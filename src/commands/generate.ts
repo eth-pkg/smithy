@@ -13,8 +13,8 @@ import { clients, getClientNames } from "../clients";
 export async function generate(
   options: Partial<GenerateOptions>,
 ): Promise<void> {
-  const logger = new Logger(options.preset ? "verbose" : "info");
-  const configManager = new ConfigManager(options.preset !== undefined);
+  const logger = new Logger(options.verbose ? "verbose" : "info");
+  const configManager = new ConfigManager(options.verbose);
 
   // Set default preset
   const preset = options.preset || "default";
@@ -28,100 +28,83 @@ export async function generate(
     logger.info(`Loading config file: ${options.configFile}`);
     try {
       userConfig = await configManager.loadConfigFile(options.configFile);
+      logger.debug(`Loaded config: ${JSON.stringify(userConfig, null, 2)}`);
     } catch (error) {
       if (error instanceof Error) {
         logger.error(`Failed to load config file: ${error.message}`);
       } else {
         logger.error(`Failed to load config file: Unknown error`);
       }
-      // Continue with empty config and let prompts handle it
+      // Exit if config file loading fails
+      process.exit(1);
     }
   }
 
   // Merge CLI options with loaded config
   userConfig = configManager.mergeOptionsWithConfig(userConfig, options);
+  logger.debug(`Merged config: ${JSON.stringify(userConfig, null, 2)}`);
 
-  // Check for missing required fields and prompt for them
-  const missingFields: string[] = configManager.getMissingRequiredFields(userConfig);
+  // Extract client values from the merged config
+  const configExecution = userConfig.commonConfig?.clients?.execution || "";
+  const configConsensus = userConfig.commonConfig?.clients?.consensus || "";
+  const configValidator = userConfig.commonConfig?.clients?.validator || "";
+
+  logger.debug(`Config values - Execution: ${configExecution}, Consensus: ${configConsensus}, Validator: ${configValidator}`);
+
+  // Determine missing fields based on config and CLI options
+  const missingFields: string[] = [];
+  if (!configExecution && !options.execution) {
+    missingFields.push('execution');
+  }
+  if (!configConsensus && !options.consensus) {
+    missingFields.push('consensus');
+  }
+  if ((userConfig.commonConfig?.features?.staking === true && !userConfig.commonConfig?.clients?.validator)) {
+    missingFields.push('validator');
+  }
+
+  logger.debug(`Missing fields: ${missingFields.join(', ')}`);
 
   // If clients aren't specified, prompt for them
   const finalOptions = await promptForMissingOptions(options, missingFields);
 
-  // Update user config with prompted values - let the processConfigWithPreset handle defaults
-  if (finalOptions.execution) {
-    // Ensure commonConfig exists
-    if (!userConfig.commonConfig) {
-      userConfig.commonConfig = {} as any;
-    }
-
-    // Type assertions to avoid TypeScript errors
-    const commonConfig = userConfig.commonConfig as any;
-
-    // Ensure clients object exists
-    if (!commonConfig.clients) {
-      commonConfig.clients = {
-        consensus: '',
-        execution: '',
-        validator: ''
-      };
-    }
-
-    // Set execution client
-    commonConfig.clients.execution = finalOptions.execution;
-  }
-
-  if (finalOptions.consensus) {
-    // Ensure commonConfig exists
-    if (!userConfig.commonConfig) {
-      userConfig.commonConfig = {} as any;
-    }
-
-    // Type assertions to avoid TypeScript errors
-    const commonConfig = userConfig.commonConfig as any;
-
-    // Ensure clients object exists
-    if (!commonConfig.clients) {
-      commonConfig.clients = {
-        consensus: '',
-        execution: '',
-        validator: ''
-      };
-    }
-
-    // Set consensus client
-    commonConfig.clients.consensus = finalOptions.consensus;
-  }
-
-  if (finalOptions.validator) {
-    // Ensure commonConfig exists
-    if (!userConfig.commonConfig) {
-      userConfig.commonConfig = {} as any;
-    }
-
-    // Type assertions to avoid TypeScript errors
-    const commonConfig = userConfig.commonConfig as any;
-
-    // Ensure clients object exists
-    if (!commonConfig.clients) {
-      commonConfig.clients = {
-        consensus: '',
-        execution: '',
-        validator: ''
-      };
-    }
-
-    // Ensure features object exists
-    if (!commonConfig.features) {
-      commonConfig.features = {
+  // Ensure commonConfig exists
+  if (!userConfig.commonConfig) {
+    userConfig.commonConfig = {
+      clients: {
+        consensus: "",
+        execution: "",
+        validator: ""
+      },
+      dataDir: "",
+      engine: {
+        apiPort: 0,
+        communication: "",
+        endpointUrl: "",
+        host: "",
+        ip: "",
+        jwtFile: "",
+        scheme: ""
+      },
+      features: {
         mevBoost: false,
         monitoring: false,
         staking: false
-      };
-    }
+      },
+      network: "",
+      operatingSystem: "",
+      syncMode: ""
+    };
+  }
 
-    // Set validator client and enable staking
-    commonConfig.clients.validator = finalOptions.validator;
-    commonConfig.features.staking = true;
+  // Set client values
+  userConfig.commonConfig.clients.execution = finalOptions.execution;
+  userConfig.commonConfig.clients.consensus = finalOptions.consensus;
+  userConfig.commonConfig.clients.validator = finalOptions.validator || "";
+
+  // If validator is provided, set staking to true
+  if (finalOptions.validator) {
+    userConfig.commonConfig.features.staking = true;
   }
 
   // Process the user config with the preset (validate and apply rules)
@@ -159,8 +142,26 @@ async function promptForMissingOptions(
   const consensusClients = getClientNames("consensus");
   const validatorClients = getClientNames("validator");
 
-  // Only prompt for execution client if it's missing and not in command line options
-  if ((missingFields.includes('execution') || !options.execution) && !options.execution) {
+  // Get values from config file if available
+  let configExecution = "";
+  let configConsensus = "";
+  let configValidator = "";
+
+  if (options.configFile) {
+    try {
+      const configManager = new ConfigManager();
+      const loadedConfig = await configManager.loadConfigFile(options.configFile);
+      configExecution = loadedConfig.commonConfig?.clients?.execution || "";
+      configConsensus = loadedConfig.commonConfig?.clients?.consensus || "";
+      configValidator = loadedConfig.commonConfig?.clients?.validator || "";
+    } catch (error) {
+      // If config file fails to load, we'll just use empty strings
+      console.warn("Failed to load config file values:", error);
+    }
+  }
+
+  // Check if execution client is in config or CLI options
+  if ((missingFields.includes('execution') || !options.execution) && !options.execution && !configExecution) {
     questions.push({
       type: "list",
       name: "execution",
@@ -169,8 +170,8 @@ async function promptForMissingOptions(
     });
   }
 
-  // Only prompt for consensus client if it's missing and not in command line options
-  if ((missingFields.includes('consensus') || !options.consensus) && !options.consensus) {
+  // Check if consensus client is in config or CLI options
+  if ((missingFields.includes('consensus') || !options.consensus) && !options.consensus && !configConsensus) {
     questions.push({
       type: "list",
       name: "consensus",
@@ -179,21 +180,14 @@ async function promptForMissingOptions(
     });
   }
 
-  // Validator is optional, only prompt if user wants it
-  if (!options.validator) {
-    questions.push({
-      type: "confirm",
-      name: "includeValidator",
-      message: "Do you want to include a validator client?",
-      default: false,
-    });
-
+  // Check if validator client is in config or CLI options
+  console.log(missingFields, options.validator, configValidator);
+  if ((missingFields.includes('validator'))) {
     questions.push({
       type: "list",
       name: "validator",
       message: "Select a validator client:",
       choices: validatorClients,
-      when: (answers: any) => answers.includeValidator,
     });
   }
 
@@ -209,12 +203,12 @@ async function promptForMissingOptions(
   // Prompt for missing options
   const answers: Record<string, any> = questions.length > 0 ? await inquirer.prompt(questions) : {};
 
-  // Merge command line options with answers
+  // Merge command line options with answers and config file values
   const result: GenerateOptions = {
     preset: options.preset || "default",
-    execution: options.execution || answers.execution || "",
-    consensus: options.consensus || answers.consensus || "",
-    validator: options.validator || answers.validator,
+    execution: options.execution || configExecution || answers.execution || "",
+    consensus: options.consensus || configConsensus || answers.consensus || "",
+    validator: options.validator || configValidator || answers.validator,
     output: options.output || answers.output || "./ethereum-configs",
     configFile: options.configFile,
   };

@@ -1,8 +1,8 @@
 commonConfig:
   clients:
-    consensus: ''
-    execution: ''
-    validator: ''
+    consensus: 'lighthouse'
+    execution: 'geth'
+    validator: 'lighthouse'
   dataDir: $HOME/ethereum/mainnet
   engine:
     apiPort: 8551
@@ -15,7 +15,7 @@ commonConfig:
   features:
     mevBoost: false
     monitoring: true
-    staking: false
+    staking: true
   network: mainnet
   operatingSystem: linux
   syncMode: snap

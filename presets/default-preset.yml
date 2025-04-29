@@ -73,10 +73,10 @@ properties:
             default: "localhost"
           ip:
             type: string
-            format: ipv4
+            pattern: "^\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}$"
             default: "127.0.0.1"
             errorMessage:
-              format: "Must be a valid IPv4 address"
+              pattern: "Must be a valid IPv4 address"
           jwtFile:
             type: string
             default: "$HOME/ethereum/jwt.hex"
@@ -233,18 +233,25 @@ properties:
 
 # Custom validation rule for validator client when staking is enabled
 if:
+  type: object
   properties:
     commonConfig:
+      type: object
       properties:
         features:
+          type: object
           properties:
             staking:
+              type: boolean
               const: true
 then:
+  type: object
   properties:
     commonConfig:
+      type: object
       properties:
         clients:
+          type: object
           required:
             - validator
           properties:

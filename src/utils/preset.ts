@@ -202,56 +202,70 @@ export class PresetManager {
   }
 
   /**
+   * Extract defaults from a schema
+   */
+  private extractDefaults(schema: any): any {
+    const result: any = {};
+    
+    if (schema.default !== undefined) {
+      return schema.default;
+    }
+    
+    if (schema.type === 'object' && schema.properties) {
+      for (const [key, value] of Object.entries(schema.properties)) {
+        if (typeof value === 'object' && value !== null) {
+          result[key] = this.extractDefaults(value as any);
+        }
+      }
+    }
+    
+    return result;
+  }
+
+  /**
    * Validate and apply preset rules to a configuration
    */
   async validateAndApplyRules(
     config: Partial<EthereumConfig>, 
-    defaultConfig: EthereumConfig,
     presetName: string = "default"
   ): Promise<EthereumConfig> {
-    // Create an empty config to start with
-    const emptyConfig: Partial<EthereumConfig> = {};
-    
-    // First, validate and apply defaults from the preset
-    // This will fill in all the default values from the schema
-    const { valid, errors } = await this.validateConfig(emptyConfig, presetName);
-    
-    if (!valid) {
-      // This shouldn't happen with an empty config unless the schema is invalid
-      this.logger.error(`Schema validation failed on empty config: ${JSON.stringify(errors)}`);
-      throw new Error("Internal error: preset schema is invalid");
-    }
-    
-    // Now emptyConfig has all default values from the schema
-    
-    // Next, merge in any default config values that aren't in the schema
-    if (defaultConfig) {
-      this.deepMerge(emptyConfig, defaultConfig);
-    }
-    
-    // Finally, merge in the user's config
-    this.deepMerge(emptyConfig, config);
-    
-    // Validate the final configuration
-    const finalValidation = await this.validateConfig(emptyConfig, presetName);
-    
-    if (!finalValidation.valid) {
-      // Format the validation errors for a better error message
-      const errorMessages = finalValidation.errors.map(err => {
-        if (err.message) return err.message;
-        if (err.keyword === 'required') {
-          return `Missing required property: ${err.params.missingProperty}`;
-        }
-        if (err.keyword === 'enum') {
-          return `Invalid value for ${err.instancePath}: ${JSON.stringify(err.params.allowedValues)}`;
-        }
-        return `${err.instancePath} ${err.message}`;
-      }).join(', ');
+    try {
+      // Load the preset schema
+      const preset = await this.loadPreset(presetName);
+      const validationSchema = preset.schema || preset;
+
+      // Create a new Ajv instance with defaults enabled
+      const ajv = new Ajv({ 
+        allErrors: true,
+        useDefaults: true,
+        coerceTypes: true
+      });
+      ajvErrors(ajv);
+
+      // Create an empty config object that will be populated with defaults
+      const configWithDefaults: Partial<EthereumConfig> = this.extractDefaults(validationSchema);
       
-      throw new Error(`Configuration validation failed: ${errorMessages}`);
+      // Now merge in the user's config to override any defaults
+      this.deepMerge(configWithDefaults, config);
+
+      // Validate the final configuration
+      const validate = ajv.compile(validationSchema);
+      const valid = validate(configWithDefaults);
+      
+      if (!valid) {
+        // Format validation errors into a more user-friendly message
+        const formattedErrors = this.formatValidationErrors(validate.errors || []);
+        this.logger.error(`Configuration validation failed:\n${formattedErrors}`);
+        throw new Error(formattedErrors);
+      }
+      
+      return configWithDefaults as EthereumConfig;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(`Failed to process config with preset: ${error.message}`);
+      }
+      throw error;
     }
-    
-    return emptyConfig as EthereumConfig;
   }
   
   /**
@@ -307,6 +321,54 @@ export class PresetManager {
     }
 
     return updatedConfig;
+  }
+
+  /**
+   * Format validation errors into a user-friendly message
+   */
+  private formatValidationErrors(errors: any[]): string {
+    if (!errors || errors.length === 0) {
+      return "Unknown validation error";
+    }
+
+    // Group errors by field for better organization
+    const groupedErrors: { [key: string]: string[] } = {};
+
+    errors.forEach(error => {
+      // Extract the field name from the instancePath
+      const fieldPath = error.instancePath.split('/').filter(Boolean);
+      const fieldName = fieldPath[fieldPath.length - 1] || 'root';
+
+      // Format the error message
+      let message = '';
+      if (error.keyword === 'required') {
+        message = `Missing required field: ${error.params.missingProperty}`;
+      } else if (error.keyword === 'enum') {
+        const allowedValues = error.params.allowedValues.join(', ');
+        message = `Invalid value for ${fieldName}. Must be one of: ${allowedValues}`;
+      } else if (error.keyword === 'errorMessage') {
+        message = error.message;
+      } else {
+        message = `${fieldName}: ${error.message}`;
+      }
+
+      // Group by the top-level field
+      const topLevelField = fieldPath[0] || 'root';
+      if (!groupedErrors[topLevelField]) {
+        groupedErrors[topLevelField] = [];
+      }
+      groupedErrors[topLevelField].push(message);
+    });
+
+    // Format the grouped errors into a readable message
+    const formattedMessage = Object.entries(groupedErrors)
+      .map(([field, messages]) => {
+        const fieldHeader = field === 'root' ? 'Configuration' : `Field: ${field}`;
+        return `${fieldHeader}:\n${messages.map(msg => `  - ${msg}`).join('\n')}`;
+      })
+      .join('\n\n');
+
+    return formattedMessage;
   }
 }
 

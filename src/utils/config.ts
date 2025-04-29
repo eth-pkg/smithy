@@ -130,14 +130,11 @@ export class ConfigManager {
     presetName: string
   ): Promise<EthereumConfig> {
     try {
-      // Default config is no longer needed as the preset schema has defaults
-      const defaultConfig = {} as EthereumConfig;
 
       // Validate the user config against the preset rules
       // The preset will apply default values from its schema
       return await this.presetManager.validateAndApplyRules(
         userConfig,
-        defaultConfig,
         presetName
       );
     } catch (error) {

@@ -86,6 +86,7 @@ export interface GenerateOptions {
   validator?: string;
   output?: string;
   configFile?: string;
+  verbose?: boolean;
 }
 
 export type ClientList = {
