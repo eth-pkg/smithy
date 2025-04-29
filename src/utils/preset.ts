@@ -3,7 +3,7 @@ import * as path from "path";
 import * as yaml from "js-yaml";
 import Ajv from "ajv";
 import ajvErrors from "ajv-errors";
-import { EthereumConfig } from "../clients/types";
+import { EthereumConfig } from "@/clients/types";
 import { Logger } from "./logger";
 
 /**
@@ -19,7 +19,8 @@ export class PresetManager {
     this.ajv = new Ajv({ 
       allErrors: true,
       useDefaults: true, // Apply defaults from schema
-      coerceTypes: true  // Convert types if needed
+      coerceTypes: true,  // Convert types if needed
+      loadSchema: this.loadSchema.bind(this) // Add schema loader
     });
     ajvErrors(this.ajv);
   }
@@ -238,9 +239,13 @@ export class PresetManager {
       const ajv = new Ajv({ 
         allErrors: true,
         useDefaults: true,
-        coerceTypes: true
+        coerceTypes: true,
+        loadSchema: this.loadSchema.bind(this)
       });
       ajvErrors(ajv);
+
+      // Compile the schema with references
+      const validate = await ajv.compileAsync(validationSchema);
 
       // Create an empty config object that will be populated with defaults
       const configWithDefaults: Partial<EthereumConfig> = this.extractDefaults(validationSchema);
@@ -249,7 +254,6 @@ export class PresetManager {
       this.deepMerge(configWithDefaults, config);
 
       // Validate the final configuration
-      const validate = ajv.compile(validationSchema);
       const valid = validate(configWithDefaults);
       
       if (!valid) {
@@ -369,6 +373,28 @@ export class PresetManager {
       .join('\n\n');
 
     return formattedMessage;
+  }
+
+  /**
+   * Load a schema from a file
+   */
+  private async loadSchema(uri: string): Promise<any> {
+    const presetsDir = this.getPresetsDir();
+    const schemaPath = path.join(presetsDir, uri);
+    
+    try {
+      if (!await fs.pathExists(schemaPath)) {
+        throw new Error(`Schema not found: ${uri}`);
+      }
+
+      const fileContent = await fs.readFile(schemaPath, 'utf-8');
+      return yaml.load(fileContent);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(`Failed to load schema ${uri}: ${error.message}`);
+      }
+      throw new Error(`Failed to load schema ${uri}`);
+    }
   }
 }
 

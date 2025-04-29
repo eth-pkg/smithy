@@ -1,4 +1,4 @@
-import { ClientConfig, EthereumConfig } from "../types";
+import { ClientConfig, EthereumConfig } from "@/clients/types";
 
 /**
  * Generate Prysm validator client configuration

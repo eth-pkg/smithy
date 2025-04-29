@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import { PresetManager } from '../../src/utils/preset';
-import { EthereumConfig, CommonConfig, ClientSelection, Features } from '../../src/clients/types';
+import { PresetManager } from '../../../src/utils/preset';
+import { EthereumConfig } from '../../../src/clients/types';
 
 describe('PresetManager', () => {
   let presetManager: PresetManager;

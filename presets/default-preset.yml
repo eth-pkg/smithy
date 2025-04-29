@@ -17,6 +17,8 @@ properties:
             type: string
             enum:
               - lighthouse
+              - lodestar
+              - nimbus-eth2
               - prysm
               - teku
             errorMessage:
@@ -25,9 +27,11 @@ properties:
           execution:
             type: string
             enum:
+              - besu
+              - erigon 
               - geth
               - nethermind
-              - besu
+              - reth
             errorMessage:
               enum: "Execution client must be one of: geth, nethermind, besu"
             default: ""
@@ -35,6 +39,8 @@ properties:
             type: string
             enum:
               - lighthouse
+              - lodestar
+              - nimbus-eth2
               - prysm
               - teku
               - ""
@@ -79,7 +85,7 @@ properties:
               pattern: "Must be a valid IPv4 address"
           jwtFile:
             type: string
-            default: "$HOME/ethereum/jwt.hex"
+            default: "$HOME/ethereum/mainnet/jwt.hex"
           scheme:
             type: string
             enum:

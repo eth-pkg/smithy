@@ -1,10 +1,10 @@
 import * as fs from "fs-extra";
 import * as path from "path";
 import inquirer from "inquirer";
-import { GenerateOptions, EthereumConfig, ClientSelection } from "../clients/types";
-import { ConfigManager } from "../utils/config";
-import { Logger } from "../utils/logger";
-import { clients, getClientNames } from "../clients";
+import { GenerateOptions, EthereumConfig, ClientSelection } from "@/clients/types";
+import { ConfigManager } from "@/utils/config";
+import { Logger } from "@/utils/logger";
+import { clients, getClientNames } from "@/clients";
 
 /**
  * Generate Ethereum client configurations

@@ -1,7 +1,7 @@
 import * as fs from "fs-extra";
 import * as path from "path";
 import * as yaml from "js-yaml";
-import { EthereumConfig } from "../clients/types";
+import { EthereumConfig } from "@/clients/types";
 import { Logger } from "./logger";
 import { PresetManager } from "./preset";
 

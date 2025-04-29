@@ -1,7 +1,8 @@
 #!/usr/bin/env node
+import './setup';
 import { Command } from "commander";
-import * as commands from "./commands";
-import { Logger } from "./utils/logger";
+import * as commands from "@/commands/index";
+import { Logger } from "@/utils/logger";
 
 // Create CLI instance
 const program = new Command();

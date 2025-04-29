@@ -1,4 +1,4 @@
-import { ClientConfig, EthereumConfig } from "../types";
+import { ClientConfig, EthereumConfig } from "@/clients/types";
 
 /**
  * Generate Geth configuration based on the provided Ethereum config

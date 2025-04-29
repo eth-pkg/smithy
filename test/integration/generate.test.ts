@@ -2,8 +2,7 @@ import { expect } from 'chai';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as yaml from 'js-yaml';
-import { generate } from '../../src/commands/generate';
-import { EthereumConfig } from '../../src/clients/types';
+import { generate } from '@/commands/generate';
 
 describe('Config Generation', () => {
   const testOutputDir = path.join(process.cwd(), 'test-output');

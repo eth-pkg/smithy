@@ -1,4 +1,4 @@
-import { PresetManager } from "../utils/preset";
+import { PresetManager } from "@/utils/preset";
 
 /**
  * List available configurations
