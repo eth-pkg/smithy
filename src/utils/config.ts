@@ -3,130 +3,109 @@ import * as path from "path";
 import * as yaml from "js-yaml";
 import { EthereumConfig } from "../clients/types";
 import { Logger } from "./logger";
+import { PresetManager } from "./preset";
 
 /**
- * Configuration utility for loading presets and generating client configs
+ * Configuration manager for loading and handling user configs
  */
 export class ConfigManager {
   private logger: Logger;
+  private presetManager: PresetManager;
 
   constructor(verbose = false) {
     this.logger = new Logger(verbose ? "verbose" : "info");
+    this.presetManager = new PresetManager(verbose);
   }
 
   /**
-   * Get the path to the presets directory
+   * Load a user configuration file
    */
-  getPresetsDir(): string {
-    // Check if running from a built package or development
-    const nodeModulesDir = path.join(
-      __dirname,
-      "..",
-      "..",
-      "..",
-      "node_modules",
-    );
-
-    if (fs.existsSync(nodeModulesDir)) {
-      // Development mode - use local presets
-      return path.join(__dirname, "..", "..", "presets");
-    } else {
-      // Installed package - use package presets
-      return path.join(__dirname, "..", "..", "presets");
-    }
-  }
-
-  /**
-   * List available presets
-   */
-  async listPresets(): Promise<string[]> {
-    const presetsDir = this.getPresetsDir();
-    this.logger.debug(`Looking for presets in: ${presetsDir}`);
+  async loadConfigFile(configPath: string): Promise<Partial<EthereumConfig>> {
+    this.logger.debug(`Loading config from: ${configPath}`);
 
     try {
-      const files = await fs.readdir(presetsDir);
-      return files
-        .filter((file) => file.endsWith(".yaml") || file.endsWith(".yml"))
-        .map((file) => path.basename(file, path.extname(file)));
-    } catch (error) {
-      this.logger.error(`Failed to read presets directory: ${presetsDir}`);
-      if (error instanceof Error) {
-        this.logger.error(error.message);
+      if (!await fs.pathExists(configPath)) {
+        throw new Error(`Config file not found: ${configPath}`);
       }
-      return ["default"]; // Return at least the default preset
-    }
-  }
 
-  /**
-   * Load a preset configuration file
-   */
-  async loadPreset(presetName: string): Promise<EthereumConfig> {
-    const presetsDir = this.getPresetsDir();
-    const yamlFile = path.join(presetsDir, `${presetName}.yaml`);
-    const ymlFile = path.join(presetsDir, `${presetName}.yml`);
+      const fileContent = await fs.readFile(configPath, "utf-8");
+      let config: Partial<EthereumConfig> = {};
 
-    let configFile = "";
-
-    if (await fs.pathExists(yamlFile)) {
-      configFile = yamlFile;
-    } else if (await fs.pathExists(ymlFile)) {
-      configFile = ymlFile;
-    } else {
-      throw new Error(`Preset not found: ${presetName}`);
-    }
-
-    this.logger.debug(`Loading preset from: ${configFile}`);
-
-    try {
-      const fileContent = await fs.readFile(configFile, "utf-8");
-      const config = yaml.load(fileContent) as EthereumConfig;
+      if (configPath.endsWith('.json')) {
+        config = JSON.parse(fileContent);
+      } else if (configPath.endsWith('.yml') || configPath.endsWith('.yaml')) {
+        config = yaml.load(fileContent) as Partial<EthereumConfig>;
+      } else {
+        throw new Error(`Unsupported config file format: ${path.extname(configPath)}`);
+      }
 
       return config;
     } catch (error) {
       if (error instanceof Error) {
-        throw new Error(
-          `Failed to load preset ${presetName}: ${error.message}`,
-        );
+        throw new Error(`Failed to load config file ${configPath}: ${error.message}`);
       }
-      throw new Error(`Failed to load preset ${presetName}`);
+      throw new Error(`Failed to load config file ${configPath}`);
     }
   }
 
   /**
-   * Update a configuration with selected clients
+   * Check if a config has all required values
+   * Returns a list of missing fields that should be prompted for
    */
-  updateConfigWithClients(
-    config: EthereumConfig,
-    execution: string,
-    consensus: string,
-    validator?: string,
-  ): EthereumConfig {
-    // Clone the config to avoid modifying the original
-    const updatedConfig = JSON.parse(JSON.stringify(config)) as EthereumConfig;
+  getMissingRequiredFields(config: Partial<EthereumConfig>): string[] {
+    const missingFields: string[] = [];
 
-    // Update client selections
-    updatedConfig.commonConfig.clients.execution = execution;
-    updatedConfig.commonConfig.clients.consensus = consensus;
-
-    if (validator) {
-      updatedConfig.commonConfig.clients.validator = validator;
-      updatedConfig.commonConfig.features.staking = true;
+    // Check for required client selections
+    if (!config.commonConfig?.clients?.execution) {
+      missingFields.push('execution');
     }
 
-    return updatedConfig;
+    if (!config.commonConfig?.clients?.consensus) {
+      missingFields.push('consensus');
+    }
+
+    // Other required fields can be added here
+
+    return missingFields;
   }
 
   /**
-   * Merge provided options with a preset config
+   * Merge command-line options with loaded config
    */
-  mergeOptionsWithPreset(
-    config: EthereumConfig,
-    options: Record<string, any>,
-  ): EthereumConfig {
+  mergeOptionsWithConfig(
+    config: Partial<EthereumConfig>,
+    options: Record<string, any>
+  ): Partial<EthereumConfig> {
     // Clone the config to avoid modifying the original
-    const mergedConfig = JSON.parse(JSON.stringify(config)) as EthereumConfig;
+    const mergedConfig = JSON.parse(JSON.stringify(config)) as any;
+
+    // Ensure the config has the expected structure
+    if (!mergedConfig.commonConfig) {
+      mergedConfig.commonConfig = {} as any;
+    }
+
+    if (!mergedConfig.commonConfig.clients) {
+      mergedConfig.commonConfig.clients = {} as any;
+    }
+
+    if (!mergedConfig.commonConfig.features) {
+      mergedConfig.commonConfig.features = {} as any;
+    }
 
     // Apply overrides from options if specified
+    if (options.execution) {
+      mergedConfig.commonConfig.clients.execution = options.execution;
+    }
+
+    if (options.consensus) {
+      mergedConfig.commonConfig.clients.consensus = options.consensus;
+    }
+
+    if (options.validator) {
+      mergedConfig.commonConfig.clients.validator = options.validator;
+      mergedConfig.commonConfig.features.staking = true;
+    }
+
     if (options.dataDir) {
       mergedConfig.commonConfig.dataDir = options.dataDir;
     }
@@ -139,7 +118,62 @@ export class ConfigManager {
       mergedConfig.commonConfig.features.mevBoost = options.mevBoost === true;
     }
 
-    return mergedConfig;
+    return mergedConfig as Partial<EthereumConfig>;
+  }
+
+  /**
+   * Process a user configuration with a preset
+   * Validates and applies preset rules to ensure the configuration is valid
+   */
+  async processConfigWithPreset(
+    userConfig: Partial<EthereumConfig>,
+    presetName: string
+  ): Promise<EthereumConfig> {
+    try {
+      // Default config is no longer needed as the preset schema has defaults
+      const defaultConfig = {} as EthereumConfig;
+
+      // Validate the user config against the preset rules
+      // The preset will apply default values from its schema
+      return await this.presetManager.validateAndApplyRules(
+        userConfig,
+        defaultConfig,
+        presetName
+      );
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(`Failed to process config with preset: ${error.message}`);
+      }
+      throw error;
+    }
+  }
+
+  /**
+   * Save a configuration to a file
+   */
+  async saveConfig(config: EthereumConfig, filePath: string): Promise<void> {
+    try {
+      const dirPath = path.dirname(filePath);
+      await fs.ensureDir(dirPath);
+
+      let content: string;
+      if (filePath.endsWith('.json')) {
+        content = JSON.stringify(config, null, 2);
+      } else if (filePath.endsWith('.yml') || filePath.endsWith('.yaml')) {
+        content = yaml.dump(config);
+      } else {
+        // Default to YAML
+        content = yaml.dump(config);
+      }
+
+      await fs.writeFile(filePath, content, 'utf-8');
+      this.logger.debug(`Config saved to: ${filePath}`);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(`Failed to save config to ${filePath}: ${error.message}`);
+      }
+      throw new Error(`Failed to save config to ${filePath}`);
+    }
   }
 }
 

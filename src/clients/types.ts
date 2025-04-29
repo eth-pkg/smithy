@@ -85,6 +85,7 @@ export interface GenerateOptions {
   consensus: string;
   validator?: string;
   output?: string;
+  configFile?: string;
 }
 
 export type ClientList = {

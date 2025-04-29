@@ -17,7 +17,7 @@ program
 program
   .command("generate")
   .description("Generate configuration files for Ethereum clients")
-  .option("-p, --preset <preset>", "Preset configuration file", "default")
+  .option("-p, --preset <preset>", "Preset to validate against", "default")
   .option(
     "-e, --execution <client>",
     "Execution client (geth, nethermind, besu)",
@@ -33,6 +33,10 @@ program
   .option(
     "-o, --output <directory>",
     "Output directory for configuration files",
+  )
+  .option(
+    "-f, --config-file <path>",
+    "Path to a configuration file to use as base",
   )
   .option("--verbose", "Enable verbose logging")
   .action(async (options: any) => {
