@@ -1,0 +1,46 @@
+commonConfig:
+  clients:
+    consensus: ''
+    execution: ''
+    validator: ''
+  dataDir: $HOME/ethereum/mainnet
+  engine:
+    apiPort: 8551
+    communication: jwt
+    endpointUrl: http://localhost:8551
+    host: localhost
+    ip: 127.0.0.1
+    jwtFile: $HOME/ethereum/jwt.hex
+    scheme: http
+  features:
+    mevBoost: false
+    monitoring: true
+    staking: false
+  network: mainnet
+  operatingSystem: linux
+  syncMode: snap
+
+consensusConfig:
+  httpPort: 5052
+  metricsPort: 8008
+  p2pPort: 9000
+
+executionConfig:
+  http:
+    apiPrefixes:
+      - eth
+      - net
+      - web3
+    cors:
+      - '*'
+    enabled: true
+    port: 8545
+  metrics:
+    enabled: true
+    port: 6060
+  p2p:
+    maxPeers: 50
+    port: 30303
+  ws:
+    enabled: false
+    port: 8546
