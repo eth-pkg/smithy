@@ -7,6 +7,12 @@ properties:
     required:
       - clients
     properties:
+      networkId:
+        type: number
+        minimum: 1
+        default: 1
+        errorMessage:
+          minimum: "Network ID must be a positive number"
       clients:
         type: object
         required:
@@ -113,9 +119,12 @@ properties:
           - goerli
           - sepolia
           - holesky
+          - hoodie
+          - ephemery
+          - custom
         default: "mainnet"
         errorMessage:
-          enum: "Network must be one of: mainnet, goerli, sepolia, holesky"
+          enum: "Network must be one of: mainnet, goerli, sepolia, holesky, hoodie, ephemery, custom"
       operatingSystem:
         type: string
         enum:

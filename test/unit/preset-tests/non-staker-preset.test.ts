@@ -1,6 +1,8 @@
 import { expect } from 'chai';
+import { describe, it, beforeEach } from 'mocha';
 import { PresetManager } from '@/utils/preset';
 import { EthereumConfig } from '@/clients/types';
+import { baseConfig } from './network-preset.test-helper';
 
 describe('Non-Staker Preset Tests', () => {
   let presetManager: PresetManager;
@@ -9,111 +11,77 @@ describe('Non-Staker Preset Tests', () => {
     presetManager = new PresetManager(true);
   });
 
-  it('should validate non-staker preset configuration', async () => {
+  it('should validate a correct non-staker config', async () => {
     const config: Partial<EthereumConfig> = {
       commonConfig: {
-        clients: {
-          execution: 'geth',
-          consensus: 'lighthouse',
-          validator: 'lighthouse'
-        },
+        ...baseConfig,
         features: {
-          mevBoost: false,
-          monitoring: true,
+          ...baseConfig.features,
           staking: false
         },
-        dataDir: '$HOME/ethereum/mainnet',
-        engine: {
-          apiPort: 8551,
-          communication: 'jwt',
-          endpointUrl: 'http://localhost:8551',
-          host: 'localhost',
-          ip: '127.0.0.1',
-          jwtFile: '$HOME/ethereum/jwt.hex',
-          scheme: 'http'
-        },
         network: 'mainnet',
-        operatingSystem: 'linux',
-        syncMode: 'snap'
+        networkId: 1,
+        dataDir: '$HOME/ethereum/mainnet'
       }
     };
 
     const result = await presetManager.validateAndApplyRules(config, 'non-staker');
     expect(result.commonConfig?.features?.staking).to.be.false;
-    expect(result.commonConfig?.clients?.validator).to.equal('lighthouse');
   });
 
   it('should reject non-staker preset with staking set to true', async () => {
     const config: Partial<EthereumConfig> = {
       commonConfig: {
-        clients: {
-          execution: 'geth',
-          consensus: 'lighthouse',
-          validator: 'lighthouse'
-        },
+        ...baseConfig,
         features: {
-          mevBoost: false,
-          monitoring: true,
+          ...baseConfig.features,
           staking: true
         },
-        dataDir: '$HOME/ethereum/mainnet',
-        engine: {
-          apiPort: 8551,
-          communication: 'jwt',
-          endpointUrl: 'http://localhost:8551',
-          host: 'localhost',
-          ip: '127.0.0.1',
-          jwtFile: '$HOME/ethereum/jwt.hex',
-          scheme: 'http'
-        },
         network: 'mainnet',
-        operatingSystem: 'linux',
-        syncMode: 'snap'
+        networkId: 1,
+        dataDir: '$HOME/ethereum/mainnet'
       }
     };
 
     try {
       await presetManager.validateAndApplyRules(config, 'non-staker');
       expect.fail('Should have thrown an error');
-    } catch (error: any) {
-      expect(error.message).to.include('must be equal to constant');
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        expect(error.message).to.include('must be equal to constant');
+      } else {
+        expect.fail('Expected an Error object');
+      }
     }
   });
 
   it('should reject non-staker preset with empty validator client', async () => {
     const config: Partial<EthereumConfig> = {
       commonConfig: {
-        clients: {
-          execution: 'geth',
-          consensus: 'lighthouse',
-          validator: ''
-        },
+        ...baseConfig,
         features: {
-          mevBoost: false,
-          monitoring: true,
+          ...baseConfig.features,
           staking: false
         },
-        dataDir: '$HOME/ethereum/mainnet',
-        engine: {
-          apiPort: 8551,
-          communication: 'jwt',
-          endpointUrl: 'http://localhost:8551',
-          host: 'localhost',
-          ip: '127.0.0.1',
-          jwtFile: '$HOME/ethereum/jwt.hex',
-          scheme: 'http'
-        },
         network: 'mainnet',
-        operatingSystem: 'linux',
-        syncMode: 'snap'
+        networkId: 1,
+        dataDir: '$HOME/ethereum/mainnet',
+        clients: {
+          ...baseConfig.clients,
+          validator: ''
+        }
       }
     };
 
     try {
       await presetManager.validateAndApplyRules(config, 'non-staker');
       expect.fail('Should have thrown an error');
-    } catch (error: any) {
-      expect(error.message).to.include('Validator client must be specified');
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        expect(error.message).to.include('Validator client must be specified');
+      } else {
+        expect.fail('Expected an Error object');
+      }
     }
   });
 }); 

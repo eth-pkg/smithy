@@ -93,7 +93,8 @@ export async function generate(
       },
       network: "",
       operatingSystem: "",
-      syncMode: ""
+      syncMode: "",
+      networkId: 0
     };
   }
 

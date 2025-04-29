@@ -1,6 +1,8 @@
 import { expect } from 'chai';
+import { describe, it, beforeEach } from 'mocha';
 import { PresetManager } from '@/utils/preset';
 import { EthereumConfig } from '@/clients/types';
+import { baseConfig } from './network-preset.test-helper';
 
 describe('Default Preset Tests', () => {
   let presetManager: PresetManager;
@@ -9,37 +11,40 @@ describe('Default Preset Tests', () => {
     presetManager = new PresetManager(true);
   });
 
-  it('should validate a correct config', async () => {
+  it('should validate a correct default config', async () => {
     const config: Partial<EthereumConfig> = {
       commonConfig: {
-        clients: {
-          execution: 'geth',
-          consensus: 'lighthouse',
-          validator: 'lighthouse'
-        },
-        features: {
-          mevBoost: false,
-          monitoring: true,
-          staking: true
-        },
-        dataDir: '$HOME/ethereum/mainnet',
-        engine: {
-          apiPort: 8551,
-          communication: 'jwt',
-          endpointUrl: 'http://localhost:8551',
-          host: 'localhost',
-          ip: '127.0.0.1',
-          jwtFile: '$HOME/ethereum/jwt.hex',
-          scheme: 'http'
-        },
+        ...baseConfig,
         network: 'mainnet',
-        operatingSystem: 'linux',
-        syncMode: 'snap'
+        networkId: 1,
+        dataDir: '$HOME/ethereum/mainnet'
       }
     };
 
     const result = await presetManager.validateAndApplyRules(config, 'default');
-    expect(result.commonConfig?.clients?.execution).to.equal('geth');
-    expect(result.commonConfig?.clients?.consensus).to.equal('lighthouse');
+    expect(result.commonConfig?.network).to.equal('mainnet');
+    expect(result.commonConfig?.networkId).to.equal(1);
+  });
+
+  it('should reject config with invalid network', async () => {
+    const config: Partial<EthereumConfig> = {
+      commonConfig: {
+        ...baseConfig,
+        network: 'invalid',
+        networkId: 1,
+        dataDir: '$HOME/ethereum/mainnet'
+      }
+    };
+
+    try {
+      await presetManager.validateAndApplyRules(config, 'default');
+      expect.fail('Should have thrown an error');
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        expect(error.message).to.include('Network must be one of: mainnet, goerli, sepolia, holesky');
+      } else {
+        expect.fail('Expected an Error object');
+      }
+    }
   });
 }); 

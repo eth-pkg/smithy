@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { PresetManager } from '../../../src/utils/preset';
 import { EthereumConfig } from '../../../src/clients/types';
+import { baseConfig } from './network-preset.test-helper';
 
 describe('PresetManager', () => {
   let presetManager: PresetManager;
@@ -13,29 +14,10 @@ describe('PresetManager', () => {
     it('should validate a correct config', async () => {
       const config: Partial<EthereumConfig> = {
         commonConfig: {
-          clients: {
-            execution: 'geth',
-            consensus: 'lighthouse',
-            validator: 'lighthouse'
-          },
-          dataDir: '$HOME/ethereum/mainnet',
-          engine: {
-            apiPort: 8551,
-            communication: 'jwt',
-            endpointUrl: 'http://localhost:8551',
-            host: 'localhost',
-            ip: '127.0.0.1',
-            jwtFile: '$HOME/ethereum/jwt.hex',
-            scheme: 'http'
-          },
-          features: {
-            mevBoost: false,
-            monitoring: true,
-            staking: true
-          },
+          ...baseConfig,
           network: 'mainnet',
-          operatingSystem: 'linux',
-          syncMode: 'snap'
+          networkId: 1,
+          dataDir: '$HOME/ethereum/mainnet'
         }
       };
 
@@ -47,68 +29,39 @@ describe('PresetManager', () => {
     it('should reject invalid client types', async () => {
       const config: Partial<EthereumConfig> = {
         commonConfig: {
+          ...baseConfig,
           clients: {
+            ...baseConfig.clients,
             execution: 'invalid',
             consensus: 'invalid',
             validator: ''
           },
-          dataDir: '$HOME/ethereum/mainnet',
-          engine: {
-            apiPort: 8551,
-            communication: 'jwt',
-            endpointUrl: 'http://localhost:8551',
-            host: 'localhost',
-            ip: '127.0.0.1',
-            jwtFile: '$HOME/ethereum/jwt.hex',
-            scheme: 'http'
-          },
-          features: {
-            mevBoost: false,
-            monitoring: true,
-            staking: false
-          },
           network: 'mainnet',
-          operatingSystem: 'linux',
-          syncMode: 'snap'
+          networkId: 1,
+          dataDir: '$HOME/ethereum/mainnet'
         }
       };
 
       try {
         await presetManager.validateAndApplyRules(config);
         expect.fail('Should have thrown an error');
-      } catch (error: any) {
-        expect(error).to.be.an('Error');
-        expect(error.message).to.include('Execution client must be one of: geth, nethermind, besu');
-        expect(error.message).to.include('Consensus client must be one of: lighthouse, prysm, teku');
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          expect(error.message).to.include('Execution client must be one of: geth, nethermind, besu');
+          expect(error.message).to.include('Consensus client must be one of: lighthouse, prysm, teku');
+        } else {
+          expect.fail('Expected an Error object');
+        }
       }
     });
 
     it('should apply defaults from schema', async () => {
       const config: Partial<EthereumConfig> = {
         commonConfig: {
-          clients: {
-            execution: 'geth',
-            consensus: 'lighthouse',
-            validator: ''
-          },
-          dataDir: '$HOME/ethereum/mainnet',
-          engine: {
-            apiPort: 8551,
-            communication: 'jwt',
-            endpointUrl: 'http://localhost:8551',
-            host: 'localhost',
-            ip: '127.0.0.1',
-            jwtFile: '$HOME/ethereum/jwt.hex',
-            scheme: 'http'
-          },
-          features: {
-            mevBoost: false,
-            monitoring: true,
-            staking: false
-          },
+          ...baseConfig,
           network: 'mainnet',
-          operatingSystem: 'linux',
-          syncMode: 'snap'
+          networkId: 1,
+          dataDir: '$HOME/ethereum/mainnet'
         }
       };
 
@@ -121,39 +74,29 @@ describe('PresetManager', () => {
     it('should reject config with empty client values', async () => {
       const config: Partial<EthereumConfig> = {
         commonConfig: {
+          ...baseConfig,
           clients: {
+            ...baseConfig.clients,
             execution: '',
             consensus: '',
             validator: ''
           },
-          dataDir: '$HOME/ethereum/mainnet',
-          engine: {
-            apiPort: 8551,
-            communication: 'jwt',
-            endpointUrl: 'http://localhost:8551',
-            host: 'localhost',
-            ip: '127.0.0.1',
-            jwtFile: '$HOME/ethereum/jwt.hex',
-            scheme: 'http'
-          },
-          features: {
-            mevBoost: false,
-            monitoring: true,
-            staking: false
-          },
           network: 'mainnet',
-          operatingSystem: 'linux',
-          syncMode: 'snap'
+          networkId: 1,
+          dataDir: '$HOME/ethereum/mainnet'
         }
       };
 
       try {
         await presetManager.validateAndApplyRules(config);
         expect.fail('Should have thrown an error for empty client values');
-      } catch (error: any) {
-        expect(error).to.be.an('Error');
-        expect(error.message).to.include('Consensus client must be one of: lighthouse, prysm, teku');
-        expect(error.message).to.include('Execution client must be one of: geth, nethermind, besu');
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          expect(error.message).to.include('Consensus client must be one of: lighthouse, prysm, teku');
+          expect(error.message).to.include('Execution client must be one of: geth, nethermind, besu');
+        } else {
+          expect.fail('Expected an Error object');
+        }
       }
     });
   });
@@ -162,29 +105,10 @@ describe('PresetManager', () => {
     it('should validate a complete config', async () => {
       const config: Partial<EthereumConfig> = {
         commonConfig: {
-          clients: {
-            execution: 'geth',
-            consensus: 'lighthouse',
-            validator: 'lighthouse'
-          },
-          features: {
-            mevBoost: false,
-            monitoring: true,
-            staking: true
-          },
-          dataDir: '$HOME/ethereum/mainnet',
-          engine: {
-            apiPort: 8551,
-            communication: 'jwt',
-            endpointUrl: 'http://localhost:8551',
-            host: 'localhost',
-            ip: '127.0.0.1',
-            jwtFile: '$HOME/ethereum/jwt.hex',
-            scheme: 'http'
-          },
+          ...baseConfig,
           network: 'mainnet',
-          operatingSystem: 'linux',
-          syncMode: 'snap'
+          networkId: 1,
+          dataDir: '$HOME/ethereum/mainnet'
         }
       };
 
@@ -196,29 +120,16 @@ describe('PresetManager', () => {
     it('should detect missing required fields', async () => {
       const config: Partial<EthereumConfig> = {
         commonConfig: {
+          ...baseConfig,
           clients: {
+            ...baseConfig.clients,
             execution: '',
             consensus: '',
             validator: ''
           },
-          dataDir: '$HOME/ethereum/mainnet',
-          engine: {
-            apiPort: 8551,
-            communication: 'jwt',
-            endpointUrl: 'http://localhost:8551',
-            host: 'localhost',
-            ip: '127.0.0.1',
-            jwtFile: '$HOME/ethereum/jwt.hex',
-            scheme: 'http'
-          },
-          features: {
-            mevBoost: false,
-            monitoring: true,
-            staking: false
-          },
           network: 'mainnet',
-          operatingSystem: 'linux',
-          syncMode: 'snap'
+          networkId: 1,
+          dataDir: '$HOME/ethereum/mainnet'
         }
       };
 

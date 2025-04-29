@@ -6,6 +6,12 @@ import ajvErrors from "ajv-errors";
 import { EthereumConfig } from "@/clients/types";
 import { Logger } from "./logger";
 
+interface SchemaProperty {
+  type?: string;
+  const?: any;
+  properties?: Record<string, SchemaProperty>;
+}
+
 /**
  * Preset utility for loading preset rules and validating configurations
  */
@@ -224,6 +230,46 @@ export class PresetManager {
   }
 
   /**
+   * Check if the config is trying to override any constant values from the preset
+   */
+  private checkConstantOverrides(config: any, schema: SchemaProperty, path: string[] = []): string[] {
+    const overrides: string[] = [];
+
+    if (schema.type === 'object' && schema.properties) {
+      for (const [key, value] of Object.entries(schema.properties)) {
+        const currentPath = [...path, key];
+        const fullPath = currentPath.join('.');
+        
+        if (value && typeof value === 'object') {
+          // Check if this property is a constant
+          if (value.const !== undefined) {
+            // Check if config is trying to override this constant
+            let current = config;
+            for (const p of currentPath) {
+              if (current && typeof current === 'object') {
+                current = current[p];
+              } else {
+                current = undefined;
+                break;
+              }
+            }
+            if (current !== undefined && current !== value.const) {
+              overrides.push(fullPath);
+            }
+          }
+          
+          // Recursively check nested objects
+          if (config && typeof config === 'object' && config[key]) {
+            overrides.push(...this.checkConstantOverrides(config[key], value, currentPath));
+          }
+        }
+      }
+    }
+
+    return overrides;
+  }
+
+  /**
    * Validate and apply preset rules to a configuration
    */
   async validateAndApplyRules(
@@ -234,6 +280,12 @@ export class PresetManager {
       // Load the preset schema
       const preset = await this.loadPreset(presetName);
       const validationSchema = preset.schema || preset;
+
+      // Check for constant overrides before applying defaults
+      const constantOverrides = this.checkConstantOverrides(config, validationSchema);
+      if (constantOverrides.length > 0) {
+        throw new Error(`Cannot override constant values in preset: ${constantOverrides.join(', ')}`);
+      }
 
       // Create a new Ajv instance with defaults enabled
       const ajv = new Ajv({ 
@@ -259,12 +311,18 @@ export class PresetManager {
       if (!valid) {
         // Format validation errors into a more user-friendly message
         const formattedErrors = this.formatValidationErrors(validate.errors || []);
-        this.logger.error(`Configuration validation failed:\n${formattedErrors}`);
         throw new Error(formattedErrors);
       }
       
       return configWithDefaults as EthereumConfig;
     } catch (error) {
+      // Don't wrap the error message if it's already a validation error
+      if (error instanceof Error && 
+          (error.message.includes('Cannot override constant values') || 
+           error.message.includes('Network must be set to') ||
+           error.message.includes('Network ID must be set to'))) {
+        throw error;
+      }
       if (error instanceof Error) {
         throw new Error(`Failed to process config with preset: ${error.message}`);
       }

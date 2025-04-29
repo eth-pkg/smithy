@@ -26,6 +26,7 @@ export interface CommonConfig {
   engine: EngineConfig;
   features: Features;
   network: string;
+  networkId: number;
   operatingSystem: string;
   syncMode: string;
 }
