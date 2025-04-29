@@ -1,0 +1,5 @@
+$id: sepolia-non-staker.yml
+allOf:
+  - $ref: ../default.yml
+  - $ref: ../networks/sepolia.yml
+  - $ref: ../features/non-staker.yml

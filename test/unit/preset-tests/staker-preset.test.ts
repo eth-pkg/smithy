@@ -25,7 +25,7 @@ describe('Staker Preset Tests', () => {
       }
     };
 
-    const result = await presetManager.validateAndApplyRules(config, 'staker');
+    const result = await presetManager.validateAndApplyRules(config, 'combined/mainnet-staker');
     expect(result.commonConfig?.features?.staking).to.be.true;
   });
 
@@ -44,7 +44,7 @@ describe('Staker Preset Tests', () => {
     };
 
     try {
-      await presetManager.validateAndApplyRules(config, 'staker');
+      await presetManager.validateAndApplyRules(config, 'combined/mainnet-staker');
       expect.fail('Should have thrown an error');
     } catch (error: unknown) {
       if (error instanceof Error) {

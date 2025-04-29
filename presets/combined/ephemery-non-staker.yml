@@ -1,0 +1,5 @@
+$id: ephemery-non-staker.yml
+allOf:
+  - $ref: ../default.yml
+  - $ref: ../networks/ephemery.yml
+  - $ref: ../features/non-staker.yml 

@@ -1,0 +1,5 @@
+$id: hoodie-non-staker.yml
+allOf:
+  - $ref: ../default.yml
+  - $ref: ../networks/hoodie.yml
+  - $ref: ../features/non-staker.yml

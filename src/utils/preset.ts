@@ -70,7 +70,7 @@ export class PresetManager {
       if (error instanceof Error) {
         this.logger.error(error.message);
       }
-      return ["default-preset"]; // Return at least the default preset
+      return ["default"]; // Return at least the default preset
     }
   }
 
@@ -162,16 +162,17 @@ export class PresetManager {
     }
 
     const presetsDir = this.getPresetsDir();
-    const presetPath = path.join(presetsDir, `${presetName}-preset.yml`);
+    // Allow presetName to include subdirectories, e.g., 'combined/ephemery-staker'
+    const presetPath = path.join(presetsDir, `${presetName}.yml`);
 
     try {
       if (!await fs.pathExists(presetPath)) {
-        throw new Error(`Preset not found: ${presetName}-preset.yml`);
+        throw new Error(`Preset not found: ${presetName}.yml`);
       }
 
       const fileContent = await fs.readFile(presetPath, 'utf-8');
       this.schema = yaml.load(fileContent);
-      this.logger.debug(`Loaded preset: ${presetName}`);
+      this.logger.debug(`Loaded preset: ${presetName} from ${presetPath}`);
       return this.schema;
     } catch (error) {
       if (error instanceof Error) {
@@ -438,8 +439,8 @@ export class PresetManager {
    */
   private async loadSchema(uri: string): Promise<any> {
     const presetsDir = this.getPresetsDir();
+    // Allow uri to include subdirectories, e.g., 'combined/ephemery-staker.yml'
     const schemaPath = path.join(presetsDir, uri);
-    
     try {
       if (!await fs.pathExists(schemaPath)) {
         throw new Error(`Schema not found: ${uri}`);

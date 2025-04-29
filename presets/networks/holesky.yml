@@ -1,0 +1,21 @@
+$id: holesky
+type: object
+required:
+  - commonConfig
+properties:
+  commonConfig:
+    type: object
+    required:
+      - network
+      - networkId
+    properties:
+      network:
+        type: string
+        const: holesky
+        errorMessage:
+          const: "Network must be set to 'holesky'"
+      networkId:
+        type: number
+        const: 17000
+        errorMessage:
+          const: "Network ID must be set to 17000" 

@@ -50,7 +50,7 @@ export const runNetworkPresetTests = (config: NetworkConfig) => {
 
   it('should validate a correct config', async () => {
     const testConfig = createNetworkConfig(config);
-    const presetName = config.network;
+    const presetName = `combined/${config.network}-non-staker`;
     const result = await presetManager.validateAndApplyRules(testConfig, presetName);
     expect(result.commonConfig?.network).to.equal(config.network);
     expect(result.commonConfig?.networkId).to.equal(config.networkId);
@@ -63,7 +63,7 @@ export const runNetworkPresetTests = (config: NetworkConfig) => {
     });
 
     try {
-      const presetName = config.network;
+      const presetName = `combined/${config.network}-non-staker`;
       await presetManager.validateAndApplyRules(testConfig, presetName);
       expect.fail('Should have thrown an error');
     } catch (error: unknown) {
@@ -82,7 +82,7 @@ export const runNetworkPresetTests = (config: NetworkConfig) => {
     });
 
     try {
-      const presetName = config.network;
+      const presetName = `combined/${config.network}-non-staker`;
       await presetManager.validateAndApplyRules(testConfig, presetName);
       expect.fail('Should have thrown an error');
     } catch (error: unknown) {
@@ -101,7 +101,7 @@ export const runNetworkPresetTests = (config: NetworkConfig) => {
     });
 
     try {
-      const presetName = config.network;
+      const presetName = `combined/${config.network}-non-staker`;
       await presetManager.validateAndApplyRules(testConfig, presetName);
       expect.fail('Should have thrown an error');
     } catch (error: unknown) {
@@ -121,7 +121,7 @@ export const runNetworkPresetTests = (config: NetworkConfig) => {
     });
 
     try {
-      const presetName = config.network;
+      const presetName = `combined/${config.network}-non-staker`;
       await presetManager.validateAndApplyRules(testConfig, presetName);
       expect.fail('Should have thrown an error');
     } catch (error: unknown) {

@@ -1,0 +1,21 @@
+$id: hoodie
+type: object
+required:
+  - commonConfig
+properties:
+  commonConfig:
+    type: object
+    required:
+      - network
+      - networkId
+    properties:
+      network:
+        type: string
+        const: hoodie
+        errorMessage:
+          const: "Network must be set to 'hoodie'"
+      networkId:
+        type: number
+        const: 17001
+        errorMessage:
+          const: "Network ID must be set to 17001" 

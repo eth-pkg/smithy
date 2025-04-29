@@ -25,7 +25,7 @@ describe('Non-Staker Preset Tests', () => {
       }
     };
 
-    const result = await presetManager.validateAndApplyRules(config, 'non-staker');
+    const result = await presetManager.validateAndApplyRules(config, 'combined/mainnet-non-staker');
     expect(result.commonConfig?.features?.staking).to.be.false;
   });
 
@@ -44,7 +44,7 @@ describe('Non-Staker Preset Tests', () => {
     };
 
     try {
-      await presetManager.validateAndApplyRules(config, 'non-staker');
+      await presetManager.validateAndApplyRules(config, 'combined/mainnet-non-staker');
       expect.fail('Should have thrown an error');
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -74,7 +74,7 @@ describe('Non-Staker Preset Tests', () => {
     };
 
     try {
-      await presetManager.validateAndApplyRules(config, 'non-staker');
+      await presetManager.validateAndApplyRules(config, 'combined/mainnet-non-staker');
       expect.fail('Should have thrown an error');
     } catch (error: unknown) {
       if (error instanceof Error) {
