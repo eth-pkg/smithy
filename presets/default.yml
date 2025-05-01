@@ -12,6 +12,7 @@ properties:
         type: number
         minimum: 1
         default: 1
+        description: "The Ethereum network ID (1 for mainnet, 11155111 for sepolia, etc.)"
         errorMessage:
           minimum: "Network ID must be a positive number"
       clients:
@@ -28,6 +29,7 @@ properties:
               - nimbus-eth2
               - prysm
               - teku
+            description: "The consensus client implementation to use"
             errorMessage:
               enum: "Consensus client must be one of: lighthouse, prysm, teku"
             default: ""
@@ -39,6 +41,7 @@ properties:
               - geth
               - nethermind
               - reth
+            description: "The execution client implementation to use"
             errorMessage:
               enum: "Execution client must be one of: geth, nethermind, besu"
             default: ""
@@ -51,12 +54,14 @@ properties:
               - prysm
               - teku
               - ""
+            description: "The validator client implementation to use (required when staking is enabled)"
             errorMessage:
               enum: "Validator client must be one of: lighthouse, prysm, teku, or empty string"
             default: ""
       dataDir:
         type: string
         default: "$HOME/ethereum/mainnet"
+        description: "Base directory for storing Ethereum client data"
       engine:
         type: object
         properties:
@@ -65,6 +70,7 @@ properties:
             minimum: 1024
             maximum: 65535
             default: 8551
+            description: "Port number for the Engine API"
             errorMessage:
               minimum: "Engine API port must be >= 1024"
               maximum: "Engine API port must be <= 65535"
@@ -73,32 +79,38 @@ properties:
             enum:
               - jwt
             default: "jwt"
+            description: "Authentication method for Engine API communication"
             errorMessage:
               enum: "Engine communication method must be 'jwt'"
           endpointUrl:
             type: string
             pattern: "^https?://[a-zA-Z0-9.-]+(:[0-9]+)?$"
             default: "http://localhost:8551"
+            description: "URL for the Engine API endpoint"
             errorMessage:
               pattern: "Engine endpoint URL must be a valid http or https URL"
           host:
             type: string
             default: "localhost"
+            description: "Hostname for the Engine API"
           ip:
             type: string
             pattern: "^\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}$"
             default: "127.0.0.1"
+            description: "IP address for the Engine API"
             errorMessage:
               pattern: "Must be a valid IPv4 address"
           jwtFile:
             type: string
             default: "$HOME/ethereum/mainnet/jwt.hex"
+            description: "Path to the JWT secret file for Engine API authentication"
           scheme:
             type: string
             enum:
               - http
               - https
             default: "http"
+            description: "Protocol scheme for Engine API communication"
             errorMessage:
               enum: "Engine scheme must be either 'http' or 'https'"
       features:
@@ -107,12 +119,15 @@ properties:
           mevBoost:
             type: boolean
             default: false
+            description: "Enable MEV-Boost for block building"
           monitoring:
             type: boolean
             default: true
+            description: "Enable monitoring and metrics collection"
           staking:
             type: boolean
             default: false
+            description: "Enable validator staking functionality"
       network:
         type: string
         enum:
@@ -123,6 +138,7 @@ properties:
           - ephemery
           - custom
         default: "mainnet"
+        description: "Ethereum network to connect to"
         errorMessage:
           enum: "Network must be one of: mainnet, goerli, sepolia, holesky, hoodie, ephemery, custom"
       operatingSystem:
@@ -132,6 +148,7 @@ properties:
           - darwin
           - windows
         default: "linux"
+        description: "Target operating system for client configuration"
         errorMessage:
           enum: "Operating system must be one of: linux, darwin, windows"
       syncMode:
@@ -141,6 +158,7 @@ properties:
           - full
           - light
         default: "snap"
+        description: "Blockchain synchronization mode (snap for fast sync, full for complete sync, light for light client)"
         errorMessage:
           enum: "Sync mode must be one of: snap, full, light"
   consensusConfig:
@@ -151,6 +169,7 @@ properties:
         minimum: 1024
         maximum: 65535
         default: 5052
+        description: "Port number for HTTP API of the consensus client"
         errorMessage:
           minimum: "HTTP port must be >= 1024"
           maximum: "HTTP port must be <= 65535"
@@ -159,6 +178,7 @@ properties:
         minimum: 1024
         maximum: 65535
         default: 8008
+        description: "Port number for metrics server of the consensus client"
         errorMessage:
           minimum: "Metrics port must be >= 1024"
           maximum: "Metrics port must be <= 65535"
@@ -167,113 +187,197 @@ properties:
         minimum: 1024
         maximum: 65535
         default: 9000
+        description: "Port number for P2P networking of the consensus client"
         errorMessage:
           minimum: "P2P port must be >= 1024"
           maximum: "P2P port must be <= 65535"
+      checkpointSyncUrl:
+        type: string
+        default: ""
+        description: "URL of a trusted beacon node for checkpoint sync"
+      checkpointBlock:
+        type: string
+        default: ""
+        description: "Block root hash to use for checkpoint sync"
+      checkpointState:
+        type: string
+        default: ""
+        description: "State root hash to use for checkpoint sync"
+      graffiti:
+        type: string
+        default: ""
+        description: "Custom graffiti message to include in proposed blocks"
+      logFile:
+        type: string
+        default: ""
+        description: "Path to store consensus client logs"
+      logFormat:
+        type: string
+        enum:
+          - auto
+          - json
+          - plain
+        default: "auto"
+        description: "Format for log output (auto, json, or plain text)"
+      metricsAddress:
+        type: string
+        default: "127.0.0.1"
+        description: "IP address to bind the metrics server to"
+      monitoringEndpoint:
+        type: string
+        default: ""
+        description: "URL for sending monitoring data to external service"
+      bootnodes:
+        type: array
+        items:
+          type: string
+        default: []
+        description: "List of bootnode enode URLs for initial peer discovery"
+      enrAddress:
+        type: string
+        default: ""
+        description: "ENR (Ethereum Node Record) address to advertise"
+      port6:
+        type: number
+        minimum: 1024
+        maximum: 65535
+        default: 0
+        description: "IPv6 P2P port number (0 to disable IPv6)"
+      discoveryPort:
+        type: number
+        minimum: 1024
+        maximum: 65535
+        default: 0
+        description: "UDP port for peer discovery (0 to use same as P2P port)"
+      testnetDir:
+        type: string
+        default: ""
+        description: "Path to testnet configuration directory"
+      validatorMonitorFile:
+        type: string
+        default: ""
+        description: "Path to file for validator monitoring data"
+      builder:
+        type: boolean
+        default: false
+        description: "Enable block builder API for MEV"
   validatorConfig:
     type: object
     properties:
       dataDir:
         type: string
         default: "$HOME/ethereum/validator"
+        description: "Base directory for validator data"
       beaconRpcProvider:
         type: string
         pattern: "^[a-zA-Z0-9.-]+(:[0-9]+)?$"
         default: "localhost:5052"
+        description: "Beacon node RPC endpoint (host:port)"
         errorMessage:
           pattern: "Beacon RPC provider must be a valid host:port"
       numValidators:
         type: number
         minimum: 1
         default: 1
+        description: "Number of validators to run"
         errorMessage:
           minimum: "Number of validators must be at least 1"
       feeRecipientAddress:
         type: string
         pattern: "^0x[a-fA-F0-9]{40}$"
         default: "0x0000000000000000000000000000000000000000"
+        description: "Ethereum address to receive transaction fees"
         errorMessage:
           pattern: "Fee recipient address must be a valid Ethereum address"
       metricsPort:
         type: string
         pattern: "^[0-9]+$"
         default: "8009"
+        description: "Port number for validator metrics server"
         errorMessage:
           pattern: "Metrics port must be a valid port number"
       graffiti:
         type: string
         default: ""
+        description: "Custom graffiti message to include in proposed blocks"
       graffitiFile:
         type: string
         default: ""
+        description: "Path to file containing graffiti messages"
       proposerConfigFile:
         type: string
         default: ""
+        description: "Path to proposer configuration file"
       suggestedGasLimit:
         type: number
-        default: 30000000  # Common default for block gas limit
+        default: 30000000
+        description: "Suggested gas limit for proposed blocks"
       doppelgangerProtection:
         type: boolean
         default: true
+        description: "Enable protection against duplicate validator instances"
       builderEnabled:
         type: boolean
         default: false
+        description: "Enable block builder API"
       externalSignerUrl:
         type: string
         default: ""
+        description: "URL for external signer service"
       externalSignerKeystore:
         type: string
         default: ""
+        description: "Path to external signer keystore"
       externalSignerKeystorePasswordFile:
         type: string
         default: ""
+        description: "Path to file containing external signer keystore password"
       externalSignerPublicKeys:
         type: array
         items:
           type: string
         default: []
+        description: "List of public keys for external signer"
       externalSignerTimeout:
         type: number
-        default: 5000  # milliseconds, common default
+        default: 5000
+        description: "Timeout in milliseconds for external signer requests"
       externalSignerTruststore:
         type: string
         default: ""
+        description: "Path to external signer truststore"
       externalSignerTruststorePasswordFile:
         type: string
         default: ""
+        description: "Path to file containing external signer truststore password"
       proposerBlindedBlocksEnabled:
         type: boolean
         default: false
+        description: "Enable blinded block proposals"
       proposerConfigRefreshEnabled:
         type: boolean
         default: false
+        description: "Enable automatic refresh of proposer configuration"
       metricsEnabled:
         type: boolean
         default: true
-      metricsAddress:
-        type: string
-        default: "127.0.0.1"
-      logFile:
-        type: string
-        default: ""
-      logLevel:
-        type: string
-        default: "info"
-      logFormat:
-        type: string
-        default: "auto"
+        description: "Enable validator metrics collection"
       validatorsDir:
         type: string
         default: "$HOME/ethereum/validator/keys"
+        description: "Directory containing validator keys"
       secretsDir:
         type: string
         default: "$HOME/ethereum/validator/secrets"
+        description: "Directory containing validator secrets"
       configFile:
         type: string
         default: ""
+        description: "Path to validator configuration file"
       distributed:
         type: boolean
         default: false
+        description: "Enable distributed validator mode"
   executionConfig:
     type: object
     properties:
@@ -284,21 +388,25 @@ properties:
             type: array
             minItems: 1
             default: ["eth", "net", "web3"]
+            description: "List of JSON-RPC API namespaces to enable"
             items:
               type: string
           cors:
             type: array
             default: ["*"]
+            description: "List of allowed CORS origins for HTTP API"
             items:
               type: string
           enabled:
             type: boolean
             default: true
+            description: "Enable HTTP JSON-RPC API"
           port:
             type: number
             minimum: 1024
             maximum: 65535
             default: 8545
+            description: "Port number for HTTP JSON-RPC API"
             errorMessage:
               minimum: "HTTP port must be >= 1024"
               maximum: "HTTP port must be <= 65535"
@@ -308,11 +416,13 @@ properties:
           enabled:
             type: boolean
             default: true
+            description: "Enable metrics collection and reporting"
           port:
             type: number
             minimum: 1024
             maximum: 65535
             default: 6060
+            description: "Port number for metrics server"
             errorMessage:
               minimum: "Metrics port must be >= 1024"
               maximum: "Metrics port must be <= 65535"
@@ -324,6 +434,7 @@ properties:
             minimum: 1
             maximum: 1000
             default: 50
+            description: "Maximum number of P2P peers to connect to"
             errorMessage:
               minimum: "Max peers must be at least 1"
               maximum: "Max peers should not exceed 1000"
@@ -332,6 +443,7 @@ properties:
             minimum: 1024
             maximum: 65535
             default: 30303
+            description: "Port number for P2P networking"
             errorMessage:
               minimum: "P2P port must be >= 1024"
               maximum: "P2P port must be <= 65535"
@@ -341,11 +453,13 @@ properties:
           enabled:
             type: boolean
             default: false
+            description: "Enable WebSocket JSON-RPC API"
           port:
             type: number
             minimum: 1024
             maximum: 65535
             default: 8546
+            description: "Port number for WebSocket JSON-RPC API"
             errorMessage:
               minimum: "WebSocket port must be >= 1024"
               maximum: "WebSocket port must be <= 65535"
