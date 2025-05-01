@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { describe, it, beforeEach } from 'mocha';
 import { PresetManager } from '@/utils/preset';
-import { EthereumConfig } from '@/clients/types';
+import { NodeConfig } from '@/lib/types';
 import { baseConfig } from './network-preset.test-helper';
 
 describe('Non-Staker Preset Tests', () => {
@@ -12,7 +12,7 @@ describe('Non-Staker Preset Tests', () => {
   });
 
   it('should validate a correct non-staker config', async () => {
-    const config: Partial<EthereumConfig> = {
+    const config: Partial<NodeConfig> = {
       commonConfig: {
         ...baseConfig,
         features: {
@@ -30,7 +30,7 @@ describe('Non-Staker Preset Tests', () => {
   });
 
   it('should reject non-staker preset with staking set to true', async () => {
-    const config: Partial<EthereumConfig> = {
+    const config: Partial<NodeConfig> = {
       commonConfig: {
         ...baseConfig,
         features: {
@@ -56,7 +56,7 @@ describe('Non-Staker Preset Tests', () => {
   });
 
   it('should reject non-staker preset with empty validator client', async () => {
-    const config: Partial<EthereumConfig> = {
+    const config: Partial<NodeConfig> = {
       commonConfig: {
         ...baseConfig,
         features: {

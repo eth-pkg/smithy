@@ -1,7 +1,7 @@
 import * as fs from "fs-extra";
 import * as path from "path";
 import * as yaml from "js-yaml";
-import { EthereumConfig } from "@/clients/types";
+import { NodeConfig } from "@/lib/types";
 import { Logger } from "./logger";
 import { PresetManager } from "./preset";
 
@@ -20,7 +20,7 @@ export class ConfigManager {
   /**
    * Load a user configuration file
    */
-  async loadConfigFile(configPath: string): Promise<Partial<EthereumConfig>> {
+  async loadConfigFile(configPath: string): Promise<Partial<NodeConfig>> {
     this.logger.debug(`Loading config from: ${configPath}`);
 
     try {
@@ -29,12 +29,12 @@ export class ConfigManager {
       }
 
       const fileContent = await fs.readFile(configPath, "utf-8");
-      let config: Partial<EthereumConfig> = {};
+      let config: Partial<NodeConfig> = {};
 
       if (configPath.endsWith('.json')) {
         config = JSON.parse(fileContent);
       } else if (configPath.endsWith('.yml') || configPath.endsWith('.yaml')) {
-        config = yaml.load(fileContent) as Partial<EthereumConfig>;
+        config = yaml.load(fileContent) as Partial<NodeConfig>;
       } else {
         throw new Error(`Unsupported config file format: ${path.extname(configPath)}`);
       }
@@ -52,7 +52,7 @@ export class ConfigManager {
    * Check if a config has all required values
    * Returns a list of missing fields that should be prompted for
    */
-  getMissingRequiredFields(config: Partial<EthereumConfig>): string[] {
+  getMissingRequiredFields(config: Partial<NodeConfig>): string[] {
     const missingFields: string[] = [];
 
     // Check for required client selections
@@ -73,9 +73,9 @@ export class ConfigManager {
    * Merge command-line options with loaded config
    */
   mergeOptionsWithConfig(
-    config: Partial<EthereumConfig>,
+    config: Partial<NodeConfig>,
     options: Record<string, any>
-  ): Partial<EthereumConfig> {
+  ): Partial<NodeConfig> {
     // Clone the config to avoid modifying the original
     const mergedConfig = JSON.parse(JSON.stringify(config)) as any;
 
@@ -118,7 +118,7 @@ export class ConfigManager {
       mergedConfig.commonConfig.features.mevBoost = options.mevBoost === true;
     }
 
-    return mergedConfig as Partial<EthereumConfig>;
+    return mergedConfig as Partial<NodeConfig>;
   }
 
   /**
@@ -126,9 +126,9 @@ export class ConfigManager {
    * Validates and applies preset rules to ensure the configuration is valid
    */
   async processConfigWithPreset(
-    userConfig: Partial<EthereumConfig>,
+    userConfig: Partial<NodeConfig>,
     presetName: string
-  ): Promise<EthereumConfig> {
+  ): Promise<NodeConfig> {
     try {
 
       // Validate the user config against the preset rules
@@ -148,7 +148,7 @@ export class ConfigManager {
   /**
    * Save a configuration to a file
    */
-  async saveConfig(config: EthereumConfig, filePath: string): Promise<void> {
+  async saveConfig(config: NodeConfig, filePath: string): Promise<void> {
     try {
       const dirPath = path.dirname(filePath);
       await fs.ensureDir(dirPath);

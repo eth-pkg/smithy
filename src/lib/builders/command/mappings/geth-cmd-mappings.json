@@ -1,0 +1,724 @@
+{
+  "name": "geth",
+  "version": "1.15.9",
+  "rules": [
+    {
+      "configPath": "commonConfig.networkId",
+      "flag": "--networkid"
+    },
+    {
+      "configPath": "commonConfig.dataDir",
+      "flag": "--datadir",
+      "transform": "formatPath"
+    },
+    {
+      "configPath": "commonConfig.http.enabled",
+      "flag": "--http"
+    },
+    {
+      "configPath": "commonConfig.http.addr",
+      "flag": "--http.addr"
+    },
+    {
+      "configPath": "commonConfig.http.port",
+      "flag": "--http.port"
+    },
+    {
+      "configPath": "commonConfig.http.api",
+      "flag": "--http.api",
+      "transform": "joinComma"
+    },
+    {
+      "configPath": "commonConfig.http.corsDomain",
+      "flag": "--http.corsdomain",
+      "transform": "joinComma"
+    },
+    {
+      "configPath": "commonConfig.ws.enabled",
+      "flag": "--ws"
+    },
+    {
+      "configPath": "commonConfig.ws.addr",
+      "flag": "--ws.addr"
+    },
+    {
+      "configPath": "commonConfig.ws.port",
+      "flag": "--ws.port"
+    },
+    {
+      "configPath": "commonConfig.ws.api",
+      "flag": "--ws.api",
+      "transform": "joinComma"
+    },
+    {
+      "configPath": "commonConfig.ws.origins",
+      "flag": "--ws.origins",
+      "transform": "joinComma"
+    },
+    {
+      "configPath": "commonConfig.authrpc.enabled",
+      "flag": "--authrpc.addr"
+    },
+    {
+      "configPath": "commonConfig.authrpc.addr",
+      "flag": "--authrpc.addr"
+    },
+    {
+      "configPath": "commonConfig.authrpc.port",
+      "flag": "--authrpc.port"
+    },
+    {
+      "configPath": "commonConfig.authrpc.jwtSecret",
+      "flag": "--authrpc.jwtsecret",
+      "transform": "formatPath"
+    },
+    {
+      "configPath": "commonConfig.metrics.enabled",
+      "flag": "--metrics"
+    },
+    {
+      "configPath": "commonConfig.metrics.addr",
+      "flag": "--metrics.addr"
+    },
+    {
+      "configPath": "commonConfig.metrics.port",
+      "flag": "--metrics.port"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--keystore"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--lightkdf"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--password"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--pcscdpath"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--signer"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--usb"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--allow-insecure-unlock"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--cache.trie.journal"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--cache.trie.rejournal"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--light.egress"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--light.ingress"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--light.maxpeers"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--light.nopruning"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--light.nosyncserve"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--light.serve"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--log.backtrace"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--log.debug"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--metrics.expensive"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--mine"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--miner.etherbase"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--miner.newpayload-timeout"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--nousb"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--rpc.enabledeprecatedpersonal"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--txlookuplimit"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--unlock"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--v5disc"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--whitelist"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--exec"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--graphql"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--graphql.corsdomain"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--graphql.vhosts"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--header"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--http.rpcprefix"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--ipcdisable"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--ipcpath"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--jspath"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--preload"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--rpc.allow-unprotected-txs"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--rpc.batch-request-limit"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--rpc.batch-response-max-size"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--rpc.evmtimeout"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--rpc.gascap"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--rpc.txfeecap"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--ws.rpcprefix"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--beacon.api"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--beacon.api.header"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--beacon.checkpoint"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--beacon.checkpoint.file"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--beacon.config"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--beacon.genesis.gvroot"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--beacon.genesis.time"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--beacon.nofilter"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--beacon.threshold"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--dev"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--dev.gaslimit"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--dev.period"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--config"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--datadir.ancient"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--datadir.minfreedisk"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--db.engine"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--eth.requiredblocks"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--exitwhensynced"
+    },
+    {
+      "configPath": "commonConfig.network",
+      "flag": "--mainnet",
+      "transform": "network",
+      "value": "mainnet"
+    },
+    {
+      "configPath": "commonConfig.network",
+      "flag": "--sepolia",
+      "transform": "network",
+      "value": "sepolia"
+    },
+    {
+      "configPath": "commonConfig.network",
+      "flag": "--holesky",
+      "transform": "network",
+      "value": "holesky"
+    },
+    {
+      "configPath": "commonConfig.network",
+      "flag": "--hoodi",
+      "transform": "network",
+      "value": "hoodie"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--override.prague"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--override.verkle"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--snapshot"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--gpo.blocks"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--gpo.ignoreprice"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--gpo.maxprice"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--gpo.percentile"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--go-execution-trace"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--log.compress"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--log.file"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--log.format"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--log.maxage"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--log.maxbackups"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--log.maxsize"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--log.rotate"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--log.vmodule"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--pprof"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--pprof.addr"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--pprof.blockprofilerate"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--pprof.cpuprofile"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--pprof.memprofilerate"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--pprof.port"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--remotedb"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--verbosity"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--ethstats"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--metrics.influxdb"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--metrics.influxdb.bucket"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--metrics.influxdb.database"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--metrics.influxdb.endpoint"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--metrics.influxdb.organization"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--metrics.influxdb.password"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--metrics.influxdb.tags"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--metrics.influxdb.token"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--metrics.influxdb.username"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--metrics.influxdbv2"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--miner.extradata"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--miner.gaslimit"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--miner.gasprice"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--miner.pending.feeRecipient"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--miner.recommit"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--synctarget"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--bootnodes"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--discovery.dns"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--discovery.port"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--discovery.v4"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--discovery.v5"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--identity"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--maxpeers"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--maxpendpeers"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--nat"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--netrestrict"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--nodekey"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--nodekeyhex"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--nodiscover"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--port"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--cache"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--cache.blocklogs"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--cache.database"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--cache.gc"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--cache.noprefetch"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--cache.preimages"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--cache.snapshot"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--cache.trie"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--crypto.kzg"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--fdlimit"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--gcmode"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--history.chain"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--history.logs"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--history.logs.disable"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--history.logs.export"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--history.state"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--history.transactions"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--state.scheme"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--syncmode"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--blobpool.datacap"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--blobpool.datadir"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--blobpool.pricebump"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--txpool.accountqueue"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--txpool.accountslots"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--txpool.globalqueue"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--txpool.globalslots"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--txpool.journal"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--txpool.lifetime"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--txpool.locals"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--txpool.nolocals"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--txpool.pricebump"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--txpool.pricelimit"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--txpool.rejournal"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--vmdebug"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--vmtrace"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--vmtrace.jsonconfig"
+    }
+  ]
+} 

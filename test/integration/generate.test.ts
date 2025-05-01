@@ -33,14 +33,14 @@ describe('Config Generation', () => {
 
     // Check if all expected files were generated
     const files = await fs.readdir(testOutputDir);
-    expect(files).to.include('geth.toml');
-    expect(files).to.include('lighthouse.toml');
-    expect(files).to.include('lighthouse-validator.toml');
+    expect(files).to.include('geth.sh');
+    expect(files).to.include('lighthouse.sh');
+    expect(files).to.include('lighthouse-validator.sh');
 
     // Check if files have content
-    const gethConfig = await fs.readFile(path.join(testOutputDir, 'geth.toml'), 'utf-8');
-    const lighthouseConfig = await fs.readFile(path.join(testOutputDir, 'lighthouse.toml'), 'utf-8');
-    const validatorConfig = await fs.readFile(path.join(testOutputDir, 'lighthouse-validator.toml'), 'utf-8');
+    const gethConfig = await fs.readFile(path.join(testOutputDir, 'geth.sh'), 'utf-8');
+    const lighthouseConfig = await fs.readFile(path.join(testOutputDir, 'lighthouse.sh'), 'utf-8');
+    const validatorConfig = await fs.readFile(path.join(testOutputDir, 'lighthouse-validator.sh'), 'utf-8');
 
     expect(gethConfig).to.not.be.empty;
     expect(lighthouseConfig).to.not.be.empty;
@@ -94,9 +94,9 @@ describe('Config Generation', () => {
     await generate(options);
 
     const files = await fs.readdir(testOutputDir);
-    expect(files).to.include('geth.toml');
-    expect(files).to.include('lighthouse.toml');
-    expect(files).to.not.include('lighthouse-validator.toml');
+    expect(files).to.include('geth.sh');
+    expect(files).to.include('lighthouse.sh');
+    expect(files).to.not.include('lighthouse-validator.sh');
   });
 
   it('should prompt for validator when staking is not set', async function() {
@@ -145,8 +145,8 @@ describe('Config Generation', () => {
     await generate(options);
 
     const files = await fs.readdir(testOutputDir);
-    expect(files).to.include('geth.toml');
-    expect(files).to.include('lighthouse.toml');
-    expect(files).to.include('lighthouse-validator.toml');
+    expect(files).to.include('geth.sh');
+    expect(files).to.include('lighthouse.sh');
+    expect(files).to.include('lighthouse-validator.sh');
   });
 }); 

@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import { PresetManager } from '../../../src/utils/preset';
-import { EthereumConfig } from '../../../src/clients/types';
+import { PresetManager } from '@/utils/preset';
 import { baseConfig } from './network-preset.test-helper';
+import { ExecutionClientName, ConsensusClientName, NodeConfig } from '@/lib/types';
 
 describe('PresetManager', () => {
   let presetManager: PresetManager;
@@ -12,7 +12,7 @@ describe('PresetManager', () => {
 
   describe('validateAndApplyRules', () => {
     it('should validate a correct config', async () => {
-      const config: Partial<EthereumConfig> = {
+      const config: Partial<NodeConfig> = {
         commonConfig: {
           ...baseConfig,
           network: 'mainnet',
@@ -27,13 +27,15 @@ describe('PresetManager', () => {
     });
 
     it('should reject invalid client types', async () => {
-      const config: Partial<EthereumConfig> = {
+      const config: Partial<NodeConfig> = {
         commonConfig: {
           ...baseConfig,
           clients: {
             ...baseConfig.clients,
-            execution: 'invalid',
-            consensus: 'invalid',
+            // @ts-nocheck
+            execution: 'invalid' as ExecutionClientName,
+            // @ts-nocheck
+            consensus: 'invalid' as ConsensusClientName,
             validator: ''
           },
           network: 'mainnet',
@@ -56,7 +58,7 @@ describe('PresetManager', () => {
     });
 
     it('should apply defaults from schema', async () => {
-      const config: Partial<EthereumConfig> = {
+      const config: Partial<NodeConfig> = {
         commonConfig: {
           ...baseConfig,
           network: 'mainnet',
@@ -72,7 +74,7 @@ describe('PresetManager', () => {
     });
 
     it('should reject config with empty client values', async () => {
-      const config: Partial<EthereumConfig> = {
+      const config: Partial<NodeConfig> = {
         commonConfig: {
           ...baseConfig,
           clients: {
@@ -103,7 +105,7 @@ describe('PresetManager', () => {
 
   describe('validateConfig', () => {
     it('should validate a complete config', async () => {
-      const config: Partial<EthereumConfig> = {
+      const config: Partial<NodeConfig> = {
         commonConfig: {
           ...baseConfig,
           network: 'mainnet',
@@ -118,7 +120,7 @@ describe('PresetManager', () => {
     });
 
     it('should detect missing required fields', async () => {
-      const config: Partial<EthereumConfig> = {
+      const config: Partial<NodeConfig> = {
         commonConfig: {
           ...baseConfig,
           clients: {

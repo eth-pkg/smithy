@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { describe, it, beforeEach } from 'mocha';
 import { PresetManager } from '@/utils/preset';
-import { EthereumConfig } from '@/clients/types';
+import { NodeConfig } from '@/lib/types';
 import { baseConfig } from './network-preset.test-helper';
 
 describe('Default Preset Tests', () => {
@@ -12,7 +12,7 @@ describe('Default Preset Tests', () => {
   });
 
   it('should validate a correct default config', async () => {
-    const config: Partial<EthereumConfig> = {
+    const config: Partial<NodeConfig> = {
       commonConfig: {
         ...baseConfig,
         network: 'mainnet',
@@ -27,7 +27,7 @@ describe('Default Preset Tests', () => {
   });
 
   it('should reject config with invalid network', async () => {
-    const config: Partial<EthereumConfig> = {
+    const config: Partial<NodeConfig> = {
       commonConfig: {
         ...baseConfig,
         network: 'invalid',

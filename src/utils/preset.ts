@@ -3,7 +3,7 @@ import * as path from "path";
 import * as yaml from "js-yaml";
 import Ajv from "ajv";
 import ajvErrors from "ajv-errors";
-import { EthereumConfig } from "@/clients/types";
+import { ConsensusClientName, NodeConfig, ValidatorClientName, ExecutionClientName } from "@/lib/types";
 import { Logger } from "./logger";
 
 interface SchemaProperty {
@@ -120,7 +120,7 @@ export class PresetManager {
   /**
    * Load a default configuration file
    */
-  async loadDefaultConfig(configName: string = "default"): Promise<EthereumConfig> {
+  async loadDefaultConfig(configName: string = "default"): Promise<NodeConfig> {
     const configsDir = this.getConfigsDir();
     const yamlFile = path.join(configsDir, `${configName}.yaml`);
     const ymlFile = path.join(configsDir, `${configName}.yml`);
@@ -139,7 +139,7 @@ export class PresetManager {
 
     try {
       const fileContent = await fs.readFile(configFile, "utf-8");
-      const config = yaml.load(fileContent) as EthereumConfig;
+      const config = yaml.load(fileContent) as NodeConfig;
 
       return config;
     } catch (error) {
@@ -185,7 +185,7 @@ export class PresetManager {
   /**
    * Validate a configuration against the preset schema
    */
-  async validateConfig(config: Partial<EthereumConfig>, presetName: string): Promise<{ valid: boolean; errors: any[] }> {
+  async validateConfig(config: Partial<NodeConfig>, presetName: string): Promise<{ valid: boolean; errors: any[] }> {
     try {
       const preset = await this.loadPreset(presetName);
       
@@ -274,9 +274,9 @@ export class PresetManager {
    * Validate and apply preset rules to a configuration
    */
   async validateAndApplyRules(
-    config: Partial<EthereumConfig>, 
+    config: Partial<NodeConfig>, 
     presetName: string = "default"
-  ): Promise<EthereumConfig> {
+  ): Promise<NodeConfig> {
     try {
       // Load the preset schema
       const preset = await this.loadPreset(presetName);
@@ -301,7 +301,7 @@ export class PresetManager {
       const validate = await ajv.compileAsync(validationSchema);
 
       // Create an empty config object that will be populated with defaults
-      const configWithDefaults: Partial<EthereumConfig> = this.extractDefaults(validationSchema);
+      const configWithDefaults: Partial<NodeConfig> = this.extractDefaults(validationSchema);
       
       // Now merge in the user's config to override any defaults
       this.deepMerge(configWithDefaults, config);
@@ -315,7 +315,7 @@ export class PresetManager {
         throw new Error(formattedErrors);
       }
       
-      return configWithDefaults as EthereumConfig;
+      return configWithDefaults as NodeConfig;
     } catch (error) {
       // Don't wrap the error message if it's already a validation error
       if (error instanceof Error && 
@@ -335,8 +335,8 @@ export class PresetManager {
    * Apply user configuration overrides to the base config
    */
   private applyUserConfig(
-    baseConfig: EthereumConfig,
-    userConfig: Partial<EthereumConfig>
+    baseConfig: NodeConfig,
+    userConfig: Partial<NodeConfig>
   ): void {
     // Apply user overrides in a deep-merge fashion
     this.deepMerge(baseConfig, userConfig);
@@ -366,13 +366,13 @@ export class PresetManager {
    * Update a configuration with selected clients
    */
   updateConfigWithClients(
-    config: EthereumConfig,
-    execution: string,
-    consensus: string,
-    validator?: string,
-  ): EthereumConfig {
+    config: NodeConfig,
+    execution: ExecutionClientName,
+    consensus: ConsensusClientName,
+    validator?: ValidatorClientName,
+  ): NodeConfig {
     // Clone the config to avoid modifying the original
-    const updatedConfig = JSON.parse(JSON.stringify(config)) as EthereumConfig;
+    const updatedConfig = JSON.parse(JSON.stringify(config)) as NodeConfig;
 
     // Update client selections
     updatedConfig.commonConfig.clients.execution = execution;

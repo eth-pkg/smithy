@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { PresetManager } from '@/utils/preset';
-import { EthereumConfig, CommonConfig } from '@/clients/types';
+import { NodeConfig, CommonConfig, ExecutionClientName, ConsensusClientName, ValidatorClientName } from '@/lib/types';
 
 interface NetworkConfig {
   network: string;
@@ -8,11 +8,11 @@ interface NetworkConfig {
   dataDir: string;
 }
 
-export const baseConfig = {
+export const baseConfig: CommonConfig = {
   clients: {
-    execution: 'geth',
-    consensus: 'lighthouse',
-    validator: 'lighthouse'
+    execution: 'geth' as ExecutionClientName,
+    consensus: 'lighthouse' as ConsensusClientName,
+    validator: 'lighthouse' as ValidatorClientName
   },
   features: {
     mevBoost: false,
@@ -29,7 +29,10 @@ export const baseConfig = {
     scheme: 'http'
   },
   operatingSystem: 'linux',
-  syncMode: 'snap'
+  syncMode: 'snap',
+  networkId: 1,
+  dataDir: '$HOME/ethereum/mainnet',
+  network: 'mainnet'
 };
 
 export const createNetworkConfig = (config: NetworkConfig): { commonConfig: CommonConfig } => ({
