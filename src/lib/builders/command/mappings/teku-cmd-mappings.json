@@ -1,6 +1,339 @@
 {
   "name": "teku",
-  "version": "23.1.1",
-  "commands": {},
-  "rules": []
+  "version": "25.4.1",
+  "rules": [
+    {
+      "configPath": "commonConfig.dataDir",
+      "flag": "--data-path"
+    },
+    {
+      "configPath": "commonConfig.network",
+      "flag": "--network"
+    },
+    {
+      "configPath": "consensusConfig.p2pPort",
+      "flag": "--p2p-port"
+    },
+    {
+      "configPath": "consensusConfig.httpPort",
+      "flag": "--rest-api-port"
+    },
+    {
+      "configPath": "consensusConfig.metricsPort",
+      "flag": "--metrics-port"
+    },
+    {
+      "configPath": "commonConfig.engine.host",
+      "flag": "--ee-endpoint"
+    },
+    {
+      "configPath": "commonConfig.jwtFile",
+      "flag": "--ee-jwt-secret-file",
+      "transform": "formatPath"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--p2p-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--p2p-discovery-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--p2p-discovery-bootnodes"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--p2p-static-peers"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--p2p-direct-peers"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--p2p-interface"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--p2p-advertised-ip"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--p2p-nat-method"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--p2p-peer-lower-bound"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--p2p-peer-upper-bound"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--p2p-private-key-file"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--rest-api-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--rest-api-interface"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--rest-api-host-allowlist"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--rest-api-cors-origins"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--rest-api-docs-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--metrics-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--metrics-interface"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--metrics-host-allowlist"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--metrics-categories"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--metrics-publish-endpoint"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--metrics-publish-interval"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validator-api-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validator-api-interface"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validator-api-port"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validator-api-host-allowlist"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validator-api-cors-origins"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validator-api-docs-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validator-api-bearer-file"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validator-keys"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validators-graffiti"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validators-proposer-default-fee-recipient"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validators-external-signer-url"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validators-external-signer-public-keys"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validators-external-signer-timeout"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validators-external-signer-slashing-protection-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validators-keystore-locking-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validators-early-attestations-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validators-builder-registration-default-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validators-builder-registration-default-gas-limit"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validators-proposer-blinded-blocks-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validators-proposer-config"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validators-proposer-config-refresh-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--doppelganger-detection-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--exit-when-no-validator-keys-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--shut-down-when-validator-slashed-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validator-is-local-slashing-protection-synchronized-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--data-storage-mode"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--data-storage-archive-frequency"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--data-storage-non-canonical-blocks-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--data-beacon-path"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--data-validator-path"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--reconstruct-historic-states"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--deposit-snapshot-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--eth1-endpoint"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--eth1-deposit-contract-max-request-size"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--eth1-deposit-contract-address"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--genesis-state"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--initial-state"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--ws-checkpoint"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--ignore-weak-subjectivity-period-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--checkpoint-sync-url"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--builder-endpoint"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--builder-bid-compare-factor"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--builder-set-user-agent-header"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--exchange-capabilities-monitoring-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--beacon-liveness-tracking-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--logging"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--log-color-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--log-destination"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--log-file"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--log-file-name-pattern"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--log-include-events-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--log-include-validator-duties-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--metrics-block-production-performance-tracking-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--metrics-block-timing-tracking-enabled"
+    }
+  ]
 } 

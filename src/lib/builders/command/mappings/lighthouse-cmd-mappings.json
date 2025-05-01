@@ -1,7 +1,449 @@
 {
   "name": "lighthouse",
-  "version": "1.0.0",
-  "commands": {},
-  "rules": []
-
+  "version": "7.0.1",
+  "rules": [
+    {
+      "configPath": "commonConfig.dataDir",
+      "flag": "--datadir",
+      "transform": "formatPath"
+    },
+    {
+      "configPath": "commonConfig.network",
+      "flag": "--network"
+    },
+    {
+      "configPath": "commonConfig.engine.host",
+      "flag": "--execution-endpoint"
+    },
+    {
+      "configPath": "commonConfig.engine.jwtFile",
+      "flag": "--execution-jwt",
+      "transform": "formatPath"
+    },
+    {
+      "configPath": "commonConfig.engine.apiPort",
+      "flag": "--execution-endpoint",
+      "transform": "appendPort"
+    },
+    {
+      "configPath": "consensusConfig.httpPort",
+      "flag": "--http-port"
+    },
+    {
+      "configPath": "consensusConfig.metricsPort",
+      "flag": "--metrics-port"
+    },
+    {
+      "configPath": "consensusConfig.p2pPort",
+      "flag": "--port"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--auto-compact-db"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--beacon-node-backend"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--blob-prune-margin-epochs"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--blobs-dir"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--block-cache-size"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--boot-nodes"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--builder"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--builder-disable-ssz"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--builder-fallback-epochs-since-finalization"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--builder-fallback-skips"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--builder-fallback-skips-per-epoch"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--builder-header-timeout"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--builder-user-agent"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--checkpoint-blobs"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--checkpoint-block"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--checkpoint-state"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--checkpoint-sync-url"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--checkpoint-sync-url-timeout"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--debug-level"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--discovery-port"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--discovery-port6"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--enr-address"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--enr-quic-port"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--enr-quic6-port"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--enr-tcp-port"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--enr-tcp6-port"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--enr-udp-port"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--enr-udp6-port"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--epochs-per-blob-prune"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--epochs-per-migration"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--eth1-blocks-per-log-query"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--eth1-cache-follow-distance"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--execution-jwt-id"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--execution-jwt-secret-key"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--execution-jwt-version"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--execution-timeout-multiplier"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--fork-choice-before-proposal-timeout"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--freezer-dir"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--genesis-state-url"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--genesis-state-url-timeout"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--graffiti"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--hdiff-buffer-cache-size"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--hierarchy-exponents"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--historic-state-cache-size"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--http-address"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--http-allow-origin"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--http-duplicate-block-status"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--http-enable-beacon-processor"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--http-sse-capacity-multiplier"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--http-tls-cert"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--http-tls-key"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--inbound-rate-limiter-protocols"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--invalid-gossip-verified-blocks-path"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--libp2p-addresses"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--listen-address"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--log-format"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--logfile"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--logfile-debug-level"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--logfile-format"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--logfile-max-number"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--logfile-max-size"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--max-skip-slots"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--metrics-address"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--metrics-allow-origin"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--monitoring-endpoint"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--monitoring-endpoint-period"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--network-dir"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--port6"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--prepare-payload-lookahead"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--proposer-reorg-cutoff"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--proposer-reorg-disallowed-offsets"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--proposer-reorg-epochs-since-finalization"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--proposer-reorg-parent-threshold"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--proposer-reorg-threshold"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--prune-blobs"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--prune-payloads"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--quic-port"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--quic-port6"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--self-limiter-protocols"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--shuffling-cache-size"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--slasher-att-cache-size"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--slasher-backend"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--slasher-broadcast"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--slasher-chunk-size"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--slasher-dir"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--slasher-history-length"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--slasher-max-db-size"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--slasher-slot-offset"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--slasher-update-period"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--slasher-validator-chunk-size"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--slots-per-restore-point"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--state-cache-headroom"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--state-cache-size"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--suggested-fee-recipient"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--testnet-dir"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--target-peers"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--trusted-peers"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--trusted-setup-file-override"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validator-monitor-file"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validator-monitor-individual-tracking-threshold"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validator-monitor-pubkeys"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--wss-checkpoint"
+    }
+  ]
 } 

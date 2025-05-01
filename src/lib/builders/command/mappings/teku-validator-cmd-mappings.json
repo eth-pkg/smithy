@@ -1,6 +1,234 @@
 {
   "name": "teku",
-  "version": "23.1.1",
-  "commands": {},
-  "rules": []
+  "version": "25.4.1",
+  "rules": [
+    {
+      "configPath": "validatorConfig.dataDir",
+      "flag": "--data-validator-path"
+    },
+    {
+      "configPath": "validatorConfig.beaconRpcProvider",
+      "flag": "--beacon-node-api-endpoint"
+    },
+    {
+      "configPath": "validatorConfig.metricsPort",
+      "flag": "--metrics-port"
+    },
+    {
+      "configPath": "validatorConfig.feeRecipientAddress",
+      "flag": "--validators-proposer-default-fee-recipient"
+    },
+    {
+      "configPath": "validatorConfig.doppelgangerProtection",
+      "flag": "--doppelganger-detection-enabled"
+    },
+    {
+      "configPath": "validatorConfig.configFile",
+      "flag": "--config-file"
+    },
+    {
+      "configPath": "validatorConfig.logFile",
+      "flag": "--log-file"
+    },
+    {
+      "configPath": "validatorConfig.logLevel",
+      "flag": "--logging"
+    },
+    {
+      "configPath": "validatorConfig.metricsEnabled",
+      "flag": "--metrics-enabled"
+    },
+    {
+      "configPath": "validatorConfig.metricsAddress",
+      "flag": "--metrics-interface"
+    },
+    {
+      "configPath": "validatorConfig.builderEnabled",
+      "flag": "--validators-builder-registration-default-enabled"
+    },
+    {
+      "configPath": "validatorConfig.suggestedGasLimit",
+      "flag": "--validators-builder-registration-default-gas-limit"
+    },
+    {
+      "configPath": "validatorConfig.externalSignerKeystore",
+      "flag": "--validators-external-signer-keystore"
+    },
+    {
+      "configPath": "validatorConfig.externalSignerKeystorePasswordFile",
+      "flag": "--validators-external-signer-keystore-password-file"
+    },
+    {
+      "configPath": "validatorConfig.externalSignerPublicKeys",
+      "flag": "--validators-external-signer-public-keys"
+    },
+    {
+      "configPath": "validatorConfig.externalSignerTimeout",
+      "flag": "--validators-external-signer-timeout"
+    },
+    {
+      "configPath": "validatorConfig.externalSignerTruststore",
+      "flag": "--validators-external-signer-truststore"
+    },
+    {
+      "configPath": "validatorConfig.externalSignerTruststorePasswordFile",
+      "flag": "--validators-external-signer-truststore-password-file"
+    },
+    {
+      "configPath": "validatorConfig.externalSignerUrl",
+      "flag": "--validators-external-signer-url"
+    },
+    {
+      "configPath": "validatorConfig.graffiti",
+      "flag": "--validators-graffiti"
+    },
+    {
+      "configPath": "validatorConfig.graffitiFile",
+      "flag": "--validators-graffiti-file"
+    },
+    {
+      "configPath": "validatorConfig.proposerConfigFile",
+      "flag": "--validators-proposer-config"
+    },
+    {
+      "configPath": "validatorConfig.proposerBlindedBlocksEnabled",
+      "flag": "--validators-proposer-blinded-blocks-enabled"
+    },
+    {
+      "configPath": "validatorConfig.proposerConfigRefreshEnabled",
+      "flag": "--validators-proposer-config-refresh-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--beacon-node-ssz-blocks-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--data-path"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--exit-when-no-validator-keys-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--log-color-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--log-destination"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--log-file-name-pattern"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--log-include-events-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--log-include-validator-duties-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--metrics-block-production-performance-tracking-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--metrics-block-timing-tracking-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--metrics-categories"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--metrics-host-allowlist"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--metrics-publish-endpoint"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--metrics-publish-interval"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--network"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--shut-down-when-validator-slashed-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validator-api-bearer-file"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validator-api-cors-origins"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validator-api-docs-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validator-api-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validator-api-host-allowlist"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validator-api-interface"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validator-api-keystore-file"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validator-api-keystore-password-file"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validator-api-port"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validator-is-local-slashing-protection-synchronized-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validator-keys"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validators-early-attestations-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validators-external-signer-slashing-protection-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validators-graffiti-client-append-format"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validators-keystore-locking-enabled"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validators-performance-tracking-mode"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--validators-proposer-config-refresh-enabled"
+    }
+  ]
 } 

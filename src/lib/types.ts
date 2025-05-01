@@ -73,6 +73,31 @@ export interface ValidatorConfig {
   numValidators: number
   feeRecipientAddress: string
   metricsPort: string
+
+  graffiti?: string
+  graffitiFile?: string
+  proposerConfigFile?: string
+  suggestedGasLimit?: number
+  doppelgangerProtection?: boolean
+  builderEnabled?: boolean
+  externalSignerUrl?: string
+  externalSignerKeystore?: string
+  externalSignerKeystorePasswordFile?: string
+  externalSignerPublicKeys?: string[]
+  externalSignerTimeout?: number
+  externalSignerTruststore?: string
+  externalSignerTruststorePasswordFile?: string
+  proposerBlindedBlocksEnabled?: boolean
+  proposerConfigRefreshEnabled?: boolean
+  metricsEnabled?: boolean
+  metricsAddress?: string
+  logFile?: string
+  logLevel?: string
+  logFormat?: string
+  validatorsDir?: string
+  secretsDir?: string
+  configFile?: string
+  distributed?: boolean
 }
 
 export interface HttpConfig {

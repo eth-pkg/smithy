@@ -1,6 +1,190 @@
 {
   "name": "lodestar",
-  "version": "1.0.0",
-  "commands": {},
-  "rules": []
+  "version": "1.29.0",
+  "rules": [
+    {
+      "configPath": "validatorConfig.dataDir",
+      "flag": "--dataDir",
+      "transform": "formatPath"
+    },
+    {
+      "configPath": "commonConfig.network",
+      "flag": "--network"
+    },
+    {
+      "configPath": "validatorConfig.metricsPort",
+      "flag": "--metrics.port",
+      "parent": "--metrics"
+    },
+    {
+      "configPath": "validatorConfig.metricsAddress",
+      "flag": "--metrics.address",
+      "parent": "--metrics"
+    },
+    {
+      "configPath": "validatorConfig.metricsEnabled",
+      "flag": "--metrics",
+      "parent": "--metrics"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--beaconNodes"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--force"
+    },
+    {
+      "configPath": "validatorConfig.graffiti",
+      "flag": "--graffiti"
+    },
+    {
+      "configPath": "validatorConfig.proposerConfigFile",
+      "flag": "--proposerSettingsFile"
+    },
+    {
+      "configPath": "validatorConfig.feeRecipientAddress",
+      "flag": "--suggestedFeeRecipient"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--strictFeeRecipientCheck"
+    },
+    {
+      "configPath": "validatorConfig.defaultGasLimit",
+      "flag": "--defaultGasLimit"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--useProduceBlockV3"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--broadcastValidation"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--blindedLocal"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--importKeystores"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--importKeystoresPassword"
+    },
+    {
+      "configPath": "validatorConfig.doppelgangerProtection",
+      "flag": "--doppelgangerProtection"
+    },
+    {
+      "configPath": "validatorConfig.distributed",
+      "flag": "--distributed"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--keymanager"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--keymanager.auth"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--keymanager.tokenFile"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--keymanager.port"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--keymanager.address"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--keymanager.cors"
+    },
+    {
+      "configPath": "validatorConfig.builderEnabled",
+      "flag": "--builder"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--builder.selection"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--builder.boostFactor"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--http.requestWireFormat"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--http.responseWireFormat"
+    },
+    {
+      "configPath": "validatorConfig.externalSignerUrl",
+      "flag": "--externalSigner.url"
+    },
+    {
+      "configPath": "validatorConfig.externalSignerPublicKeys",
+      "flag": "--externalSigner.pubkeys"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--externalSigner.fetch"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--externalSigner.fetchInterval"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--monitoring.endpoint"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--monitoring.interval"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--paramsFile"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--rcConfig"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--terminal-total-difficulty-override"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--terminal-block-hash-override"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--terminal-block-hash-epoch-override"
+    },
+    {
+      "configPath": "validatorConfig.logLevel",
+      "flag": "--logLevel"
+    },
+    {
+      "configPath": "validatorConfig.logFile",
+      "flag": "--logFile"
+    },
+    {
+      "configPath": "validatorConfig.logLevel",
+      "flag": "--logFileLevel"
+    },
+    {
+      "configPath": "todo",
+      "flag": "--logFileDailyRotate"
+    }
+  ]
 } 

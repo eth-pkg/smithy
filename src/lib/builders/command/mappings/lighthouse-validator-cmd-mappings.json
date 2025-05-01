@@ -1,6 +1,251 @@
 {
     "name": "lighthouse",
-    "version": "1.0.0",
-    "commands": {},
-    "rules": []
+    "version": "7.0.1",
+    "rules": [
+      {
+        "configPath": "validatorConfig.dataDir",
+        "flag": "--datadir",
+        "transform": "formatPath"
+      },
+      {
+        "configPath": "validatorConfig.beaconRpcProvider",
+        "flag": "--beacon-nodes"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--beacon-nodes-tls-certs"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--broadcast"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--builder-boost-factor"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--builder-registration-timestamp-override"
+      },
+      {
+        "configPath": "validatorConfig.logLevel",
+        "flag": "--debug-level"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--gas-limit"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--genesis-state-url"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--genesis-state-url-timeout"
+      },
+      {
+        "configPath": "validatorConfig.graffiti",
+        "flag": "--graffiti"
+      },
+      {
+        "configPath": "validatorConfig.graffitiFile",
+        "flag": "--graffiti-file"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--http-address"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--http-allow-origin"
+      },
+      {
+        "configPath": "validatorConfig.metricsPort",
+        "flag": "--http-port"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--http-token-path"
+      },
+      {
+        "configPath": "validatorConfig.logFormat",
+        "flag": "--log-format"
+      },
+      {
+        "configPath": "validatorConfig.logFile",
+        "flag": "--logfile"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--logfile-debug-level"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--logfile-format"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--logfile-max-number"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--logfile-max-size"
+      },
+      {
+        "configPath": "validatorConfig.metricsEnabled",
+        "flag": "--metrics"
+      },
+      {
+        "configPath": "validatorConfig.metricsAddress",
+        "flag": "--metrics-address"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--metrics-allow-origin"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--metrics-port"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--monitoring-endpoint"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--monitoring-endpoint-period"
+      },
+      {
+        "configPath": "commonConfig.network",
+        "flag": "--network"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--proposer-nodes"
+      },
+      {
+        "configPath": "validatorConfig.secretsDir",
+        "flag": "--secrets-dir"
+      },
+      {
+        "configPath": "validatorConfig.feeRecipientAddress",
+        "flag": "--suggested-fee-recipient"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--testnet-dir"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--validator-registration-batch-size"
+      },
+      {
+        "configPath": "validatorConfig.validatorsDir",
+        "flag": "--validators-dir"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--web3-signer-keep-alive-timeout"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--web3-signer-max-idle-connections"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--beacon-nodes-sync-tolerances"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--builder-proposals"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--disable-attesting"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--disable-auto-discover"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--disable-latency-measurement-service"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--disable-log-timestamp"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--disable-malloc-tuning"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--disable-slashing-protection-web3signer"
+      },
+      {
+        "configPath": "validatorConfig.distributed",
+        "flag": "--distributed"
+      },
+      {
+        "configPath": "validatorConfig.doppelgangerProtection",
+        "flag": "--enable-doppelganger-protection"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--enable-high-validator-count-metrics"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--http"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--http-allow-keystore-export"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--http-store-passwords-in-secrets-dir"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--init-slashing-protection"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--log-color"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--logfile-compress"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--logfile-no-restricted-perms"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--long-timeouts-multiplier"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--prefer-builder-proposals"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--stdin-inputs"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--unencrypted-http-transport"
+      },
+      {
+        "configPath": "todo",
+        "flag": "--use-long-timeouts"
+      },
+      {
+        "configPath": "validatorConfig.configFile",
+        "flag": "--config-file"
+      }
+    ]
   } 

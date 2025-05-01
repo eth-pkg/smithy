@@ -200,6 +200,80 @@ properties:
         default: "8009"
         errorMessage:
           pattern: "Metrics port must be a valid port number"
+      graffiti:
+        type: string
+        default: ""
+      graffitiFile:
+        type: string
+        default: ""
+      proposerConfigFile:
+        type: string
+        default: ""
+      suggestedGasLimit:
+        type: number
+        default: 30000000  # Common default for block gas limit
+      doppelgangerProtection:
+        type: boolean
+        default: true
+      builderEnabled:
+        type: boolean
+        default: false
+      externalSignerUrl:
+        type: string
+        default: ""
+      externalSignerKeystore:
+        type: string
+        default: ""
+      externalSignerKeystorePasswordFile:
+        type: string
+        default: ""
+      externalSignerPublicKeys:
+        type: array
+        items:
+          type: string
+        default: []
+      externalSignerTimeout:
+        type: number
+        default: 5000  # milliseconds, common default
+      externalSignerTruststore:
+        type: string
+        default: ""
+      externalSignerTruststorePasswordFile:
+        type: string
+        default: ""
+      proposerBlindedBlocksEnabled:
+        type: boolean
+        default: false
+      proposerConfigRefreshEnabled:
+        type: boolean
+        default: false
+      metricsEnabled:
+        type: boolean
+        default: true
+      metricsAddress:
+        type: string
+        default: "127.0.0.1"
+      logFile:
+        type: string
+        default: ""
+      logLevel:
+        type: string
+        default: "info"
+      logFormat:
+        type: string
+        default: "auto"
+      validatorsDir:
+        type: string
+        default: "$HOME/ethereum/validator/keys"
+      secretsDir:
+        type: string
+        default: "$HOME/ethereum/validator/secrets"
+      configFile:
+        type: string
+        default: ""
+      distributed:
+        type: boolean
+        default: false
   executionConfig:
     type: object
     properties:

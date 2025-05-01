@@ -54,23 +54,23 @@ export class CommandClientRegistry {
     erigon: "erigon",
     nethermind: "nethermind",
     besu: "besu",
-    reth: "reth",
+    reth: "reth node",
   }
 
   private consensusClientCommands: Record<ConsensusClientName, string> = {
     lighthouse: "lighthouse beacon",
     lodestar: "lodestar beacon",
-    "nimbus-eth2": "nimbus-eth2 beacon",
-    prysm: "prysm beacon",
+    "nimbus-eth2": "nimbus_beacon_node",
+    prysm: "beacon-chain",
     teku: "teku beacon",
   }
 
   private validatorClientCommands: Record<ValidatorClientName, string> = {
-    lighthouse: "lighthouse validator",
+    lighthouse: "lighthouse validator_client",
     lodestar: "lodestar validator",
     "nimbus-eth2": "nimbus-eth2 validator",
     prysm: "prysm validator",
-    teku: "teku validator",
+    teku: "teku validator-client",
   }
 
   constructor() {
