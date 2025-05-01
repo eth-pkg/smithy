@@ -2,7 +2,7 @@ commonConfig:
   clients:
     consensus: 'lighthouse'
     execution: 'geth'
-    validator: 'lighthouse'
+    validator: 'nimbus-eth2'
   dataDir: $HOME/ethereum/mainnet
   engine:
     apiPort: 8551
@@ -13,10 +13,11 @@ commonConfig:
     jwtFile: $HOME/ethereum/jwt.hex
     scheme: http
   features:
-    mevBoost: false
+    mevBoost: true
     monitoring: true
     staking: true
   network: mainnet
+  networkId: 1
   operatingSystem: linux
   syncMode: snap
 
@@ -24,6 +25,13 @@ consensusConfig:
   httpPort: 5052
   metricsPort: 8008
   p2pPort: 9000
+
+validatorConfig:
+  dataDir: "$HOME/ethereum/validator_keys"
+  beaconRpcProvider: "localhost:5052"
+  numValidators: 1
+  feeRecipientAddress: "0x0000000000000000000000000000000000000000"
+  metricsPort: "8009"
 
 executionConfig:
   http:
@@ -43,4 +51,4 @@ executionConfig:
     port: 30303
   ws:
     enabled: false
-    port: 8546
+    port: 8546 

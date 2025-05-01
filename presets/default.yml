@@ -170,6 +170,36 @@ properties:
         errorMessage:
           minimum: "P2P port must be >= 1024"
           maximum: "P2P port must be <= 65535"
+  validatorConfig:
+    type: object
+    properties:
+      dataDir:
+        type: string
+        default: "$HOME/ethereum/validator"
+      beaconRpcProvider:
+        type: string
+        pattern: "^[a-zA-Z0-9.-]+(:[0-9]+)?$"
+        default: "localhost:5052"
+        errorMessage:
+          pattern: "Beacon RPC provider must be a valid host:port"
+      numValidators:
+        type: number
+        minimum: 1
+        default: 1
+        errorMessage:
+          minimum: "Number of validators must be at least 1"
+      feeRecipientAddress:
+        type: string
+        pattern: "^0x[a-fA-F0-9]{40}$"
+        default: "0x0000000000000000000000000000000000000000"
+        errorMessage:
+          pattern: "Fee recipient address must be a valid Ethereum address"
+      metricsPort:
+        type: string
+        pattern: "^[0-9]+$"
+        default: "8009"
+        errorMessage:
+          pattern: "Metrics port must be a valid port number"
   executionConfig:
     type: object
     properties:
@@ -275,6 +305,13 @@ then:
               minLength: 1
               errorMessage:
                 minLength: "Validator client is required when staking is enabled"
+    validatorConfig:
+      type: object
+      required:
+        - beaconRpcProvider
+        - feeRecipientAddress
+      errorMessage:
+        required: "Validator configuration is required when staking is enabled"
 
 allOf:
   - if:
