@@ -29,13 +29,11 @@ describe('Network Mappings Tests', () => {
             const config = { ...testConfig, commonConfig: { ...testConfig.commonConfig, network, networkId: getNetworkId(network) } };
             const scriptContent = registry.getScriptContent(client, config);
             const scriptString = scriptContent.toString();
-            // Verify network-specific flags are present
             switch (client) {
               case 'geth':
                 expect(scriptString).to.contain(`--${network}`);
                 expect(scriptString).to.contain(`--networkid ${getNetworkId(network)}`);
                 expect(scriptString).to.not.contain(`--network ${network}`);
-                // Verify no other network flags are present
                 networks.filter(n => n !== network).forEach(otherNetwork => {
                   expect(scriptString).to.not.contain(`--${otherNetwork}`);
                 });
@@ -117,10 +115,10 @@ describe('Network Mappings Tests', () => {
 
   describe('Validator Clients', () => {
     const validatorClients: ValidatorClientName[] = [
-      //'lighthouse', 
-      //'lodestar', 
-      // 'nimbus-eth2', 
-      // 'prysm', 
+      'lighthouse', 
+      'lodestar', 
+      'nimbus-eth2', 
+      'prysm', 
        'teku'
     ];
 
@@ -132,7 +130,6 @@ describe('Network Mappings Tests', () => {
             const scriptContent = registry.getScriptContent(client, config, true);
             const scriptString = scriptContent.toString();
 
-            // Verify network-specific flags are present
             switch (client) {
               case 'lighthouse':
                 expect(scriptString).to.contain(`--network ${network}`);
@@ -167,7 +164,6 @@ describe('Network Mappings Tests', () => {
   });
 });
 
-// Helper function to get network IDs
 function getNetworkId(network: string): number {
   const networkIds: Record<string, number> = {
     mainnet: 1,

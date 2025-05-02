@@ -1,0 +1,262 @@
+$id: versions
+allOf:
+  # Execution client version rules
+  - if:
+      properties:
+        commonConfig:
+          properties:
+            clients:
+              properties:
+                execution:
+                  const: geth
+    then:
+      properties:
+        commonConfig:
+          properties:
+            clients:
+              properties:
+                executionVersion:
+                  enum:
+                    - "1.13.12"
+  - if:
+      properties:
+        commonConfig:
+          properties:
+            clients:
+              properties:
+                execution:
+                  const: erigon
+    then:
+      properties:
+        commonConfig:
+          properties:
+            clients:
+              properties:
+                executionVersion:
+                  enum:
+                    - "2.56.1"
+  - if:
+      properties:
+        commonConfig:
+          properties:
+            clients:
+              properties:
+                execution:
+                  const: besu
+    then:
+      properties:
+        commonConfig:
+          properties:
+            clients:
+              properties:
+                executionVersion:
+                  enum:
+                    - "24.1.0"
+  - if:
+      properties:
+        commonConfig:
+          properties:
+            clients:
+              properties:
+                execution:
+                  const: nethermind
+    then:
+      properties:
+        commonConfig:
+          properties:
+            clients:
+              properties:
+                executionVersion:
+                  enum:
+                    - "1.25.0"
+  - if:
+      properties:
+        commonConfig:
+          properties:
+            clients:
+              properties:
+                execution:
+                  const: reth
+    then:
+      properties:
+        commonConfig:
+          properties:
+            clients:
+              properties:
+                executionVersion:
+                  enum:
+                    - "0.2.0"
+
+  # Consensus client version rules
+  - if:
+      properties:
+        commonConfig:
+          properties:
+            clients:
+              properties:
+                consensus:
+                  const: lighthouse
+    then:
+      properties:
+        commonConfig:
+          properties:
+            clients:
+              properties:
+                consensusVersion:
+                  enum:
+                    - "4.7.0"
+  - if:
+      properties:
+        commonConfig:
+          properties:
+            clients:
+              properties:
+                consensus:
+                  const: lodestar
+    then:
+      properties:
+        commonConfig:
+          properties:
+            clients:
+              properties:
+                consensusVersion:
+                  enum:
+                    - "1.10.0"
+  - if:
+      properties:
+        commonConfig:
+          properties:
+            clients:
+              properties:
+                consensus:
+                  const: nimbus-eth2
+    then:
+      properties:
+        commonConfig:
+          properties:
+            clients:
+              properties:
+                consensusVersion:
+                  enum:
+                    - "24.1.0"
+  - if:
+      properties:
+        commonConfig:
+          properties:
+            clients:
+              properties:
+                consensus:
+                  const: prysm
+    then:
+      properties:
+        commonConfig:
+          properties:
+            clients:
+              properties:
+                consensusVersion:
+                  enum:
+                    - "4.1.0"
+  - if:
+      properties:
+        commonConfig:
+          properties:
+            clients:
+              properties:
+                consensus:
+                  const: teku
+    then:
+      properties:
+        commonConfig:
+          properties:
+            clients:
+              properties:
+                consensusVersion:
+                  enum:
+                    - "24.1.0"
+
+  # Validator client version rules
+  - if:
+      properties:
+        commonConfig:
+          properties:
+            clients:
+              properties:
+                validator:
+                  const: lighthouse
+    then:
+      properties:
+        commonConfig:
+          properties:
+            clients:
+              properties:
+                validatorVersion:
+                  enum:
+                    - "4.7.0"
+  - if:
+      properties:
+        commonConfig:
+          properties:
+            clients:
+              properties:
+                validator:
+                  const: lodestar
+    then:
+      properties:
+        commonConfig:
+          properties:
+            clients:
+              properties:
+                validatorVersion:
+                  enum:
+                    - "1.10.0"
+  - if:
+      properties:
+        commonConfig:
+          properties:
+            clients:
+              properties:
+                validator:
+                  const: nimbus-eth2
+    then:
+      properties:
+        commonConfig:
+          properties:
+            clients:
+              properties:
+                validatorVersion:
+                  enum:
+                    - "24.1.0"
+  - if:
+      properties:
+        commonConfig:
+          properties:
+            clients:
+              properties:
+                validator:
+                  const: prysm
+    then:
+      properties:
+        commonConfig:
+          properties:
+            clients:
+              properties:
+                validatorVersion:
+                  enum:
+                    - "4.1.0"
+  - if:
+      properties:
+        commonConfig:
+          properties:
+            clients:
+              properties:
+                validator:
+                  const: teku
+    then:
+      properties:
+        commonConfig:
+          properties:
+            clients:
+              properties:
+                validatorVersion:
+                  enum:
+                    - "24.1.0"

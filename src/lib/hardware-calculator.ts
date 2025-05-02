@@ -28,8 +28,8 @@ export interface HardwareRequirements {
 // Calculate hardware requirements based on the configuration
 export function calculateHardwareRequirements(config: NodeConfig): HardwareRequirements {
   const { commonConfig } = config
-  const executionClient = commonConfig.executionClient || ""
-  const consensusClient = commonConfig.consensusClient || ""
+  const executionClient = commonConfig.clients.execution || ""
+  const consensusClient = commonConfig.clients.consensus || ""
   const network = commonConfig.network || "mainnet"
   const isStaking = commonConfig.features?.staking || false
   const syncMode = commonConfig.syncMode || "full"
@@ -111,7 +111,7 @@ export function calculateHardwareRequirements(config: NodeConfig): HardwareRequi
       minRam = "8 GB"
       recommendedRam = "16 GB"
     }
-  } else if (consensusClient === "nimbus") {
+  } else if (consensusClient === "nimbus-eth2") {
     if (network === "mainnet") {
       consensusStorage = "90 GB"
       minRam = "4 GB"
@@ -136,7 +136,7 @@ export function calculateHardwareRequirements(config: NodeConfig): HardwareRequi
   }
 
   // Adjust for sync mode
-  if (syncMode === "full" || syncMode === "archive") {
+  if (syncMode === "full") {
     if (network === "mainnet") {
       executionStorage = "1.5 TB"
       yearProjection = "2 TB+"

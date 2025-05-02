@@ -8,8 +8,8 @@ A CLI tool for generating Ethereum client configurations, built with TypeScript.
 # Install globally
 npm install -g smithy
 
-# Or install as a dev dependency
-npm install --save-dev smithy
+# Or install as a dependency
+npm install --save smithy
 ```
 
 ## Usage

@@ -2,7 +2,7 @@ export type OperatingSystem = "linux" | "darwin" | "windows"
 export type SyncMode = "snap" | "full" | "light"
 
 export type EngineScheme = "http" | "https"
-export type Communication = "jwt" | "icp"
+export type Communication = "jwt" | "ipc"
 export type Geth = "geth"
 export type Erigon = "erigon"
 export type Besu = "besu"
@@ -28,14 +28,12 @@ export type Ephemery = "ephemery"
 export type Custom = string
 export type NetworkName = Mainnet | Sepolia | Holesky | Hoodi | Ephemery | Custom
 
-export interface EngineConfig {
+export interface EngineBaseConfig {
   scheme: EngineScheme
   host: string
   apiPort: number
   endpointUrl: string
   ip: string
-  jwtFile: string
-  communication: Communication
 }
 
 export interface ClientsConfig {
@@ -268,3 +266,15 @@ export interface GenerateOptions {
   configFile?: string;
   verbose?: boolean;
 }
+
+export type EngineConfigWithJwt = EngineBaseConfig & {
+  communication: "jwt"
+  jwtFile: string
+}
+
+export type EngineConfigWithIpc = EngineBaseConfig & {
+  communication: "ipc"
+  jwtFile?: never
+}
+
+export type EngineConfig = EngineConfigWithJwt | EngineConfigWithIpc

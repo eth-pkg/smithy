@@ -1,0 +1,110 @@
+# Custom validation rule for validator client when staking is enabled
+if:
+  type: object
+  properties:
+    commonConfig:
+      type: object
+      properties:
+        features:
+          type: object
+          properties:
+            staking:
+              type: boolean
+              const: true
+then:
+  type: object
+  properties:
+    commonConfig:
+      type: object
+      properties:
+        clients:
+          type: object
+          required:
+            - validator
+          properties:
+            validator:
+              type: string
+              minLength: 1
+              errorMessage:
+                minLength: "Validator client is required when staking is enabled"
+    validatorConfig:
+      type: object
+      required:
+        - beaconRpcProvider
+        - feeRecipientAddress
+      errorMessage:
+        required: "Validator configuration is required when staking is enabled"
+
+allOf:
+  - if:
+      type: object
+      properties:
+        commonConfig:
+          type: object
+          properties:
+            network:
+              const: mainnet
+    then:
+      type: object
+      properties:
+        commonConfig:
+          type: object
+          properties:
+            networkId:
+              const: 1
+              errorMessage:
+                const: "mainnet must have networkId 1"
+  - if:
+      type: object
+      properties:
+        commonConfig:
+          type: object
+          properties:
+            network:
+              const: sepolia
+    then:
+      type: object
+      properties:
+        commonConfig:
+          type: object
+          properties:
+            networkId:
+              const: 11155111
+              errorMessage:
+                const: "sepolia must have networkId 11155111"
+  - if:
+      type: object
+      properties:
+        commonConfig:
+          type: object
+          properties:
+            network:
+              const: holesky
+    then:
+      type: object
+      properties:
+        commonConfig:
+          type: object
+          properties:
+            networkId:
+              const: 17000
+              errorMessage:
+                const: "holesky must have networkId 17000"
+  - if:
+      type: object
+      properties:
+        commonConfig:
+          type: object
+          properties:
+            network:
+              const: hoodi
+    then:
+      type: object
+      properties:
+        commonConfig:
+          type: object
+          properties:
+            networkId:
+              const: 17001
+              errorMessage:
+                const: "hoodi must have networkId 17001"

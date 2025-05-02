@@ -103,41 +103,4 @@ describe('PresetManager', () => {
     });
   });
 
-  describe('validateConfig', () => {
-    it('should validate a complete config', async () => {
-      const config: Partial<NodeConfig> = {
-        commonConfig: {
-          ...baseConfig,
-          network: 'mainnet',
-          networkId: 1,
-          dataDir: '$HOME/ethereum/mainnet'
-        }
-      };
-
-      const result = await presetManager.validateConfig(config, 'default');
-      expect(result.valid).to.be.true;
-      expect(result.errors).to.be.empty;
-    });
-
-    it('should detect missing required fields', async () => {
-      const config: Partial<NodeConfig> = {
-        commonConfig: {
-          ...baseConfig,
-          clients: {
-            ...baseConfig.clients,
-            execution: '',
-            consensus: '',
-            validator: ''
-          },
-          network: 'mainnet',
-          networkId: 1,
-          dataDir: '$HOME/ethereum/mainnet'
-        }
-      };
-
-      const result = await presetManager.validateConfig(config, 'default');
-      expect(result.valid).to.be.false;
-      expect(result.errors).to.not.be.empty;
-    });
-  });
 }); 

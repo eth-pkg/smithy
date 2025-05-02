@@ -36,10 +36,8 @@ describe('DataDir Interpolation Tests', () => {
         const scriptString = scriptContent.toString();
         const expectedDataDir = `${config.commonConfig.dataDir}/${client}`;
         
-        // Check for interpolated path
         expect(scriptString).to.contain(expectedDataDir);
         
-        // Verify data directory flag for each client
         switch (client) {
           case 'besu':
             expect(scriptString).to.contain(`--data-path=${expectedDataDir}`);
@@ -87,10 +85,8 @@ describe('DataDir Interpolation Tests', () => {
         const scriptString = scriptContent.toString();
         const expectedDataDir = `${config.commonConfig.dataDir}/${client}`;
         
-        // Check for interpolated path
         expect(scriptString).to.contain(expectedDataDir);
         
-        // Verify data directory flag for each client
         switch (client) {
           case 'lighthouse':
             expect(scriptString).to.contain(`--datadir ${expectedDataDir}`);
@@ -138,10 +134,8 @@ describe('DataDir Interpolation Tests', () => {
         const scriptString = scriptContent.toString();
         const expectedDataDir = `${config.commonConfig.dataDir}/${client}-validator`;
         
-        // Check for interpolated path
         expect(scriptString).to.contain(expectedDataDir);
         
-        // Verify data directory flag for each client
         switch (client) {
           case 'lighthouse':
             expect(scriptString).to.contain(`--datadir ${expectedDataDir}`);
