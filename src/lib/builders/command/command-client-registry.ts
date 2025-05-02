@@ -120,7 +120,7 @@ export class CommandClientRegistry {
     if (clientName in executionClientMappings) {
       mappings = executionClientMappings[clientName as ExecutionClientName]
       command = this.executionClientCommands[clientName as ExecutionClientName]
-    } else if (clientName in consensusClientMappings) {
+    } else if (clientName in consensusClientMappings && !isValidator) {
       mappings = consensusClientMappings[clientName as ConsensusClientName]
       command = this.consensusClientCommands[clientName as ConsensusClientName]
     } else if (clientName in validatorClientMappings && isValidator) {

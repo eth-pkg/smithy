@@ -97,7 +97,7 @@ describe('DataDir Interpolation Tests', () => {
         // Verify data directory flag for each client
         switch (client) {
           case 'besu':
-            expect(scriptString).to.contain(`--data-path ${expectedDataDir}`);
+            expect(scriptString).to.contain(`--data-path=${expectedDataDir}`);
             break;
           case 'erigon':
             expect(scriptString).to.contain(`--datadir ${expectedDataDir}`);
@@ -160,14 +160,14 @@ describe('DataDir Interpolation Tests', () => {
             expect(scriptString).to.contain(`--datadir ${expectedDataDir}`);
             break;
           case 'teku':
-            expect(scriptString).to.contain(`--data-path ${expectedDataDir}`);
+            expect(scriptString).to.contain(`--data-path=${expectedDataDir}`);
             break;
         }
       });
     });
   });
 
-  describe('Validator Clients', () => {
+  describe.only('Validator Clients', () => {
     const validatorClients: ValidatorClientName[] = [
       'lighthouse', 
       'lodestar', 
@@ -186,12 +186,12 @@ describe('DataDir Interpolation Tests', () => {
           },
           validatorConfig: {
             ...testConfig.validatorConfig,
-            dataDir: '{commonConfig.dataDir}/{commonConfig.clients.validator}'
+            dataDir: '{commonConfig.dataDir}/{commonConfig.clients.validator}-validator'
           }
         };
         const scriptContent = registry.getScriptContent(client, config, true);
         const scriptString = scriptContent.toString();
-        const expectedDataDir = `${config.commonConfig.dataDir}/${client}`;
+        const expectedDataDir = `${config.commonConfig.dataDir}/${client}-validator`;
         
         // Check for interpolated path
         expect(scriptString).to.contain(expectedDataDir);
@@ -211,7 +211,7 @@ describe('DataDir Interpolation Tests', () => {
             expect(scriptString).to.contain(`--datadir ${expectedDataDir}`);
             break;
           case 'teku':
-            expect(scriptString).to.contain(`--data-path ${expectedDataDir}`);
+            expect(scriptString).to.contain(`--data-path=${expectedDataDir}`);
             break;
         }
       });

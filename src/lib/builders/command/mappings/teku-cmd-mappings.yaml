@@ -3,7 +3,7 @@ version: 24.1.0
 valueFormat: equals
 rules:
   - configPath: consensusConfig.dataDir
-    flag: --datadir
+    flag: --data-path
     transform: interpolate
   - configPath: commonConfig.network
     flag: --network

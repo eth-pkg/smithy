@@ -3,7 +3,7 @@ version: 25.4.1
 valueFormat: equals
 rules:
   - configPath: validatorConfig.dataDir
-    flag: --data-validator-path
+    flag: --data-path
     transform: interpolate
   - configPath: validatorConfig.beaconRpcProvider
     flag: --beacon-node-api-endpoint

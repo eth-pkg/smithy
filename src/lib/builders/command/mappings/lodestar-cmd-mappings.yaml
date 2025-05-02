@@ -3,7 +3,7 @@ version: 1.9.0
 valueFormat: space
 rules:
   - configPath: consensusConfig.dataDir
-    flag: --datadir
+    flag: --dataDir
     transform: interpolate
   - configPath: commonConfig.network
     flag: --network

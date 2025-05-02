@@ -271,7 +271,7 @@ properties:
     properties:
       dataDir:
         type: string
-        default: "{commonConfig.dataDir}/{commonConfig.clients.validator}"
+        default: "{commonConfig.dataDir}/{commonConfig.clients.validator}-validator"
         description: "Base directory for validator data. Interpolated from commonConfig.dataDir and commonConfig.clients.validator."
       beaconRpcProvider:
         type: string
