@@ -62,6 +62,7 @@ export interface CommonConfig {
 }
 
 export interface ConsensusConfig {
+  dataDir: string
   httpPort: number
   metricsPort: number
   p2pPort: number
@@ -123,6 +124,7 @@ export interface WebSocketConfig {
 }
 
 export interface ExecutionConfig {
+  dataDir: string
   http: HttpConfig
   metrics: MetricsConfig
   p2p: P2PConfig

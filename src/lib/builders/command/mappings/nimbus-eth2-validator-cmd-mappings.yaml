@@ -1,0 +1,82 @@
+name: nimbus-eth2-validator
+version: 25.3.1
+valueFormat: space
+rules:
+  - configPath: validatorConfig.dataDir
+    flag: --data-dir
+    transform: interpolate
+  - configPath: validatorConfig.beaconRpcProvider
+    flag: --beacon-node
+  - configPath: validatorConfig.feeRecipientAddress
+    flag: --suggested-fee-recipient
+  - configPath: validatorConfig.metricsPort
+    flag: --metrics-port
+    parent: --metrics
+  - configPath: validatorConfig.metricsEnabled
+    flag: --metrics
+    transform: boolean
+  - configPath: validatorConfig.metricsAddress
+    flag: --metrics-address
+    parent: --metrics
+  - configPath: validatorConfig.validatorsDir
+    flag: --validators-dir
+  - configPath: validatorConfig.secretsDir
+    flag: --secrets-dir
+  - configPath: validatorConfig.externalSignerUrl
+    flag: --web3-signer-url
+  - configPath: validatorConfig.suggestedGasLimit
+    flag: --suggested-gas-limit
+  - configPath: validatorConfig.graffiti
+    flag: --graffiti
+  - configPath: validatorConfig.builderEnabled
+    flag: --payload-builder
+    transform: boolean
+  - configPath: validatorConfig.distributed
+    flag: --distributed
+    transform: boolean
+  - configPath: validatorConfig.doppelgangerProtection
+    flag: --doppelganger-detection
+    transform: boolean
+  - configPath: validatorConfig.configFile
+    flag: --config-file
+  - configPath: validatorConfig.logLevel
+    flag: --log-level
+  - configPath: validatorConfig.logFile
+    flag: --log-file
+  - configPath: todo
+    flag: --keymanager
+    transform: boolean
+  - configPath: todo
+    flag: --keymanager-port
+    parent: --keymanager
+  - configPath: todo
+    flag: --keymanager-address
+    parent: --keymanager
+  - configPath: todo
+    flag: --keymanager-allow-origin
+    parent: --keymanager
+  - configPath: todo
+    flag: --keymanager-token-file
+    parent: --keymanager
+  - configPath: todo
+    flag: --verifying-web3-signer-url
+  - configPath: todo
+    flag: --proven-block-property
+  - configPath: todo
+    flag: --web3-signer-update-interval
+  - configPath: todo
+    flag: --rest-request-timeout
+  - configPath: todo
+    flag: --rest-max-body-size
+  - configPath: todo
+    flag: --rest-max-headers-size
+  - configPath: todo
+    flag: --debug-stop-at-epoch
+  - configPath: todo
+    flag: --non-interactive
+  - configPath: todo
+    flag: --builder-boost-factor
+  - configPath: todo
+    flag: --block-monitor-type
+  - configPath: todo
+    flag: --web3-signer-update-interval 

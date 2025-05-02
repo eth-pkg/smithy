@@ -1,6 +1,7 @@
 import { OperatingSystem, NodeConfig } from "../../types"
 
-type TransformFunction = (value: any, os: string) => any
+type TransformFunction = (value: any, os: string, flag: string) => any
+type TransformFunctionWithConfig = (value: any, config: any) => any
 
 type Rule = {
   configPath: string
@@ -11,9 +12,10 @@ type Rule = {
 
 type Mappings = {
   rules: Rule[]
+  valueFormat: 'equals' | 'space'
 }
 
-const transformers: Record<string, TransformFunction> = {
+const transformers: Record<string, TransformFunction | TransformFunctionWithConfig> = {
   formatPath: (value: string, os: string) => {
     if (os === "windows") {
       return value.replace(/\//g, "\\")
@@ -27,8 +29,19 @@ const transformers: Record<string, TransformFunction> = {
     const isFastSync = value.toLowerCase() === "fast" || value.toLowerCase() === "snap"
     return isFastSync ? "fast" : "full"
   },
-  network: (value: string) => {
-    return `--${value}`
+  network: (value: string, _os: string, flag: string) => {
+    // If the value matches the flag (without --), return empty string since flag already has --
+    const flagWithoutPrefix = flag.replace(/^--/, '')
+    return value === flagWithoutPrefix ? true : false
+  },
+  interpolate: (template: string, config: NodeConfig) => {
+    if (typeof template !== 'string') {
+      return template;
+    }
+    return template.replace(/\{([^}]+)\}/g, (_, path) => {
+      const value = CommandBuilder.getValueFromPath(config, path);
+      return value !== undefined ? value : '';
+    });
   }
 }
 
@@ -45,7 +58,8 @@ export class CommandBuilder {
 
   addArg(flag: string, value?: string | number | boolean): this {
     if (value !== undefined && value !== null && value !== "") {
-      this.args.push(Buffer.from(`${flag}=${value}`))
+      const formattedValue = this.mappings?.valueFormat === 'equals' ? `${flag}=${value}` : `${flag} ${value}`
+      this.args.push(Buffer.from(formattedValue))
     }
     return this
   }
@@ -94,10 +108,17 @@ export class CommandBuilder {
 
     for (const rule of mappings.rules) {
       const value = this.getValueFromPath(config, rule.configPath)
+  
       if (value !== undefined) {
         let transformedValue = value
         if (rule.transform) {
-          transformedValue = transformers[rule.transform](value, os)
+        
+          if (rule.transform === 'interpolate') {
+            transformedValue = (transformers[rule.transform] as TransformFunctionWithConfig)(value, config);
+          } else {
+            transformedValue = (transformers[rule.transform] as TransformFunction)(value, os, rule.flag);
+          }
+       
         }
 
         // Check if this flag has a parent and if the parent is enabled
@@ -113,8 +134,8 @@ export class CommandBuilder {
           }
         }
 
-        if (typeof value === 'boolean') {
-          builder.addFlag(rule.flag, value)
+        if (typeof transformedValue === 'boolean') {
+          builder.addFlag(rule.flag, transformedValue)
         } else {
           builder.addArg(rule.flag, transformedValue)
         }
@@ -124,7 +145,7 @@ export class CommandBuilder {
     return builder.build(os)
   }
 
-  private static getValueFromPath(obj: any, path: string): any {
+  static getValueFromPath(obj: any, path: string): any {
     return path.split(".").reduce((current, key) => {
       if (current === undefined) return undefined
       return current[key]

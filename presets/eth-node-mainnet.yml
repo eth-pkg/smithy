@@ -1,0 +1,4 @@
+$id: eth-node-mainnet.yml
+allOf:
+  - $ref: ../default.yml
+  - $ref: ../networks/mainnet.yml
