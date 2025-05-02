@@ -79,7 +79,7 @@ rules:
     flag: --metrics-publish-endpoint
   - configPath: todo
     flag: --metrics-publish-interval
-  - configPath: todo
+  - configPath: commonConfig.network
     flag: --network
   - configPath: todo
     flag: --shut-down-when-validator-slashed-enabled

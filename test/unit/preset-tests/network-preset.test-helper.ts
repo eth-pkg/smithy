@@ -35,6 +35,62 @@ export const baseConfig: CommonConfig = {
   network: 'mainnet'
 };
 
+export const testConfig: NodeConfig = {
+  commonConfig: {
+    ...baseConfig,
+    dataDir: '/test/data',
+    clients: {
+      execution: 'geth',
+      consensus: 'lighthouse',
+      validator: 'prysm'
+    },
+    network: 'mainnet',
+    engine: {
+      apiPort: 8551,
+      communication: 'jwt',
+      endpointUrl: 'http://localhost:8551',
+      host: 'localhost',
+      ip: '127.0.0.1',
+      jwtFile: '/test/jwt',
+      scheme: 'http'
+    }
+  },
+  consensusConfig: {
+    dataDir: '{commonConfig.dataDir}/{commonConfig.clients.consensus}',
+    httpPort: 5052,
+    metricsPort: 8008,
+    p2pPort: 9000
+  },
+  validatorConfig: {
+    dataDir: '{commonConfig.dataDir}/{commonConfig.clients.validator}',
+    beaconRpcProvider: 'http://localhost:5052',
+    numValidators: 1,
+    feeRecipientAddress: '0x0000000000000000000000000000000000000000',
+    metricsPort: '8080'
+  },
+  executionConfig: {
+    dataDir: '{commonConfig.dataDir}/{commonConfig.clients.execution}',
+    http: {
+      enabled: true,
+      port: 8545,
+      apiPrefixes: ['eth', 'net', 'web3'],
+      cors: []
+    },
+    metrics: {
+      enabled: true,
+      port: 6060
+    },
+    p2p: {
+      maxPeers: 50,
+      port: 30303
+    },
+    ws: {
+      enabled: true,
+      port: 8546
+    }
+  }
+};
+
 export const createNetworkConfig = (config: NetworkConfig): { commonConfig: CommonConfig } => ({
   commonConfig: {
     ...baseConfig,
