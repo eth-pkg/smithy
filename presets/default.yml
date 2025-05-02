@@ -128,13 +128,13 @@ properties:
           - mainnet
           - sepolia
           - holesky
-          - hoodie
+          - hoodi
           - ephemery
           - custom
         default: "mainnet"
         description: "Ethereum network to connect to"
         errorMessage:
-          enum: "Network must be one of: mainnet, goerli, sepolia, holesky, hoodie, ephemery, custom"
+          enum: "Network must be one of: mainnet, goerli, sepolia, holesky, hoodi, ephemery, custom"
       networkId:
         type: number
         minimum: 1
@@ -572,7 +572,7 @@ allOf:
           type: object
           properties:
             network:
-              const: hoodie
+              const: hoodi
     then:
       type: object
       properties:
@@ -582,4 +582,4 @@ allOf:
             networkId:
               const: 17001
               errorMessage:
-                const: "hoodie must have networkId 17001"
+                const: "hoodi must have networkId 17001"

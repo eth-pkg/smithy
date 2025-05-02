@@ -1,4 +1,4 @@
-$id: hoodie
+$id: hoodi
 type: object
 required:
   - commonConfig
@@ -11,9 +11,9 @@ properties:
     properties:
       network:
         type: string
-        const: hoodie
+        const: hoodi
         errorMessage:
-          const: "Network must be set to 'hoodie'"
+          const: "Network must be set to 'hoodi'"
       networkId:
         type: number
         const: 17001

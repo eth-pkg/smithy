@@ -3,8 +3,8 @@ import { runNetworkPresetTests } from './network-preset.test-helper';
 
 describe('Hoodie Preset Tests', () => {
   runNetworkPresetTests({
-    network: 'hoodie',
+    network: 'hoodi',
     networkId: 17001,
-    dataDir: '$HOME/ethereum/hoodie'
+    dataDir: '$HOME/ethereum/hoodi'
   });
 }); 
