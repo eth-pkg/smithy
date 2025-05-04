@@ -1,21 +1,33 @@
-name: nethermind
-version: 1.25.0
+name: prysm
+version: 4.0.0
 valueFormat: space
 rules:
-  - configPath: executionConfig.dataDir
+  - configPath: commonConfig.network
+    flag: --mainnet
+    transform: network
+  - configPath: commonConfig.network
+    flag: --sepolia
+    transform: network
+  - configPath: commonConfig.network
+    flag: --holesky
+    transform: network
+  - configPath: commonConfig.network
+    flag: --ephemery
+    transform: network
+  - configPath: commonConfig.network
+    flag: --hoodi
+    transform: network
+  - configPath: consensusConfig.dataDir
     flag: --datadir
     transform: interpolate
-  # Nethermind does not support network flag
-  # - configPath: commonConfig.network
-  #   flag: --network
   - configPath: executionConfig.p2p.port
-    flag: --p2p.port
+    flag: --port
   - configPath: executionConfig.p2p.maxPeers
-    flag: --p2p.max
+    flag: --maxpeers
   - configPath: executionConfig.http.enabled
     flag: --http
   - configPath: commonConfig.engine.host
-    flag: --http.host
+    flag: --http.addr
     parent: --http
   - configPath: executionConfig.http.port
     flag: --http.port
@@ -29,12 +41,12 @@ rules:
   - configPath: executionConfig.ws.port
     flag: --ws.port
     parent: --ws
-  - configPath: commonConfig.jwtFile
+  - configPath: commonConfig.engine.jwtFile
     flag: --jwtsecret
     transform: formatPath
   - configPath: commonConfig.engine.host
     flag: --engine.host
-  - configPath: commonConfig.engine.apiPort
+  - configPath: commonConfig.engine.port
     flag: --engine.port
   - configPath: executionConfig.base.syncMode
     flag: --syncmode
@@ -234,7 +246,7 @@ rules:
   - configPath: todo
     flag: --vmdebug
   - configPath: commonConfig.networkId
-    flag: --networkid
+    flag: --network-id
   - configPath: todo
     flag: --experiment.persist.receipts
   - configPath: todo

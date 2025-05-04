@@ -1,12 +1,12 @@
-name: nimbus
-version: 24.1.0
+name: reth
+version: 0.1.0
 valueFormat: space
 rules:
-  - configPath: consensusConfig.dataDir
-    flag: --data-dir
+  - configPath: executionConfig.dataDir
+    flag: --datadir
     transform: interpolate
   - configPath: commonConfig.network
-    flag: --network
+    flag: --chain
   - configPath: executionConfig.p2p.port
     flag: --port
   - configPath: executionConfig.p2p.maxPeers
@@ -28,13 +28,34 @@ rules:
   - configPath: executionConfig.ws.port
     flag: --ws.port
     parent: --ws
-  - configPath: commonConfig.jwtFile
-    flag: --jwtsecret
-    transform: formatPath
+  - configPath: commonConfig.engine.jwtFile
+    flag: --authrpc.jwtsecret
+    transform: interpolate
+    enabled:
+      configPath: commonConfig.engine.communication
+      transform: jwtEnabled
   - configPath: commonConfig.engine.host
-    flag: --engine.host
-  - configPath: commonConfig.engine.apiPort
-    flag: --engine.port
+    flag: --authrpc.addr
+    enabled:
+      configPath: commonConfig.engine.communication
+      transform: jwtEnabled
+  - configPath: commonConfig.engine.port
+    flag: --authrpc.port
+    enabled:
+      configPath: commonConfig.engine.communication
+      transform: jwtEnabled
+  - configPath: commonConfig.engine.ipcPath
+    flag: --auth-ipc.path
+    transform: interpolate
+    enabled:
+      configPath: commonConfig.engine.communication
+      transform: ipcEnabled
+  - configPath: commonConfig.engine.communication
+    flag: --auth-ipc
+    transform: isFlag
+    enabled:
+      configPath: commonConfig.engine.communication
+      transform: ipcEnabled
   - configPath: executionConfig.base.syncMode
     flag: --syncmode
     transform: syncMode
@@ -44,7 +65,7 @@ rules:
     flag: --metrics.port
     parent: --metrics
   - configPath: executionConfig.metrics.addr
-    flag: --metrics.host
+    flag: --metrics.addr
     parent: --metrics
   - configPath: todo
     flag: --ethash.dagdir
@@ -112,8 +133,10 @@ rules:
     flag: --http.corsdomain
   - configPath: todo
     flag: --http.vhosts
-  - configPath: todo
-    flag: --authrpc.vhosts
+  # no vhosts for reth
+  # - configPath: commonConfig.engine.hostAllowlist
+  #   flag: --authrpc.vhosts
+    transform: hostAllowlist
   - configPath: todo
     flag: --http.trace
   - configPath: todo

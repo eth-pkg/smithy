@@ -49,8 +49,8 @@ describe('PresetManager', () => {
         expect.fail('Should have thrown an error');
       } catch (error: unknown) {
         if (error instanceof Error) {
-          expect(error.message).to.include('Execution client must be one of: geth, nethermind, besu');
-          expect(error.message).to.include('Consensus client must be one of: lighthouse, prysm, teku');
+          expect(error.message).to.include('Execution client must be one of: besu, erigon, geth, nethermind, reth');
+          expect(error.message).to.include('Consensus client must be one of: lighthouse, lodestar, nimbus-eth2, prysm, teku');
         } else {
           expect.fail('Expected an Error object');
         }
@@ -94,8 +94,8 @@ describe('PresetManager', () => {
         expect.fail('Should have thrown an error for empty client values');
       } catch (error: unknown) {
         if (error instanceof Error) {
-          expect(error.message).to.include('Consensus client must be one of: lighthouse, prysm, teku');
-          expect(error.message).to.include('Execution client must be one of: geth, nethermind, besu');
+          expect(error.message).to.include('Consensus client must be one of: lighthouse, lodestar, nimbus-eth2, prysm, teku');
+          expect(error.message).to.include('Execution client must be one of: besu, erigon, geth, nethermind, reth');
         } else {
           expect.fail('Expected an Error object');
         }

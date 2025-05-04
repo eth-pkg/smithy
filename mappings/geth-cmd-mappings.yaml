@@ -1,21 +1,33 @@
-name: reth
-version: 0.1.0
+name: geth
+version: 1.13.14
 valueFormat: space
 rules:
   - configPath: executionConfig.dataDir
     flag: --datadir
     transform: interpolate
   - configPath: commonConfig.network
-    flag: --chain
+    flag: --mainnet
+    transform: network
+  - configPath: commonConfig.network
+    flag: --sepolia
+    transform: network  
+  - configPath: commonConfig.network
+    flag: --holesky
+    transform: network  
+  - configPath: commonConfig.network
+    flag: --ephemery
+    transform: network
+  - configPath: commonConfig.network
+    flag: --hoodi
+    transform: network
+  - configPath: commonConfig.networkId
+    flag: --networkid
   - configPath: executionConfig.p2p.port
     flag: --port
   - configPath: executionConfig.p2p.maxPeers
     flag: --maxpeers
   - configPath: executionConfig.http.enabled
     flag: --http
-  - configPath: commonConfig.engine.host
-    flag: --http.addr
-    parent: --http
   - configPath: executionConfig.http.port
     flag: --http.port
     parent: --http
@@ -28,16 +40,37 @@ rules:
   - configPath: executionConfig.ws.port
     flag: --ws.port
     parent: --ws
-  - configPath: commonConfig.jwtFile
+  - configPath: commonConfig.engine.jwtFile
     flag: --authrpc.jwtsecret
-    transform: formatPath
+    transform: interpolate
+    enabled:
+      configPath: commonConfig.engine.communication
+      transform: jwtEnabled
   - configPath: commonConfig.engine.host
     flag: --authrpc.addr
-  - configPath: commonConfig.engine.apiPort
+    enabled:
+      configPath: commonConfig.engine.communication
+      transform: jwtEnabled
+  - configPath: commonConfig.engine.port
     flag: --authrpc.port
+    enabled:
+      configPath: commonConfig.engine.communication
+      transform: jwtEnabled
   - configPath: executionConfig.base.syncMode
     flag: --syncmode
     transform: syncMode
+  - configPath: commonConfig.engine.ipcPath
+    flag: --ipcpath
+    transform: interpolate
+    enabled:
+      configPath: commonConfig.engine.communication
+      transform: ipcEnabled
+  - configPath: commonConfig.engine.communication
+    flag: --ipcdisable
+    transform: isFlag
+    enabled:
+      configPath: commonConfig.engine.communication
+      transform: jwtEnabled
   - configPath: executionConfig.metrics.enabled
     flag: --metrics
   - configPath: executionConfig.metrics.port
@@ -112,8 +145,9 @@ rules:
     flag: --http.corsdomain
   - configPath: todo
     flag: --http.vhosts
-  - configPath: todo
+  - configPath: commonConfig.engine.hostAllowlist
     flag: --authrpc.vhosts
+    transform: hostAllowlist
   - configPath: todo
     flag: --http.trace
   - configPath: todo

@@ -26,9 +26,27 @@ rules:
     flag: --rpc-ws-port
   - configPath: commonConfig.engine.jwtFile
     flag: --engine-jwt-secret
-    transform: formatPath
-  - configPath: commonConfig.engine.apiPort
+    transform: interpolate
+    enabled:
+      configPath: commonConfig.engine.communication
+      transform: jwtEnabled
+  - configPath: commonConfig.engine.port
     flag: --engine-rpc-port
+    enabled:
+      configPath: commonConfig.engine.communication
+      transform: jwtEnabled
+  - configPath: commonConfig.engine.hostAllowlist
+    flag: --engine-host-allowlist
+    transform: hostAllowlist
+    enabled:
+      configPath: commonConfig.engine.communication
+      transform: jwtEnabled
+  - configPath: commonConfig.engine.host
+    flag: --engine-jwt-disabled
+    transform: isFlag
+    enabled:
+      configPath: commonConfig.engine.communication
+      transform: ipcEnabled
   - configPath: commonConfig.syncMode
     flag: --sync-mode
   - configPath: executionConfig.metrics.enabled
@@ -209,13 +227,7 @@ rules:
     flag: --graphql-tls-truststore-file
   - configPath: todo
     flag: --graphql-tls-truststore-password-file
-  - configPath: todo
-    flag: --engine-host-allowlist
-  - configPath: todo
-    flag: --engine-jwt-disabled
-  - configPath: todo
-    flag: --engine-jwt-secret
-  - configPath: todo
+  - configPath: commonConfig.engine.enabled
     flag: --engine-rpc-enabled
   - configPath: todo
     flag: --json-pretty-print-enabled
@@ -371,3 +383,8 @@ rules:
     flag: --rpc-max-logs-range
   - configPath: todo
     flag: --rpc-max-trace-filter-range 
+  - configPath: commonConfig.engine.communication
+    flag: --Xrpc-ipc-enabled
+    enabled:
+      configPath: commonConfig.engine.communication
+      transform: ipcEnabled

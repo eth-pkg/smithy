@@ -1,5 +1,5 @@
 import { expect } from "chai"
-import { CommandClientRegistry } from "@/lib/builders/command/command-client-registry"
+import { CommandClientRegistry } from "@/builders/command/command-client-registry"
 import { ExecutionClientName, ConsensusClientName, ValidatorClientName, NodeConfig } from "@/lib/types"
 import { testConfig } from "../preset-tests/network-preset.test-helper"
 

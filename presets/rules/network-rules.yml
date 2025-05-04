@@ -1,40 +1,19 @@
-# Custom validation rule for validator client when staking is enabled
-if:
-  type: object
-  properties:
-    commonConfig:
-      type: object
-      properties:
-        features:
-          type: object
-          properties:
-            staking:
-              type: boolean
-              const: true
-then:
-  type: object
-  properties:
-    commonConfig:
-      type: object
-      properties:
-        clients:
-          type: object
-          required:
-            - validator
-          properties:
-            validator:
-              type: string
-              minLength: 1
-              errorMessage:
-                minLength: "Validator client is required when staking is enabled"
-    validatorConfig:
-      type: object
-      required:
-        - beaconRpcProvider
-        - feeRecipientAddress
-      errorMessage:
-        required: "Validator configuration is required when staking is enabled"
-
+$id: network-rules.yml
+# =============================================
+# Network Configuration Validation Rules
+# =============================================
+# Ensures network names and IDs are correctly paired and both are provided:
+# - Different clients accept either network names or network IDs
+# - This standardized configuration requires both to be specified
+# - Validates that the specified pair actually matches a known network
+# - This allows the system to pass the appropriate format (name or ID) to each client
+# - Prevents misconfiguration where network name doesn't match the actual network ID
+# 
+# Network ID mappings:
+# - Mainnet: networkId must be 1
+# - Sepolia: networkId must be 11155111
+# - Holesky: networkId must be 17000
+# - Hoodi: networkId must be 17001
 allOf:
   - if:
       type: object

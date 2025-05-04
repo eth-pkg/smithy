@@ -94,7 +94,7 @@ commonConfig:
   consensusClient: ''
   dataDir: $HOME/ethereum/mainnet
   engine:
-    apiPort: 8551
+    port: 8551
     endpointUrl: http://localhost:8551
     host: localhost
     ip: 127.0.0.1

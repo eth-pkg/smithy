@@ -20,10 +20,12 @@ export const baseConfig: CommonConfig = {
     staking: false
   },
   engine: {
-    apiPort: 8551,
+    enabled: true,
+    port: 8551,
     communication: 'jwt',
-    endpointUrl: 'http://localhost:8551',
+    url: 'http://localhost:8551',
     host: 'localhost',
+    hostAllowlist: 'localhost',
     ip: '127.0.0.1',
     jwtFile: '$HOME/ethereum/jwt.hex',
     scheme: 'http'
@@ -46,10 +48,12 @@ export const testConfig: NodeConfig = {
     },
     network: 'mainnet',
     engine: {
-      apiPort: 8551,
+      enabled: true,
+      port: 8551,
       communication: 'jwt',
-      endpointUrl: 'http://localhost:8551',
+      url: 'http://localhost:8551',
       host: 'localhost',
+      hostAllowlist: 'localhost',
       ip: '127.0.0.1',
       jwtFile: '/test/jwt',
       scheme: 'http'

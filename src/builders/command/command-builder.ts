@@ -1,4 +1,4 @@
-import { OperatingSystem, NodeConfig } from "../../types"
+import { OperatingSystem, NodeConfig } from "@/lib/types"
 
 type TransformFunction = (value: any, os: string, flag: string) => any
 type TransformFunctionWithConfig = (value: any, config: any) => any
@@ -8,6 +8,10 @@ type Rule = {
   flag: string
   transform?: string
   parent?: string
+  enabled?: {
+    configPath: string
+    transform?: string
+  }
 }
 
 type Mappings = {
@@ -24,6 +28,12 @@ const transformers: Record<string, TransformFunction | TransformFunctionWithConf
   },
   joinComma: (value: string | string[]) => {
     return Array.isArray(value) ? value.join(",") : value
+  },
+  flagEnabled: (value: string) => {
+    return value === "true" ? true : false
+  },
+  isFlag: () => {
+    return true
   },
   syncMode: (value: string) => {
     const isFastSync = value.toLowerCase() === "fast" || value.toLowerCase() === "snap"
@@ -42,7 +52,15 @@ const transformers: Record<string, TransformFunction | TransformFunctionWithConf
       const value = CommandBuilder.getValueFromPath(config, path);
       return value !== undefined ? value : '';
     });
-  }
+  },
+  hostAllowlist: (value: string | string[]) => {
+    if (typeof value === 'string') {
+      return `"${value}"`;
+    }
+    return value;
+  },
+  jwtEnabled: (value: any) => value === "jwt",
+  ipcEnabled: (value: string) => value === "ipc",
 }
 
 // Base builder class for all client commands
@@ -107,21 +125,38 @@ export class CommandBuilder {
     const builder = new CommandBuilder(baseCommand, mappings)
 
     for (const rule of mappings.rules) {
+      // Check if this rule is enabled via the 'enabled' property
+      if (rule.enabled) {
+        let enabledValue = this.getValueFromPath(config, rule.enabled.configPath)
+        if (rule.enabled.transform) {
+          if (!transformers[rule.enabled.transform]) {
+            throw new Error(`Unknown transform function: ${rule.enabled.transform}`);
+          }
+          enabledValue = (transformers[rule.enabled.transform] as TransformFunction)(enabledValue, os, rule.flag)
+        }
+        if (!enabledValue) {
+          continue
+        }
+      }
+
       const value = this.getValueFromPath(config, rule.configPath)
   
       if (value !== undefined) {
         let transformedValue = value
         if (rule.transform) {
-        
+          if (!transformers[rule.transform]) {
+            throw new Error(`Unknown transform function: ${rule.transform}`);
+          }
+          
           if (rule.transform === 'interpolate') {
             transformedValue = (transformers[rule.transform] as TransformFunctionWithConfig)(value, config);
           } else {
             transformedValue = (transformers[rule.transform] as TransformFunction)(value, os, rule.flag);
           }
-       
         }
 
         // Check if this flag has a parent and if the parent is enabled
+        // todo remove this and use flagEnabled instead and enable the flag if the parent is enabled
         if (typeof rule.parent === 'string') {
           const parentRule = mappings.rules.find(r => r.flag === rule.parent)
           if (typeof parentRule === 'undefined') {

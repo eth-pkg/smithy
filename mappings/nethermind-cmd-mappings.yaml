@@ -1,21 +1,19 @@
-name: teku
-version: 24.1.0
-valueFormat: equals
+name: nethermind
+version: 1.25.0
+valueFormat: space
 rules:
-  - configPath: consensusConfig.dataDir
-    flag: --data-path
+  - configPath: executionConfig.dataDir
+    flag: --datadir
     transform: interpolate
-  - configPath: commonConfig.network
-    flag: --network
   - configPath: executionConfig.p2p.port
-    flag: --port
+    flag: --p2p.port
   - configPath: executionConfig.p2p.maxPeers
-    flag: --maxpeers
+    flag: --p2p.max
   - configPath: executionConfig.http.enabled
     flag: --http
-  - configPath: commonConfig.engine.host
-    flag: --http.addr
-    parent: --http
+  # - configPath: commonConfig.engine.host
+  #   flag: --http.host
+  #   parent: --http
   - configPath: executionConfig.http.port
     flag: --http.port
     parent: --http
@@ -28,13 +26,34 @@ rules:
   - configPath: executionConfig.ws.port
     flag: --ws.port
     parent: --ws
-  - configPath: commonConfig.jwtFile
-    flag: --jwtsecret
-    transform: formatPath
+  - configPath: commonConfig.engine.jwtFile
+    flag: --JsonRpc.JwtSecretFile
+    transform: interpolate
+    enabled:
+      configPath: commonConfig.engine.communication
+      transform: jwtEnabled
   - configPath: commonConfig.engine.host
-    flag: --engine.host
-  - configPath: commonConfig.engine.apiPort
-    flag: --engine.port
+    flag: --JsonRpc.EngineHost
+    enabled:
+      configPath: commonConfig.engine.communication
+      transform: jwtEnabled
+  - configPath: commonConfig.engine.port
+    flag: --JsonRpc.EnginePort
+    enabled:
+      configPath: commonConfig.engine.communication
+      transform: jwtEnabled
+  - configPath: commonConfig.engine.hostAllowlist
+    flag: --JsonRpc.EngineEnabledModules
+    transform: hostAllowlist
+    enabled:
+      configPath: commonConfig.engine.communication
+      transform: jwtEnabled
+  - configPath: commonConfig.engine.ipcPath
+    flag: --JsonRpc.IpcUnixDomainSocketPath
+    transform: interpolate
+    enabled:
+      configPath: commonConfig.engine.communication
+      transform: ipcEnabled
   - configPath: executionConfig.base.syncMode
     flag: --syncmode
     transform: syncMode
@@ -232,7 +251,7 @@ rules:
     flag: --dev.period
   - configPath: todo
     flag: --vmdebug
-  - configPath: todo
+  - configPath: commonConfig.networkId
     flag: --networkid
   - configPath: todo
     flag: --experiment.persist.receipts

@@ -28,12 +28,12 @@ rules:
   - configPath: executionConfig.ws.port
     flag: --ws.port
     parent: --ws
-  - configPath: commonConfig.jwtFile
+  - configPath: commonConfig.engine.jwtFile
     flag: --jwtsecret
     transform: formatPath
   - configPath: commonConfig.engine.host
     flag: --engine.host
-  - configPath: commonConfig.engine.apiPort
+  - configPath: commonConfig.engine.port
     flag: --engine.port
   - configPath: executionConfig.base.syncMode
     flag: --syncmode

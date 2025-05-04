@@ -1,25 +1,12 @@
-name: prysm
-version: 4.0.0
+name: lighthouse
+version: 4.5.0
 valueFormat: space
 rules:
-  - configPath: commonConfig.network
-    flag: --mainnet
-    transform: network
-  - configPath: commonConfig.network
-    flag: --sepolia
-    transform: network
-  - configPath: commonConfig.network
-    flag: --holesky
-    transform: network
-  - configPath: commonConfig.network
-    flag: --ephemery
-    transform: network
-  - configPath: commonConfig.network
-    flag: --hoodi
-    transform: network
   - configPath: consensusConfig.dataDir
     flag: --datadir
     transform: interpolate
+  - configPath: commonConfig.network
+    flag: --network
   - configPath: executionConfig.p2p.port
     flag: --port
   - configPath: executionConfig.p2p.maxPeers
@@ -41,12 +28,12 @@ rules:
   - configPath: executionConfig.ws.port
     flag: --ws.port
     parent: --ws
-  - configPath: commonConfig.jwtFile
+  - configPath: commonConfig.engine.jwtFile
     flag: --jwtsecret
     transform: formatPath
   - configPath: commonConfig.engine.host
     flag: --engine.host
-  - configPath: commonConfig.engine.apiPort
+  - configPath: commonConfig.engine.port
     flag: --engine.port
   - configPath: executionConfig.base.syncMode
     flag: --syncmode
@@ -245,8 +232,8 @@ rules:
     flag: --dev.period
   - configPath: todo
     flag: --vmdebug
-  - configPath: commonConfig.networkId
-    flag: --network-id
+  - configPath: todo
+    flag: --networkid
   - configPath: todo
     flag: --experiment.persist.receipts
   - configPath: todo

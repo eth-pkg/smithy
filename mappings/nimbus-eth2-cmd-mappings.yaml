@@ -1,33 +1,21 @@
-name: geth
-version: 1.13.14
+name: nimbus
+version: 24.1.0
 valueFormat: space
 rules:
-  - configPath: executionConfig.dataDir
-    flag: --datadir
+  - configPath: consensusConfig.dataDir
+    flag: --data-dir
     transform: interpolate
   - configPath: commonConfig.network
-    flag: --mainnet
-    transform: network
-  - configPath: commonConfig.network
-    flag: --sepolia
-    transform: network  
-  - configPath: commonConfig.network
-    flag: --holesky
-    transform: network  
-  - configPath: commonConfig.network
-    flag: --ephemery
-    transform: network
-  - configPath: commonConfig.network
-    flag: --hoodi
-    transform: network
-  - configPath: commonConfig.networkId
-    flag: --networkid
+    flag: --network
   - configPath: executionConfig.p2p.port
     flag: --port
   - configPath: executionConfig.p2p.maxPeers
     flag: --maxpeers
   - configPath: executionConfig.http.enabled
     flag: --http
+  - configPath: commonConfig.engine.host
+    flag: --http.addr
+    parent: --http
   - configPath: executionConfig.http.port
     flag: --http.port
     parent: --http
@@ -40,13 +28,13 @@ rules:
   - configPath: executionConfig.ws.port
     flag: --ws.port
     parent: --ws
-  - configPath: commonConfig.jwtFile
-    flag: --authrpc.jwtsecret
+  - configPath: commonConfig.engine.jwtFile
+    flag: --jwtsecret
     transform: formatPath
   - configPath: commonConfig.engine.host
-    flag: --authrpc.addr
-  - configPath: commonConfig.engine.apiPort
-    flag: --authrpc.port
+    flag: --engine.host
+  - configPath: commonConfig.engine.port
+    flag: --engine.port
   - configPath: executionConfig.base.syncMode
     flag: --syncmode
     transform: syncMode
@@ -56,7 +44,7 @@ rules:
     flag: --metrics.port
     parent: --metrics
   - configPath: executionConfig.metrics.addr
-    flag: --metrics.addr
+    flag: --metrics.host
     parent: --metrics
   - configPath: todo
     flag: --ethash.dagdir

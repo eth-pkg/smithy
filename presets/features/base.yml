@@ -25,7 +25,7 @@ properties:
               - teku
             description: "The consensus client implementation to use"
             errorMessage:
-              enum: "Consensus client must be one of: lighthouse, prysm, teku"
+              enum: "Consensus client must be one of: lighthouse, lodestar, nimbus-eth2, prysm, teku"
             default: ""
        
           execution:
@@ -38,7 +38,7 @@ properties:
               - reth
             description: "The execution client implementation to use"
             errorMessage:
-              enum: "Execution client must be one of: geth, nethermind, besu"
+              enum: "Execution client must be one of: besu, erigon, geth, nethermind, reth"
             default: ""
           validator:
             type: string
@@ -51,7 +51,7 @@ properties:
               - ""
             description: "The validator client implementation to use (required when staking is enabled)"
             errorMessage:
-              enum: "Validator client must be one of: lighthouse, prysm, teku, or empty string"
+              enum: "Validator client must be one of: lighthouse, lodestar, nimbus-eth2, prysm, teku"
             default: ""
           # consensusVersion:
           #   type: string
@@ -67,12 +67,16 @@ properties:
           #   default: ""
       dataDir:
         type: string
-        default: "$HOME/ethereum/mainnet"
+        default: "{HOME}/{commonConfig.network}"
         description: "Base directory for storing Ethereum client data"
       engine:
         type: object
         properties:
-          apiPort:
+          enabled:
+            type: boolean
+            default: true
+            description: "Enable the Engine API"
+          port:
             type: number
             minimum: 1024
             maximum: 65535
@@ -90,17 +94,18 @@ properties:
             description: "Authentication method for Engine API communication"
             errorMessage:
               enum: "Engine communication method must be 'jwt' or 'ipc'"
-          endpointUrl:
+          url:
             type: string
-            pattern: "^https?://[a-zA-Z0-9.-]+(:[0-9]+)?$"
-            default: "http://localhost:8551"
+            default: "{commonConfig.engine.scheme}://{commonConfig.engine.host}:{commonConfig.engine.port}"
             description: "URL for the Engine API endpoint"
-            errorMessage:
-              pattern: "Engine endpoint URL must be a valid http or https URL"
           host:
             type: string
             default: "localhost"
             description: "Hostname for the Engine API"
+          hostAllowlist:
+            type: string
+            default: "localhost"
+            description: "Allowed hostnames for the Engine API"
           ip:
             type: string
             pattern: "^\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}$"
@@ -110,7 +115,7 @@ properties:
               pattern: "Must be a valid IPv4 address"
           jwtFile:
             type: string
-            default: "$HOME/ethereum/mainnet/jwt.hex"
+            default: "{commonConfig.dataDir}/jwt.hex"
             description: "Path to the JWT secret file for Engine API authentication"
           scheme:
             type: string
@@ -486,3 +491,4 @@ properties:
         type: string
         default: "{commonConfig.dataDir}/{commonConfig.clients.execution}"
         description: "Base directory for execution client data. Interpolated from commonConfig.dataDir and commonConfig.clients.execution."
+

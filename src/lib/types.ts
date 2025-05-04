@@ -29,11 +29,8 @@ export type Custom = string
 export type NetworkName = Mainnet | Sepolia | Holesky | Hoodi | Ephemery | Custom
 
 export interface EngineBaseConfig {
-  scheme: EngineScheme
-  host: string
-  apiPort: number
-  endpointUrl: string
-  ip: string
+  enabled: boolean
+
 }
 
 export interface ClientsConfig {
@@ -270,11 +267,25 @@ export interface GenerateOptions {
 export type EngineConfigWithJwt = EngineBaseConfig & {
   communication: "jwt"
   jwtFile: string
+  ipcPath?: never
+  scheme: EngineScheme
+  host: string
+  port: number
+  url: string
+  ip: string
+  hostAllowlist: string
 }
 
 export type EngineConfigWithIpc = EngineBaseConfig & {
   communication: "ipc"
+  ipcPath: string
   jwtFile?: never
+  scheme?: never
+  host?: never
+  port?: never
+  url?: never
+  ip?: never
+  hostAllowlist?: never
 }
 
 export type EngineConfig = EngineConfigWithJwt | EngineConfigWithIpc

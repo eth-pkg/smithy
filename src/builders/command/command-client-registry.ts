@@ -1,29 +1,34 @@
-import { ExecutionClientName, NodeConfig, ValidatorClientName, ConsensusClientName } from "../../types"
+import { ExecutionClientName, NodeConfig, ValidatorClientName, ConsensusClientName } from "@/lib/types"
 import { CommandBuilder } from "./command-builder"
 import * as path from "path"
 import * as fs from "fs"
 import * as yaml from "js-yaml"
 
+const ROOT_DIR = path.join(__dirname, "../../../mappings")
+function loadYamlFile(filename: string): any {
+  return yaml.load(fs.readFileSync(path.join(ROOT_DIR, filename), "utf8"))
+}
+
 // Execution client mappings
-const besuMappings = yaml.load(fs.readFileSync(path.join(__dirname, "mappings/besu-cmd-mappings.yaml"), "utf8"))
-const erigonMappings = yaml.load(fs.readFileSync(path.join(__dirname, "mappings/erigon-cmd-mappings.yaml"), "utf8"))
-const gethMappings = yaml.load(fs.readFileSync(path.join(__dirname, "mappings/geth-cmd-mappings.yaml"), "utf8"))
-const nethermindMappings = yaml.load(fs.readFileSync(path.join(__dirname, "mappings/nethermind-cmd-mappings.yaml"), "utf8"))
-const rethMappings = yaml.load(fs.readFileSync(path.join(__dirname, "mappings/reth-cmd-mappings.yaml"), "utf8"))
+const besuMappings = loadYamlFile("besu-cmd-mappings.yaml")
+const erigonMappings = loadYamlFile("erigon-cmd-mappings.yaml")
+const gethMappings = loadYamlFile("geth-cmd-mappings.yaml")
+const nethermindMappings = loadYamlFile("nethermind-cmd-mappings.yaml")
+const rethMappings = loadYamlFile("reth-cmd-mappings.yaml")
 
 // Consensus client mappings
-const lighthouseMappings = yaml.load(fs.readFileSync(path.join(__dirname, "mappings/lighthouse-cmd-mappings.yaml"), "utf8"))
-const lodestarMappings = yaml.load(fs.readFileSync(path.join(__dirname, "mappings/lodestar-cmd-mappings.yaml"), "utf8"))
-const nimbusMappings = yaml.load(fs.readFileSync(path.join(__dirname, "mappings/nimbus-eth2-cmd-mappings.yaml"), "utf8"))
-const prysmMappings = yaml.load(fs.readFileSync(path.join(__dirname, "mappings/prysm-cmd-mappings.yaml"), "utf8"))
-const tekuMappings = yaml.load(fs.readFileSync(path.join(__dirname, "mappings/teku-cmd-mappings.yaml"), "utf8"))
+const lighthouseMappings = loadYamlFile("lighthouse-cmd-mappings.yaml")
+const lodestarMappings = loadYamlFile("lodestar-cmd-mappings.yaml")
+const nimbusMappings = loadYamlFile("nimbus-eth2-cmd-mappings.yaml")
+const prysmMappings = loadYamlFile("prysm-cmd-mappings.yaml")
+const tekuMappings = loadYamlFile("teku-cmd-mappings.yaml")
 
 // Validator client mappings
-const lighthouseValidatorMappings = yaml.load(fs.readFileSync(path.join(__dirname, "mappings/lighthouse-validator-cmd-mappings.yaml"), "utf8"))
-const lodestarValidatorMappings = yaml.load(fs.readFileSync(path.join(__dirname, "mappings/lodestar-validator-cmd-mappings.yaml"), "utf8"))
-const nimbusValidatorMappings = yaml.load(fs.readFileSync(path.join(__dirname, "mappings/nimbus-eth2-validator-cmd-mappings.yaml"), "utf8"))
-const prysmValidatorMappings = yaml.load(fs.readFileSync(path.join(__dirname, "mappings/prysm-validator-cmd-mappings.yaml"), "utf8"))
-const tekuValidatorMappings = yaml.load(fs.readFileSync(path.join(__dirname, "mappings/teku-validator-cmd-mappings.yaml"), "utf8"))
+const lighthouseValidatorMappings = loadYamlFile("lighthouse-validator-cmd-mappings.yaml")
+const lodestarValidatorMappings = loadYamlFile("lodestar-validator-cmd-mappings.yaml")
+const nimbusValidatorMappings = loadYamlFile("nimbus-eth2-validator-cmd-mappings.yaml")
+const prysmValidatorMappings = loadYamlFile("prysm-validator-cmd-mappings.yaml")
+const tekuValidatorMappings = loadYamlFile("teku-validator-cmd-mappings.yaml")
 
 const executionClientMappings: Record<ExecutionClientName, any> = {
   geth: gethMappings,

@@ -1,0 +1,173 @@
+$id: misc.yml
+allOf:
+  - if:
+      type: object
+      properties:
+        commonConfig:
+          type: object
+          properties:
+            features:
+              type: object
+              properties:
+                staking:
+                  type: boolean
+                  const: true
+    then:
+      type: object
+      properties:
+        commonConfig:
+          type: object
+          properties:
+            clients:
+              type: object
+              required:
+                - validator
+              properties:
+                validator:
+                  type: string
+                  minLength: 1
+                  errorMessage:
+                    minLength: "Validator client is required when staking is enabled"
+        validatorConfig:
+          type: object
+          required:
+            - beaconRpcProvider
+            - feeRecipientAddress
+          errorMessage:
+            required: "Validator configuration is required when staking is enabled"
+
+  # =============================================
+  # Besu Security Configuration Rules
+  # =============================================
+  # Enforces strict security rules for Besu's hostAllowlist configuration:
+  # - Prevents mixing wildcards (*) or 'all' with specific hosts
+  # - This prevents accidental exposure by ensuring the allowlist is either:
+  #   * Completely open (just '*' or 'all')
+  #   * Completely closed (specific hosts only)
+  # - Prevents ambiguous configurations that could lead to security vulnerabilities
+  - if:
+      type: object
+      properties:
+        commonConfig:
+          type: object
+          properties:
+            clients:
+              type: object
+              properties:
+                execution:
+                  const: "besu"
+    required: ["commonConfig"]
+    then:
+      type: object
+      properties:
+        commonConfig:
+          type: object
+          properties:
+            engine:
+              type: object
+              properties:
+                hostAllowlist:
+                  not:
+                    anyOf:
+                      - type: string
+                        pattern: ".*\\*.*,.*"
+                      - type: string
+                        pattern: ".*,.*\\*.*"
+                      - type: string
+                        pattern: ".*all.*,.*"
+                      - type: string
+                        pattern: ".*,.*all.*"
+                  errorMessage:
+                    not: "When using Besu, hostAllowlist cannot contain '*' or 'all' combined with other values"
+
+  # =============================================
+  # Client Compatibility Rules
+  # =============================================
+  # Enforces known client compatibility constraints:
+  # - Specifically prevents the Lighthouse consensus client with Prysm validator combination
+  # - This combination is known to have compatibility issues
+  # - All other client combinations are allowed
+  - if:
+      type: object
+      properties:
+        commonConfig:
+          type: object
+          properties:
+            clients:
+              type: object
+              properties:
+                consensus:
+                  const: lighthouse
+                validator:
+                  const: prysm
+    then:
+      errorMessage: |
+        The combination of Lighthouse consensus client with Prysm validator is not currently supported.
+        All other client combinations are supported.
+        If you need this specific combination, please check with the clients team.
+
+  # =============================================
+  # IPC Communication OS Restriction Rule
+  # =============================================
+  # Ensures that IPC communication is only supported on Linux:
+  # - If engine.communication is set to 'ipc', operatingSystem must be 'linux'
+  # - For Besu, IPC support (--Xrpc-ipc-enabled) is still early access and should be used with caution
+  - if:
+      type: object
+      properties:
+        commonConfig:
+          type: object
+          properties:
+            engine:
+              type: object
+              properties:
+                communication:
+                  const: ipc
+    then:
+      type: object
+      properties:
+        commonConfig:
+          type: object
+          properties:
+            operatingSystem:
+              const: linux
+              errorMessage: "IPC communication is only supported on Linux. Please set operatingSystem to 'linux' or use a different communication method."
+
+  # Warning for Besu IPC early access
+  - if:
+      type: object
+      properties:
+        commonConfig:
+          type: object
+          properties:
+            engine:
+              type: object
+              properties:
+                communication:
+                  const: ipc
+            clients:
+              type: object
+              properties:
+                execution:
+                  const: besu
+    then:
+      errorMessage: "Warning: Besu support for IPC (--Xrpc-ipc-enabled) is still early access. Use with caution."
+
+  - if:
+      type: object
+      properties:
+        commonConfig:
+          type: object
+          properties:
+            clients:
+              type: object
+              properties:
+                execution:
+                  const: erigon
+            engine:
+              type: object
+              properties:
+                communication:
+                  const: ipc
+    then:
+      errorMessage: "Erigon does not support IPC communication. Please use a different communication method."

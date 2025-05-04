@@ -65,7 +65,7 @@ describe('Config Generation', () => {
         },
         dataDir: '$HOME/ethereum/mainnet',
         engine: {
-          apiPort: 8551,
+          port: 8551,
           communication: 'jwt',
           endpointUrl: 'http://localhost:8551',
           host: 'localhost',
@@ -116,7 +116,7 @@ describe('Config Generation', () => {
         },
         dataDir: '$HOME/ethereum/mainnet',
         engine: {
-          apiPort: 8551,
+          port: 8551,
           communication: 'jwt',
           endpointUrl: 'http://localhost:8551',
           host: 'localhost',

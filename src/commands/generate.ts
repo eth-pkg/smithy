@@ -4,7 +4,7 @@ import { GenerateOptions, NodeConfig, CommonConfig, ClientsConfig, FeaturesConfi
 import { ConfigManager } from "@/utils/config";
 import { Logger } from "@/utils/logger";
 import { EXECUTION_CLIENTS, CONSENSUS_CLIENTS, VALIDATOR_CLIENTS } from "@/lib/client-names";
-import { CommandClientRegistry } from "@/lib/builders/command/command-client-registry";
+import { CommandClientRegistry } from "@/builders/command/command-client-registry";
 
 /**
  * Generate Ethereum client commands

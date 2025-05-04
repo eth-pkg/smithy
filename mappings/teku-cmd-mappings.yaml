@@ -1,12 +1,12 @@
-name: erigon
-version: 3.0.2
-valueFormat: space
+name: teku
+version: 24.1.0
+valueFormat: equals
 rules:
-  - configPath: executionConfig.dataDir
-    flag: --datadir
+  - configPath: consensusConfig.dataDir
+    flag: --data-path
     transform: interpolate
   - configPath: commonConfig.network
-    flag: --chain
+    flag: --network
   - configPath: executionConfig.p2p.port
     flag: --port
   - configPath: executionConfig.p2p.maxPeers
@@ -28,13 +28,13 @@ rules:
   - configPath: executionConfig.ws.port
     flag: --ws.port
     parent: --ws
-  - configPath: commonConfig.jwtFile
-    flag: --authrpc.jwtsecret
+  - configPath: commonConfig.engine.jwtFile
+    flag: --jwtsecret
     transform: formatPath
   - configPath: commonConfig.engine.host
-    flag: --authrpc.addr
-  - configPath: commonConfig.engine.apiPort
-    flag: --authrpc.port
+    flag: --engine.host
+  - configPath: commonConfig.engine.port
+    flag: --engine.port
   - configPath: executionConfig.base.syncMode
     flag: --syncmode
     transform: syncMode
@@ -44,7 +44,7 @@ rules:
     flag: --metrics.port
     parent: --metrics
   - configPath: executionConfig.metrics.addr
-    flag: --metrics.addr
+    flag: --metrics.host
     parent: --metrics
   - configPath: todo
     flag: --ethash.dagdir
@@ -232,7 +232,7 @@ rules:
     flag: --dev.period
   - configPath: todo
     flag: --vmdebug
-  - configPath: commonConfig.networkId
+  - configPath: todo
     flag: --networkid
   - configPath: todo
     flag: --experiment.persist.receipts
