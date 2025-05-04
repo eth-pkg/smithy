@@ -3,37 +3,36 @@ allOf:
   - if:
       type: object
       properties:
-        commonConfig:
+        validatorConfig:
           type: object
           properties:
-            features:
-              type: object
-              properties:
-                staking:
-                  type: boolean
-                  const: true
-      required: ["commonConfig"]
+            enabled:
+              type: boolean
+              const: true
+      required: ["validatorConfig"]
     then:
       type: object
+      required:
+        - validatorConfig
       properties:
-        commonConfig:
-          type: object
-          properties:
-            clients:
-              type: object
-              required:
-                - validator
-              properties:
-                validator:
-                  type: string
-                  minLength: 1
-                  errorMessage:
-                    minLength: "Validator client is required when staking is enabled"
         validatorConfig:
           type: object
           required:
+            - client
             - beaconRpcProvider
             - feeRecipientAddress
+          properties:
+            beaconRpcProvider:
+              type: string
+            feeRecipientAddress:
+              type: string
+            client:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
           errorMessage:
             required: "Validator configuration is required when staking is enabled"
 
@@ -172,3 +171,4 @@ allOf:
                   const: ipc
     then:
       errorMessage: "Erigon does not support IPC communication. Please use a different communication method."
+

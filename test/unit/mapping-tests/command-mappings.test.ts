@@ -34,13 +34,13 @@ describe("CommandClientRegistry", () => {
     it(`should use the correct command (${expectedCommand}) for execution client ${client}`, () => {
       let config = { 
         ...testConfig, 
-        commonConfig: { 
-          ...testConfig.commonConfig,
-          clients: { 
-            ...testConfig.commonConfig.clients, 
-            execution: client as ExecutionClientName 
-          } 
-        } 
+        executionConfig: {
+          ...testConfig.executionConfig,
+          client: {
+            name: client as ExecutionClientName,
+            version: "",
+          }
+        }
       }
       const script = registry.getScriptContent(client as ExecutionClientName, config)
       const scriptStr = script.toString()
@@ -52,13 +52,13 @@ describe("CommandClientRegistry", () => {
     it(`should use the correct command (${expectedCommand}) for consensus client ${client}`, () => {
       let config = { 
         ...testConfig, 
-        commonConfig: { 
-          ...testConfig.commonConfig,
-          clients: { 
-            ...testConfig.commonConfig.clients, 
-            consensus: client as ConsensusClientName 
-          } 
-        } 
+        consensusConfig: {
+          ...testConfig.consensusConfig,
+          client: {
+            name: client as ConsensusClientName,
+            version: "",
+          }
+        }
       }
       const script = registry.getScriptContent(client as ConsensusClientName, config)
       const scriptStr = script.toString()
@@ -70,13 +70,13 @@ describe("CommandClientRegistry", () => {
     it(`should use the correct command (${expectedCommand}) for validator client ${client}`, () => {
       let config = { 
         ...testConfig, 
-        commonConfig: { 
-          ...testConfig.commonConfig,
-          clients: { 
-            ...testConfig.commonConfig.clients, 
-            validator: client as ValidatorClientName 
-          } 
-        } 
+        validatorConfig: {
+          ...testConfig.validatorConfig,
+          client: {
+            name: client as ValidatorClientName,
+            version: "",
+          }
+        }
       }
       const script = registry.getScriptContent(client as ValidatorClientName, config, true)
       const scriptStr = script.toString()

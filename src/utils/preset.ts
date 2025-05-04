@@ -231,13 +231,13 @@ export class PresetManager {
         useDefaults: true,
         coerceTypes: true,
         loadSchema: this.loadSchema.bind(this),
-        strict: false
+        strict: true
       });
       ajvErrors(ajv);
 
       const validate = await ajv.compileAsync(validationSchema);
 
-      const configWithDefaults: Partial<NodeConfig> = this.extractDefaults(validationSchema);
+      const configWithDefaults = this.extractDefaults(validationSchema);
       
       this.deepMerge(configWithDefaults, config);
 

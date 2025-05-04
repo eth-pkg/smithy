@@ -1,24 +1,14 @@
 $id: non-staker
 type: object
 properties:
-  commonConfig:
+  validatorConfig:
     type: object
     properties:
-      features:
+      enabled:
+        type: boolean
+        const: false
+        default: false
+      client:
         type: object
-        properties:
-          staking:
-            type: boolean
-            const: false
-            default: false
-      clients:
-        type: object
-        properties:
-          validator:
-            type: string
-            minLength: 1
-            errorMessage:
-              minLength: "Validator client must be specified"
-    required:
-      - features
-      - clients 
+        const: "" 
+        default: ""

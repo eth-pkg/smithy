@@ -14,7 +14,6 @@ rules:
     parent: --metrics
   - configPath: validatorConfig.metricsEnabled
     flag: --metrics
-    transform: boolean
   - configPath: validatorConfig.metricsAddress
     flag: --metrics-address
     parent: --metrics
@@ -30,13 +29,10 @@ rules:
     flag: --graffiti
   - configPath: validatorConfig.builderEnabled
     flag: --payload-builder
-    transform: boolean
   - configPath: validatorConfig.distributed
     flag: --distributed
-    transform: boolean
   - configPath: validatorConfig.doppelgangerProtection
     flag: --doppelganger-detection
-    transform: boolean
   - configPath: validatorConfig.configFile
     flag: --config-file
   - configPath: validatorConfig.logLevel
@@ -45,7 +41,6 @@ rules:
     flag: --log-file
   - configPath: todo
     flag: --keymanager
-    transform: boolean
   - configPath: todo
     flag: --keymanager-port
     parent: --keymanager

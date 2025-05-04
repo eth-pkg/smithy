@@ -26,7 +26,6 @@ describe('Engine Configuration Tests', () => {
           ...testConfig,
           commonConfig: {
             ...testConfig.commonConfig,
-            clients: { ...testConfig.commonConfig.clients, execution: client },
             engine: {
               enabled: true,
               scheme: 'http' as const,
@@ -38,6 +37,13 @@ describe('Engine Configuration Tests', () => {
               ip: '127.0.0.1',
               jwtFile: '{commonConfig.dataDir}/jwt.hex',
             }
+          },
+          executionConfig: {
+            ...testConfig.executionConfig,
+            client: {
+              name: client,
+              version: ''
+            },
           }
         };
 
@@ -101,7 +107,6 @@ describe('Engine Configuration Tests', () => {
             ...testConfig,
             commonConfig: {
               ...testConfig.commonConfig,
-              clients: { ...testConfig.commonConfig.clients, execution: client },
               engine: {
                 enabled: true,
                 scheme: 'http' as const,
@@ -113,9 +118,15 @@ describe('Engine Configuration Tests', () => {
                 ip: '127.0.0.1',
                 jwtFile: '{commonConfig.dataDir}/jwt.hex',
               }
+            },
+            executionConfig: {
+              ...testConfig.executionConfig,
+              client: {
+                name: client,
+                version: ''
+              },
             }
           };
-
           const scriptContent = registry.getScriptContent(client, config);
           const scriptString = scriptContent.toString();
 
@@ -147,12 +158,18 @@ describe('Engine Configuration Tests', () => {
           ...testConfig,
           commonConfig: {
             ...testConfig.commonConfig,
-            clients: { ...testConfig.commonConfig.clients, execution: client },
             engine: {
               enabled: true,
               communication: 'ipc' as const,
               ipcPath: 'ipc:///path/to/ipc.sock',
             }
+          },
+          executionConfig: {
+            ...testConfig.executionConfig,
+            client: {
+              name: client,
+              version: ''
+            },
           }
         };
 
@@ -197,7 +214,6 @@ describe('Engine Configuration Tests', () => {
           ...testConfig,
           commonConfig: {
             ...testConfig.commonConfig,
-            clients: { ...testConfig.commonConfig.clients, execution: client },
             engine: {
               enabled: true,
               port: 8551,
@@ -209,6 +225,13 @@ describe('Engine Configuration Tests', () => {
               jwtFile: '/path/to/jwt.hex',
               scheme: 'http' as const
             }
+          },
+          executionConfig: {
+            ...testConfig.executionConfig,
+            client: {
+              name: client,
+              version: ''
+            },
           }
         };
 
@@ -260,7 +283,6 @@ describe('Engine Configuration Tests', () => {
           ...testConfig,
           commonConfig: {
             ...testConfig.commonConfig,
-            clients: { ...testConfig.commonConfig.clients, consensus: client },
             engine: {
               enabled: true,
               port: 8551,
@@ -272,6 +294,13 @@ describe('Engine Configuration Tests', () => {
               jwtFile: '/path/to/jwt.hex',
               scheme: 'http' as const
             }
+          },
+          consensusConfig: {
+            ...testConfig.consensusConfig,
+            client: {
+              name: client,
+              version: ''
+            },
           }
         };
 
@@ -310,12 +339,18 @@ describe('Engine Configuration Tests', () => {
           ...testConfig,
           commonConfig: {
             ...testConfig.commonConfig,
-            clients: { ...testConfig.commonConfig.clients, consensus: client },
             engine: {
               enabled: true,
               communication: 'ipc' as const,
               ipcPath: 'ipc:///path/to/ipc.sock',
             }
+          },
+          consensusConfig: {
+            ...testConfig.consensusConfig,
+            client: {
+              name: client,
+              version: ''
+            },
           }
         };
 
@@ -351,7 +386,6 @@ describe('Engine Configuration Tests', () => {
           ...testConfig,
           commonConfig: {
             ...testConfig.commonConfig,
-            clients: { ...testConfig.commonConfig.clients, consensus: client },
             engine: {
               enabled: true,
               port: 8551,
@@ -363,6 +397,13 @@ describe('Engine Configuration Tests', () => {
               jwtFile: '/path/to/jwt.hex',
               scheme: 'http' as const
             }
+          },
+          consensusConfig: {
+            ...testConfig.consensusConfig,
+            client: {
+              name: client,
+              version: ''
+            },
           }
         };
 
@@ -398,7 +439,6 @@ describe('Engine Configuration Tests', () => {
           ...testConfig,
           commonConfig: {
             ...testConfig.commonConfig,
-            clients: { ...testConfig.commonConfig.clients, consensus: client },
             engine: {
               enabled: true,
               port: 9999,
@@ -410,9 +450,15 @@ describe('Engine Configuration Tests', () => {
               jwtFile: '/custom/path/jwt.hex',
               scheme: 'https' as const
             }
+          },
+          consensusConfig: {
+            ...testConfig.consensusConfig,
+            client: {
+              name: client,
+              version: ''
+            },
           }
         };
-
         const scriptContent = registry.getScriptContent(client, config);
         const scriptString = scriptContent.toString();
 

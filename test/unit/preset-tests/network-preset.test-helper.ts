@@ -9,16 +9,6 @@ interface NetworkConfig {
 }
 
 export const baseConfig: CommonConfig = {
-  clients: {
-    execution: 'geth' as ExecutionClientName,
-    consensus: 'lighthouse' as ConsensusClientName,
-    validator: 'lighthouse' as ValidatorClientName
-  },
-  features: {
-    mevBoost: false,
-    monitoring: true,
-    staking: false
-  },
   engine: {
     enabled: true,
     port: 8551,
@@ -41,27 +31,35 @@ export const testConfig: NodeConfig = {
   commonConfig: {
     ...baseConfig,
     dataDir: '/test/data',
-    clients: {
-      execution: 'geth',
-      consensus: 'lighthouse',
-      validator: 'prysm'
-    }
   },
   consensusConfig: {
-    dataDir: '{commonConfig.dataDir}/{commonConfig.clients.consensus}',
+    client: {
+      name: 'lighthouse',
+      version: ''
+    },
+    dataDir: '{commonConfig.dataDir}/{consensusConfig.client.name}',
     httpPort: 5052,
     metricsPort: 8008,
     p2pPort: 9000
   },
   validatorConfig: {
-    dataDir: '{commonConfig.dataDir}/{commonConfig.clients.validator}',
+    client: {
+      name: 'prysm',
+      version: ''
+    },
+    enabled: false,
+    dataDir: '{commonConfig.dataDir}/{validatorConfig.client.name}',
     beaconRpcProvider: 'http://localhost:5052',
     numValidators: 1,
     feeRecipientAddress: '0x0000000000000000000000000000000000000000',
     metricsPort: '8080'
   },
   executionConfig: {
-    dataDir: '{commonConfig.dataDir}/{commonConfig.clients.execution}',
+    client: {
+      name: 'geth',
+      version: ''
+    },
+    dataDir: '{commonConfig.dataDir}/{executionConfig.client.name}',
     http: {
       enabled: true,
       port: 8545,

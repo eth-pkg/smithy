@@ -43,7 +43,10 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid consensus client values
   it('should reject invalid consensus client value', async () => {
     const config = { ...testConfig };
-    config.commonConfig!.clients.consensus = 'invalid_client' as any;
+    config.consensusConfig!.client = {
+      name: 'invalid_client' as any,
+      version: ''
+    };
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -58,7 +61,10 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid execution client values
   it('should reject invalid execution client value', async () => {
     const config = { ...testConfig };
-    config.commonConfig!.clients.execution = 'invalid_client' as any;
+    config.executionConfig!.client = {
+      name: 'invalid_client' as any,
+      version: ''
+    };
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -73,7 +79,10 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid validator client values
   it('should reject invalid validator client value', async () => {
     const config = { ...testConfig };
-    config.commonConfig!.clients.validator = 'invalid_client' as any;
+    config.validatorConfig!.client = {
+      name: 'invalid_client' as any,
+      version: ''
+    };
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -388,9 +397,9 @@ describe.skip('Preset Validation Tests', () => {
   // Test missing required fields
   it('should reject missing required consensus client', async () => {
     const config = { ...testConfig };
-    config.commonConfig!.clients = {
-      ...config.commonConfig!.clients,
-      consensus: '' as any
+    config.consensusConfig!.client = {
+      name: '' as any,
+      version: ''
     };
 
     try {
@@ -406,9 +415,9 @@ describe.skip('Preset Validation Tests', () => {
   // Test missing required fields
   it('should reject missing required execution client', async () => {
     const config = { ...testConfig };
-    config.commonConfig!.clients = {
-      ...config.commonConfig!.clients,
-      execution: '' as any
+    config.executionConfig!.client = {
+      name: '' as any,
+      version: ''
     };
 
     try {

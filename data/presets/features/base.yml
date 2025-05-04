@@ -5,66 +5,7 @@ required:
 properties:
   commonConfig:
     type: object
-    required:
-      - clients
     properties:
-
-      clients:
-        type: object
-        required:
-          - consensus
-          - execution
-        properties:
-          consensus:
-            type: string
-            enum:
-              - lighthouse
-              - lodestar
-              - nimbus-eth2
-              - prysm
-              - teku
-            description: "The consensus client implementation to use"
-            errorMessage:
-              enum: "Consensus client must be one of: lighthouse, lodestar, nimbus-eth2, prysm, teku"
-            default: ""
-       
-          execution:
-            type: string
-            enum:
-              - besu
-              - erigon 
-              - geth
-              - nethermind
-              - reth
-            description: "The execution client implementation to use"
-            errorMessage:
-              enum: "Execution client must be one of: besu, erigon, geth, nethermind, reth"
-            default: ""
-          validator:
-            type: string
-            enum:
-              - lighthouse
-              - lodestar
-              - nimbus-eth2
-              - prysm
-              - teku
-              - ""
-            description: "The validator client implementation to use (required when staking is enabled)"
-            errorMessage:
-              enum: "Validator client must be one of: lighthouse, lodestar, nimbus-eth2, prysm, teku"
-            default: ""
-          # consensusVersion:
-          #   type: string
-          #   description: "The version of the consensus client to use"
-          #   default: ""  
-          # executionVersion:
-          #   type: string
-          #   description: "The version of the execution client to use"
-          #   default: ""
-          # validatorVersion:
-          #   type: string
-          #   description: "The version of the validator client to use"
-          #   default: ""
       dataDir:
         type: string
         default: "{HOME}/{commonConfig.network}"
@@ -131,21 +72,6 @@ properties:
             default: "{commonConfig.dataDir}/engine.ipc"
             description: "Path to the IPC file for Engine API communication"
 
-      features:
-        type: object
-        properties:
-          mevBoost:
-            type: boolean
-            default: false
-            description: "Enable MEV-Boost for block building"
-          monitoring:
-            type: boolean
-            default: true
-            description: "Enable monitoring and metrics collection"
-          staking:
-            type: boolean
-            default: false
-            description: "Enable validator staking functionality"
       network:
         type: string
         enum:
@@ -186,9 +112,143 @@ properties:
         description: "Blockchain synchronization mode (snap for fast sync, full for complete sync, light for light client)"
         errorMessage:
           enum: "Sync mode must be one of: snap, full, light"
+  executionConfig:
+    type: object
+    required: [client]
+    properties:
+      client:
+        type: object
+        required: [name]
+        properties:
+          name:
+            type: string
+            enum:
+            - besu
+            - erigon 
+            - geth
+            - nethermind
+            - reth
+            description: "The execution client implementation to use"
+            errorMessage:
+              enum: "Execution client must be one of: besu, erigon, geth, nethermind, reth"
+          version:
+            type: string
+            default: ""
+            description: "The version of the execution client to use"
+            errorMessage:
+              pattern: "Version must be a valid semver string"
+      http:
+        type: object
+        properties:
+          apiPrefixes:
+            type: array
+            minItems: 1
+            default: ["eth", "net", "web3"]
+            description: "List of JSON-RPC API namespaces to enable"
+            items:
+              type: string
+          cors:
+            type: array
+            default: ["*"]
+            description: "List of allowed CORS origins for HTTP API"
+            items:
+              type: string
+          enabled:
+            type: boolean
+            default: true
+            description: "Enable HTTP JSON-RPC API"
+          port:
+            type: number
+            minimum: 1024
+            maximum: 65535
+            default: 8545
+            description: "Port number for HTTP JSON-RPC API"
+            errorMessage:
+              minimum: "HTTP port must be >= 1024"
+              maximum: "HTTP port must be <= 65535"
+      metrics:
+        type: object
+        properties:
+          enabled:
+            type: boolean
+            default: true
+            description: "Enable metrics collection and reporting"
+          port:
+            type: number
+            minimum: 1024
+            maximum: 65535
+            default: 6060
+            description: "Port number for metrics server"
+            errorMessage:
+              minimum: "Metrics port must be >= 1024"
+              maximum: "Metrics port must be <= 65535"
+      p2p:
+        type: object
+        properties:
+          maxPeers:
+            type: number
+            minimum: 1
+            maximum: 1000
+            default: 50
+            description: "Maximum number of P2P peers to connect to"
+            errorMessage:
+              minimum: "Max peers must be at least 1"
+              maximum: "Max peers should not exceed 1000"
+          port:
+            type: number
+            minimum: 1024
+            maximum: 65535
+            default: 30303
+            description: "Port number for P2P networking"
+            errorMessage:
+              minimum: "P2P port must be >= 1024"
+              maximum: "P2P port must be <= 65535"
+      ws:
+        type: object
+        properties:
+          enabled:
+            type: boolean
+            default: false
+            description: "Enable WebSocket JSON-RPC API"
+          port:
+            type: number
+            minimum: 1024
+            maximum: 65535
+            default: 8546
+            description: "Port number for WebSocket JSON-RPC API"
+            errorMessage:
+              minimum: "WebSocket port must be >= 1024"
+              maximum: "WebSocket port must be <= 65535"
+      dataDir:
+        type: string
+        default: "{commonConfig.dataDir}/{executionConfig.client.name}"
+        description: "Base directory for execution client data. Interpolated from commonConfig.dataDir and executionConfig.client.name."
+      
   consensusConfig:
     type: object
+    required: [client]
     properties:
+      client:
+        type: object
+        required: [name]
+        properties:
+          name:
+            type: string
+            enum:
+              - lighthouse
+              - lodestar
+              - nimbus-eth2
+              - prysm
+              - teku
+            description: "The consensus client implementation to use"
+            errorMessage:
+              enum: "Consensus client must be one of: lighthouse, lodestar, nimbus-eth2, prysm, teku"
+          version:
+            type: string
+            default: ""
+            description: "The version of the consensus client to use"
+            errorMessage:
+              pattern: "Version must be a valid semver string"
       httpPort:
         type: number
         minimum: 1024
@@ -288,15 +348,43 @@ properties:
         description: "Enable block builder API for MEV"
       dataDir:
         type: string
-        default: "{commonConfig.dataDir}/{commonConfig.clients.consensus}"
-        description: "Base directory for consensus client data. Interpolated from commonConfig.dataDir and commonConfig.clients.consensus."
+        default: "{commonConfig.dataDir}/{consensusConfig.client.name}"
+        description: "Base directory for consensus client data. Interpolated from commonConfig.dataDir and consensusConfig.client.name."
+  
   validatorConfig:
     type: object
     properties:
+      enabled:
+        type: boolean
+        default: false
+        description: "Enable validator functionality"
+      client:
+        type: object
+        required: [name]
+        properties:
+          name:
+            type: string
+            enum:
+            - lighthouse
+            - lodestar
+            - nimbus-eth2
+            - prysm
+            - teku
+            - ""
+            description: "The validator client implementation to use (required when staking is enabled)"
+            errorMessage:
+              enum: "Validator client must be one of: lighthouse, lodestar, nimbus-eth2, prysm, teku"
+            default: ""
+          version:
+            type: string
+            default: ""
+            description: "The version of the validator client to use"
+            errorMessage:
+              pattern: "Version must be a valid semver string"  
       dataDir:
         type: string
-        default: "{commonConfig.dataDir}/{commonConfig.clients.validator}-validator"
-        description: "Base directory for validator data. Interpolated from commonConfig.dataDir and commonConfig.clients.validator."
+        default: "{commonConfig.dataDir}/{validatorConfig.client.name}-validator"
+        description: "Base directory for validator data. Interpolated from commonConfig.dataDir and validatorConfig.client.name."
       beaconRpcProvider:
         type: string
         default: "localhost:5052"
@@ -401,93 +489,5 @@ properties:
         type: boolean
         default: false
         description: "Enable distributed validator mode"
-  executionConfig:
-    type: object
-    properties:
-      http:
-        type: object
-        properties:
-          apiPrefixes:
-            type: array
-            minItems: 1
-            default: ["eth", "net", "web3"]
-            description: "List of JSON-RPC API namespaces to enable"
-            items:
-              type: string
-          cors:
-            type: array
-            default: ["*"]
-            description: "List of allowed CORS origins for HTTP API"
-            items:
-              type: string
-          enabled:
-            type: boolean
-            default: true
-            description: "Enable HTTP JSON-RPC API"
-          port:
-            type: number
-            minimum: 1024
-            maximum: 65535
-            default: 8545
-            description: "Port number for HTTP JSON-RPC API"
-            errorMessage:
-              minimum: "HTTP port must be >= 1024"
-              maximum: "HTTP port must be <= 65535"
-      metrics:
-        type: object
-        properties:
-          enabled:
-            type: boolean
-            default: true
-            description: "Enable metrics collection and reporting"
-          port:
-            type: number
-            minimum: 1024
-            maximum: 65535
-            default: 6060
-            description: "Port number for metrics server"
-            errorMessage:
-              minimum: "Metrics port must be >= 1024"
-              maximum: "Metrics port must be <= 65535"
-      p2p:
-        type: object
-        properties:
-          maxPeers:
-            type: number
-            minimum: 1
-            maximum: 1000
-            default: 50
-            description: "Maximum number of P2P peers to connect to"
-            errorMessage:
-              minimum: "Max peers must be at least 1"
-              maximum: "Max peers should not exceed 1000"
-          port:
-            type: number
-            minimum: 1024
-            maximum: 65535
-            default: 30303
-            description: "Port number for P2P networking"
-            errorMessage:
-              minimum: "P2P port must be >= 1024"
-              maximum: "P2P port must be <= 65535"
-      ws:
-        type: object
-        properties:
-          enabled:
-            type: boolean
-            default: false
-            description: "Enable WebSocket JSON-RPC API"
-          port:
-            type: number
-            minimum: 1024
-            maximum: 65535
-            default: 8546
-            description: "Port number for WebSocket JSON-RPC API"
-            errorMessage:
-              minimum: "WebSocket port must be >= 1024"
-              maximum: "WebSocket port must be <= 65535"
-      dataDir:
-        type: string
-        default: "{commonConfig.dataDir}/{commonConfig.clients.execution}"
-        description: "Base directory for execution client data. Interpolated from commonConfig.dataDir and commonConfig.clients.execution."
-
+    
+  

@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { describe, it, beforeEach } from 'mocha';
 import { PresetManager } from '@/utils/preset';
 import { NodeConfig } from '@/lib/types';
-import { baseConfig } from './network-preset.test-helper';
+import { baseConfig, testConfig } from './network-preset.test-helper';
 
 describe('Staker Preset Tests', () => {
   let presetManager: PresetManager;
@@ -15,31 +15,31 @@ describe('Staker Preset Tests', () => {
     const config: Partial<NodeConfig> = {
       commonConfig: {
         ...baseConfig,
-        features: {
-          ...baseConfig.features,
-          staking: true
-        },
         network: 'mainnet',
         networkId: 1,
         dataDir: '$HOME/ethereum/mainnet'
+      },
+      validatorConfig: {
+        ...testConfig.validatorConfig,
+        enabled: true
       }
     };
 
     const result = await presetManager.validateAndApplyRules(config, 'combined/mainnet-staker');
-    expect(result.commonConfig?.features?.staking).to.be.true;
+    expect(result.validatorConfig?.enabled).to.be.true;
   });
 
   it('should reject staker preset with staking set to false', async () => {
     const config: Partial<NodeConfig> = {
       commonConfig: {
         ...baseConfig,
-        features: {
-          ...baseConfig.features,
-          staking: false
-        },
         network: 'mainnet',
         networkId: 1,
         dataDir: '$HOME/ethereum/mainnet'
+      },
+      validatorConfig: {
+        ...testConfig.validatorConfig,
+        enabled: false
       }
     };
 

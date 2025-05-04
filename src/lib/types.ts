@@ -30,33 +30,22 @@ export type NetworkName = Mainnet | Sepolia | Holesky | Hoodi | Ephemery | Custo
 
 export interface EngineBaseConfig {
   enabled: boolean
-
-}
-
-export interface ClientsConfig {
-  consensus: ConsensusClientName | EmptyValue
-  execution: ExecutionClientName | EmptyValue
-  validator: ValidatorClientName | EmptyValue
-}
-
-export interface FeaturesConfig {
-  mevBoost: boolean
-  monitoring: boolean
-  staking: boolean
 }
 
 export interface CommonConfig {
   networkId: number
-  clients: ClientsConfig
   dataDir: string
   engine: EngineConfig
-  features: FeaturesConfig
   network: NetworkName
   operatingSystem: OperatingSystem
   syncMode: SyncMode
 }
 
 export interface ConsensusConfig {
+  client: {
+    name: ConsensusClientName | EmptyValue
+    version: string
+  }
   dataDir: string
   httpPort: number
   metricsPort: number
@@ -64,6 +53,11 @@ export interface ConsensusConfig {
 }
 
 export interface ValidatorConfig {
+  client: {
+    name: ValidatorClientName | EmptyValue
+    version: string
+  }
+  enabled: boolean
   dataDir: string
   beaconRpcProvider: string
   numValidators: number
@@ -119,6 +113,10 @@ export interface WebSocketConfig {
 }
 
 export interface ExecutionConfig {
+  client: {
+    name: ExecutionClientName | EmptyValue
+    version: string
+  }
   dataDir: string
   http: HttpConfig
   metrics: MetricsConfig

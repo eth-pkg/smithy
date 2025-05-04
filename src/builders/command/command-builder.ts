@@ -130,7 +130,7 @@ export class CommandBuilder {
         let enabledValue = this.getValueFromPath(config, rule.enabled.configPath)
         if (rule.enabled.transform) {
           if (!transformers[rule.enabled.transform]) {
-            throw new Error(`Unknown transform function: ${rule.enabled.transform}`);
+            throw new Error(`Unknown transform function: ${rule.enabled.transform} for flag: ${rule.flag}`);
           }
           enabledValue = (transformers[rule.enabled.transform] as TransformFunction)(enabledValue, os, rule.flag)
         }
@@ -145,7 +145,7 @@ export class CommandBuilder {
         let transformedValue = value
         if (rule.transform) {
           if (!transformers[rule.transform]) {
-            throw new Error(`Unknown transform function: ${rule.transform}`);
+            throw new Error(`Unknown transform function: ${rule.transform} for flag: ${rule.flag}`);
           }
           
           if (rule.transform === 'interpolate') {

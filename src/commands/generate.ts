@@ -1,6 +1,6 @@
 import * as fs from "fs-extra";
 import inquirer from "inquirer";
-import { GenerateOptions, NodeConfig, CommonConfig, ClientsConfig, FeaturesConfig, ExecutionClientName, ConsensusClientName, ValidatorClientName } from "@/lib/types";
+import { GenerateOptions, NodeConfig, CommonConfig, ValidatorConfig, ExecutionClientName, ConsensusClientName, ValidatorClientName, ExecutionConfig, ConsensusConfig } from "@/lib/types";
 import { ConfigManager } from "@/utils/config";
 import { Logger } from "@/utils/logger";
 import { EXECUTION_CLIENTS, CONSENSUS_CLIENTS, VALIDATOR_CLIENTS } from "@/lib/client-names";
@@ -40,9 +40,9 @@ export async function generate(
   userConfig = configManager.mergeOptionsWithConfig(userConfig, options);
   logger.debug(`Merged config: ${JSON.stringify(userConfig, null, 2)}`);
 
-  const configExecution = userConfig.commonConfig?.clients?.execution || "";
-  const configConsensus = userConfig.commonConfig?.clients?.consensus || "";
-  const configValidator = userConfig.commonConfig?.clients?.validator || "";
+  const configExecution = userConfig.executionConfig?.client?.name || "";
+  const configConsensus = userConfig.consensusConfig?.client?.name || "";
+  const configValidator = userConfig.validatorConfig?.client?.name || "";
 
   logger.debug(`Config values - Execution: ${configExecution}, Consensus: ${configConsensus}, Validator: ${configValidator}`);
 
@@ -53,7 +53,7 @@ export async function generate(
   if (!configConsensus && !options.consensus) {
     missingFields.push('consensus');
   }
-  if ((userConfig.commonConfig?.features?.staking === true && !userConfig.commonConfig?.clients?.validator)) {
+  if ((userConfig.validatorConfig?.enabled === true && !userConfig.validatorConfig?.client?.name)) {
     missingFields.push('validator');
   }
 
@@ -61,18 +61,28 @@ export async function generate(
 
   const finalOptions = await promptForMissingOptions(options, missingFields);
 
-  userConfig.commonConfig = {
-    ...userConfig?.commonConfig,
-    clients: {
-      execution: finalOptions.execution,
-      consensus: finalOptions.consensus,
-      validator: finalOptions.validator || ""
-    } as ClientsConfig,
-    features: {
-      ...userConfig.commonConfig?.features,
-      staking: finalOptions.validator ? true : false,
-    } as FeaturesConfig,
-  } as CommonConfig;
+  userConfig.executionConfig = {
+    ...userConfig.executionConfig,
+    client: {
+      name: finalOptions.execution as ExecutionClientName,
+      version: "",
+    },
+  } as ExecutionConfig;
+  userConfig.consensusConfig = {
+    ...userConfig.consensusConfig,
+    client: {
+      name: finalOptions.consensus as ConsensusClientName,
+      version: "",
+    },
+  } as ConsensusConfig;
+  userConfig.validatorConfig = {
+    ...userConfig.validatorConfig,
+    enabled: finalOptions.validator ? true : false,
+    client: {
+      name: finalOptions.validator as ValidatorClientName,
+      version: "",
+    },
+  } as ValidatorConfig;
 
   try {
     const config = await configManager.processConfigWithPreset(userConfig, preset);
@@ -111,9 +121,9 @@ async function promptForMissingOptions(
     try {
       const configManager = new ConfigManager();
       const loadedConfig = await configManager.loadConfigFile(options.configFile);
-      configExecution = loadedConfig.commonConfig?.clients?.execution || "";
-      configConsensus = loadedConfig.commonConfig?.clients?.consensus || "";
-      configValidator = loadedConfig.commonConfig?.clients?.validator || "";
+      configExecution = loadedConfig.executionConfig?.client?.name || "";
+      configConsensus = loadedConfig.consensusConfig?.client?.name || "";
+      configValidator = loadedConfig.validatorConfig?.enabled ? loadedConfig.validatorConfig?.client?.name || "" : "";
     } catch (error) {
       throw new Error(`Failed to load config file values: ${error}`);
     }

@@ -1,8 +1,4 @@
 commonConfig:
-  clients:
-    consensus: 'lighthouse'
-    execution: 'geth'
-    validator: 'lighthouse'
   dataDir: $HOME/ethereum/mainnet
   engine:
     port: 8551
@@ -12,21 +8,23 @@ commonConfig:
     ip: 127.0.0.1
     jwtFile: $HOME/ethereum/jwt.hex
     scheme: http
-  features:
-    mevBoost: false
-    monitoring: true
-    staking: true
   network: mainnet
   networkId: 1
   operatingSystem: linux
   syncMode: snap
 
 consensusConfig:
+  client:
+    name: lighthouse
+    version: ''
   httpPort: 5052
   metricsPort: 8008
   p2pPort: 9000
 
 executionConfig:
+  client:
+    name: geth
+    version: ''
   http:
     apiPrefixes:
       - eth
@@ -45,3 +43,9 @@ executionConfig:
   ws:
     enabled: false
     port: 8546
+
+validatorConfig:
+  client:
+    name: lighthouse
+    version: ''
+  enabled: false

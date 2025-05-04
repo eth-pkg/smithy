@@ -27,11 +27,11 @@ export interface HardwareRequirements {
 
 // Calculate hardware requirements based on the configuration
 export function calculateHardwareRequirements(config: NodeConfig): HardwareRequirements {
-  const { commonConfig } = config
-  const executionClient = commonConfig.clients.execution || ""
-  const consensusClient = commonConfig.clients.consensus || ""
+  const { commonConfig, validatorConfig } = config
+  const executionClient = executionConfig.client.name || ""
+  const consensusClient = consensusConfig.client.name || ""
   const network = commonConfig.network || "mainnet"
-  const isStaking = commonConfig.features?.staking || false
+  const isStaking = validatorConfig.enabled || false
   const syncMode = commonConfig.syncMode || "full"
 
   // Default values for mainnet

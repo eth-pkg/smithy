@@ -23,13 +23,13 @@ describe('DataDir Interpolation Tests', () => {
       it(`should interpolate dataDir and use correct flag for ${client}`, () => {
         const config = {
           ...testConfig,
-          commonConfig: {
-            ...testConfig.commonConfig,
-            clients: { ...testConfig.commonConfig.clients, execution: client }
-          },
           executionConfig: {
             ...testConfig.executionConfig,
-            dataDir: '{commonConfig.dataDir}/{commonConfig.clients.execution}'
+            client: {
+              name: client,
+              version: ''
+            },
+            dataDir: '{commonConfig.dataDir}/{executionConfig.client.name}'
           }
         };
         const scriptContent = registry.getScriptContent(client, config);
@@ -72,13 +72,13 @@ describe('DataDir Interpolation Tests', () => {
       it(`should interpolate dataDir and use correct flag for ${client}`, () => {
         const config = {
           ...testConfig,
-          commonConfig: {
-            ...testConfig.commonConfig,
-            clients: { ...testConfig.commonConfig.clients, consensus: client }
-          },
           consensusConfig: {
             ...testConfig.consensusConfig,
-            dataDir: '{commonConfig.dataDir}/{commonConfig.clients.consensus}'
+            client: {
+              name: client,
+              version: ''
+            },
+            dataDir: '{commonConfig.dataDir}/{consensusConfig.client.name}'
           }
         };
         const scriptContent = registry.getScriptContent(client, config);
@@ -121,13 +121,13 @@ describe('DataDir Interpolation Tests', () => {
       it(`should interpolate dataDir and use correct flag for ${client}`, () => {
         const config = {
           ...testConfig,
-          commonConfig: {
-            ...testConfig.commonConfig,
-            clients: { ...testConfig.commonConfig.clients, validator: client }
-          },
           validatorConfig: {
             ...testConfig.validatorConfig,
-            dataDir: '{commonConfig.dataDir}/{commonConfig.clients.validator}-validator'
+            client: {
+              name: client,
+              version: ''
+            },
+            dataDir: '{commonConfig.dataDir}/{validatorConfig.client.name}-validator'
           }
         };
         const scriptContent = registry.getScriptContent(client, config, true);

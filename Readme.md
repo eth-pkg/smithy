@@ -100,10 +100,6 @@ commonConfig:
     ip: 127.0.0.1
     scheme: http
   executionClient: ''
-  features:
-    mevBoost: false
-    monitoring: true
-    staking: false
   jwtFile: $HOME/ethereum/jwt.hex
   network: mainnet
   operatingSystem: linux
@@ -134,6 +130,8 @@ executionConfig:
   ws:
     enabled: false
     port: '8546'
+validatorConfig:
+  enabled: false    
 ```
 
 ## Development

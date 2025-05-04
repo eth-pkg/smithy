@@ -56,11 +56,11 @@ export class ConfigManager {
     const missingFields: string[] = [];
 
     // Check for required client selections
-    if (!config.commonConfig?.clients?.execution) {
+    if (!config.executionConfig?.client?.name) {
       missingFields.push('execution');
     }
 
-    if (!config.commonConfig?.clients?.consensus) {
+    if (!config.consensusConfig?.client?.name) {
       missingFields.push('consensus');
     }
 
@@ -88,22 +88,19 @@ export class ConfigManager {
       mergedConfig.commonConfig.clients = {} as any;
     }
 
-    if (!mergedConfig.commonConfig.features) {
-      mergedConfig.commonConfig.features = {} as any;
-    }
 
     // Apply overrides from options if specified
     if (options.execution) {
-      mergedConfig.commonConfig.clients.execution = options.execution;
+      mergedConfig.executionConfig.client.name = options.execution;
     }
 
     if (options.consensus) {
-      mergedConfig.commonConfig.clients.consensus = options.consensus;
+      mergedConfig.consensusConfig.client.name = options.consensus;
     }
 
     if (options.validator) {
-      mergedConfig.commonConfig.clients.validator = options.validator;
-      mergedConfig.commonConfig.features.staking = true;
+      mergedConfig.validatorConfig.client.name = options.validator;
+      mergedConfig.validatorConfig.enabled = true;
     }
 
     if (options.dataDir) {
@@ -114,9 +111,6 @@ export class ConfigManager {
       mergedConfig.commonConfig.network = options.network;
     }
 
-    if (options.mevBoost !== undefined) {
-      mergedConfig.commonConfig.features.mevBoost = options.mevBoost === true;
-    }
 
     return mergedConfig as Partial<NodeConfig>;
   }

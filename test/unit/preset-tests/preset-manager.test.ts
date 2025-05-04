@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { PresetManager } from '@/utils/preset';
 import { baseConfig } from './network-preset.test-helper';
-import { ExecutionClientName, ConsensusClientName, NodeConfig } from '@/lib/types';
+import { ExecutionClientName, ConsensusClientName, NodeConfig, ValidatorClientName } from '@/lib/types';
 import { testConfig } from '../preset-tests/network-preset.test-helper';
 
 describe('PresetManager', () => {
@@ -15,36 +15,74 @@ describe('PresetManager', () => {
     it('should validate a correct config', async () => {
 
       const result = await presetManager.validateAndApplyRules(testConfig);
-      expect(result.commonConfig?.clients?.execution).to.equal('geth');
-      expect(result.commonConfig?.clients?.consensus).to.equal('lighthouse');
+      expect(result.executionConfig?.client?.name).to.equal('geth');
+      expect(result.consensusConfig?.client?.name).to.equal('lighthouse');
     });
 
-    it('should reject invalid client types', async () => {
+    it('should reject invalid execution client type', async () => {
       const config: Partial<NodeConfig> = {
         ...testConfig,
-        commonConfig: {
-          ...baseConfig,
-          clients: {
-            ...baseConfig.clients,
-            // @ts-nocheck
-            execution: 'invalid' as ExecutionClientName,
-            // @ts-nocheck
-            consensus: 'invalid' as ConsensusClientName,
-            validator: ''
-          },
-          network: 'mainnet',
-          networkId: 1,
-          dataDir: '$HOME/ethereum/mainnet'
+        executionConfig: {
+          ...testConfig.executionConfig,
+          client: {
+            name: 'invalid' as ExecutionClientName,
+            version: ''
+          }
         }
       };
+      try {
+        const result = await presetManager.validateAndApplyRules(config);
+        expect.fail('Should have thrown an error');
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          expect(error.message).to.include('Execution client must be one of: besu, erigon, geth, nethermind, reth');
+        } else {
+          expect.fail('Expected an Error object');
+        }
+      }
+    });
 
+    it('should reject invalid consensus client type', async () => {
+      const config: Partial<NodeConfig> = {
+        ...testConfig,
+        consensusConfig: {
+          ...testConfig.consensusConfig,
+          client: {
+            name: 'invalid' as ConsensusClientName,
+            version: ''
+          }
+        }
+      };
       try {
         await presetManager.validateAndApplyRules(config);
         expect.fail('Should have thrown an error');
       } catch (error: unknown) {
         if (error instanceof Error) {
-          expect(error.message).to.include('Execution client must be one of: besu, erigon, geth, nethermind, reth');
           expect(error.message).to.include('Consensus client must be one of: lighthouse, lodestar, nimbus-eth2, prysm, teku');
+        } else {
+          expect.fail('Expected an Error object');
+        }
+      }
+    });
+
+    it('should reject invalid validator client type', async () => {
+      const config: Partial<NodeConfig> = {
+        ...testConfig,
+        validatorConfig: {
+          ...testConfig.validatorConfig,
+          client: {
+            name: 'invalid' as ValidatorClientName,
+            version: ''
+          }
+        }
+      };
+      try {
+        await presetManager.validateAndApplyRules(config);
+        expect.fail('Should have thrown an error');
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          // The error message for validator client may be the same as consensus, adjust if needed
+          expect(error.message).to.include('Validator client must be one of: lighthouse, lodestar, nimbus-eth2, prysm, teku');
         } else {
           expect.fail('Expected an Error object');
         }
@@ -63,7 +101,6 @@ describe('PresetManager', () => {
       };
 
       const result = await presetManager.validateAndApplyRules(config);
-      expect(result.commonConfig?.features?.monitoring).to.equal(true);
       expect(result.commonConfig?.network).to.equal('mainnet');
       expect(result.commonConfig?.syncMode).to.equal('snap');
     });
@@ -73,18 +110,32 @@ describe('PresetManager', () => {
         ...testConfig,
         commonConfig: {
           ...baseConfig,
-          clients: {
-            ...baseConfig.clients,
-            execution: '',
-            consensus: '',
-            validator: ''
-          },
           network: 'mainnet',
           networkId: 1,
           dataDir: '$HOME/ethereum/mainnet'
+        },
+        executionConfig: {
+          ...testConfig.executionConfig,
+          client: {
+            name: '',
+            version: ''
+          }
+        },
+        consensusConfig: {
+          ...testConfig.consensusConfig,
+          client: {
+            name: '',
+            version: ''
+          }
+        },
+        validatorConfig: {
+          ...testConfig.validatorConfig,
+          client: {
+            name: '',
+            version: ''
+          }
         }
       };
-
       try {
         await presetManager.validateAndApplyRules(config);
         expect.fail('Should have thrown an error for empty client values');
