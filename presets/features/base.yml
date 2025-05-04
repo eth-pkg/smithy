@@ -126,6 +126,11 @@ properties:
             description: "Protocol scheme for Engine API communication"
             errorMessage:
               enum: "Engine scheme must be either 'http' or 'https'"
+          ipcPath:
+            type: string
+            default: "{commonConfig.dataDir}/engine.ipc"
+            description: "Path to the IPC file for Engine API communication"
+
       features:
         type: object
         properties:
