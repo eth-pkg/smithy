@@ -12,6 +12,7 @@ allOf:
                 staking:
                   type: boolean
                   const: true
+      required: ["commonConfig"]
     then:
       type: object
       properties:
@@ -56,7 +57,7 @@ allOf:
               properties:
                 execution:
                   const: "besu"
-    required: ["commonConfig"]
+      required: ["commonConfig"]
     then:
       type: object
       properties:

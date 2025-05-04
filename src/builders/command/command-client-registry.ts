@@ -4,7 +4,7 @@ import * as path from "path"
 import * as fs from "fs"
 import * as yaml from "js-yaml"
 
-const ROOT_DIR = path.join(__dirname, "../../../mappings")
+const ROOT_DIR = path.join(__dirname, "../../../data/mappings")
 function loadYamlFile(filename: string): any {
   return yaml.load(fs.readFileSync(path.join(ROOT_DIR, filename), "utf8"))
 }

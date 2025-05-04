@@ -42,7 +42,7 @@ export class ConfigManager {
       return config;
     } catch (error) {
       if (error instanceof Error) {
-        throw new Error(`Failed to load config file ${configPath}: ${error.message}`);
+        throw new Error(`${error.message}`);
       }
       throw new Error(`Failed to load config file ${configPath}`);
     }

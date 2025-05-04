@@ -29,10 +29,11 @@ export async function generate(
     } catch (error) {
       if (error instanceof Error) {
         logger.error(`Failed to load config file: ${error.message}`);
+        throw new Error(`Failed to load config file: ${error.message}`);
       } else {
         logger.error(`Failed to load config file: Unknown error`);
+        throw new Error('Failed to load config file: Unknown error');
       }
-      process.exit(1);
     }
   }
 
@@ -82,10 +83,11 @@ export async function generate(
   } catch (error) {
     if (error instanceof Error) {
       logger.error(`Config validation failed: ${error.message}`);
+      throw new Error(`Config validation failed: ${error.message}`);
     } else {
       logger.error("Config validation failed with an unknown error");
+      throw new Error('Config validation failed with an unknown error');
     }
-    process.exit(1);
   }
 }
 
@@ -113,9 +115,7 @@ async function promptForMissingOptions(
       configConsensus = loadedConfig.commonConfig?.clients?.consensus || "";
       configValidator = loadedConfig.commonConfig?.clients?.validator || "";
     } catch (error) {
-      console.error("Failed to load config file values:", error);
-      process.exit(1);
-
+      throw new Error(`Failed to load config file values: ${error}`);
     }
   }
 

@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { describe, it, beforeEach } from 'mocha';
 import { PresetManager } from '@/utils/preset';
 import { NodeConfig } from '@/lib/types';
-import { baseConfig } from './network-preset.test-helper';
+import { baseConfig, testConfig } from './network-preset.test-helper';
 
 describe('Default Preset Tests', () => {
   let presetManager: PresetManager;
@@ -13,6 +13,7 @@ describe('Default Preset Tests', () => {
 
   it('should validate a correct default config', async () => {
     const config: Partial<NodeConfig> = {
+      ...testConfig,
       commonConfig: {
         ...baseConfig,
         network: 'mainnet',
@@ -28,6 +29,7 @@ describe('Default Preset Tests', () => {
 
   it('should reject config with invalid network', async () => {
     const config: Partial<NodeConfig> = {
+      ...testConfig,
       commonConfig: {
         ...baseConfig,
         network: 'invalid',
@@ -41,7 +43,7 @@ describe('Default Preset Tests', () => {
       expect.fail('Should have thrown an error');
     } catch (error: unknown) {
       if (error instanceof Error) {
-        expect(error.message).to.include('Network must be one of: mainnet, goerli, sepolia, holesky');
+        expect(error.message).to.include('Network must be one of: mainnet, sepolia, holesky, hoodi, ephemery, custom');
       } else {
         expect.fail('Expected an Error object');
       }

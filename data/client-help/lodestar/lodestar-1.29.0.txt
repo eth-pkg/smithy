@@ -1,0 +1,213 @@
+ beacon
+
+Run a beacon chain node
+
+weak subjectivity
+      --checkpointSyncUrl            Server url hosting Beacon Node APIs to fetc
+                                     h weak subjectivity state. Fetch latest fin
+                                     alized by default, else set --wssCheckpoint
+                                                                        [string]
+      --checkpointState              Set a checkpoint state to start syncing fro
+                                     m                                  [string]
+      --wssCheckpoint                Start beacon node off a state at the provid
+                                     ed weak subjectivity checkpoint, to be supp
+                                     lied in <blockRoot>:<epoch> format. For exa
+                                     mple, 0x1234:100 will sync and start off fr
+                                     om the weak subjectivity state at checkpoin
+                                     t of epoch 100 with block root 0x1234.
+                                                                        [string]
+      --forceCheckpointSync          Force syncing from checkpoint state even if
+                                      db state is within weak subjectivity perio
+                                     d. This helps to avoid long sync times afte
+                                     r node has been offline for a while.
+                                                                       [boolean]
+      --ignoreWeakSubjectivityCheck  Ignore the checkpoint sync state failing th
+                                     e weak subjectivity check. This is relevant
+                                      in testnets where the weak subjectivity pe
+                                     riod is too small for even few epochs of no
+                                     n finalization causing last finalized to be
+                                      out of range. This flag is not recommended
+                                      for mainnet use.                 [boolean]
+
+api
+      --rest            Enable/disable HTTP API        [boolean] [default: true]
+      --rest.namespace  Pick namespaces to expose for HTTP API. Set to '*' to en
+                        able all namespaces
+  [array] [choices: "beacon", "config", "debug", "events", "lightclient", "lodes
+  tar", "node", "proof", "validator", "*"] [default: ["beacon","config","debug",
+                                     "events","node","validator","lightclient"]]
+      --rest.cors       Configures the Access-Control-Allow-Origin CORS header f
+                        or HTTP API                        [string] [default: *]
+      --rest.address    Set host for HTTP API      [string] [default: 127.0.0.1]
+      --rest.port       Set port for HTTP API           [number] [default: 9596]
+      --rest.swaggerUI  Enable Swagger UI for API exploration at http://{address
+                        }:{port}/documentation        [boolean] [default: false]
+
+chain
+      --suggestedFeeRecipient             Specify fee recipient default for coll
+                                          ecting the EL block fees and rewards (
+                                          a hex string representing 20 bytes add
+                                          ress: ^0x[a-fA-F0-9]{40}$) in case val
+                                          idator fails to update for a validator
+                                           index before calling `produceBlock`.
+                [string] [default: "0x0000000000000000000000000000000000000000"]
+      --emitPayloadAttributes             Flag to SSE emit execution `payloadAtt
+                                          ributes` before every slot
+                                                      [boolean] [default: false]
+      --chain.archiveStateEpochFrequency  Minimum number of epochs between archi
+                                          ved states    [number] [default: 1024]
+      --chain.archiveBlobEpochs           Number of epochs to retain finalized b
+                                          lobs (minimum of MIN_EPOCHS_FOR_BLOB_S
+                                          IDECARS_REQUESTS)             [number]
+
+eth1
+      --eth1               Whether to follow the eth1 chain
+                                                       [boolean] [default: true]
+      --eth1.providerUrls  Urls to Eth1 node with enabled rpc. If not explicitly
+                            provided and execution endpoint provided via executi
+                           on.urls, it will use execution.urls. Otherwise will t
+                           ry connecting on the specified default(s)
+                                        [array] [default: http://localhost:8545]
+
+execution
+      --execution.urls                      Urls to execution client engine API
+                                      [array] [default: "http://localhost:8551"]
+      --execution.timeout                   Timeout in milliseconds for executio
+                                            n engine API HTTP client
+                                                       [number] [default: 12000]
+      --execution.retries, --execution.ret  Number of retries when calling execu
+      ryAttempts                            tion engine API[number] [default: 2]
+      --execution.retryDelay                Delay time in milliseconds between r
+                                            etries when retrying calls to the ex
+                                            ecution engine API
+                                                        [number] [default: 2000]
+      --execution.engineMock                Set the execution engine to mock mod
+                                            e (development only)       [boolean]
+      --jwtSecret                           File path to a shared hex-encoded jw
+                                            t secret which will be used to gener
+                                            ate and bundle HS256 encoded jwt tok
+                                            ens for authentication with the EL c
+                                            lient's rpc server hosting engine ap
+                                            is. Secret to be exactly same as the
+                                             one used by the corresponding EL cl
+                                            ient.                       [string]
+      --jwtId                               An optional identifier to be set in
+                                            the id field of the claims included
+                                            in jwt tokens used for authenticatio
+                                            n with EL client's rpc server hostin
+                                            g engine apis               [string]
+
+builder
+      --builder                        Enable builder interface
+                                                      [boolean] [default: false]
+      --builder.url, --builder.urls    Url hosting the builder API
+                                       [string] [default: http://localhost:8661]
+      --builder.timeout                Timeout in milliseconds for builder API H
+                                       TTP client      [number] [default: 12000]
+      --builder.faultInspectionWindow  Window to inspect missed slots for enabli
+                                       ng/disabling builder circuit breaker
+                                                                        [number]
+      --builder.allowedFaults          Number of missed slots allowed in the `fa
+                                       ultInspectionWindow` for builder circuit
+                                                                        [number]
+
+metrics
+      --metrics          Enable the Prometheus metrics HTTP server
+                                                      [boolean] [default: false]
+      --metrics.port     Listen TCP port for the Prometheus metrics HTTP server
+                                                        [number] [default: 8008]
+      --metrics.address  Listen address for the Prometheus metrics HTTP server
+                                                   [string] [default: 127.0.0.1]
+
+monitoring
+      --monitoring.endpoint  Enables monitoring service for sending clients stat
+                             s to the specified endpoint of a remote service (e.
+                             g. beaconcha.in)                           [string]
+      --monitoring.interval  Interval in milliseconds between sending client sta
+                             ts to the remote service  [number] [default: 60000]
+
+network
+      --discv5               Enable discv5             [boolean] [default: true]
+      --listenAddress        The IPv4 address to listen for p2p UDP and TCP conn
+                             ections                 [string] [default: 0.0.0.0]
+      --port                 The TCP/UDP port to listen on. The UDP port can be
+                             modified by the --discoveryPort flag.
+                                                        [number] [default: 9000]
+      --discoveryPort        The UDP port that discovery will listen on. Default
+                             s to `port`              [number] [default: `port`]
+      --listenAddress6       The IPv6 address to listen for p2p UDP and TCP conn
+                             ections                                    [string]
+      --port6                The TCP/UDP port to listen on. The UDP port can be
+                             modified by the --discoveryPort6 flag.
+                                                        [number] [default: 9090]
+      --discoveryPort6       The UDP port that discovery will listen on. Default
+                             s to `port6`            [number] [default: `port6`]
+      --bootnodes            Bootnodes for discv5 discovery[array] [default: []]
+      --targetPeers          The target connected peers. Above this number peers
+                              will be disconnected       [number] [default: 100]
+      --subscribeAllSubnets  Subscribe to all subnets regardless of validator co
+                             unt                      [boolean] [default: false]
+      --disablePeerScoring   Disable peer scoring, used for testing on devnets
+                                                      [boolean] [default: false]
+      --mdns                 Enable mdns local peer discovery
+                                                      [boolean] [default: false]
+
+enr
+      --enr.ip    Override ENR IP entry                                 [string]
+      --enr.tcp   Override ENR TCP entry                                [number]
+      --enr.udp   Override ENR UDP entry                                [number]
+      --enr.ip6   Override ENR IPv6 entry                               [string]
+      --enr.tcp6  Override ENR (IPv6-specific) TCP entry                [number]
+      --enr.udp6  Override ENR (IPv6-specific) UDP entry                [number]
+      --nat       Allow configuration of non-local addresses           [boolean]
+
+Options:
+      --dataDir                             Lodestar root data directory[string]
+      --network                             Name of the Ethereum Consensus chain
+                                             network to join
+  [string] [choices: "mainnet", "gnosis", "sepolia", "holesky", "hoodi", "chiado
+                                        ", "ephemery", "dev"] [default: mainnet]
+      --paramsFile                          Network configuration file  [string]
+      --rcConfig                            RC file to supplement command line a
+                                            rgs, accepted formats: .yml, .yaml,
+                                            .json                       [string]
+      --terminal-total-difficulty-override  Terminal PoW block TTD override
+                                                                        [string]
+      --terminal-block-hash-override        Terminal PoW block hash override
+                                                                        [string]
+      --terminal-block-hash-epoch-override  Terminal PoW block hash override act
+                                            ivation epoch               [string]
+      --genesisStateFile                    Path or URL to download a genesis st
+                                            ate file in ssz-encoded format
+                                                                        [string]
+      --persistNetworkIdentity              Whether to reuse the same peer-id ac
+                                            ross restarts              [boolean]
+      --private                             Do not send implementation details o
+                                            ver p2p identify protocol and in bui
+                                            lder, execution engine and eth1 requ
+                                            ests                       [boolean]
+      --validatorMonitorLogs                Log validator monitor events as info
+                                            .                          [boolean]
+      --disableLightClientServer            Disable light client server.
+                                                                       [boolean]
+      --logLevel                            Logging verbosity level for emitting
+                                             logs to terminal
+  [string] [choices: "error", "warn", "info", "verbose", "debug", "trace"] [defa
+                                                                    ult: "info"]
+      --logFile                             Path to output all logs to a persist
+                                            ent log file, use 'none' to disable
+                                                                        [string]
+      --logFileLevel                        Logging verbosity level for emitting
+                                             logs to file
+  [string] [choices: "error", "warn", "info", "verbose", "debug", "trace"] [defa
+                                                                   ult: "debug"]
+      --logFileDailyRotate                  Daily rotate log files, set to an in
+                                            teger to limit the file count, set t
+                                            o 0 (zero) to disable rotation
+                                                           [number] [default: 5]
+  -h, --help                                Show help                  [boolean]
+  -v, --version                             Show version number        [boolean]
+
+Examples:
+   beacon --network hoodi  Run a beacon chain node and connect to the hoodi test
+                           net

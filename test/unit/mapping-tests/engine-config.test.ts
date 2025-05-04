@@ -159,7 +159,6 @@ describe('Engine Configuration Tests', () => {
         const scriptContent = registry.getScriptContent(client, config);
         const scriptString = scriptContent.toString();
 
-        console.log(scriptString)
         switch (client) {
           case 'besu':
             expect(scriptString).to.contain('--Xrpc-ipc-enabled');

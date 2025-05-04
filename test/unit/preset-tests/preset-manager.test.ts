@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import { PresetManager } from '@/utils/preset';
 import { baseConfig } from './network-preset.test-helper';
 import { ExecutionClientName, ConsensusClientName, NodeConfig } from '@/lib/types';
+import { testConfig } from '../preset-tests/network-preset.test-helper';
 
 describe('PresetManager', () => {
   let presetManager: PresetManager;
@@ -12,22 +13,15 @@ describe('PresetManager', () => {
 
   describe('validateAndApplyRules', () => {
     it('should validate a correct config', async () => {
-      const config: Partial<NodeConfig> = {
-        commonConfig: {
-          ...baseConfig,
-          network: 'mainnet',
-          networkId: 1,
-          dataDir: '$HOME/ethereum/mainnet'
-        }
-      };
 
-      const result = await presetManager.validateAndApplyRules(config);
+      const result = await presetManager.validateAndApplyRules(testConfig);
       expect(result.commonConfig?.clients?.execution).to.equal('geth');
       expect(result.commonConfig?.clients?.consensus).to.equal('lighthouse');
     });
 
     it('should reject invalid client types', async () => {
       const config: Partial<NodeConfig> = {
+        ...testConfig,
         commonConfig: {
           ...baseConfig,
           clients: {
@@ -59,6 +53,7 @@ describe('PresetManager', () => {
 
     it('should apply defaults from schema', async () => {
       const config: Partial<NodeConfig> = {
+        ...testConfig,
         commonConfig: {
           ...baseConfig,
           network: 'mainnet',
@@ -75,6 +70,7 @@ describe('PresetManager', () => {
 
     it('should reject config with empty client values', async () => {
       const config: Partial<NodeConfig> = {
+        ...testConfig,
         commonConfig: {
           ...baseConfig,
           clients: {

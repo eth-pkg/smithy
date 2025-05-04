@@ -45,18 +45,6 @@ export const testConfig: NodeConfig = {
       execution: 'geth',
       consensus: 'lighthouse',
       validator: 'prysm'
-    },
-    network: 'mainnet',
-    engine: {
-      enabled: true,
-      port: 8551,
-      communication: 'jwt',
-      url: 'http://localhost:8551',
-      host: 'localhost',
-      hostAllowlist: 'localhost',
-      ip: '127.0.0.1',
-      jwtFile: '/test/jwt',
-      scheme: 'http'
     }
   },
   consensusConfig: {

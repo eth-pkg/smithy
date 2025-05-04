@@ -26,7 +26,8 @@ export class PresetManager {
       allErrors: true,
       useDefaults: true, 
       coerceTypes: true,  
-      loadSchema: this.loadSchema.bind(this) 
+      loadSchema: this.loadSchema.bind(this),
+      strict: true
     });
     ajvErrors(this.ajv);
   }
@@ -35,7 +36,7 @@ export class PresetManager {
    * Get the path to the presets directory
    */
   getPresetsDir(): string {
-    return path.join(__dirname, "..", "..", "presets");
+    return path.join(__dirname, "..", "..", "data", "presets");
   }
 
   /**
@@ -225,12 +226,12 @@ export class PresetManager {
       if (constantOverrides.length > 0) {
         throw new Error(`Cannot override constant values in preset: ${constantOverrides.join(', ')}`);
       }
-
       const ajv = new Ajv({ 
         allErrors: true,
         useDefaults: true,
         coerceTypes: true,
-        loadSchema: this.loadSchema.bind(this)
+        loadSchema: this.loadSchema.bind(this),
+        strict: false
       });
       ajvErrors(ajv);
 

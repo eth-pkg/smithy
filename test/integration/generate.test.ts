@@ -26,7 +26,7 @@ describe('Config Generation', () => {
       validator: 'lighthouse',
       output: testOutputDir,
       verbose: false,
-      configFile: path.join(process.cwd(), 'presets', 'default.yml')
+      configFile: path.join(process.cwd(), 'data', 'presets', 'default.yml')
     };
 
     await generate(options);
