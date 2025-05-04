@@ -1,5 +1,5 @@
 {
-  "name": "smithy-cli",
+  "name": "smithy",
   "version": "1.0.0",
   "description": "A CLI tool for generating Ethereum client configurations",
   "main": "dist/index.js",
