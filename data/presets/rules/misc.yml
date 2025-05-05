@@ -48,15 +48,16 @@ allOf:
   - if:
       type: object
       properties:
-        common:
+        execution:
           type: object
           properties:
-            clients:
+            client:
               type: object
               properties:
-                execution:
+                name:
                   const: "besu"
-      required: ["common"]
+          required: ["client"]
+      required: ["execution"]
     then:
       type: object
       properties:
@@ -90,16 +91,27 @@ allOf:
   - if:
       type: object
       properties:
-        common:
+        consensus:
           type: object
           properties:
-            clients:
+            client:
               type: object
               properties:
-                consensus:
+                name:
                   const: lighthouse
-                validator:
-                  const: prysm
+              required: ["name"]    
+          required: ["client"]        
+        validator:
+          type: object
+          properties:
+            client:
+              type: object
+              properties:
+                name:
+                  const: prysm 
+              required: ["name"]
+          required: ["client"]           
+      required: ["consensus", "validator"]                  
     then:
       errorMessage: |
         The combination of Lighthouse consensus client with Prysm validator is not currently supported.
@@ -145,30 +157,46 @@ allOf:
               properties:
                 communication:
                   const: ipc
-            clients:
+              required: ["communication"]
+          required: ["engine"]        
+        execution:   
+          type: object
+          properties:       
+            client:
               type: object
               properties:
-                execution:
+                name:
                   const: besu
+              required: ["name"]
+          required: ["client"]
+      required: ["common", "execution"]
     then:
       errorMessage: "Warning: Besu support for IPC (--Xrpc-ipc-enabled) is still early access. Use with caution."
 
   - if:
       type: object
       properties:
+        execution:
+          type: object
+          properties:
+            client:
+              type: object
+              properties:
+                name:
+                  const: erigon
+              required: ["name"]
+          required: ["client"]        
         common:
           type: object
           properties:
-            clients:
-              type: object
-              properties:
-                execution:
-                  const: erigon
             engine:
               type: object
               properties:
                 communication:
                   const: ipc
+              required: ["communication"]
+          required: ["engine"]        
+      required: ["execution", "common"]          
     then:
       errorMessage: "Erigon does not support IPC communication. Please use a different communication method."
 

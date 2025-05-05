@@ -38,6 +38,24 @@ Smithy delivers correct commands, saving time and preventing errors.
 npm install -g smithy
 ```
 
+## Development
+
+To run Smithy in development mode:
+
+```bash
+# Clone the repository
+git clone https://github.com/eth-pkg/smithy.git
+cd smithy
+
+# Install dependencies
+npm install
+
+# Run in development mode
+npm run dev -- --execution geth --consensus lighthouse
+```
+
+The development mode uses `ts-node-dev` which provides hot-reloading, so any changes to the source code will automatically restart the application.
+
 ## Usage
 
 Generate commands:
@@ -390,9 +408,9 @@ The following table indicates the current mapping status of schema fields to cli
 Smithy uses JSON schema-based presets with:
 1. **Schema**: Defines standardized settings across clients (e.g., data directories, ports), requiring only JSON schema knowledge.
 2. **Validation**: Enforces rules for network consistency, valid ports, and client compatibility (e.g., blocks Lighthouse with Prysm validator).
-3. **Defaults**: Applies JSON schema defaults (e.g., numbers, enums, or interpolated strings like `{HOME}/ethereum/{common.network}`, where `{common.network}` is replaced by values like `mainnet`).
+3. **Defaults**: Applies JSON schema defaults (e.g., numbers, enums, or interpolated strings like `{HOME}/ethereum/{common.network.name}`, where `{common.network.name}` is replaced by values like `mainnet`).
 4. **Mappings**: Maps standard schema settings to client-specific flags (e.g., `reth-cmd-mappings.yaml`), often with minimal or no transformation, extensible for new versions or flags.
-5. **Transformers**: Formats values for client compatibility when needed (e.g., `joinComma` for arrays, `interpolate` for strings like `{HOME}/ethereum/{common.network}`).
+5. **Transformers**: Formats values for client compatibility when needed (e.g., `joinComma` for arrays, `interpolate` for strings like `{HOME}/ethereum/{common.network.name}`).
 
 Example mapping:
 ```yaml
@@ -405,7 +423,7 @@ Example mapping:
 Example preset:
 ```yaml
 common:
-  dataDir: "{HOME}/ethereum/{common.network}"
+  dataDir: "{HOME}/ethereum/{common.network.name}"
   network: mainnet
   engine:
     port: 8551

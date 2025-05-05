@@ -48,10 +48,29 @@ const transformers: Record<string, TransformFunction | TransformFunctionWithConf
     if (typeof template !== 'string') {
       return template;
     }
-    return template.replace(/\{([^}]+)\}/g, (_, path) => {
-      const value = CommandBuilder.getValueFromPath(config, path);
-      return value !== undefined ? value : '';
-    });
+    let result = template;
+    let previousResult;
+    let depth = 0;
+    const MAX_DEPTH = 10;
+    
+    do {
+      previousResult = result;
+      result = result.replace(/\{([^}]+)\}/g, (_, path) => {
+        // Special handling for HOME variable
+        if (path === 'HOME') {
+          return process.env.HOME || process.env.USERPROFILE || '';
+        }
+        const value = CommandBuilder.getValueFromPath(config, path);
+        return value !== undefined ? value : '';
+      });
+      depth++;
+    } while (result !== previousResult && depth < MAX_DEPTH);
+    
+    if (depth >= MAX_DEPTH) {
+      throw new Error(`Maximum interpolation depth (${MAX_DEPTH}) reached. This may indicate a circular reference in your configuration.`);
+    }
+    
+    return result;
   },
   hostAllowlist: (value: string | string[]) => {
     if (typeof value === 'string') {

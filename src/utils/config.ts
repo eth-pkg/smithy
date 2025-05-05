@@ -76,20 +76,12 @@ export class ConfigManager {
     config: Partial<NodeConfig>,
     options: Record<string, any>
   ): Partial<NodeConfig> {
-    // Clone the config to avoid modifying the original
-    const mergedConfig = JSON.parse(JSON.stringify(config)) as any;
+    const mergedConfig = {...config} as any;
 
-    // Ensure the config has the expected structure
     if (!mergedConfig.common) {
       mergedConfig.common = {} as any;
     }
 
-    if (!mergedConfig.common.clients) {
-      mergedConfig.common.clients = {} as any;
-    }
-
-
-    // Apply overrides from options if specified
     if (options.execution) {
       mergedConfig.execution.client.name = options.execution;
     }

@@ -13,9 +13,9 @@ rules:
     flag: --maxpeers
   - configPath: execution.http.enabled
     flag: --http
-  - configPath: common.engine.host
-    flag: --http.addr
-    parent: --http
+  # - configPath: common.engine.host
+  #   flag: --http.addr
+  #   parent: --http
   - configPath: execution.http.port
     flag: --http.port
     parent: --http

@@ -157,21 +157,82 @@ export class PresetManager {
    * Extract defaults from a schema
    */
   private extractDefaults(schema: any): any {
-    const result: any = {};
-    
+    if (!schema || typeof schema !== 'object') {
+      return undefined;
+    }
+
+    // If there's a direct default value, use it
     if (schema.default !== undefined) {
       return schema.default;
     }
-    
-    if (schema.type === 'object' && schema.properties) {
-      for (const [key, value] of Object.entries(schema.properties)) {
-        if (typeof value === 'object' && value !== null) {
-          result[key] = this.extractDefaults(value as any);
-        }
+
+    // Handle references
+    if (schema.$ref) {
+      const refSchema = this.loadSchemaSync(schema.$ref);
+      if (refSchema) {
+        return this.extractDefaults(refSchema);
       }
     }
-    
-    return result;
+
+    // Handle allOf/anyOf/oneOf
+    if (schema.allOf || schema.anyOf || schema.oneOf) {
+      const schemas = schema.allOf || schema.anyOf || schema.oneOf;
+      const results = schemas.map((s: any) => this.extractDefaults(s)).filter((r: any) => r !== undefined);
+      
+      if (schema.allOf) {
+        // For allOf, merge all results
+        return results.reduce((acc: any, curr: any) => {
+          if (typeof curr === 'object' && curr !== null) {
+            return { ...acc, ...curr };
+          }
+          return curr;
+        }, {});
+      } else {
+        // For anyOf/oneOf, use the first valid result
+        return results[0];
+      }
+    }
+
+    // Handle object types
+    if (schema.type === 'object' && schema.properties) {
+      const result: any = {};
+      for (const [key, value] of Object.entries(schema.properties)) {
+        if (typeof value === 'object' && value !== null) {
+          const defaultValue = this.extractDefaults(value);
+          if (defaultValue !== undefined) {
+            result[key] = defaultValue;
+          }
+        }
+      }
+      return Object.keys(result).length > 0 ? result : undefined;
+    }
+
+    // Handle array types
+    if (schema.type === 'array' && schema.items) {
+      const itemDefault = this.extractDefaults(schema.items);
+      return itemDefault !== undefined ? [itemDefault] : undefined;
+    }
+
+    return undefined;
+  }
+
+  /**
+   * Synchronously load a schema from a reference
+   */
+  private loadSchemaSync(ref: string): any {
+    try {
+      const presetsDir = this.getPresetsDir();
+      const refPath = ref.startsWith('./') ? ref.substring(2) : ref;
+      const schemaPath = path.join(presetsDir, refPath);
+      
+      if (fs.existsSync(schemaPath)) {
+        const fileContent = fs.readFileSync(schemaPath, 'utf-8');
+        return yaml.load(fileContent);
+      }
+    } catch (error) {
+      this.logger.debug(`Failed to load schema reference: ${ref}`);
+    }
+    return null;
   }
 
   /**
@@ -226,6 +287,7 @@ export class PresetManager {
       if (constantOverrides.length > 0) {
         throw new Error(`Cannot override constant values in preset: ${constantOverrides.join(', ')}`);
       }
+
       const ajv = new Ajv({ 
         allErrors: true,
         useDefaults: true,
@@ -237,10 +299,15 @@ export class PresetManager {
 
       const validate = await ajv.compileAsync(validationSchema);
 
-      const configWithDefaults = this.extractDefaults(validationSchema);
+      // Extract defaults from the schema
+      const defaults = this.extractDefaults(validationSchema) || {};
+      // Create a new config object with defaults applied
+      const configWithDefaults = { ...defaults };
       
+      // Deep merge the user's config on top of the defaults
       this.deepMerge(configWithDefaults, config);
-
+      
+      // Validate the final config
       const valid = validate(configWithDefaults);
       
       if (!valid) {
