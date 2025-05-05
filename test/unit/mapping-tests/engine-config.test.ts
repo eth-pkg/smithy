@@ -16,7 +16,7 @@ describe('Engine Configuration Tests', () => {
       // 'erigon',
       // 'geth',
       // 'nethermind',
-       'reth'
+      'reth'
     ];
 
     // TODO: need to test hostAllowlist when it is a list of hosts
@@ -24,8 +24,8 @@ describe('Engine Configuration Tests', () => {
       it(`should correctly configure engine API for ${client}`, () => {
         const config = {
           ...testConfig,
-          commonConfig: {
-            ...testConfig.commonConfig,
+          common: {
+            ...testConfig.common,
             engine: {
               enabled: true,
               scheme: 'http' as const,
@@ -33,13 +33,13 @@ describe('Engine Configuration Tests', () => {
               hostAllowlist: 'localhost',
               port: 8551,
               communication: 'jwt' as const,
-              url: '{commonConfig.engine.scheme}://{commonConfig.engine.host}:{commonConfig.engine.port}',
+              url: '{common.engine.scheme}://{common.engine.host}:{common.engine.port}',
               ip: '127.0.0.1',
-              jwtFile: '{commonConfig.dataDir}/jwt.hex',
+              jwtFile: '{common.dataDir}/jwt.hex',
             }
           },
-          executionConfig: {
-            ...testConfig.executionConfig,
+          execution: {
+            ...testConfig.execution,
             client: {
               name: client,
               version: ''
@@ -50,40 +50,40 @@ describe('Engine Configuration Tests', () => {
         const scriptContent = registry.getScriptContent(client, config);
         const scriptString = scriptContent.toString();
 
-        const jwtFile = `${config.commonConfig.dataDir}/jwt.hex`
+        const jwtFile = `${config.common.dataDir}/jwt.hex`
 
         switch (client) {
           case 'besu':
             expect(scriptString).to.contain(`--engine-rpc-enabled`);
-            expect(scriptString).to.contain(`--engine-rpc-port=${config.commonConfig.engine.port}`);
-            expect(scriptString).to.contain(`--engine-host-allowlist=${config.commonConfig.engine.hostAllowlist}`);
+            expect(scriptString).to.contain(`--engine-rpc-port=${config.common.engine.port}`);
+            expect(scriptString).to.contain(`--engine-host-allowlist=${config.common.engine.hostAllowlist}`);
             expect(scriptString).to.contain(`--engine-jwt-secret=${jwtFile}`);
             expect(scriptString).to.not.contain('http://localhost:8551');
             break;
           case 'erigon':
-            expect(scriptString).to.contain(`--authrpc.port ${config.commonConfig.engine.port}`);
-            expect(scriptString).to.contain(`--authrpc.addr ${config.commonConfig.engine.host}`);
+            expect(scriptString).to.contain(`--authrpc.port ${config.common.engine.port}`);
+            expect(scriptString).to.contain(`--authrpc.addr ${config.common.engine.host}`);
             expect(scriptString).to.contain(`--authrpc.jwtsecret ${jwtFile}`);
-            expect(scriptString).to.contain(`--authrpc.vhosts ${config.commonConfig.engine.hostAllowlist}`);
+            expect(scriptString).to.contain(`--authrpc.vhosts ${config.common.engine.hostAllowlist}`);
             expect(scriptString).to.contain('--externalcl');
             break;
           case 'geth':
-            expect(scriptString).to.contain(`--authrpc.port ${config.commonConfig.engine.port}`);
-            expect(scriptString).to.contain(`--authrpc.addr ${config.commonConfig.engine.host}`);
+            expect(scriptString).to.contain(`--authrpc.port ${config.common.engine.port}`);
+            expect(scriptString).to.contain(`--authrpc.addr ${config.common.engine.host}`);
             expect(scriptString).to.contain(`--authrpc.jwtsecret ${jwtFile}`);
-            expect(scriptString).to.contain(`--authrpc.vhosts ${config.commonConfig.engine.hostAllowlist}`);
+            expect(scriptString).to.contain(`--authrpc.vhosts ${config.common.engine.hostAllowlist}`);
             break;
           case 'nethermind':
-            expect(scriptString).to.contain(`--JsonRpc.EnginePort ${config.commonConfig.engine.port}`);
-            expect(scriptString).to.contain(`--JsonRpc.EngineHost ${config.commonConfig.engine.host}`);
+            expect(scriptString).to.contain(`--JsonRpc.EnginePort ${config.common.engine.port}`);
+            expect(scriptString).to.contain(`--JsonRpc.EngineHost ${config.common.engine.host}`);
             expect(scriptString).to.contain(`--JsonRpc.JwtSecretFile ${jwtFile}`);
-            expect(scriptString).to.contain(`--JsonRpc.EngineEnabledModules ${config.commonConfig.engine.hostAllowlist}`);
+            expect(scriptString).to.contain(`--JsonRpc.EngineEnabledModules ${config.common.engine.hostAllowlist}`);
             break;
           case 'reth':
-            expect(scriptString).to.contain(`--authrpc.port ${config.commonConfig.engine.port}`);
-            expect(scriptString).to.contain(`--authrpc.addr ${config.commonConfig.engine.host}`);
+            expect(scriptString).to.contain(`--authrpc.port ${config.common.engine.port}`);
+            expect(scriptString).to.contain(`--authrpc.addr ${config.common.engine.host}`);
             expect(scriptString).to.contain(`--authrpc.jwtsecret ${jwtFile}`);
-            // expect(scriptString).to.contain(`--authrpc.vhosts ${config.commonConfig.engine.hostAllowlist}`);
+            // expect(scriptString).to.contain(`--authrpc.vhosts ${config.common.engine.hostAllowlist}`);
             break;
         }
       });
@@ -105,8 +105,8 @@ describe('Engine Configuration Tests', () => {
         it(`should correctly configure hostAllowlist=${host} for ${client}`, () => {
           const config = {
             ...testConfig,
-            commonConfig: {
-              ...testConfig.commonConfig,
+            common: {
+              ...testConfig.common,
               engine: {
                 enabled: true,
                 scheme: 'http' as const,
@@ -114,13 +114,13 @@ describe('Engine Configuration Tests', () => {
                 hostAllowlist: host.toString(),
                 port: 8551,
                 communication: 'jwt' as const,
-                url: '{commonConfig.engine.scheme}://{commonConfig.engine.host}:{commonConfig.engine.port}',
+                url: '{common.engine.scheme}://{common.engine.host}:{common.engine.port}',
                 ip: '127.0.0.1',
-                jwtFile: '{commonConfig.dataDir}/jwt.hex',
+                jwtFile: '{common.dataDir}/jwt.hex',
               }
             },
-            executionConfig: {
-              ...testConfig.executionConfig,
+            execution: {
+              ...testConfig.execution,
               client: {
                 name: client,
                 version: ''
@@ -131,7 +131,7 @@ describe('Engine Configuration Tests', () => {
           const scriptString = scriptContent.toString();
 
           switch (client) {
-            case 'besu':            
+            case 'besu':
               // Note: Besu does not support mixing '*' or 'all' with other values in engine-host-allowlist
               // This is validated separately in the configuration validation logic
               // So we don't need to test for it here
@@ -156,16 +156,16 @@ describe('Engine Configuration Tests', () => {
       it(`should handle IPC communication mode for ${client}`, () => {
         const config = {
           ...testConfig,
-          commonConfig: {
-            ...testConfig.commonConfig,
+          common: {
+            ...testConfig.common,
             engine: {
               enabled: true,
               communication: 'ipc' as const,
               ipcPath: 'ipc:///path/to/ipc.sock',
             }
           },
-          executionConfig: {
-            ...testConfig.executionConfig,
+          execution: {
+            ...testConfig.execution,
             client: {
               name: client,
               version: ''
@@ -188,12 +188,12 @@ describe('Engine Configuration Tests', () => {
             expect(scriptString).to.contain('--authrpc.jwtsecret');
             break;
           case 'geth':
-            expect(scriptString).to.contain(`--ipcpath ${config.commonConfig.engine.ipcPath}`);
+            expect(scriptString).to.contain(`--ipcpath ${config.common.engine.ipcPath}`);
             expect(scriptString).to.not.contain('--authrpc.jwtsecret');
             expect(scriptString).to.not.contain('--ipcdisable');
             break;
           case 'nethermind':
-            expect(scriptString).to.contain(`--JsonRpc.IpcUnixDomainSocketPath ${config.commonConfig.engine.ipcPath}`);
+            expect(scriptString).to.contain(`--JsonRpc.IpcUnixDomainSocketPath ${config.common.engine.ipcPath}`);
             expect(scriptString).to.not.contain('--JsonRpc.JwtSecretFile');
             expect(scriptString).to.not.contain('--JsonRpc.EngineEnabledModules');
             expect(scriptString).to.not.contain('--JsonRpc.EnginePort');
@@ -201,7 +201,7 @@ describe('Engine Configuration Tests', () => {
             break;
           case 'reth':
             expect(scriptString).to.contain(`--auth-ipc`);
-            expect(scriptString).to.contain(`--auth-ipc.path ${config.commonConfig.engine.ipcPath}`);
+            expect(scriptString).to.contain(`--auth-ipc.path ${config.common.engine.ipcPath}`);
             expect(scriptString).to.not.contain('--authrpc.jwtsecret');
             expect(scriptString).to.not.contain('--authrpc.addr');
             expect(scriptString).to.not.contain('--authrpc.port');
@@ -212,8 +212,8 @@ describe('Engine Configuration Tests', () => {
       it(`should handle JWT communication mode for ${client}`, () => {
         const config = {
           ...testConfig,
-          commonConfig: {
-            ...testConfig.commonConfig,
+          common: {
+            ...testConfig.common,
             engine: {
               enabled: true,
               port: 8551,
@@ -226,8 +226,8 @@ describe('Engine Configuration Tests', () => {
               scheme: 'http' as const
             }
           },
-          executionConfig: {
-            ...testConfig.executionConfig,
+          execution: {
+            ...testConfig.execution,
             client: {
               name: client,
               version: ''
@@ -240,23 +240,23 @@ describe('Engine Configuration Tests', () => {
 
         switch (client) {
           case 'besu':
-            expect(scriptString).to.contain(`--engine-jwt-secret=${config.commonConfig.engine.jwtFile}`);
+            expect(scriptString).to.contain(`--engine-jwt-secret=${config.common.engine.jwtFile}`);
             expect(scriptString).to.not.contain('--Xrpc-ipc-enabled');
             break;
           case 'erigon':
-            expect(scriptString).to.contain(`--authrpc.jwtsecret ${config.commonConfig.engine.jwtFile}`);
+            expect(scriptString).to.contain(`--authrpc.jwtsecret ${config.common.engine.jwtFile}`);
             break;
           case 'geth':
-            expect(scriptString).to.contain(`--authrpc.jwtsecret ${config.commonConfig.engine.jwtFile}`);
+            expect(scriptString).to.contain(`--authrpc.jwtsecret ${config.common.engine.jwtFile}`);
             expect(scriptString).to.contain('--ipcdisable');
             expect(scriptString).to.not.contain('--ipcpath');
             break;
           case 'nethermind':
-            expect(scriptString).to.contain(`--JsonRpc.JwtSecretFile ${config.commonConfig.engine.jwtFile}`);
+            expect(scriptString).to.contain(`--JsonRpc.JwtSecretFile ${config.common.engine.jwtFile}`);
             expect(scriptString).to.not.contain('--JsonRpc.IpcUnixDomainSocketPath');
             break;
           case 'reth':
-            expect(scriptString).to.contain(`--authrpc.jwtsecret ${config.commonConfig.engine.jwtFile}`);
+            expect(scriptString).to.contain(`--authrpc.jwtsecret ${config.common.engine.jwtFile}`);
             expect(scriptString).to.not.contain('--auth-ipc');
             expect(scriptString).to.not.contain('--auth-ipc.path');
             break;
@@ -281,8 +281,8 @@ describe('Engine Configuration Tests', () => {
       it(`should correctly configure engine API for ${client}`, () => {
         const config = {
           ...testConfig,
-          commonConfig: {
-            ...testConfig.commonConfig,
+          common: {
+            ...testConfig.common,
             engine: {
               enabled: true,
               port: 8551,
@@ -295,8 +295,8 @@ describe('Engine Configuration Tests', () => {
               scheme: 'http' as const
             }
           },
-          consensusConfig: {
-            ...testConfig.consensusConfig,
+          consensus: {
+            ...testConfig.consensus,
             client: {
               name: client,
               version: ''
@@ -337,16 +337,16 @@ describe('Engine Configuration Tests', () => {
       it(`should handle IPC communication mode for ${client}`, () => {
         const config = {
           ...testConfig,
-          commonConfig: {
-            ...testConfig.commonConfig,
+          common: {
+            ...testConfig.common,
             engine: {
               enabled: true,
               communication: 'ipc' as const,
               ipcPath: 'ipc:///path/to/ipc.sock',
             }
           },
-          consensusConfig: {
-            ...testConfig.consensusConfig,
+          consensus: {
+            ...testConfig.consensus,
             client: {
               name: client,
               version: ''
@@ -384,8 +384,8 @@ describe('Engine Configuration Tests', () => {
       it(`should handle JWT communication mode for ${client}`, () => {
         const config = {
           ...testConfig,
-          commonConfig: {
-            ...testConfig.commonConfig,
+          common: {
+            ...testConfig.common,
             engine: {
               enabled: true,
               port: 8551,
@@ -398,8 +398,8 @@ describe('Engine Configuration Tests', () => {
               scheme: 'http' as const
             }
           },
-          consensusConfig: {
-            ...testConfig.consensusConfig,
+          consensus: {
+            ...testConfig.consensus,
             client: {
               name: client,
               version: ''
@@ -437,8 +437,8 @@ describe('Engine Configuration Tests', () => {
       it(`should handle custom engine API configuration for ${client}`, () => {
         const config = {
           ...testConfig,
-          commonConfig: {
-            ...testConfig.commonConfig,
+          common: {
+            ...testConfig.common,
             engine: {
               enabled: true,
               port: 9999,
@@ -451,8 +451,8 @@ describe('Engine Configuration Tests', () => {
               scheme: 'https' as const
             }
           },
-          consensusConfig: {
-            ...testConfig.consensusConfig,
+          consensus: {
+            ...testConfig.consensus,
             client: {
               name: client,
               version: ''

@@ -15,9 +15,9 @@ describe('Config Generation', () => {
     await fs.remove(testOutputDir);
   });
 
-  it('should generate config files for all clients when staking is true', async function() {
+  it('should generate config files for all clients when staking is true', async function () {
     this.timeout(10000);
-    
+
     const options = {
       preset: 'default',
       output: testOutputDir,
@@ -36,14 +36,14 @@ describe('Config Generation', () => {
     // Check if files have content
     const gethConfig = await fs.readFile(path.join(testOutputDir, 'geth.sh'), 'utf-8');
     const lighthouseConfig = await fs.readFile(path.join(testOutputDir, 'lighthouse.sh'), 'utf-8');
-    const validatorConfig = await fs.readFile(path.join(testOutputDir, 'nimbus-eth2-validator.sh'), 'utf-8');
+    const validator = await fs.readFile(path.join(testOutputDir, 'nimbus-eth2-validator.sh'), 'utf-8');
 
     expect(gethConfig).to.not.be.empty;
     expect(lighthouseConfig).to.not.be.empty;
-    expect(validatorConfig).to.not.be.empty;
+    expect(validator).to.not.be.empty;
   });
 
-  it('should not generate validator config when staking is false', async function() {
+  it('should not generate validator config when staking is false', async function () {
     this.timeout(10000);
 
     const options = {

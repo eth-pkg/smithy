@@ -15,15 +15,15 @@ describe('PresetManager', () => {
     it('should validate a correct config', async () => {
 
       const result = await presetManager.validateAndApplyRules(testConfig);
-      expect(result.executionConfig?.client?.name).to.equal('geth');
-      expect(result.consensusConfig?.client?.name).to.equal('lighthouse');
+      expect(result.execution?.client?.name).to.equal('geth');
+      expect(result.consensus?.client?.name).to.equal('lighthouse');
     });
 
     it('should reject invalid execution client type', async () => {
       const config: Partial<NodeConfig> = {
         ...testConfig,
-        executionConfig: {
-          ...testConfig.executionConfig,
+        execution: {
+          ...testConfig.execution,
           client: {
             name: 'invalid' as ExecutionClientName,
             version: ''
@@ -45,8 +45,8 @@ describe('PresetManager', () => {
     it('should reject invalid consensus client type', async () => {
       const config: Partial<NodeConfig> = {
         ...testConfig,
-        consensusConfig: {
-          ...testConfig.consensusConfig,
+        consensus: {
+          ...testConfig.consensus,
           client: {
             name: 'invalid' as ConsensusClientName,
             version: ''
@@ -68,8 +68,8 @@ describe('PresetManager', () => {
     it('should reject invalid validator client type', async () => {
       const config: Partial<NodeConfig> = {
         ...testConfig,
-        validatorConfig: {
-          ...testConfig.validatorConfig,
+        validator: {
+          ...testConfig.validator,
           client: {
             name: 'invalid' as ValidatorClientName,
             version: ''
@@ -92,7 +92,7 @@ describe('PresetManager', () => {
     it('should apply defaults from schema', async () => {
       const config: Partial<NodeConfig> = {
         ...testConfig,
-        commonConfig: {
+        common: {
           ...baseConfig,
           network: 'mainnet',
           networkId: 1,
@@ -101,35 +101,35 @@ describe('PresetManager', () => {
       };
 
       const result = await presetManager.validateAndApplyRules(config);
-      expect(result.commonConfig?.network).to.equal('mainnet');
-      expect(result.commonConfig?.syncMode).to.equal('snap');
+      expect(result.common?.network).to.equal('mainnet');
+      expect(result.common?.syncMode).to.equal('snap');
     });
 
     it('should reject config with empty client values', async () => {
       const config: Partial<NodeConfig> = {
         ...testConfig,
-        commonConfig: {
+        common: {
           ...baseConfig,
           network: 'mainnet',
           networkId: 1,
           dataDir: '$HOME/ethereum/mainnet'
         },
-        executionConfig: {
-          ...testConfig.executionConfig,
+        execution: {
+          ...testConfig.execution,
           client: {
             name: '',
             version: ''
           }
         },
-        consensusConfig: {
-          ...testConfig.consensusConfig,
+        consensus: {
+          ...testConfig.consensus,
           client: {
             name: '',
             version: ''
           }
         },
-        validatorConfig: {
-          ...testConfig.validatorConfig,
+        validator: {
+          ...testConfig.validator,
           client: {
             name: '',
             version: ''

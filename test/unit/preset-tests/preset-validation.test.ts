@@ -13,7 +13,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid network values
   it('should reject invalid network value', async () => {
     const config = { ...testConfig };
-    config.commonConfig!.network = 'invalid_network' as any;
+    config.common!.network = 'invalid_network' as any;
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -28,7 +28,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid networkId values
   it('should reject invalid networkId value', async () => {
     const config = { ...testConfig };
-    config.commonConfig!.networkId = 0;
+    config.common!.networkId = 0;
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -43,7 +43,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid consensus client values
   it('should reject invalid consensus client value', async () => {
     const config = { ...testConfig };
-    config.consensusConfig!.client = {
+    config.consensus!.client = {
       name: 'invalid_client' as any,
       version: ''
     };
@@ -61,7 +61,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid execution client values
   it('should reject invalid execution client value', async () => {
     const config = { ...testConfig };
-    config.executionConfig!.client = {
+    config.execution!.client = {
       name: 'invalid_client' as any,
       version: ''
     };
@@ -79,7 +79,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid validator client values
   it('should reject invalid validator client value', async () => {
     const config = { ...testConfig };
-    config.validatorConfig!.client = {
+    config.validator!.client = {
       name: 'invalid_client' as any,
       version: ''
     };
@@ -97,7 +97,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid engine port values (minimum)
   it('should reject engine port below minimum', async () => {
     const config = { ...testConfig };
-    config.commonConfig!.engine.port = 80;
+    config.common!.engine.port = 80;
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -112,7 +112,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid engine port values (maximum)
   it('should reject engine port above maximum', async () => {
     const config = { ...testConfig };
-    config.commonConfig!.engine.port = 70000;
+    config.common!.engine.port = 70000;
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -127,7 +127,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid engine communication values
   it('should reject invalid engine communication value', async () => {
     const config = { ...testConfig };
-    config.commonConfig!.engine.communication = 'invalid' as any;
+    config.common!.engine.communication = 'invalid' as any;
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -142,7 +142,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid engine IP address
   it('should reject invalid engine IP address', async () => {
     const config = { ...testConfig };
-    config.commonConfig!.engine.ip = 'invalid.ip.address';
+    config.common!.engine.ip = 'invalid.ip.address';
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -157,7 +157,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid engine scheme
   it('should reject invalid engine scheme', async () => {
     const config = { ...testConfig };
-    config.commonConfig!.engine.scheme = 'invalid' as any;
+    config.common!.engine.scheme = 'invalid' as any;
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -172,7 +172,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid operating system values
   it('should reject invalid operating system value', async () => {
     const config = { ...testConfig };
-    config.commonConfig!.operatingSystem = 'invalid_os' as any;
+    config.common!.operatingSystem = 'invalid_os' as any;
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -187,7 +187,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid sync mode values
   it('should reject invalid sync mode value', async () => {
     const config = { ...testConfig };
-    config.commonConfig!.syncMode = 'invalid_mode' as any;
+    config.common!.syncMode = 'invalid_mode' as any;
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -202,7 +202,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid consensus HTTP port values (minimum)
   it('should reject consensus HTTP port below minimum', async () => {
     const config = { ...testConfig };
-    config.consensusConfig!.httpPort = 80;
+    config.consensus!.httpPort = 80;
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -217,7 +217,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid consensus HTTP port values (maximum)
   it('should reject consensus HTTP port above maximum', async () => {
     const config = { ...testConfig };
-    config.consensusConfig!.httpPort = 70000;
+    config.consensus!.httpPort = 70000;
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -232,7 +232,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid consensus metrics port values (minimum)
   it('should reject consensus metrics port below minimum', async () => {
     const config = { ...testConfig };
-    config.consensusConfig!.metricsPort = 80;
+    config.consensus!.metricsPort = 80;
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -247,7 +247,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid consensus P2P port values (minimum)
   it('should reject consensus P2P port below minimum', async () => {
     const config = { ...testConfig };
-    config.consensusConfig!.p2pPort = 80;
+    config.consensus!.p2pPort = 80;
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -262,7 +262,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid validator fee recipient address
   it('should reject invalid validator fee recipient address', async () => {
     const config = { ...testConfig };
-    config.validatorConfig!.feeRecipientAddress = 'invalid_address';
+    config.validator!.feeRecipientAddress = 'invalid_address';
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -277,7 +277,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid validator metrics port
   it('should reject invalid validator metrics port', async () => {
     const config = { ...testConfig };
-    config.validatorConfig!.metricsPort = 'invalid_port';
+    config.validator!.metricsPort = 'invalid_port';
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -292,7 +292,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid execution HTTP port values (minimum)
   it('should reject execution HTTP port below minimum', async () => {
     const config = { ...testConfig };
-    config.executionConfig!.http.port = 80;
+    config.execution!.http.port = 80;
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -307,7 +307,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid execution HTTP port values (maximum)
   it('should reject execution HTTP port above maximum', async () => {
     const config = { ...testConfig };
-    config.executionConfig!.http.port = 70000;
+    config.execution!.http.port = 70000;
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -322,7 +322,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid execution metrics port values (minimum)
   it('should reject execution metrics port below minimum', async () => {
     const config = { ...testConfig };
-    config.executionConfig!.metrics.port = 80;
+    config.execution!.metrics.port = 80;
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -337,7 +337,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid execution P2P port values (minimum)
   it('should reject execution P2P port below minimum', async () => {
     const config = { ...testConfig };
-    config.executionConfig!.p2p.port = 80;
+    config.execution!.p2p.port = 80;
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -352,7 +352,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid execution P2P max peers value (minimum)
   it('should reject execution P2P max peers below minimum', async () => {
     const config = { ...testConfig };
-    config.executionConfig!.p2p.maxPeers = 0;
+    config.execution!.p2p.maxPeers = 0;
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -367,7 +367,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid execution P2P max peers value (maximum)
   it('should reject execution P2P max peers above maximum', async () => {
     const config = { ...testConfig };
-    config.executionConfig!.p2p.maxPeers = 2000;
+    config.execution!.p2p.maxPeers = 2000;
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -382,7 +382,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid execution WebSocket port values (minimum)
   it('should reject execution WebSocket port below minimum', async () => {
     const config = { ...testConfig };
-    config.executionConfig!.ws.port = 80;
+    config.execution!.ws.port = 80;
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -397,7 +397,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test missing required fields
   it('should reject missing required consensus client', async () => {
     const config = { ...testConfig };
-    config.consensusConfig!.client = {
+    config.consensus!.client = {
       name: '' as any,
       version: ''
     };
@@ -415,7 +415,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test missing required fields
   it('should reject missing required execution client', async () => {
     const config = { ...testConfig };
-    config.executionConfig!.client = {
+    config.execution!.client = {
       name: '' as any,
       version: ''
     };

@@ -3,19 +3,19 @@ allOf:
   - if:
       type: object
       properties:
-        validatorConfig:
+        validator:
           type: object
           properties:
             enabled:
               type: boolean
               const: true
-      required: ["validatorConfig"]
+      required: ["validator"]
     then:
       type: object
       required:
-        - validatorConfig
+        - validator
       properties:
-        validatorConfig:
+        validator:
           type: object
           required:
             - client
@@ -48,7 +48,7 @@ allOf:
   - if:
       type: object
       properties:
-        commonConfig:
+        common:
           type: object
           properties:
             clients:
@@ -56,11 +56,11 @@ allOf:
               properties:
                 execution:
                   const: "besu"
-      required: ["commonConfig"]
+      required: ["common"]
     then:
       type: object
       properties:
-        commonConfig:
+        common:
           type: object
           properties:
             engine:
@@ -90,7 +90,7 @@ allOf:
   - if:
       type: object
       properties:
-        commonConfig:
+        common:
           type: object
           properties:
             clients:
@@ -115,7 +115,7 @@ allOf:
   - if:
       type: object
       properties:
-        commonConfig:
+        common:
           type: object
           properties:
             engine:
@@ -126,7 +126,7 @@ allOf:
     then:
       type: object
       properties:
-        commonConfig:
+        common:
           type: object
           properties:
             operatingSystem:
@@ -137,7 +137,7 @@ allOf:
   - if:
       type: object
       properties:
-        commonConfig:
+        common:
           type: object
           properties:
             engine:
@@ -156,7 +156,7 @@ allOf:
   - if:
       type: object
       properties:
-        commonConfig:
+        common:
           type: object
           properties:
             clients:

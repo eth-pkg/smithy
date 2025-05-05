@@ -2,31 +2,31 @@ name: prysm-validator
 version: 6.0.0
 valueFormat: space
 rules:
-  - configPath: commonConfig.network
+  - configPath: common.network
     flag: --mainnet
     transform: network
-  - configPath: commonConfig.network
+  - configPath: common.network
     flag: --sepolia
     transform: network
-  - configPath: commonConfig.network
+  - configPath: common.network
     flag: --holesky
     transform: network
-  - configPath: commonConfig.network
+  - configPath: common.network
     flag: --ephemery
     transform: network
-  - configPath: commonConfig.network
+  - configPath: common.network
     flag: --hoodi
     transform: network
-  - configPath: validatorConfig.dataDir
+  - configPath: validator.dataDir
     flag: --datadir
     transform: interpolate
-  - configPath: validatorConfig.beaconRpcProvider
+  - configPath: validator.beaconRpcProvider
     flag: --beacon-rpc-provider
-  - configPath: validatorConfig.beaconRpcProvider
+  - configPath: validator.beaconRpcProvider
     flag: --beacon-rest-api-provider
-  - configPath: validatorConfig.feeRecipientAddress
+  - configPath: validator.feeRecipientAddress
     flag: --suggested-fee-recipient
-  - configPath: validatorConfig.metricsPort
+  - configPath: validator.metricsPort
     flag: --monitoring-port
   - configPath: todo
     flag: --accept-terms-of-use
@@ -50,9 +50,9 @@ rules:
     flag: --force-clear-db
   - configPath: todo
     flag: --grpc-max-msg-size
-  - configPath: validatorConfig.logFile
+  - configPath: validator.logFile
     flag: --log-file
-  - configPath: validatorConfig.logFormat
+  - configPath: validator.logFormat
     flag: --log-format
   - configPath: todo
     flag: --minimal-config
@@ -64,7 +64,7 @@ rules:
     flag: --tracing-endpoint
   - configPath: todo
     flag: --tracing-process-name
-  - configPath: validatorConfig.logLevel
+  - configPath: validator.logLevel
     flag: --verbosity
   - configPath: todo
     flag: --wallet-password-file
@@ -100,25 +100,25 @@ rules:
     flag: --rpc-port
   - configPath: todo
     flag: --tls-cert
-  - configPath: validatorConfig.builderEnabled
+  - configPath: validator.builderEnabled
     flag: --enable-builder
-  - configPath: validatorConfig.graffiti
+  - configPath: validator.graffiti
     flag: --graffiti
-  - configPath: validatorConfig.graffitiFile
+  - configPath: validator.graffitiFile
     flag: --graffiti-file
-  - configPath: validatorConfig.proposerConfigFile
+  - configPath: validator.proposerConfigFile
     flag: --proposer-settings-file
   - configPath: todo
     flag: --proposer-settings-url
-  - configPath: validatorConfig.suggestedGasLimit
+  - configPath: validator.suggestedGasLimit
     flag: --suggested-gas-limit
   - configPath: todo
     flag: --validators-registration-batch-size
-  - configPath: validatorConfig.externalSignerKeystore
+  - configPath: validator.externalSignerKeystore
     flag: --validators-external-signer-key-file
-  - configPath: validatorConfig.externalSignerPublicKeys
+  - configPath: validator.externalSignerPublicKeys
     flag: --validators-external-signer-public-keys
-  - configPath: validatorConfig.externalSignerUrl
+  - configPath: validator.externalSignerUrl
     flag: --validators-external-signer-url
   - configPath: todo
     flag: --slasher-rpc-provider
@@ -128,7 +128,7 @@ rules:
     flag: --disable-account-metrics
   - configPath: todo
     flag: --disable-rewards-penalties-logging
-  - configPath: validatorConfig.distributed
+  - configPath: validator.distributed
     flag: --distributed
   - configPath: todo
     flag: --keymanager-token-file

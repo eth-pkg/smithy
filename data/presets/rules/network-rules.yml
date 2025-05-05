@@ -18,7 +18,7 @@ allOf:
   - if:
       type: object
       properties:
-        commonConfig:
+        common:
           type: object
           properties:
             network:
@@ -26,7 +26,7 @@ allOf:
     then:
       type: object
       properties:
-        commonConfig:
+        common:
           type: object
           properties:
             networkId:
@@ -36,7 +36,7 @@ allOf:
   - if:
       type: object
       properties:
-        commonConfig:
+        common:
           type: object
           properties:
             network:
@@ -44,7 +44,7 @@ allOf:
     then:
       type: object
       properties:
-        commonConfig:
+        common:
           type: object
           properties:
             networkId:
@@ -54,7 +54,7 @@ allOf:
   - if:
       type: object
       properties:
-        commonConfig:
+        common:
           type: object
           properties:
             network:
@@ -62,7 +62,7 @@ allOf:
     then:
       type: object
       properties:
-        commonConfig:
+        common:
           type: object
           properties:
             networkId:
@@ -72,7 +72,7 @@ allOf:
   - if:
       type: object
       properties:
-        commonConfig:
+        common:
           type: object
           properties:
             network:
@@ -80,7 +80,7 @@ allOf:
     then:
       type: object
       properties:
-        commonConfig:
+        common:
           type: object
           properties:
             networkId:

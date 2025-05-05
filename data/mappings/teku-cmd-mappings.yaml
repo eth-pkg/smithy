@@ -2,48 +2,48 @@ name: teku
 version: 24.1.0
 valueFormat: equals
 rules:
-  - configPath: consensusConfig.dataDir
+  - configPath: consensus.dataDir
     flag: --data-path
     transform: interpolate
-  - configPath: commonConfig.network
+  - configPath: common.network
     flag: --network
-  - configPath: executionConfig.p2p.port
+  - configPath: execution.p2p.port
     flag: --port
-  - configPath: executionConfig.p2p.maxPeers
+  - configPath: execution.p2p.maxPeers
     flag: --maxpeers
-  - configPath: executionConfig.http.enabled
+  - configPath: execution.http.enabled
     flag: --http
-  - configPath: commonConfig.engine.host
+  - configPath: common.engine.host
     flag: --http.addr
     parent: --http
-  - configPath: executionConfig.http.port
+  - configPath: execution.http.port
     flag: --http.port
     parent: --http
-  - configPath: executionConfig.http.apiPrefixes
+  - configPath: execution.http.apiPrefixes
     flag: --http.api
     transform: joinComma
     parent: --http
-  - configPath: executionConfig.ws.enabled
+  - configPath: execution.ws.enabled
     flag: --ws
-  - configPath: executionConfig.ws.port
+  - configPath: execution.ws.port
     flag: --ws.port
     parent: --ws
-  - configPath: commonConfig.engine.jwtFile
+  - configPath: common.engine.jwtFile
     flag: --jwtsecret
     transform: formatPath
-  - configPath: commonConfig.engine.host
+  - configPath: common.engine.host
     flag: --engine.host
-  - configPath: commonConfig.engine.port
+  - configPath: common.engine.port
     flag: --engine.port
-  - configPath: executionConfig.base.syncMode
+  - configPath: execution.base.syncMode
     flag: --syncmode
     transform: syncMode
-  - configPath: executionConfig.metrics.enabled
+  - configPath: execution.metrics.enabled
     flag: --metrics
-  - configPath: executionConfig.metrics.port
+  - configPath: execution.metrics.port
     flag: --metrics.port
     parent: --metrics
-  - configPath: executionConfig.metrics.addr
+  - configPath: execution.metrics.addr
     flag: --metrics.host
     parent: --metrics
   - configPath: todo

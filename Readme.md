@@ -112,9 +112,9 @@ Below is the core JSON schema structure for Smithy configurations, excluding val
 ```yaml
 type: object
 required:
-  - commonConfig
+  - common
 properties:
-  commonConfig:
+  common:
     type: object
     properties:
       dataDir:
@@ -150,7 +150,7 @@ properties:
         type: string
       syncMode:
         type: string
-  executionConfig:
+  execution:
     type: object
     required: [client]
     properties:
@@ -200,7 +200,7 @@ properties:
             type: number
       dataDir:
         type: string
-  consensusConfig:
+  consensus:
     type: object
     required: [client]
     properties:
@@ -252,7 +252,7 @@ properties:
         type: boolean
       dataDir:
         type: string
-  validatorConfig:
+  validator:
     type: object
     properties:
       enabled:
@@ -324,79 +324,79 @@ The following table indicates the current mapping status of schema fields to cli
 
 | Schema Section       | Field                                | Mapping Status       |
 |----------------------|--------------------------------------|----------------------|
-| commonConfig         | dataDir                              | Mapped               |
-| commonConfig         | engine                               | Mapped               |
-| commonConfig         | network                              | Mapped               |
-| commonConfig         | networkId                            | Mapped               |
-| commonConfig         | operatingSystem                      | Mapped               |
-| commonConfig         | syncMode                             | Work in Progress     |
-| executionConfig      | client.name                          | Mapped               |
-| executionConfig      | client.version                       | Work in Progress     |
-| executionConfig      | http                                 | Work in Progress     |
-| executionConfig      | metrics                              | Work in Progress     |
-| executionConfig      | p2p                                  | Work in Progress     |
-| executionConfig      | ws                                   | Work in Progress     |
-| executionConfig      | dataDir                              | Mapped               |
-| consensusConfig      | client.name                          | Mapped               |
-| consensusConfig      | client.version                       | Work in Progress     |
-| consensusConfig      | httpPort                             | Work in Progress     |
-| consensusConfig      | metricsPort                          | Work in Progress     |
-| consensusConfig      | p2pPort                              | Work in Progress     |
-| consensusConfig      | checkpointSyncUrl                    | Work in Progress     |
-| consensusConfig      | checkpointBlock                      | Work in Progress     |
-| consensusConfig      | checkpointState                      | Work in Progress     |
-| consensusConfig      | graffiti                             | Work in Progress     |
-| consensusConfig      | logFile                              | Work in Progress     |
-| consensusConfig      | logFormat                            | Work in Progress     |
-| consensusConfig      | metricsAddress                       | Work in Progress     |
-| consensusConfig      | monitoringEndpoint                   | Work in Progress     |
-| consensusConfig      | bootnodes                            | Work in Progress     |
-| consensusConfig      | enrAddress                           | Work in Progress     |
-| consensusConfig      | port6                                | Work in Progress     |
-| consensusConfig      | discoveryPort                        | Work in Progress     |
-| consensusConfig      | testnetDir                           | Work in Progress     |
-| consensusConfig      | validatorMonitorFile                 | Work in Progress     |
-| consensusConfig      | builder                              | Work in Progress     |
-| consensusConfig      | dataDir                              | Mapped               |
-| validatorConfig      | enabled                              | Mapped               |
-| validatorConfig      | client.name                          | Mapped               |
-| validatorConfig      | client.version                       | Work in Progress     |
-| validatorConfig      | dataDir                              | Mapped               |
-| validatorConfig      | beaconRpcProvider                    | Work in Progress     |
-| validatorConfig      | numValidators                        | Work in Progress     |
-| validatorConfig      | feeRecipientAddress                  | Work in Progress     |
-| validatorConfig      | metricsPort                          | Work in Progress     |
-| validatorConfig      | graffiti                             | Work in Progress     |
-| validatorConfig      | graffitiFile                         | Work in Progress     |
-| validatorConfig      | proposerConfigFile                   | Work in Progress     |
-| validatorConfig      | suggestedGasLimit                    | Work in Progress     |
-| validatorConfig      | doppelgangerProtection               | Work in Progress     |
-| validatorConfig      | builderEnabled                       | Work in Progress     |
-| validatorConfig      | externalSignerUrl                    | Work in Progress     |
-| validatorConfig      | externalSignerKeystore               | Work in Progress     |
-| validatorConfig      | externalSignerKeystorePasswordFile   | Work in Progress     |
-| validatorConfig      | externalSignerPublicKeys             | Work in Progress     |
-| validatorConfig      | externalSignerTimeout                | Work in Progress     |
-| validatorConfig      | externalSignerTruststore             | Work in Progress     |
-| validatorConfig      | externalSignerTruststorePasswordFile | Work in Progress     |
-| validatorConfig      | proposerBlindedBlocksEnabled         | Work in Progress     |
-| validatorConfig      | proposerConfigRefreshEnabled         | Work in Progress     |
-| validatorConfig      | metricsEnabled                       | Work in Progress     |
-| validatorConfig      | validatorsDir                        | Work in Progress     |
-| validatorConfig      | secretsDir                           | Work in Progress     |
-| validatorConfig      | distributed                          | Work in Progress     |
+| common         | dataDir                              | Mapped               |
+| common         | engine                               | Mapped               |
+| common         | network                              | Mapped               |
+| common         | networkId                            | Mapped               |
+| common         | operatingSystem                      | Mapped               |
+| common         | syncMode                             | Work in Progress     |
+| execution      | client.name                          | Mapped               |
+| execution      | client.version                       | Work in Progress     |
+| execution      | http                                 | Work in Progress     |
+| execution      | metrics                              | Work in Progress     |
+| execution      | p2p                                  | Work in Progress     |
+| execution      | ws                                   | Work in Progress     |
+| execution      | dataDir                              | Mapped               |
+| consensus      | client.name                          | Mapped               |
+| consensus      | client.version                       | Work in Progress     |
+| consensus      | httpPort                             | Work in Progress     |
+| consensus      | metricsPort                          | Work in Progress     |
+| consensus      | p2pPort                              | Work in Progress     |
+| consensus      | checkpointSyncUrl                    | Work in Progress     |
+| consensus      | checkpointBlock                      | Work in Progress     |
+| consensus      | checkpointState                      | Work in Progress     |
+| consensus      | graffiti                             | Work in Progress     |
+| consensus      | logFile                              | Work in Progress     |
+| consensus      | logFormat                            | Work in Progress     |
+| consensus      | metricsAddress                       | Work in Progress     |
+| consensus      | monitoringEndpoint                   | Work in Progress     |
+| consensus      | bootnodes                            | Work in Progress     |
+| consensus      | enrAddress                           | Work in Progress     |
+| consensus      | port6                                | Work in Progress     |
+| consensus      | discoveryPort                        | Work in Progress     |
+| consensus      | testnetDir                           | Work in Progress     |
+| consensus      | validatorMonitorFile                 | Work in Progress     |
+| consensus      | builder                              | Work in Progress     |
+| consensus      | dataDir                              | Mapped               |
+| validator      | enabled                              | Mapped               |
+| validator      | client.name                          | Mapped               |
+| validator      | client.version                       | Work in Progress     |
+| validator      | dataDir                              | Mapped               |
+| validator      | beaconRpcProvider                    | Work in Progress     |
+| validator      | numValidators                        | Work in Progress     |
+| validator      | feeRecipientAddress                  | Work in Progress     |
+| validator      | metricsPort                          | Work in Progress     |
+| validator      | graffiti                             | Work in Progress     |
+| validator      | graffitiFile                         | Work in Progress     |
+| validator      | proposerConfigFile                   | Work in Progress     |
+| validator      | suggestedGasLimit                    | Work in Progress     |
+| validator      | doppelgangerProtection               | Work in Progress     |
+| validator      | builderEnabled                       | Work in Progress     |
+| validator      | externalSignerUrl                    | Work in Progress     |
+| validator      | externalSignerKeystore               | Work in Progress     |
+| validator      | externalSignerKeystorePasswordFile   | Work in Progress     |
+| validator      | externalSignerPublicKeys             | Work in Progress     |
+| validator      | externalSignerTimeout                | Work in Progress     |
+| validator      | externalSignerTruststore             | Work in Progress     |
+| validator      | externalSignerTruststorePasswordFile | Work in Progress     |
+| validator      | proposerBlindedBlocksEnabled         | Work in Progress     |
+| validator      | proposerConfigRefreshEnabled         | Work in Progress     |
+| validator      | metricsEnabled                       | Work in Progress     |
+| validator      | validatorsDir                        | Work in Progress     |
+| validator      | secretsDir                           | Work in Progress     |
+| validator      | distributed                          | Work in Progress     |
 ## How It Works
 
 Smithy uses JSON schema-based presets with:
 1. **Schema**: Defines standardized settings across clients (e.g., data directories, ports), requiring only JSON schema knowledge.
 2. **Validation**: Enforces rules for network consistency, valid ports, and client compatibility (e.g., blocks Lighthouse with Prysm validator).
-3. **Defaults**: Applies JSON schema defaults (e.g., numbers, enums, or interpolated strings like `{HOME}/ethereum/{commonConfig.network}`, where `{commonConfig.network}` is replaced by values like `mainnet`).
+3. **Defaults**: Applies JSON schema defaults (e.g., numbers, enums, or interpolated strings like `{HOME}/ethereum/{common.network}`, where `{common.network}` is replaced by values like `mainnet`).
 4. **Mappings**: Maps standard schema settings to client-specific flags (e.g., `reth-cmd-mappings.yaml`), often with minimal or no transformation, extensible for new versions or flags.
-5. **Transformers**: Formats values for client compatibility when needed (e.g., `joinComma` for arrays, `interpolate` for strings like `{HOME}/ethereum/{commonConfig.network}`).
+5. **Transformers**: Formats values for client compatibility when needed (e.g., `joinComma` for arrays, `interpolate` for strings like `{HOME}/ethereum/{common.network}`).
 
 Example mapping:
 ```yaml
-- configPath: executionConfig.http.apiPrefixes
+- configPath: execution.http.apiPrefixes
   flag: --http.api
   transform: joinComma
   parent: --http
@@ -404,8 +404,8 @@ Example mapping:
 
 Example preset:
 ```yaml
-commonConfig:
-  dataDir: "{HOME}/ethereum/{commonConfig.network}"
+common:
+  dataDir: "{HOME}/ethereum/{common.network}"
   network: mainnet
   engine:
     port: 8551

@@ -29,13 +29,13 @@ describe("CommandClientRegistry", () => {
       teku: "teku validator-client",
     }
   }
-  
+
   Object.entries(expectedCommands.execution).forEach(([client, expectedCommand]) => {
     it(`should use the correct command (${expectedCommand}) for execution client ${client}`, () => {
-      let config = { 
-        ...testConfig, 
-        executionConfig: {
-          ...testConfig.executionConfig,
+      let config = {
+        ...testConfig,
+        execution: {
+          ...testConfig.execution,
           client: {
             name: client as ExecutionClientName,
             version: "",
@@ -47,13 +47,13 @@ describe("CommandClientRegistry", () => {
       expect(scriptStr).to.include(expectedCommand)
     })
   })
-  
+
   Object.entries(expectedCommands.consensus).forEach(([client, expectedCommand]) => {
     it(`should use the correct command (${expectedCommand}) for consensus client ${client}`, () => {
-      let config = { 
-        ...testConfig, 
-        consensusConfig: {
-          ...testConfig.consensusConfig,
+      let config = {
+        ...testConfig,
+        consensus: {
+          ...testConfig.consensus,
           client: {
             name: client as ConsensusClientName,
             version: "",
@@ -65,13 +65,13 @@ describe("CommandClientRegistry", () => {
       expect(scriptStr).to.include(expectedCommand)
     })
   })
-  
+
   Object.entries(expectedCommands.validator).forEach(([client, expectedCommand]) => {
     it(`should use the correct command (${expectedCommand}) for validator client ${client}`, () => {
-      let config = { 
-        ...testConfig, 
-        validatorConfig: {
-          ...testConfig.validatorConfig,
+      let config = {
+        ...testConfig,
+        validator: {
+          ...testConfig.validator,
           client: {
             name: client as ValidatorClientName,
             version: "",

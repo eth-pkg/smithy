@@ -13,7 +13,7 @@ describe.skip('Non-Staker Preset Tests', () => {
 
   it('should validate a correct non-staker config', async () => {
     const config: Partial<NodeConfig> = {
-      commonConfig: {
+      common: {
         ...baseConfig,
         network: 'mainnet',
         networkId: 1,
@@ -22,19 +22,19 @@ describe.skip('Non-Staker Preset Tests', () => {
     };
 
     const result = await presetManager.validateAndApplyRules(config, 'combined/mainnet-non-staker');
-    expect(result.validatorConfig?.enabled).to.be.false;
+    expect(result.validator?.enabled).to.be.false;
   });
 
   it('should reject non-staker preset with staking set to true', async () => {
     const config: Partial<NodeConfig> = {
-      commonConfig: {
+      common: {
         ...baseConfig,
         network: 'mainnet',
         networkId: 1,
         dataDir: '$HOME/ethereum/mainnet'
       },
-      validatorConfig: {
-        ...testConfig.validatorConfig,
+      validator: {
+        ...testConfig.validator,
         enabled: true
       }
     };
@@ -53,14 +53,14 @@ describe.skip('Non-Staker Preset Tests', () => {
 
   it('should reject staker preset with empty validator client', async () => {
     const config: Partial<NodeConfig> = {
-      commonConfig: {
+      common: {
         ...baseConfig,
         network: 'mainnet',
         networkId: 1,
         dataDir: '$HOME/ethereum/mainnet',
       },
-      validatorConfig: {
-        ...testConfig.validatorConfig,
+      validator: {
+        ...testConfig.validator,
         enabled: true,
         client: {
           name: '',

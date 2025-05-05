@@ -14,7 +14,7 @@ describe('Default Preset Tests', () => {
   it('should validate a correct default config', async () => {
     const config: Partial<NodeConfig> = {
       ...testConfig,
-      commonConfig: {
+      common: {
         ...baseConfig,
         network: 'mainnet',
         networkId: 1,
@@ -23,14 +23,14 @@ describe('Default Preset Tests', () => {
     };
 
     const result = await presetManager.validateAndApplyRules(config, 'default');
-    expect(result.commonConfig?.network).to.equal('mainnet');
-    expect(result.commonConfig?.networkId).to.equal(1);
+    expect(result.common?.network).to.equal('mainnet');
+    expect(result.common?.networkId).to.equal(1);
   });
 
   it('should reject config with invalid network', async () => {
     const config: Partial<NodeConfig> = {
       ...testConfig,
-      commonConfig: {
+      common: {
         ...baseConfig,
         network: 'invalid',
         networkId: 1,

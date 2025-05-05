@@ -13,32 +13,32 @@ describe('Staker Preset Tests', () => {
 
   it('should validate a correct staker config', async () => {
     const config: Partial<NodeConfig> = {
-      commonConfig: {
+      common: {
         ...baseConfig,
         network: 'mainnet',
         networkId: 1,
         dataDir: '$HOME/ethereum/mainnet'
       },
-      validatorConfig: {
-        ...testConfig.validatorConfig,
+      validator: {
+        ...testConfig.validator,
         enabled: true
       }
     };
 
     const result = await presetManager.validateAndApplyRules(config, 'combined/mainnet-staker');
-    expect(result.validatorConfig?.enabled).to.be.true;
+    expect(result.validator?.enabled).to.be.true;
   });
 
   it('should reject staker preset with staking set to false', async () => {
     const config: Partial<NodeConfig> = {
-      commonConfig: {
+      common: {
         ...baseConfig,
         network: 'mainnet',
         networkId: 1,
         dataDir: '$HOME/ethereum/mainnet'
       },
-      validatorConfig: {
-        ...testConfig.validatorConfig,
+      validator: {
+        ...testConfig.validator,
         enabled: false
       }
     };

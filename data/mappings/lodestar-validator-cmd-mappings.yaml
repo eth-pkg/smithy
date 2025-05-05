@@ -2,33 +2,33 @@ name: lodestar-validator
 version: 1.29.0
 valueFormat: space
 rules:
-  - configPath: validatorConfig.dataDir
+  - configPath: validator.dataDir
     flag: --dataDir
     transform: interpolate
-  - configPath: commonConfig.network
+  - configPath: common.network
     flag: --network
-  - configPath: validatorConfig.metricsPort
+  - configPath: validator.metricsPort
     flag: --metrics.port
     parent: --metrics
-  - configPath: validatorConfig.metricsAddress
+  - configPath: validator.metricsAddress
     flag: --metrics.address
     parent: --metrics
-  - configPath: validatorConfig.metricsEnabled
+  - configPath: validator.metricsEnabled
     flag: --metrics
     parent: --metrics
   - configPath: todo
     flag: --beaconNodes
   - configPath: todo
     flag: --force
-  - configPath: validatorConfig.graffiti
+  - configPath: validator.graffiti
     flag: --graffiti
-  - configPath: validatorConfig.proposerConfigFile
+  - configPath: validator.proposerConfigFile
     flag: --proposerSettingsFile
-  - configPath: validatorConfig.feeRecipientAddress
+  - configPath: validator.feeRecipientAddress
     flag: --suggestedFeeRecipient
   - configPath: todo
     flag: --strictFeeRecipientCheck
-  - configPath: validatorConfig.defaultGasLimit
+  - configPath: validator.defaultGasLimit
     flag: --defaultGasLimit
   - configPath: todo
     flag: --useProduceBlockV3
@@ -40,9 +40,9 @@ rules:
     flag: --importKeystores
   - configPath: todo
     flag: --importKeystoresPassword
-  - configPath: validatorConfig.doppelgangerProtection
+  - configPath: validator.doppelgangerProtection
     flag: --doppelgangerProtection
-  - configPath: validatorConfig.distributed
+  - configPath: validator.distributed
     flag: --distributed
   - configPath: todo
     flag: --keymanager
@@ -56,7 +56,7 @@ rules:
     flag: --keymanager.address
   - configPath: todo
     flag: --keymanager.cors
-  - configPath: validatorConfig.builderEnabled
+  - configPath: validator.builderEnabled
     flag: --builder
   - configPath: todo
     flag: --builder.selection
@@ -66,9 +66,9 @@ rules:
     flag: --http.requestWireFormat
   - configPath: todo
     flag: --http.responseWireFormat
-  - configPath: validatorConfig.externalSignerUrl
+  - configPath: validator.externalSignerUrl
     flag: --externalSigner.url
-  - configPath: validatorConfig.externalSignerPublicKeys
+  - configPath: validator.externalSignerPublicKeys
     flag: --externalSigner.pubkeys
   - configPath: todo
     flag: --externalSigner.fetch
@@ -88,11 +88,11 @@ rules:
     flag: --terminal-block-hash-override
   - configPath: todo
     flag: --terminal-block-hash-epoch-override
-  - configPath: validatorConfig.logLevel
+  - configPath: validator.logLevel
     flag: --logLevel
-  - configPath: validatorConfig.logFile
+  - configPath: validator.logFile
     flag: --logFile
-  - configPath: validatorConfig.logLevel
+  - configPath: validator.logLevel
     flag: --logFileLevel
   - configPath: todo
     flag: --logFileDailyRotate 

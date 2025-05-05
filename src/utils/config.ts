@@ -56,11 +56,11 @@ export class ConfigManager {
     const missingFields: string[] = [];
 
     // Check for required client selections
-    if (!config.executionConfig?.client?.name) {
+    if (!config.execution?.client?.name) {
       missingFields.push('execution');
     }
 
-    if (!config.consensusConfig?.client?.name) {
+    if (!config.consensus?.client?.name) {
       missingFields.push('consensus');
     }
 
@@ -80,35 +80,35 @@ export class ConfigManager {
     const mergedConfig = JSON.parse(JSON.stringify(config)) as any;
 
     // Ensure the config has the expected structure
-    if (!mergedConfig.commonConfig) {
-      mergedConfig.commonConfig = {} as any;
+    if (!mergedConfig.common) {
+      mergedConfig.common = {} as any;
     }
 
-    if (!mergedConfig.commonConfig.clients) {
-      mergedConfig.commonConfig.clients = {} as any;
+    if (!mergedConfig.common.clients) {
+      mergedConfig.common.clients = {} as any;
     }
 
 
     // Apply overrides from options if specified
     if (options.execution) {
-      mergedConfig.executionConfig.client.name = options.execution;
+      mergedConfig.execution.client.name = options.execution;
     }
 
     if (options.consensus) {
-      mergedConfig.consensusConfig.client.name = options.consensus;
+      mergedConfig.consensus.client.name = options.consensus;
     }
 
     if (options.validator) {
-      mergedConfig.validatorConfig.client.name = options.validator;
-      mergedConfig.validatorConfig.enabled = true;
+      mergedConfig.validator.client.name = options.validator;
+      mergedConfig.validator.enabled = true;
     }
 
     if (options.dataDir) {
-      mergedConfig.commonConfig.dataDir = options.dataDir;
+      mergedConfig.common.dataDir = options.dataDir;
     }
 
     if (options.network) {
-      mergedConfig.commonConfig.network = options.network;
+      mergedConfig.common.network = options.network;
     }
 
 

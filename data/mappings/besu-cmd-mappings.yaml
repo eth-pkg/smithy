@@ -2,58 +2,58 @@ name: besu
 version: 25.4.1
 valueFormat: equals
 rules:
-  - configPath: executionConfig.dataDir
+  - configPath: execution.dataDir
     flag: --data-path
     transform: interpolate
-  - configPath: commonConfig.network
+  - configPath: common.network
     flag: --network
-  - configPath: commonConfig.networkId
+  - configPath: common.networkId
     flag: --network-id
-  - configPath: executionConfig.p2p.port
+  - configPath: execution.p2p.port
     flag: --p2p-port
-  - configPath: executionConfig.p2p.maxPeers
+  - configPath: execution.p2p.maxPeers
     flag: --max-peers
-  - configPath: executionConfig.http.enabled
+  - configPath: execution.http.enabled
     flag: --rpc-http-enabled
-  - configPath: executionConfig.http.port
+  - configPath: execution.http.port
     flag: --rpc-http-port
-  - configPath: executionConfig.http.apiPrefixes
+  - configPath: execution.http.apiPrefixes
     flag: --rpc-http-api
     transform: joinComma
-  - configPath: executionConfig.ws.enabled
+  - configPath: execution.ws.enabled
     flag: --rpc-ws-enabled
-  - configPath: executionConfig.ws.port
+  - configPath: execution.ws.port
     flag: --rpc-ws-port
-  - configPath: commonConfig.engine.jwtFile
+  - configPath: common.engine.jwtFile
     flag: --engine-jwt-secret
     transform: interpolate
     enabled:
-      configPath: commonConfig.engine.communication
+      configPath: common.engine.communication
       transform: jwtEnabled
-  - configPath: commonConfig.engine.port
+  - configPath: common.engine.port
     flag: --engine-rpc-port
     enabled:
-      configPath: commonConfig.engine.communication
+      configPath: common.engine.communication
       transform: jwtEnabled
-  - configPath: commonConfig.engine.hostAllowlist
+  - configPath: common.engine.hostAllowlist
     flag: --engine-host-allowlist
     transform: hostAllowlist
     enabled:
-      configPath: commonConfig.engine.communication
+      configPath: common.engine.communication
       transform: jwtEnabled
-  - configPath: commonConfig.engine.host
+  - configPath: common.engine.host
     flag: --engine-jwt-disabled
     transform: isFlag
     enabled:
-      configPath: commonConfig.engine.communication
+      configPath: common.engine.communication
       transform: ipcEnabled
-  - configPath: commonConfig.syncMode
+  - configPath: common.syncMode
     flag: --sync-mode
-  - configPath: executionConfig.metrics.enabled
+  - configPath: execution.metrics.enabled
     flag: --metrics-enabled
-  - configPath: executionConfig.metrics.port
+  - configPath: execution.metrics.port
     flag: --metrics-port
-  - configPath: executionConfig.metrics.host
+  - configPath: execution.metrics.host
     flag: --metrics-host
   - configPath: todo
     flag: --auto-log-bloom-caching-enabled
@@ -227,7 +227,7 @@ rules:
     flag: --graphql-tls-truststore-file
   - configPath: todo
     flag: --graphql-tls-truststore-password-file
-  - configPath: commonConfig.engine.enabled
+  - configPath: common.engine.enabled
     flag: --engine-rpc-enabled
   - configPath: todo
     flag: --json-pretty-print-enabled
@@ -383,8 +383,8 @@ rules:
     flag: --rpc-max-logs-range
   - configPath: todo
     flag: --rpc-max-trace-filter-range 
-  - configPath: commonConfig.engine.communication
+  - configPath: common.engine.communication
     flag: --Xrpc-ipc-enabled
     enabled:
-      configPath: commonConfig.engine.communication
+      configPath: common.engine.communication
       transform: ipcEnabled

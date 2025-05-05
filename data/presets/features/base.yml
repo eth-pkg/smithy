@@ -1,14 +1,14 @@
 $id: base.yml
 type: object
 required:
-  - commonConfig
+  - common
 properties:
-  commonConfig:
+  common:
     type: object
     properties:
       dataDir:
         type: string
-        default: "{HOME}/{commonConfig.network}"
+        default: "{HOME}/{common.network}"
         description: "Base directory for storing Ethereum client data"
       engine:
         type: object
@@ -37,7 +37,7 @@ properties:
               enum: "Engine communication method must be 'jwt' or 'ipc'"
           url:
             type: string
-            default: "{commonConfig.engine.scheme}://{commonConfig.engine.host}:{commonConfig.engine.port}"
+            default: "{common.engine.scheme}://{common.engine.host}:{common.engine.port}"
             description: "URL for the Engine API endpoint"
           host:
             type: string
@@ -56,7 +56,7 @@ properties:
               pattern: "Must be a valid IPv4 address"
           jwtFile:
             type: string
-            default: "{commonConfig.dataDir}/jwt.hex"
+            default: "{common.dataDir}/jwt.hex"
             description: "Path to the JWT secret file for Engine API authentication"
           scheme:
             type: string
@@ -69,7 +69,7 @@ properties:
               enum: "Engine scheme must be either 'http' or 'https'"
           ipcPath:
             type: string
-            default: "{commonConfig.dataDir}/engine.ipc"
+            default: "{common.dataDir}/engine.ipc"
             description: "Path to the IPC file for Engine API communication"
 
       network:
@@ -112,7 +112,7 @@ properties:
         description: "Blockchain synchronization mode (snap for fast sync, full for complete sync, light for light client)"
         errorMessage:
           enum: "Sync mode must be one of: snap, full, light"
-  executionConfig:
+  execution:
     type: object
     required: [client]
     properties:
@@ -221,10 +221,10 @@ properties:
               maximum: "WebSocket port must be <= 65535"
       dataDir:
         type: string
-        default: "{commonConfig.dataDir}/{executionConfig.client.name}"
-        description: "Base directory for execution client data. Interpolated from commonConfig.dataDir and executionConfig.client.name."
+        default: "{common.dataDir}/{execution.client.name}"
+        description: "Base directory for execution client data. Interpolated from common.dataDir and execution.client.name."
       
-  consensusConfig:
+  consensus:
     type: object
     required: [client]
     properties:
@@ -348,10 +348,10 @@ properties:
         description: "Enable block builder API for MEV"
       dataDir:
         type: string
-        default: "{commonConfig.dataDir}/{consensusConfig.client.name}"
-        description: "Base directory for consensus client data. Interpolated from commonConfig.dataDir and consensusConfig.client.name."
+        default: "{common.dataDir}/{consensus.client.name}"
+        description: "Base directory for consensus client data. Interpolated from common.dataDir and consensus.client.name."
   
-  validatorConfig:
+  validator:
     type: object
     properties:
       enabled:
@@ -383,8 +383,8 @@ properties:
               pattern: "Version must be a valid semver string"  
       dataDir:
         type: string
-        default: "{commonConfig.dataDir}/{validatorConfig.client.name}-validator"
-        description: "Base directory for validator data. Interpolated from commonConfig.dataDir and validatorConfig.client.name."
+        default: "{common.dataDir}/{validator.client.name}-validator"
+        description: "Base directory for validator data. Interpolated from common.dataDir and validator.client.name."
       beaconRpcProvider:
         type: string
         default: "localhost:5052"

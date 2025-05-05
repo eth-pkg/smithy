@@ -1,9 +1,9 @@
 $id: sepolia
 type: object
 required:
-  - commonConfig
+  - common
 properties:
-  commonConfig:
+  common:
     type: object
     required:
       - network

@@ -120,8 +120,8 @@ export class CommandBuilder {
   }
 
   static buildFromConfig(config: NodeConfig, baseCommand: string, mappings: Mappings): Buffer {
-    const { commonConfig } = config
-    const os = commonConfig.operatingSystem
+    const { common } = config
+    const os = common.operatingSystem
     const builder = new CommandBuilder(baseCommand, mappings)
 
     for (const rule of mappings.rules) {
@@ -140,14 +140,14 @@ export class CommandBuilder {
       }
 
       const value = this.getValueFromPath(config, rule.configPath)
-  
+
       if (value !== undefined) {
         let transformedValue = value
         if (rule.transform) {
           if (!transformers[rule.transform]) {
             throw new Error(`Unknown transform function: ${rule.transform} for flag: ${rule.flag}`);
           }
-          
+
           if (rule.transform === 'interpolate') {
             transformedValue = (transformers[rule.transform] as TransformFunctionWithConfig)(value, config);
           } else {

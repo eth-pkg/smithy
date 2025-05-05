@@ -32,7 +32,7 @@ export interface EngineBaseConfig {
   enabled: boolean
 }
 
-export interface CommonConfig {
+export interface common {
   networkId: number
   dataDir: string
   engine: EngineConfig
@@ -41,7 +41,7 @@ export interface CommonConfig {
   syncMode: SyncMode
 }
 
-export interface ConsensusConfig {
+export interface consensus {
   client: {
     name: ConsensusClientName | EmptyValue
     version: string
@@ -52,7 +52,7 @@ export interface ConsensusConfig {
   p2pPort: number
 }
 
-export interface ValidatorConfig {
+export interface validator {
   client: {
     name: ValidatorClientName | EmptyValue
     version: string
@@ -112,7 +112,7 @@ export interface WebSocketConfig {
   port: number
 }
 
-export interface ExecutionConfig {
+export interface execution {
   client: {
     name: ExecutionClientName | EmptyValue
     version: string
@@ -125,10 +125,10 @@ export interface ExecutionConfig {
 }
 
 export interface NodeConfig {
-  commonConfig: CommonConfig
-  consensusConfig: ConsensusConfig
-  validatorConfig: ValidatorConfig
-  executionConfig: ExecutionConfig
+  common: common
+  consensus: consensus
+  validator: validator
+  execution: execution
 }
 
 
@@ -158,96 +158,96 @@ export interface RethConfig {
   _eslint_error: string
 }
 
-export interface PrysmConsensusConfig {
+export interface Prysmconsensus {
   /* prysm specific properties */
   _eslint_error: string
 }
 
-export interface LighthouseConsensusConfig {
+export interface Lighthouseconsensus {
   /* lighthouse specific properties */
   _eslint_error: string
 }
 
-export interface TekuConsensusConfig {
+export interface Tekuconsensus {
   /* teku specific properties */
   _eslint_error: string
 }
 
-export interface NimbusEth2ConsensusConfig {
+export interface NimbusEth2consensus {
   /* nimbus-eth2 specific properties */
   _eslint_error: string
 }
 
-export interface LodestarConsensusConfig {
+export interface Lodestarconsensus {
   /* lodestar specific properties */
   _eslint_error: string
 }
 
-export interface PrysmValidatorConfig {
+export interface Prysmvalidator {
   /* prysm validator specific properties */
   _eslint_error: string
 }
 
-export interface LighthouseValidatorConfig {
+export interface Lighthousevalidator {
   /* lighthouse validator specific properties */
   _eslint_error: string
 }
 
-export interface TekuValidatorConfig {
+export interface Tekuvalidator {
   /* teku validator specific properties */
   _eslint_error: string
 }
 
-export interface NimbusEth2ValidatorConfig {
+export interface NimbusEth2validator {
   /* nimbus-eth2 validator specific properties */
   _eslint_error: string
 }
 
-export interface LodestarValidatorConfig {
+export interface Lodestarvalidator {
   /* lodestar validator specific properties */
   _eslint_error: string
 }
 
 export type ExecutionClientConfigMap = {
   [K in ExecutionClientName]: K extends "geth"
-    ? GethConfig
-    : K extends Erigon
-      ? ErigonConfig
-      : K extends Besu
-        ? BesuConfig
-        : K extends Nethermind
-          ? NethermindConfig
-          : K extends Reth
-            ? RethConfig
-            : never
+  ? GethConfig
+  : K extends Erigon
+  ? ErigonConfig
+  : K extends Besu
+  ? BesuConfig
+  : K extends Nethermind
+  ? NethermindConfig
+  : K extends Reth
+  ? RethConfig
+  : never
 }
 
 export type ConsensusClientConfigMap = {
   [K in ConsensusClientName]: K extends Prysm
-    ? PrysmConsensusConfig
-    : K extends Lighthouse
-      ? LighthouseConsensusConfig
-      : K extends Teku
-        ? TekuConsensusConfig
-        : K extends NimbusEth2
-          ? NimbusEth2ConsensusConfig
-          : K extends Lodestar
-            ? LodestarConsensusConfig
-            : never
+  ? Prysmconsensus
+  : K extends Lighthouse
+  ? Lighthouseconsensus
+  : K extends Teku
+  ? Tekuconsensus
+  : K extends NimbusEth2
+  ? NimbusEth2consensus
+  : K extends Lodestar
+  ? Lodestarconsensus
+  : never
 }
 
 export type ValidatorClientConfigMap = {
   [K in ValidatorClientName]: K extends Prysm
-    ? PrysmValidatorConfig
-    : K extends Lighthouse
-      ? LighthouseValidatorConfig
-      : K extends Teku
-        ? TekuValidatorConfig
-        : K extends NimbusEth2
-          ? NimbusEth2ValidatorConfig
-          : K extends Lodestar
-            ? LodestarValidatorConfig
-            : never
+  ? Prysmvalidator
+  : K extends Lighthouse
+  ? Lighthousevalidator
+  : K extends Teku
+  ? Tekuvalidator
+  : K extends NimbusEth2
+  ? NimbusEth2validator
+  : K extends Lodestar
+  ? Lodestarvalidator
+  : never
 }
 
 export type ClientName = ExecutionClientName | ConsensusClientName | ValidatorClientName

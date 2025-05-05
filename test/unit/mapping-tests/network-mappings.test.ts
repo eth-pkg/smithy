@@ -5,7 +5,7 @@ import { testConfig } from '../preset-tests/network-preset.test-helper';
 
 describe('Network Mappings Tests', () => {
   let registry: CommandClientRegistry;
- 
+
 
   beforeEach(() => {
     registry = new CommandClientRegistry();
@@ -26,7 +26,7 @@ describe('Network Mappings Tests', () => {
       describe(`${client}`, () => {
         networks.forEach(network => {
           it(`should correctly map ${network} network`, () => {
-            const config = { ...testConfig, commonConfig: { ...testConfig.commonConfig, network, networkId: getNetworkId(network) } };
+            const config = { ...testConfig, common: { ...testConfig.common, network, networkId: getNetworkId(network) } };
             const scriptContent = registry.getScriptContent(client, config);
             const scriptString = scriptContent.toString();
             switch (client) {
@@ -64,9 +64,9 @@ describe('Network Mappings Tests', () => {
 
   describe('Consensus Clients', () => {
     const consensusClients: ConsensusClientName[] = [
-      'lighthouse', 
-      'lodestar', 
-      'nimbus-eth2', 
+      'lighthouse',
+      'lodestar',
+      'nimbus-eth2',
       'prysm',
       'teku'
     ];
@@ -75,7 +75,7 @@ describe('Network Mappings Tests', () => {
       describe(`${client}`, () => {
         networks.forEach(network => {
           it(`should correctly map ${network} network`, () => {
-            const config = { ...testConfig, commonConfig: { ...testConfig.commonConfig, network, networkId: getNetworkId(network) } };
+            const config = { ...testConfig, common: { ...testConfig.common, network, networkId: getNetworkId(network) } };
             const scriptContent = registry.getScriptContent(client, config);
             const scriptString = scriptContent.toString();
 
@@ -115,18 +115,18 @@ describe('Network Mappings Tests', () => {
 
   describe('Validator Clients', () => {
     const validatorClients: ValidatorClientName[] = [
-      'lighthouse', 
-      'lodestar', 
-      'nimbus-eth2', 
-      'prysm', 
-       'teku'
+      'lighthouse',
+      'lodestar',
+      'nimbus-eth2',
+      'prysm',
+      'teku'
     ];
 
     validatorClients.forEach(client => {
       describe(`${client}`, () => {
         networks.forEach(network => {
           it(`should correctly map ${network} network`, () => {
-            const config = { ...testConfig, commonConfig: { ...testConfig.commonConfig, network, networkId: getNetworkId(network) } };
+            const config = { ...testConfig, common: { ...testConfig.common, network, networkId: getNetworkId(network) } };
             const scriptContent = registry.getScriptContent(client, config, true);
             const scriptString = scriptContent.toString();
 

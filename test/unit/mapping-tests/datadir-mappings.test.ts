@@ -5,7 +5,7 @@ import { testConfig } from '../preset-tests/network-preset.test-helper';
 
 describe('DataDir Interpolation Tests', () => {
   let registry: CommandClientRegistry;
- 
+
   beforeEach(() => {
     registry = new CommandClientRegistry();
   });
@@ -23,21 +23,21 @@ describe('DataDir Interpolation Tests', () => {
       it(`should interpolate dataDir and use correct flag for ${client}`, () => {
         const config = {
           ...testConfig,
-          executionConfig: {
-            ...testConfig.executionConfig,
+          execution: {
+            ...testConfig.execution,
             client: {
               name: client,
               version: ''
             },
-            dataDir: '{commonConfig.dataDir}/{executionConfig.client.name}'
+            dataDir: '{common.dataDir}/{execution.client.name}'
           }
         };
         const scriptContent = registry.getScriptContent(client, config);
         const scriptString = scriptContent.toString();
-        const expectedDataDir = `${config.commonConfig.dataDir}/${client}`;
-        
+        const expectedDataDir = `${config.common.dataDir}/${client}`;
+
         expect(scriptString).to.contain(expectedDataDir);
-        
+
         switch (client) {
           case 'besu':
             expect(scriptString).to.contain(`--data-path=${expectedDataDir}`);
@@ -61,9 +61,9 @@ describe('DataDir Interpolation Tests', () => {
 
   describe('Consensus Clients', () => {
     const consensusClients: ConsensusClientName[] = [
-      'lighthouse', 
-      'lodestar', 
-      'nimbus-eth2', 
+      'lighthouse',
+      'lodestar',
+      'nimbus-eth2',
       'prysm',
       'teku'
     ];
@@ -72,21 +72,21 @@ describe('DataDir Interpolation Tests', () => {
       it(`should interpolate dataDir and use correct flag for ${client}`, () => {
         const config = {
           ...testConfig,
-          consensusConfig: {
-            ...testConfig.consensusConfig,
+          consensus: {
+            ...testConfig.consensus,
             client: {
               name: client,
               version: ''
             },
-            dataDir: '{commonConfig.dataDir}/{consensusConfig.client.name}'
+            dataDir: '{common.dataDir}/{consensus.client.name}'
           }
         };
         const scriptContent = registry.getScriptContent(client, config);
         const scriptString = scriptContent.toString();
-        const expectedDataDir = `${config.commonConfig.dataDir}/${client}`;
-        
+        const expectedDataDir = `${config.common.dataDir}/${client}`;
+
         expect(scriptString).to.contain(expectedDataDir);
-        
+
         switch (client) {
           case 'lighthouse':
             expect(scriptString).to.contain(`--datadir ${expectedDataDir}`);
@@ -110,10 +110,10 @@ describe('DataDir Interpolation Tests', () => {
 
   describe('Validator Clients', () => {
     const validatorClients: ValidatorClientName[] = [
-      'lighthouse', 
-      'lodestar', 
-      'nimbus-eth2', 
-      'prysm', 
+      'lighthouse',
+      'lodestar',
+      'nimbus-eth2',
+      'prysm',
       'teku'
     ];
 
@@ -121,21 +121,21 @@ describe('DataDir Interpolation Tests', () => {
       it(`should interpolate dataDir and use correct flag for ${client}`, () => {
         const config = {
           ...testConfig,
-          validatorConfig: {
-            ...testConfig.validatorConfig,
+          validator: {
+            ...testConfig.validator,
             client: {
               name: client,
               version: ''
             },
-            dataDir: '{commonConfig.dataDir}/{validatorConfig.client.name}-validator'
+            dataDir: '{common.dataDir}/{validator.client.name}-validator'
           }
         };
         const scriptContent = registry.getScriptContent(client, config, true);
         const scriptString = scriptContent.toString();
-        const expectedDataDir = `${config.commonConfig.dataDir}/${client}-validator`;
-        
+        const expectedDataDir = `${config.common.dataDir}/${client}-validator`;
+
         expect(scriptString).to.contain(expectedDataDir);
-        
+
         switch (client) {
           case 'lighthouse':
             expect(scriptString).to.contain(`--datadir ${expectedDataDir}`);

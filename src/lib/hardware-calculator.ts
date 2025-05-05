@@ -27,12 +27,12 @@ export interface HardwareRequirements {
 
 // Calculate hardware requirements based on the configuration
 export function calculateHardwareRequirements(config: NodeConfig): HardwareRequirements {
-  const { commonConfig, validatorConfig } = config
-  const executionClient = executionConfig.client.name || ""
-  const consensusClient = consensusConfig.client.name || ""
-  const network = commonConfig.network || "mainnet"
-  const isStaking = validatorConfig.enabled || false
-  const syncMode = commonConfig.syncMode || "full"
+  const { common, validator } = config
+  const executionClient = execution.client.name || ""
+  const consensusClient = consensus.client.name || ""
+  const network = common.network || "mainnet"
+  const isStaking = validator.enabled || false
+  const syncMode = common.syncMode || "full"
 
   // Default values for mainnet
   let initialStorage = "600 GB"

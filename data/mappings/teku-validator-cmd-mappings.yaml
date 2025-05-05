@@ -2,54 +2,54 @@ name: teku-validator
 version: 25.4.1
 valueFormat: equals
 rules:
-  - configPath: validatorConfig.dataDir
+  - configPath: validator.dataDir
     flag: --data-path
     transform: interpolate
-  - configPath: validatorConfig.beaconRpcProvider
+  - configPath: validator.beaconRpcProvider
     flag: --beacon-node-api-endpoint
-  - configPath: validatorConfig.metricsPort
+  - configPath: validator.metricsPort
     flag: --metrics-port
-  - configPath: validatorConfig.feeRecipientAddress
+  - configPath: validator.feeRecipientAddress
     flag: --validators-proposer-default-fee-recipient
-  - configPath: validatorConfig.doppelgangerProtection
+  - configPath: validator.doppelgangerProtection
     flag: --doppelganger-detection-enabled
-  - configPath: validatorConfig.configFile
+  - configPath: validator.configFile
     flag: --config-file
-  - configPath: validatorConfig.logFile
+  - configPath: validator.logFile
     flag: --log-file
-  - configPath: validatorConfig.logLevel
+  - configPath: validator.logLevel
     flag: --logging
-  - configPath: validatorConfig.metricsEnabled
+  - configPath: validator.metricsEnabled
     flag: --metrics-enabled
-  - configPath: validatorConfig.metricsAddress
+  - configPath: validator.metricsAddress
     flag: --metrics-interface
-  - configPath: validatorConfig.builderEnabled
+  - configPath: validator.builderEnabled
     flag: --validators-builder-registration-default-enabled
-  - configPath: validatorConfig.suggestedGasLimit
+  - configPath: validator.suggestedGasLimit
     flag: --validators-builder-registration-default-gas-limit
-  - configPath: validatorConfig.externalSignerKeystore
+  - configPath: validator.externalSignerKeystore
     flag: --validators-external-signer-keystore
-  - configPath: validatorConfig.externalSignerKeystorePasswordFile
+  - configPath: validator.externalSignerKeystorePasswordFile
     flag: --validators-external-signer-keystore-password-file
-  - configPath: validatorConfig.externalSignerPublicKeys
+  - configPath: validator.externalSignerPublicKeys
     flag: --validators-external-signer-public-keys
-  - configPath: validatorConfig.externalSignerTimeout
+  - configPath: validator.externalSignerTimeout
     flag: --validators-external-signer-timeout
-  - configPath: validatorConfig.externalSignerTruststore
+  - configPath: validator.externalSignerTruststore
     flag: --validators-external-signer-truststore
-  - configPath: validatorConfig.externalSignerTruststorePasswordFile
+  - configPath: validator.externalSignerTruststorePasswordFile
     flag: --validators-external-signer-truststore-password-file
-  - configPath: validatorConfig.externalSignerUrl
+  - configPath: validator.externalSignerUrl
     flag: --validators-external-signer-url
-  - configPath: validatorConfig.graffiti
+  - configPath: validator.graffiti
     flag: --validators-graffiti
-  - configPath: validatorConfig.graffitiFile
+  - configPath: validator.graffitiFile
     flag: --validators-graffiti-file
-  - configPath: validatorConfig.proposerConfigFile
+  - configPath: validator.proposerConfigFile
     flag: --validators-proposer-config
-  - configPath: validatorConfig.proposerBlindedBlocksEnabled
+  - configPath: validator.proposerBlindedBlocksEnabled
     flag: --validators-proposer-blinded-blocks-enabled
-  - configPath: validatorConfig.proposerConfigRefreshEnabled
+  - configPath: validator.proposerConfigRefreshEnabled
     flag: --validators-proposer-config-refresh-enabled
   - configPath: todo
     flag: --beacon-node-ssz-blocks-enabled
@@ -79,7 +79,7 @@ rules:
     flag: --metrics-publish-endpoint
   - configPath: todo
     flag: --metrics-publish-interval
-  - configPath: commonConfig.network
+  - configPath: common.network
     flag: --network
   - configPath: todo
     flag: --shut-down-when-validator-slashed-enabled

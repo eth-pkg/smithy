@@ -1,4 +1,4 @@
-commonConfig:
+common:
   dataDir: $HOME/ethereum/mainnet
   engine:
     port: 8551
@@ -13,7 +13,7 @@ commonConfig:
   operatingSystem: linux
   syncMode: snap
 
-consensusConfig:
+consensus:
   client:
     name: lighthouse
     version: ''
@@ -21,7 +21,7 @@ consensusConfig:
   metricsPort: 8008
   p2pPort: 9000
 
-executionConfig:
+execution:
   client:
     name: geth
     version: ''
@@ -44,7 +44,7 @@ executionConfig:
     enabled: false
     port: 8546
 
-validatorConfig:
+validator:
   client:
     name: lighthouse
     version: ''

@@ -2,42 +2,42 @@ name: nimbus-eth2-validator
 version: 25.3.1
 valueFormat: space
 rules:
-  - configPath: validatorConfig.dataDir
+  - configPath: validator.dataDir
     flag: --data-dir
     transform: interpolate
-  - configPath: validatorConfig.beaconRpcProvider
+  - configPath: validator.beaconRpcProvider
     flag: --beacon-node
-  - configPath: validatorConfig.feeRecipientAddress
+  - configPath: validator.feeRecipientAddress
     flag: --suggested-fee-recipient
-  - configPath: validatorConfig.metricsPort
+  - configPath: validator.metricsPort
     flag: --metrics-port
     parent: --metrics
-  - configPath: validatorConfig.metricsEnabled
+  - configPath: validator.metricsEnabled
     flag: --metrics
-  - configPath: validatorConfig.metricsAddress
+  - configPath: validator.metricsAddress
     flag: --metrics-address
     parent: --metrics
-  - configPath: validatorConfig.validatorsDir
+  - configPath: validator.validatorsDir
     flag: --validators-dir
-  - configPath: validatorConfig.secretsDir
+  - configPath: validator.secretsDir
     flag: --secrets-dir
-  - configPath: validatorConfig.externalSignerUrl
+  - configPath: validator.externalSignerUrl
     flag: --web3-signer-url
-  - configPath: validatorConfig.suggestedGasLimit
+  - configPath: validator.suggestedGasLimit
     flag: --suggested-gas-limit
-  - configPath: validatorConfig.graffiti
+  - configPath: validator.graffiti
     flag: --graffiti
-  - configPath: validatorConfig.builderEnabled
+  - configPath: validator.builderEnabled
     flag: --payload-builder
-  - configPath: validatorConfig.distributed
+  - configPath: validator.distributed
     flag: --distributed
-  - configPath: validatorConfig.doppelgangerProtection
+  - configPath: validator.doppelgangerProtection
     flag: --doppelganger-detection
-  - configPath: validatorConfig.configFile
+  - configPath: validator.configFile
     flag: --config-file
-  - configPath: validatorConfig.logLevel
+  - configPath: validator.logLevel
     flag: --log-level
-  - configPath: validatorConfig.logFile
+  - configPath: validator.logFile
     flag: --log-file
   - configPath: todo
     flag: --keymanager

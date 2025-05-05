@@ -1,7 +1,7 @@
 $id: non-staker
 type: object
 properties:
-  validatorConfig:
+  validator:
     type: object
     properties:
       enabled:
