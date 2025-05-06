@@ -2,461 +2,645 @@ name: teku
 version: 24.1.0
 valueFormat: equals
 rules:
-  - configPath: consensus.dataDir
-    flag: --data-path
+  - flag: --beacon-liveness-tracking-enabled
+    configPath: 
+    description: |
+      Track validator liveness and enable requests to the liveness rest api
+  - flag: --builder-bid-compare-factor
+    configPath: 
+    description: |
+      Set the compare factor applied to the builder bid value when comparing it with locally produced
+      payload. Factor is expressed in percentage
+  - flag: --builder-endpoint
+    configPath: consensus.builder.url
+    description: |
+      URL for an external Builder node (optional)
+  - flag: --builder-set-user-agent-header
+    configPath: 
+    description: |
+      Set User-Agent header to teku/v<version> when making a builder bid request to help builders
+      identify clients and versions
+  - flag: --checkpoint-sync-url
+    configPath: consensus.checkpoint.url
+    description: |
+      The Checkpointz server that will be used to bootstrap this node
+  - flag: --config-file
+    configPath: 
     transform: interpolate
-  - configPath: common.network
-    flag: --network
-  - configPath: execution.p2p.port
-    flag: --port
-  - configPath: execution.p2p.maxPeers
-    flag: --maxpeers
-  - configPath: execution.http.enabled
-    flag: --http
-  - configPath: common.engine.host
-    flag: --http.addr
-    parent: --http
-  - configPath: execution.http.port
-    flag: --http.port
-    parent: --http
-  - configPath: execution.http.apiPrefixes
-    flag: --http.api
-    transform: joinComma
-    parent: --http
-  - configPath: execution.ws.enabled
-    flag: --ws
-  - configPath: execution.ws.port
-    flag: --ws.port
-    parent: --ws
-  - configPath: common.engine.jwtFile
-    flag: --jwtsecret
-    transform: formatPath
-  - configPath: common.engine.host
-    flag: --engine.host
-  - configPath: common.engine.port
-    flag: --engine.port
-  - configPath: execution.base.syncMode
-    flag: --syncmode
-    transform: syncMode
-  - configPath: execution.metrics.enabled
-    flag: --metrics
-  - configPath: execution.metrics.port
-    flag: --metrics.port
-    parent: --metrics
-  - configPath: execution.metrics.addr
-    flag: --metrics.host
-    parent: --metrics
-  - configPath: todo
-    flag: --ethash.dagdir
-  - configPath: todo
-    flag: --externalcl
-  - configPath: todo
-    flag: --txpool.disable
-  - configPath: todo
-    flag: --txpool.pricelimit
-  - configPath: todo
-    flag: --txpool.pricebump
-  - configPath: todo
-    flag: --txpool.blobpricebump
-  - configPath: todo
-    flag: --txpool.accountslots
-  - configPath: todo
-    flag: --txpool.blobslots
-  - configPath: todo
-    flag: --txpool.totalblobpoollimit
-  - configPath: todo
-    flag: --txpool.globalslots
-  - configPath: todo
-    flag: --txpool.globalbasefeeslots
-  - configPath: todo
-    flag: --txpool.globalqueue
-  - configPath: todo
-    flag: --txpool.trace.senders
-  - configPath: todo
-    flag: --txpool.commit.every
-  - configPath: todo
-    flag: --prune.distance
-  - configPath: todo
-    flag: --prune.distance.blocks
-  - configPath: todo
-    flag: --prune.mode
-  - configPath: todo
-    flag: --batchSize
-  - configPath: todo
-    flag: --bodies.cache
-  - configPath: todo
-    flag: --database.verbosity
-  - configPath: todo
-    flag: --private.api.addr
-  - configPath: todo
-    flag: --private.api.ratelimit
-  - configPath: todo
-    flag: --etl.bufferSize
-  - configPath: todo
-    flag: --tls
-  - configPath: todo
-    flag: --tls.cert
-  - configPath: todo
-    flag: --tls.key
-  - configPath: todo
-    flag: --tls.cacert
-  - configPath: todo
-    flag: --state.stream.disable
-  - configPath: todo
-    flag: --sync.loop.throttle
-  - configPath: todo
-    flag: --bad.block
-  - configPath: todo
-    flag: --http.compression
-  - configPath: todo
-    flag: --http.corsdomain
-  - configPath: todo
-    flag: --http.vhosts
-  - configPath: todo
-    flag: --authrpc.vhosts
-  - configPath: todo
-    flag: --http.trace
-  - configPath: todo
-    flag: --http.dbg.single
-  - configPath: todo
-    flag: --state.cache
-  - configPath: todo
-    flag: --rpc.batch.concurrency
-  - configPath: todo
-    flag: --rpc.streaming.disable
-  - configPath: todo
-    flag: --db.read.concurrency
-  - configPath: todo
-    flag: --rpc.accessList
-  - configPath: todo
-    flag: --trace.compat
-  - configPath: todo
-    flag: --rpc.gascap
-  - configPath: todo
-    flag: --rpc.batch.limit
-  - configPath: todo
-    flag: --rpc.returndata.limit
-  - configPath: todo
-    flag: --rpc.allow-unprotected-txs
-  - configPath: todo
-    flag: --rpc.txfeecap
-  - configPath: todo
-    flag: --txpool.api.addr
-  - configPath: todo
-    flag: --trace.maxtraces
-  - configPath: todo
-    flag: --experimental.commitment-history
-  - configPath: todo
-    flag: --http.timeouts.read
-  - configPath: todo
-    flag: --http.timeouts.write
-  - configPath: todo
-    flag: --http.timeouts.idle
-  - configPath: todo
-    flag: --authrpc.timeouts.read
-  - configPath: todo
-    flag: --authrpc.timeouts.write
-  - configPath: todo
-    flag: --authrpc.timeouts.idle
-  - configPath: todo
-    flag: --rpc.evmtimeout
-  - configPath: todo
-    flag: --rpc.overlay.getlogstimeout
-  - configPath: todo
-    flag: --rpc.overlay.replayblocktimeout
-  - configPath: todo
-    flag: --rpc.subscription.filters.maxlogs
-  - configPath: todo
-    flag: --rpc.subscription.filters.maxheaders
-  - configPath: todo
-    flag: --rpc.subscription.filters.maxtxs
-  - configPath: todo
-    flag: --rpc.subscription.filters.maxaddresses
-  - configPath: todo
-    flag: --rpc.subscription.filters.maxtopics
-  - configPath: todo
-    flag: --snap.keepblocks
-  - configPath: todo
-    flag: --snap.stop
-  - configPath: todo
-    flag: --snap.state.stop
-  - configPath: todo
-    flag: --snap.skip-state-snapshot-download
-  - configPath: todo
-    flag: --db.pagesize
-  - configPath: todo
-    flag: --db.size.limit
-  - configPath: todo
-    flag: --db.writemap
-  - configPath: todo
-    flag: --torrent.port
-  - configPath: todo
-    flag: --torrent.maxpeers
-  - configPath: todo
-    flag: --torrent.conns.perfile
-  - configPath: todo
-    flag: --torrent.download.slots
-  - configPath: todo
-    flag: --torrent.staticpeers
-  - configPath: todo
-    flag: --torrent.upload.rate
-  - configPath: todo
-    flag: --torrent.download.rate
-  - configPath: todo
-    flag: --torrent.verbosity
-  - configPath: todo
-    flag: --p2p.protocol
-  - configPath: todo
-    flag: --p2p.allowed-ports
-  - configPath: todo
-    flag: --nat
-  - configPath: todo
-    flag: --nodiscover
-  - configPath: todo
-    flag: --v5disc
-  - configPath: todo
-    flag: --netrestrict
-  - configPath: todo
-    flag: --nodekey
-  - configPath: todo
-    flag: --nodekeyhex
-  - configPath: todo
-    flag: --discovery.dns
-  - configPath: todo
-    flag: --bootnodes
-  - configPath: todo
-    flag: --staticpeers
-  - configPath: todo
-    flag: --trustedpeers
-  - configPath: todo
-    flag: --dev.period
-  - configPath: todo
-    flag: --vmdebug
-  - configPath: todo
-    flag: --networkid
-  - configPath: todo
-    flag: --experiment.persist.receipts
-  - configPath: todo
-    flag: --fakepow
-  - configPath: todo
-    flag: --gpo.blocks
-  - configPath: todo
-    flag: --gpo.percentile
-  - configPath: todo
-    flag: --allow-insecure-unlock
-  - configPath: todo
-    flag: --identity
-  - configPath: todo
-    flag: --clique.checkpoint
-  - configPath: todo
-    flag: --clique.snapshots
-  - configPath: todo
-    flag: --clique.signatures
-  - configPath: todo
-    flag: --clique.datadir
-  - configPath: todo
-    flag: --mine
-  - configPath: todo
-    flag: --proposer.disable
-  - configPath: todo
-    flag: --miner.notify
-  - configPath: todo
-    flag: --miner.gaslimit
-  - configPath: todo
-    flag: --miner.etherbase
-  - configPath: todo
-    flag: --miner.extradata
-  - configPath: todo
-    flag: --miner.noverify
-  - configPath: todo
-    flag: --miner.sigfile
-  - configPath: todo
-    flag: --miner.recommit
-  - configPath: todo
-    flag: --sentry.api.addr
-  - configPath: todo
-    flag: --sentry.log-peer-info
-  - configPath: todo
-    flag: --downloader.api.addr
-  - configPath: todo
-    flag: --downloader.disable.ipv4
-  - configPath: todo
-    flag: --downloader.disable.ipv6
-  - configPath: todo
-    flag: --no-downloader
-  - configPath: todo
-    flag: --downloader.verify
-  - configPath: todo
-    flag: --healthcheck
-  - configPath: todo
-    flag: --bor.heimdall
-  - configPath: todo
-    flag: --webseed
-  - configPath: todo
-    flag: --bor.withoutheimdall
-  - configPath: todo
-    flag: --bor.period
-  - configPath: todo
-    flag: --bor.minblocksize
-  - configPath: todo
-    flag: --bor.milestone
-  - configPath: todo
-    flag: --bor.waypoints
-  - configPath: todo
-    flag: --polygon.sync
-  - configPath: todo
-    flag: --polygon.sync.stage
-  - configPath: todo
-    flag: --ethstats
-  - configPath: todo
-    flag: --override.prague
-  - configPath: todo
-    flag: --caplin.discovery.addr
-  - configPath: todo
-    flag: --caplin.discovery.port
-  - configPath: todo
-    flag: --caplin.discovery.tcpport
-  - configPath: todo
-    flag: --caplin.checkpoint-sync-url
-  - configPath: todo
-    flag: --caplin.subscribe-all-topics
-  - configPath: todo
-    flag: --caplin.max-peer-count
-  - configPath: todo
-    flag: --caplin.enable-upnp
-  - configPath: todo
-    flag: --caplin.max-inbound-traffic-per-peer
-  - configPath: todo
-    flag: --caplin.max-outbound-traffic-per-peer
-  - configPath: todo
-    flag: --caplin.adaptable-maximum-traffic-requirements
-  - configPath: todo
-    flag: --sentinel.addr
-  - configPath: todo
-    flag: --sentinel.port
-  - configPath: todo
-    flag: --sentinel.bootnodes
-  - configPath: todo
-    flag: --sentinel.staticpeers
-  - configPath: todo
-    flag: --ots.search.max.pagesize
-  - configPath: todo
-    flag: --silkworm.exec
-  - configPath: todo
-    flag: --silkworm.rpc
-  - configPath: todo
-    flag: --silkworm.sentry
-  - configPath: todo
-    flag: --silkworm.verbosity
-  - configPath: todo
-    flag: --silkworm.contexts
-  - configPath: todo
-    flag: --silkworm.rpc.log
-  - configPath: todo
-    flag: --silkworm.rpc.log.maxsize
-  - configPath: todo
-    flag: --silkworm.rpc.log.maxfiles
-  - configPath: todo
-    flag: --silkworm.rpc.log.response
-  - configPath: todo
-    flag: --silkworm.rpc.workers
-  - configPath: todo
-    flag: --silkworm.rpc.compatibility
-  - configPath: todo
-    flag: --beacon.api
-  - configPath: todo
-    flag: --beacon.api.addr
-  - configPath: todo
-    flag: --beacon.api.cors.allow-methods
-  - configPath: todo
-    flag: --beacon.api.cors.allow-origins
-  - configPath: todo
-    flag: --beacon.api.cors.allow-credentials
-  - configPath: todo
-    flag: --beacon.api.port
-  - configPath: todo
-    flag: --beacon.api.read.timeout
-  - configPath: todo
-    flag: --beacon.api.write.timeout
-  - configPath: todo
-    flag: --beacon.api.protocol
-  - configPath: todo
-    flag: --beacon.api.ide.timeout
-  - configPath: todo
-    flag: --caplin.blocks-archive
-  - configPath: todo
-    flag: --caplin.blobs-archive
-  - configPath: todo
-    flag: --caplin.states-archive
-  - configPath: todo
-    flag: --caplin.blobs-immediate-backfill
-  - configPath: todo
-    flag: --caplin.blobs-no-pruning
-  - configPath: todo
-    flag: --caplin.checkpoint-sync.disable
-  - configPath: todo
-    flag: --caplin.snapgen
-  - configPath: todo
-    flag: --caplin.mev-relay-url
-  - configPath: todo
-    flag: --caplin.validator-monitor
-  - configPath: todo
-    flag: --caplin.custom-config
-  - configPath: todo
-    flag: --caplin.custom-genesis
-  - configPath: todo
-    flag: --trusted-setup-file
-  - configPath: todo
-    flag: --rpc.slow
-  - configPath: todo
-    flag: --txpool.gossip.disable
-  - configPath: todo
-    flag: --sync.loop.block.limit
-  - configPath: todo
-    flag: --sync.loop.break.after
-  - configPath: todo
-    flag: --sync.parallel-state-flushing
-  - configPath: todo
-    flag: --chaos.monkey
-  - configPath: todo
-    flag: --shutter
-  - configPath: todo
-    flag: --shutter.p2p.bootstrap.nodes
-  - configPath: todo
-    flag: --shutter.p2p.listen.port
-  - configPath: todo
-    flag: --polygon.pos.ssf
-  - configPath: todo
-    flag: --polygon.pos.ssf.block
-  - configPath: todo
-    flag: --pprof
-  - configPath: todo
-    flag: --pprof.addr
-  - configPath: todo
-    flag: --pprof.port
-  - configPath: todo
-    flag: --pprof.cpuprofile
-  - configPath: todo
-    flag: --trace
-  - configPath: todo
-    flag: --log.json
-  - configPath: todo
-    flag: --log.console.json
-  - configPath: todo
-    flag: --log.dir.json
-  - configPath: todo
-    flag: --verbosity
-  - configPath: todo
-    flag: --log.console.verbosity
-  - configPath: todo
-    flag: --log.dir.disable
-  - configPath: todo
-    flag: --log.dir.path
-  - configPath: todo
-    flag: --log.dir.prefix
-  - configPath: todo
-    flag: --log.dir.verbosity
-  - configPath: todo
-    flag: --log.delays
-  - configPath: todo
-    flag: --config 
+    description: |
+      Path/filename of the yaml config file
+  - flag: --data-beacon-path
+    configPath: 
+    description: |
+      Path to beacon node data
+  - flag: --data-path
+    configPath: consensus.dataDir
+    transform: interpolate
+    description: |
+      Path to the base directory for storage
+  - flag: --data-storage-mode
+    configPath: 
+    description: |
+      Sets the strategy for handling historical chain data
+  - flag: --data-validator-path
+    configPath: validator.dataDir
+    transform: interpolate
+    enabled: 
+      configPath: validator.enabled
+      transform: flagEnabled
+    description: |
+      Path to validator client data
+  - flag: --deposit-snapshot-enabled
+    configPath: 
+    description: |
+      Use bundled snapshot for most networks and persist deposit tree snapshot
+  - flag: --doppelganger-detection-enabled
+    configPath: validator.doppelgangerProtection
+    enabled: 
+      configPath: validator.isExternal
+      transform: negate
+    description: |
+      Enable validators doppelganger detection
+  - flag: --ee-endpoint
+    configPath: common.engine.url
+    transform: interpolate
+    enabled: 
+      configPath: common.engine.enabled
+      transform: flagEnabled
+    description: |
+      URL for Execution Engine node
+  - flag: --ee-jwt-claim-id
+    configPath: common.engine.jwtId
+    enabled: 
+      configPath: common.engine.communication
+      transform: jwtEnabled
+    description: |
+      A unique identifier for the consensus layer client. This identifier will be added to the JWT
+      claims as an 'id' claim
+  - flag: --ee-jwt-secret-file
+    configPath: common.engine.jwtFile
+    enabled: 
+      configPath: common.engine.communication
+      transform: jwtEnabled
+    description: |
+      Location of the file specifying the hex-encoded 256 bit secret key to be used for
+      verifying/generating jwt tokens
+  - flag: --eth1-endpoints
+    configPath: 
+    description: |
+      URLs for Eth1 nodes
+  - flag: --exchange-capabilities-monitoring-enabled
+    configPath: 
+    description: |
+      Enables querying EL periodically for the Engine API methods it supports
+  - flag: --exit-when-no-validator-keys-enabled
+    configPath: validator.enabled
+    transform: flagEnabled
+    description: |
+      Enable terminating the process if no validator keys are found during startup
+  - flag: --genesis-state
+    configPath: 
+    description: |
+      The genesis state. This value should be a file or URL pointing to an SSZ-encoded finalized
+      checkpoint state
+  - flag: --ignore-weak-subjectivity-period-enabled
+    configPath: 
+    description: |
+      Allows syncing outside of the weak subjectivity period
+  - flag: --initial-state
+    configPath: consensus.checkpoint.url
+    description: |
+      The initial state. This value should be a file or URL pointing to an SSZ-encoded finalized
+      checkpoint state
+  - flag: --log-color-enabled
+    configPath: 
+    enabled: 
+      configPath: consensus.log.enabled
+      transform: flagEnabled
+    description: |
+      Whether Status and Event log messages include a console color display code
+  - flag: --log-destination
+    configPath:
+    enabled: 
+        configPath: consensus.log.enabled
+        transform: flagEnabled
+    description: |
+      Whether a logger is added for the console, the log file, or both
+  - flag: --log-file
+    configPath: consensus.log.file
+    enabled: 
+      configPath: consensus.log.enabled
+      transform: flagEnabled
+    description: |
+      Path containing the location (relative or absolute) and the log filename
+  - flag: --log-file-name-pattern
+    configPath: consensus.log.file
+    enabled: 
+      configPath: consensus.log.enabled
+      transform: flagEnabled
+    description: |
+      Pattern for the filename to apply to rolled over log files
+  - flag: --log-include-events-enabled
+    configPath: consensus.log.enabled
+    enabled: 
+      configPath: consensus.log.enabled
+      transform: flagEnabled
+    description: |
+      Whether frequent update events are logged (e.g. every slot and epoch event)
+  - flag: --log-include-validator-duties-enabled
+    configPath: consensus.log.enabled
+    enabled: 
+      configPath: consensus.log.enabled
+      transform: flagEnabled
+    description: |
+      Whether events are logged when validators perform duties
+  - flag: --logging
+    configPath: consensus.log.enabled
+    transform: flagEnabled
+    description: |
+      Logging verbosity levels: OFF, FATAL, ERROR, WARN, INFO, DEBUG, TRACE, ALL
+  - flag: --metrics-block-production-performance-tracking-enabled
+    configPath: 
+    enabled: 
+      configPath: consensus.metrics.enabled
+      transform: flagEnabled
+    description: |
+      Whether block production timing metrics are tracked and reported
+  - flag: --metrics-block-timing-tracking-enabled
+    configPath: 
+    enabled: 
+      configPath: 
+      transform: flagEnabled
+    description: |
+      Whether block timing metrics are tracked and reported
+  - flag: --metrics-categories
+    configPath: 
+    enabled: 
+      configPath: consensus.metrics.enabled
+      transform: flagEnabled
+    description: |
+      Metric categories to enable
+  - flag: --metrics-enabled
+    configPath: consensus.metrics.enabled
+    transform: flagEnabled
+    description: |
+      Enables metrics collection via Prometheus
+  - flag: --metrics-host-allowlist
+    configPath: consensus.metrics.allowlist
+    enabled: 
+      configPath: consensus.metrics.enabled
+      transform: flagEnabled
+    description: |
+      Comma-separated list of hostnames to allow, or * to allow any host
+  - flag: --metrics-interface
+    configPath: consensus.metrics.host
+    enabled: 
+      configPath: consensus.metrics.enabled
+      transform: flagEnabled
+    description: |
+      Metrics network interface to expose metrics for Prometheus
+  - flag: --metrics-port
+    configPath: consensus.metrics.port
+    enabled: 
+      configPath: consensus.metrics.enabled
+      transform: flagEnabled
+    description: |
+      Metrics port to expose metrics for Prometheus
+  - flag: --metrics-publish-endpoint
+    configPath: 
+    enabled: 
+      configPath: consensus.metrics.enabled
+      transform: flagEnabled
+    description: |
+      Publish metrics for node monitoring to an external service
+  - flag: --metrics-publish-interval
+    configPath: 
+    enabled: 
+      configPath: consensus.metrics.enabled
+      transform: flagEnabled
+    description: |
+      Interval between metric publications to the external service (measured in seconds)
+  - flag: --network
+    configPath: common.network
+    description: |
+      Represents which network to use
+  - flag: --p2p-advertised-ip
+    configPath: 
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: |
+      P2P advertised IP address(es). You can define up to 2 addresses, with one being IPv4 and the
+      other IPv6
+  - flag: --p2p-advertised-port
+    configPath: consensus.p2p.port
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: |
+      P2P advertised port. The default is the port specified in --p2p-port
+  - flag: --p2p-advertised-port-ipv6
+    configPath: consensus.p2p.port6
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: |
+      P2P advertised IPv6 port. This port is only used when advertising both IPv4 and IPv6
+      addresses
+  - flag: --p2p-advertised-udp-port
+    configPath: consensus.p2p.udpPort
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: |
+      Advertised UDP port to external peers. The default is the port specified in --p2p-advertised-port
+  - flag: --p2p-advertised-udp-port-ipv6
+    configPath: consensus.p2p.udpPort
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: |
+      Advertised IPv6 UDP port to external peers. This port is only used when advertising both IPv4 and
+      IPv6 addresses
+  - flag: --p2p-discovery-bootnodes
+    configPath: consensus.p2p.bootnodes
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: |
+      List of ENRs of the bootnodes
+  - flag: --p2p-discovery-enabled
+    configPath: consensus.p2p.enabled
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: |
+      Enables discv5 discovery
+  - flag: --p2p-discovery-site-local-addresses-enabled
+    configPath: consensus.p2p.enabled
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: |
+      Whether discovery accepts messages and peer records with site local (RFC1918) addresses
+  - flag: --p2p-enabled
+    configPath: consensus.p2p.enabled
+    transform: flagEnabled
+    description: |
+      Enables P2P
+  - flag: --p2p-interface
+    configPath: 
+    description: |
+      The network interface(s) on which the node listens for P2P communication
+  - flag: --p2p-nat-method
+    configPath: 
+    description: |
+      Specify the NAT circumvention method to be used, possible values are UPNP, NONE
+  - flag: --p2p-peer-lower-bound
+    configPath: consensus.p2p.minPeers
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: |
+      Lower bound on the target number of peers
+  - flag: --p2p-peer-upper-bound
+    configPath: consensus.p2p.maxPeers
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: |
+      Upper bound on the target number of peers
+  - flag: --p2p-port
+    configPath: consensus.p2p.port
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: |
+      P2P port
+  - flag: --p2p-port-ipv6
+    configPath: consensus.p2p.port6
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: |
+      P2P IPv6 port. This port is only used when listening over both IPv4 and IPv6
+  - flag: --p2p-private-key-file
+    configPath: 
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: |
+      This node's private key file in LibP2P format
+  - flag: --p2p-static-peers
+    configPath: consensus.p2p.staticPeers
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: |
+      Specifies a list of 'static' peers with which to establish and maintain connections
+  - flag: --p2p-subscribe-all-subnets-enabled
+    configPath: 
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: |
+      Enable subscribing to all subnets
+  - flag: --p2p-udp-port
+    configPath: consensus.p2p.udpPort
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: |
+      UDP port used for discovery. The default is the port specified in --p2p-port
+  - flag: --p2p-udp-port-ipv6
+    configPath: consensus.p2p.udpPort
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: |
+      IPv6 UDP port used for discovery. This port is only used when listening over both IPv4 and
+      IPv6
+  - flag: --reconstruct-historic-states
+    configPath: 
+    description: |
+      Enable reconstruction of historic states
+  - flag: --rest-api-cors-origins
+    configPath: consensus.http.allowlist
+    enabled: 
+      configPath: consensus.http.enabled
+      transform: flagEnabled
+    description: |
+      Comma separated list of origins to allow, or * to allow any origin
+  - flag: --rest-api-docs-enabled
+    configPath: consensus.http.enabled
+    enabled: 
+      configPath: consensus.http.enabled
+      transform: flagEnabled
+    description: |
+      Enable swagger-docs and swagger-ui endpoints
+  - flag: --rest-api-enabled
+    configPath: consensus.http.enabled
+    transform: flagEnabled
+    description: |
+      Enables Beacon Rest API
+  - flag: --rest-api-host-allowlist
+    configPath: consensus.http.allowlist
+    enabled: 
+      configPath: consensus.http.enabled
+      transform: flagEnabled
+    description: |
+      Comma-separated list of hostnames to allow, or * to allow any host
+  - flag: --rest-api-interface
+    configPath: consensus.http.address
+    enabled: 
+      configPath: consensus.http.enabled
+      transform: flagEnabled
+    description: |
+      Interface of Beacon Rest API
+  - flag: --rest-api-port
+    configPath: consensus.http.port
+    enabled: 
+      configPath: consensus.http.enabled
+      transform: flagEnabled
+    description: |
+      Port number of Beacon Rest API
+  - flag: --shut-down-when-validator-slashed-enabled
+    configPath: 
+    transform: flagEnabled
+    description: |
+      If enabled and an owned validator key is detected as slashed, the node will terminate
+  - flag: --validator-api-bearer-file
+    configPath: 
+    enabled: 
+      configPath: validator.enabled
+      transform: flagEnabled
+    description: |
+      Use the specified file as the bearer token for the validator Rest API
+  - flag: --validator-api-cors-origins
+    configPath: validator.http.allowlist
+    enabled: 
+      configPath: validator.http.enabled
+      transform: flagEnabled
+    description: |
+      Comma separated list of origins to allow, or * to allow any origin
+  - flag: --validator-api-docs-enabled
+    configPath: 
+    enabled: 
+      configPath: validator.http.enabled
+      transform: flagEnabled
+    description: |
+      Enable swagger-docs and swagger-ui endpoints
+  - flag: --validator-api-enabled
+    configPath: 
+    enabled: 
+      configPath: validator.http.enabled
+      transform: flagEnabled
+    description: |
+      Enables Validator Rest API
+  - flag: --validator-api-host-allowlist
+    configPath: validator.http.allowlist
+    enabled: 
+      configPath: validator.http.enabled
+      transform: flagEnabled
+    description: |
+      Comma-separated list of hostnames to allow, or * to allow any host
+  - flag: --validator-api-interface
+    configPath: validator.http.address
+    enabled: 
+      configPath: validator.http.enabled
+      transform: flagEnabled
+    description: |
+      Interface of Validator Rest API
+  - flag: --validator-api-keystore-file
+    configPath: validator.externalSigner.keystore
+    enabled: 
+      configPath: validator.externalSigner.enabled
+      transform: flagEnabled
+    description: |
+      Keystore used for ssl for the validator api
+  - flag: --validator-api-keystore-password-file
+    configPath: validator.externalSigner.keystorePasswordFile
+    enabled: 
+      configPath: validator.externalSigner.enabled
+      transform: flagEnabled
+    description: |
+      Password used to decrypt the keystore for the validator api
+  - flag: --validator-api-port
+    configPath: validator.metrics.port
+    enabled: 
+      configPath: validator.http.enabled
+      transform: flagEnabled
+    description: |
+      Port number of Rest API
+  - flag: --validator-is-local-slashing-protection-synchronized-enabled
+    configPath: 
+    enabled: 
+      configPath: validator.enabled
+      transform: flagEnabled
+    description: |
+      Restrict local signing to a single operation at a time
+  - flag: --validator-keys
+    configPath: validator.keysDir
+    enabled: 
+      configPath: validator.enabled
+      transform: flagEnabled
+    description: |
+      <KEY_DIR>:<PASS_DIR> will find <KEY_DIR>/**.json, and expect to find <PASS_DIR>/**.txt
+  - flag: --validators-builder-registration-default-enabled
+    configPath: validator.builderEnabled
+    enabled: 
+      configPath: validator.enabled
+      transform: flagEnabled
+    description: |
+      Enable validators registration to builder infrastructure
+  - flag: --validators-builder-registration-default-gas-limit
+    configPath: validator.suggestedGasLimit
+    enabled: 
+      configPath: validator.enabled
+      transform: flagEnabled
+    description: |
+      Change the default gas limit used for the validators registration
+  - flag: --validators-early-attestations-enabled
+    configPath: 
+    enabled: 
+      configPath: validator.enabled
+      transform: flagEnabled
+    description: |
+      Generate attestations as soon as a block is known, rather than delaying until the attestation
+      is due
+  - flag: --validators-external-signer-keystore
+    configPath: validator.externalSigner.keystore
+    enabled: 
+      configPath: validator.externalSigner.enabled
+      transform: flagEnabled
+    description: |
+      Keystore (PKCS12/JKS) to use for TLS mutual authentication with external signer
+  - flag: --validators-external-signer-keystore-password-file
+    configPath: validator.externalSigner.keystorePasswordFile
+    enabled: 
+      configPath: validator.externalSigner.enabled
+      transform: flagEnabled
+    description: |
+      Password file to decrypt keystore (PKCS12/JKS) that will be used for TLS mutual
+      authentication with external signer
+  - flag: --validators-external-signer-public-keys
+    configPath: validator.externalSigner.publicKeys
+    enabled: 
+      configPath: validator.externalSigner.enabled
+      transform: flagEnabled
+    description: |
+      The list of external signer public keys, or a URL to load the keys from
+  - flag: --validators-external-signer-slashing-protection-enabled
+    configPath: 
+    enabled: 
+      configPath: validator.externalSigner.enabled
+      transform: flagEnabled
+    description: |
+      Enable internal slashing protection for external signers
+  - flag: --validators-external-signer-timeout
+    configPath: validator.externalSigner.timeout
+    enabled: 
+      configPath: validator.externalSigner.enabled
+      transform: flagEnabled
+    description: |
+      Timeout (in milliseconds) for the external signing service
+  - flag: --validators-external-signer-truststore
+    configPath: validator.externalSigner.truststore
+    enabled: 
+      configPath: validator.externalSigner.enabled
+      transform: flagEnabled
+    description: |
+      Keystore (PKCS12/JKS) to trust external signer's self-signed certificate
+  - flag: --validators-external-signer-truststore-password-file
+    configPath: validator.externalSigner.truststorePasswordFile
+    enabled: 
+      configPath: validator.externalSigner.enabled
+      transform: flagEnabled
+    description: |
+      Password file to decrypt keystore (PKCS12/JKS) that will be used to trust external
+      signer's self-signed certificate
+  - flag: --validators-external-signer-url
+    configPath: validator.externalSigner.url
+    enabled: 
+      configPath: validator.externalSigner.enabled
+      transform: flagEnabled
+    description: |
+      URL for the external signing service
+  - flag: --validators-graffiti
+    configPath: validator.graffiti.message
+    enabled: 
+      configPath: validator.graffiti.enabled
+      transform: flagEnabled
+    description: |
+      Graffiti value to include during block creation. Value gets converted to bytes and
+      padded to Bytes32
+  - flag: --validators-graffiti-client-append-format
+    configPath: validator.graffiti.enabled
+    enabled: 
+      configPath: validator.graffiti.enabled
+      transform: flagEnabled
+    description: |
+      Appends CL and EL clients information with a space to user's graffiti when producing a
+      block on the Beacon Node
+  - flag: --validators-graffiti-file
+    configPath: validator.graffiti.file
+    enabled: 
+      configPath: validator.graffiti.enabled
+      transform: flagEnabled
+    description: |
+      File to load graffiti value to include during block creation. Value gets converted to
+      bytes and padded to Bytes32
+  - flag: --validators-keystore-locking-enabled
+    configPath: 
+    enabled: 
+      configPath: validator.enabled
+      transform: flagEnabled
+    description: |
+      Enable locking validator keystore files
+  - flag: --validators-performance-tracking-mode
+    configPath: 
+    enabled: 
+      configPath: validator.enabled
+      transform: flagEnabled
+    description: |
+      Set strategy for handling performance tracking
+  - flag: --validators-proposer-blinded-blocks-enabled
+    configPath: validator.proposerConfig.blindedBlocksEnabled
+    enabled: 
+      configPath: validator.proposerConfig.enabled
+      transform: flagEnabled
+    description: |
+      Use blinded blocks when in block production duties
+  - flag: --validators-proposer-config
+    configPath: validator.proposerConfig.file
+    enabled: 
+      configPath: validator.proposerConfig.enabled
+      transform: flagEnabled
+    description: |
+      Remote URL or local file path to load proposer configuration from
+  - flag: --validators-proposer-config-refresh-enabled
+    configPath: validator.proposerConfig.refreshEnabled
+    enabled: 
+      configPath: validator.proposerConfig.enabled
+      transform: flagEnabled
+    description: |
+      Enable the proposer configuration reload on every proposer preparation (once per
+      epoch)
+  - flag: --validators-proposer-default-fee-recipient
+    configPath: validator.feeRecipientAddress
+    enabled: 
+      configPath: validator.enabled
+      transform: flagEnabled
+    description: |
+      Default fee recipient sent to the execution engine, which could use it as fee
+      recipient when producing a new execution block
+  - flag: --ws-checkpoint
+    configPath: consensus.checkpoint.url
+    transform: interpolate
+    enabled: 
+      configPath: consensus.checkpoint.enabled
+      transform: flagEnabled
+    description: |
+      A recent checkpoint within the weak subjectivity period. Should be a string
+      containing <BLOCK_ROOT>:<EPOCH_NUMBER> or a URL containing the field
+      ws_checkpoint with the same information

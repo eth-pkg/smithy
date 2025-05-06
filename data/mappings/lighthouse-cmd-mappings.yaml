@@ -1,462 +1,892 @@
 name: lighthouse
-version: 4.5.0
+version: 7.0.1
 valueFormat: space
 rules:
-  - configPath: consensus.dataDir
-    flag: --datadir
+  - flag: --allow-insecure-genesis-sync
+    configPath: 
+    transform: isFlag
+    description: >-
+      Enable syncing from genesis, which is generally insecure and incompatible
+      with data availability checks. Checkpoint syncing is the preferred method
+      for syncing a node. Only use this flag when testing. DO NOT use on mainnet!
+  - flag: --always-prepare-payload
+    configPath: 
+    transform: isFlag
+    description: >-
+      Send payload attributes with every fork choice update. This is intended for
+      use by block builders, relays and developers. You should set a fee recipient
+      on this BN and also consider adjusting the --prepare-payload-lookahead flag.
+  - flag: --auto-compact-db
+    configPath: 
+    description: >-
+      Enable or disable automatic compaction of the database on finalization.
+      [default: true]
+  - flag: --beacon-node-backend
+    configPath: 
+    description: >-
+      Set the database backend to be used by the beacon node.
+      [possible values: leveldb]
+  - flag: --blob-prune-margin-epochs
+    configPath: 
+    description: >-
+      The margin for blob pruning in epochs. The oldest blobs are pruned up until
+      data_availability_boundary - blob_prune_margin_epochs. [default: 0]
+  - flag: --blobs-dir
+    configPath: 
+    description: Data directory for the blobs database.
+  - flag: --block-cache-size
+    configPath: 
+    description: >-
+      Specifies how many blocks the database should cache in memory
+      [default: 5]
+  - flag: --boot-nodes
+    configPath: consensus.bootnodes
+    description: >-
+      One or more comma-delimited base64-encoded ENR's to bootstrap the p2p
+      network. Multiaddr is also supported.
+  - flag: --builder
+    configPath: consensus.builder
+    description: The URL of a service compatible with the MEV-boost API.
+  - flag: --builder-disable-ssz
+    configPath: 
+    transform: isFlag
+    description: Disables sending requests using SSZ over the builder API.
+  - flag: --builder-fallback-disable-checks
+    configPath: 
+    transform: isFlag
+    description: >-
+      This flag disables all checks related to chain health. This means the
+      builder API will always be used for payload construction, regardless of
+      recent chain conditions.
+  - flag: --builder-fallback-epochs-since-finalization
+    configPath: 
+    description: >-
+      If this node is proposing a block and the chain has not finalized within
+      this number of epochs, it will NOT query any connected builders, and will
+      use the local execution engine for payload construction. Setting this value
+      to anything less than 2 will cause the node to NEVER query connected
+      builders. Setting it to 2 will cause this condition to be hit if there are
+      skips slots at the start of an epoch, right before this node is set to
+      propose. [default: 3]
+  - flag: --builder-fallback-skips
+    configPath: 
+    description: >-
+      If this node is proposing a block and has seen this number of skip slots on
+      the canonical chain in a row, it will NOT query any connected builders, and
+      will use the local execution engine for payload construction. [default: 3]
+  - flag: --builder-fallback-skips-per-epoch
+    configPath: 
+    description: >-
+      If this node is proposing a block and has seen this number of skip slots on
+      the canonical chain in the past `SLOTS_PER_EPOCH`, it will NOT query any
+      connected builders, and will use the local execution engine for payload
+      construction. [default: 8]
+  - flag: --builder-header-timeout
+    configPath: 
+    description: >-
+      Defines a timeout value (in milliseconds) to use when fetching a block
+      header from the builder API. [default: 1000]
+  - flag: --builder-user-agent
+    configPath: 
+    description: >-
+      The HTTP user agent to send alongside requests to the builder URL. The
+      default is Lighthouse's version string.
+  - flag: --checkpoint-blobs
+    configPath: 
+    description: >-
+      Set the checkpoint blobs to start syncing from. Must be aligned and match
+      --checkpoint-block. Using --checkpoint-sync-url instead is recommended.
+  - flag: --checkpoint-block
+    configPath: consensus.checkpointBlock
+    description: >-
+      Set a checkpoint block to start syncing from. Must be aligned and match
+      --checkpoint-state. Using --checkpoint-sync-url instead is recommended.
+  - flag: --checkpoint-state
+    configPath: 
+    description: >-
+      Set a checkpoint state to start syncing from. Must be aligned and match
+      --checkpoint-block. Using --checkpoint-sync-url instead is recommended.
+  - flag: --checkpoint-sync-url
+    configPath: consensus.checkpointSyncUrl
+    description: >-
+      Set the remote beacon node HTTP endpoint to use for checkpoint sync.
+  - flag: --checkpoint-sync-url-timeout
+    configPath: 
+    description: >-
+      Set the timeout for checkpoint sync calls to remote beacon node HTTP
+      endpoint. [default: 180]
+  - flag: --compact-db
+    configPath: 
+    transform: isFlag
+    description: >-
+      If present, apply compaction to the database on start-up. Use with caution.
+      It is generally not recommended unless auto-compaction is disabled.
+  - flag: --datadir
+    configPath: consensus.dataDir
     transform: interpolate
-  - configPath: common.network
-    flag: --network
-  - configPath: execution.p2p.port
-    flag: --port
-  - configPath: execution.p2p.maxPeers
-    flag: --maxpeers
-  - configPath: execution.http.enabled
-    flag: --http
-  # - configPath: common.engine.host
-  #   flag: --http.addr
-  #   parent: --http
-  - configPath: execution.http.port
-    flag: --http.port
-    parent: --http
-  - configPath: execution.http.apiPrefixes
-    flag: --http.api
-    transform: joinComma
-    parent: --http
-  - configPath: execution.ws.enabled
-    flag: --ws
-  - configPath: execution.ws.port
-    flag: --ws.port
-    parent: --ws
-  - configPath: common.engine.jwtFile
-    flag: --jwtsecret
-    transform: formatPath
-  - configPath: common.engine.host
-    flag: --engine.host
-  - configPath: common.engine.port
-    flag: --engine.port
-  - configPath: execution.base.syncMode
-    flag: --syncmode
-    transform: syncMode
-  - configPath: execution.metrics.enabled
-    flag: --metrics
-  - configPath: execution.metrics.port
-    flag: --metrics.port
-    parent: --metrics
-  - configPath: execution.metrics.addr
-    flag: --metrics.host
-    parent: --metrics
-  - configPath: todo
-    flag: --ethash.dagdir
-  - configPath: todo
-    flag: --externalcl
-  - configPath: todo
-    flag: --txpool.disable
-  - configPath: todo
-    flag: --txpool.pricelimit
-  - configPath: todo
-    flag: --txpool.pricebump
-  - configPath: todo
-    flag: --txpool.blobpricebump
-  - configPath: todo
-    flag: --txpool.accountslots
-  - configPath: todo
-    flag: --txpool.blobslots
-  - configPath: todo
-    flag: --txpool.totalblobpoollimit
-  - configPath: todo
-    flag: --txpool.globalslots
-  - configPath: todo
-    flag: --txpool.globalbasefeeslots
-  - configPath: todo
-    flag: --txpool.globalqueue
-  - configPath: todo
-    flag: --txpool.trace.senders
-  - configPath: todo
-    flag: --txpool.commit.every
-  - configPath: todo
-    flag: --prune.distance
-  - configPath: todo
-    flag: --prune.distance.blocks
-  - configPath: todo
-    flag: --prune.mode
-  - configPath: todo
-    flag: --batchSize
-  - configPath: todo
-    flag: --bodies.cache
-  - configPath: todo
-    flag: --database.verbosity
-  - configPath: todo
-    flag: --private.api.addr
-  - configPath: todo
-    flag: --private.api.ratelimit
-  - configPath: todo
-    flag: --etl.bufferSize
-  - configPath: todo
-    flag: --tls
-  - configPath: todo
-    flag: --tls.cert
-  - configPath: todo
-    flag: --tls.key
-  - configPath: todo
-    flag: --tls.cacert
-  - configPath: todo
-    flag: --state.stream.disable
-  - configPath: todo
-    flag: --sync.loop.throttle
-  - configPath: todo
-    flag: --bad.block
-  - configPath: todo
-    flag: --http.compression
-  - configPath: todo
-    flag: --http.corsdomain
-  - configPath: todo
-    flag: --http.vhosts
-  - configPath: todo
-    flag: --authrpc.vhosts
-  - configPath: todo
-    flag: --http.trace
-  - configPath: todo
-    flag: --http.dbg.single
-  - configPath: todo
-    flag: --state.cache
-  - configPath: todo
-    flag: --rpc.batch.concurrency
-  - configPath: todo
-    flag: --rpc.streaming.disable
-  - configPath: todo
-    flag: --db.read.concurrency
-  - configPath: todo
-    flag: --rpc.accessList
-  - configPath: todo
-    flag: --trace.compat
-  - configPath: todo
-    flag: --rpc.gascap
-  - configPath: todo
-    flag: --rpc.batch.limit
-  - configPath: todo
-    flag: --rpc.returndata.limit
-  - configPath: todo
-    flag: --rpc.allow-unprotected-txs
-  - configPath: todo
-    flag: --rpc.txfeecap
-  - configPath: todo
-    flag: --txpool.api.addr
-  - configPath: todo
-    flag: --trace.maxtraces
-  - configPath: todo
-    flag: --experimental.commitment-history
-  - configPath: todo
-    flag: --http.timeouts.read
-  - configPath: todo
-    flag: --http.timeouts.write
-  - configPath: todo
-    flag: --http.timeouts.idle
-  - configPath: todo
-    flag: --authrpc.timeouts.read
-  - configPath: todo
-    flag: --authrpc.timeouts.write
-  - configPath: todo
-    flag: --authrpc.timeouts.idle
-  - configPath: todo
-    flag: --rpc.evmtimeout
-  - configPath: todo
-    flag: --rpc.overlay.getlogstimeout
-  - configPath: todo
-    flag: --rpc.overlay.replayblocktimeout
-  - configPath: todo
-    flag: --rpc.subscription.filters.maxlogs
-  - configPath: todo
-    flag: --rpc.subscription.filters.maxheaders
-  - configPath: todo
-    flag: --rpc.subscription.filters.maxtxs
-  - configPath: todo
-    flag: --rpc.subscription.filters.maxaddresses
-  - configPath: todo
-    flag: --rpc.subscription.filters.maxtopics
-  - configPath: todo
-    flag: --snap.keepblocks
-  - configPath: todo
-    flag: --snap.stop
-  - configPath: todo
-    flag: --snap.state.stop
-  - configPath: todo
-    flag: --snap.skip-state-snapshot-download
-  - configPath: todo
-    flag: --db.pagesize
-  - configPath: todo
-    flag: --db.size.limit
-  - configPath: todo
-    flag: --db.writemap
-  - configPath: todo
-    flag: --torrent.port
-  - configPath: todo
-    flag: --torrent.maxpeers
-  - configPath: todo
-    flag: --torrent.conns.perfile
-  - configPath: todo
-    flag: --torrent.download.slots
-  - configPath: todo
-    flag: --torrent.staticpeers
-  - configPath: todo
-    flag: --torrent.upload.rate
-  - configPath: todo
-    flag: --torrent.download.rate
-  - configPath: todo
-    flag: --torrent.verbosity
-  - configPath: todo
-    flag: --p2p.protocol
-  - configPath: todo
-    flag: --p2p.allowed-ports
-  - configPath: todo
-    flag: --nat
-  - configPath: todo
-    flag: --nodiscover
-  - configPath: todo
-    flag: --v5disc
-  - configPath: todo
-    flag: --netrestrict
-  - configPath: todo
-    flag: --nodekey
-  - configPath: todo
-    flag: --nodekeyhex
-  - configPath: todo
-    flag: --discovery.dns
-  - configPath: todo
-    flag: --bootnodes
-  - configPath: todo
-    flag: --staticpeers
-  - configPath: todo
-    flag: --trustedpeers
-  - configPath: todo
-    flag: --dev.period
-  - configPath: todo
-    flag: --vmdebug
-  - configPath: todo
-    flag: --networkid
-  - configPath: todo
-    flag: --experiment.persist.receipts
-  - configPath: todo
-    flag: --fakepow
-  - configPath: todo
-    flag: --gpo.blocks
-  - configPath: todo
-    flag: --gpo.percentile
-  - configPath: todo
-    flag: --allow-insecure-unlock
-  - configPath: todo
-    flag: --identity
-  - configPath: todo
-    flag: --clique.checkpoint
-  - configPath: todo
-    flag: --clique.snapshots
-  - configPath: todo
-    flag: --clique.signatures
-  - configPath: todo
-    flag: --clique.datadir
-  - configPath: todo
-    flag: --mine
-  - configPath: todo
-    flag: --proposer.disable
-  - configPath: todo
-    flag: --miner.notify
-  - configPath: todo
-    flag: --miner.gaslimit
-  - configPath: todo
-    flag: --miner.etherbase
-  - configPath: todo
-    flag: --miner.extradata
-  - configPath: todo
-    flag: --miner.noverify
-  - configPath: todo
-    flag: --miner.sigfile
-  - configPath: todo
-    flag: --miner.recommit
-  - configPath: todo
-    flag: --sentry.api.addr
-  - configPath: todo
-    flag: --sentry.log-peer-info
-  - configPath: todo
-    flag: --downloader.api.addr
-  - configPath: todo
-    flag: --downloader.disable.ipv4
-  - configPath: todo
-    flag: --downloader.disable.ipv6
-  - configPath: todo
-    flag: --no-downloader
-  - configPath: todo
-    flag: --downloader.verify
-  - configPath: todo
-    flag: --healthcheck
-  - configPath: todo
-    flag: --bor.heimdall
-  - configPath: todo
-    flag: --webseed
-  - configPath: todo
-    flag: --bor.withoutheimdall
-  - configPath: todo
-    flag: --bor.period
-  - configPath: todo
-    flag: --bor.minblocksize
-  - configPath: todo
-    flag: --bor.milestone
-  - configPath: todo
-    flag: --bor.waypoints
-  - configPath: todo
-    flag: --polygon.sync
-  - configPath: todo
-    flag: --polygon.sync.stage
-  - configPath: todo
-    flag: --ethstats
-  - configPath: todo
-    flag: --override.prague
-  - configPath: todo
-    flag: --caplin.discovery.addr
-  - configPath: todo
-    flag: --caplin.discovery.port
-  - configPath: todo
-    flag: --caplin.discovery.tcpport
-  - configPath: todo
-    flag: --caplin.checkpoint-sync-url
-  - configPath: todo
-    flag: --caplin.subscribe-all-topics
-  - configPath: todo
-    flag: --caplin.max-peer-count
-  - configPath: todo
-    flag: --caplin.enable-upnp
-  - configPath: todo
-    flag: --caplin.max-inbound-traffic-per-peer
-  - configPath: todo
-    flag: --caplin.max-outbound-traffic-per-peer
-  - configPath: todo
-    flag: --caplin.adaptable-maximum-traffic-requirements
-  - configPath: todo
-    flag: --sentinel.addr
-  - configPath: todo
-    flag: --sentinel.port
-  - configPath: todo
-    flag: --sentinel.bootnodes
-  - configPath: todo
-    flag: --sentinel.staticpeers
-  - configPath: todo
-    flag: --ots.search.max.pagesize
-  - configPath: todo
-    flag: --silkworm.exec
-  - configPath: todo
-    flag: --silkworm.rpc
-  - configPath: todo
-    flag: --silkworm.sentry
-  - configPath: todo
-    flag: --silkworm.verbosity
-  - configPath: todo
-    flag: --silkworm.contexts
-  - configPath: todo
-    flag: --silkworm.rpc.log
-  - configPath: todo
-    flag: --silkworm.rpc.log.maxsize
-  - configPath: todo
-    flag: --silkworm.rpc.log.maxfiles
-  - configPath: todo
-    flag: --silkworm.rpc.log.response
-  - configPath: todo
-    flag: --silkworm.rpc.workers
-  - configPath: todo
-    flag: --silkworm.rpc.compatibility
-  - configPath: todo
-    flag: --beacon.api
-  - configPath: todo
-    flag: --beacon.api.addr
-  - configPath: todo
-    flag: --beacon.api.cors.allow-methods
-  - configPath: todo
-    flag: --beacon.api.cors.allow-origins
-  - configPath: todo
-    flag: --beacon.api.cors.allow-credentials
-  - configPath: todo
-    flag: --beacon.api.port
-  - configPath: todo
-    flag: --beacon.api.read.timeout
-  - configPath: todo
-    flag: --beacon.api.write.timeout
-  - configPath: todo
-    flag: --beacon.api.protocol
-  - configPath: todo
-    flag: --beacon.api.ide.timeout
-  - configPath: todo
-    flag: --caplin.blocks-archive
-  - configPath: todo
-    flag: --caplin.blobs-archive
-  - configPath: todo
-    flag: --caplin.states-archive
-  - configPath: todo
-    flag: --caplin.blobs-immediate-backfill
-  - configPath: todo
-    flag: --caplin.blobs-no-pruning
-  - configPath: todo
-    flag: --caplin.checkpoint-sync.disable
-  - configPath: todo
-    flag: --caplin.snapgen
-  - configPath: todo
-    flag: --caplin.mev-relay-url
-  - configPath: todo
-    flag: --caplin.validator-monitor
-  - configPath: todo
-    flag: --caplin.custom-config
-  - configPath: todo
-    flag: --caplin.custom-genesis
-  - configPath: todo
-    flag: --trusted-setup-file
-  - configPath: todo
-    flag: --rpc.slow
-  - configPath: todo
-    flag: --txpool.gossip.disable
-  - configPath: todo
-    flag: --sync.loop.block.limit
-  - configPath: todo
-    flag: --sync.loop.break.after
-  - configPath: todo
-    flag: --sync.parallel-state-flushing
-  - configPath: todo
-    flag: --chaos.monkey
-  - configPath: todo
-    flag: --shutter
-  - configPath: todo
-    flag: --shutter.p2p.bootstrap.nodes
-  - configPath: todo
-    flag: --shutter.p2p.listen.port
-  - configPath: todo
-    flag: --polygon.pos.ssf
-  - configPath: todo
-    flag: --polygon.pos.ssf.block
-  - configPath: todo
-    flag: --pprof
-  - configPath: todo
-    flag: --pprof.addr
-  - configPath: todo
-    flag: --pprof.port
-  - configPath: todo
-    flag: --pprof.cpuprofile
-  - configPath: todo
-    flag: --trace
-  - configPath: todo
-    flag: --log.json
-  - configPath: todo
-    flag: --log.console.json
-  - configPath: todo
-    flag: --log.dir.json
-  - configPath: todo
-    flag: --verbosity
-  - configPath: todo
-    flag: --log.console.verbosity
-  - configPath: todo
-    flag: --log.dir.disable
-  - configPath: todo
-    flag: --log.dir.path
-  - configPath: todo
-    flag: --log.dir.prefix
-  - configPath: todo
-    flag: --log.dir.verbosity
-  - configPath: todo
-    flag: --log.delays
-  - configPath: todo
-    flag: --config 
+    description: >-
+      Used to specify a custom root data directory for lighthouse keys and
+      databases. Defaults to $HOME/.lighthouse/{network} where network is the
+      value of the `network` flag Note: Users should specify separate custom
+      datadirs for different networks.
+  - flag: --debug-level
+    configPath: 
+    description: >-
+      Specifies the verbosity level used when emitting logs to the terminal.
+      [default: info] [possible values: info, debug, trace, warn, error, crit]
+  - flag: --disable-backfill-rate-limiting
+    configPath: 
+    transform: isFlag
+    description: >-
+      Disable the backfill sync rate-limiting. This allow users to just sync the
+      entire chain as fast as possible, however it can result in resource
+      contention which degrades staking performance. Stakers should generally
+      choose to avoid this flag since backfill sync is not required for staking.
+  - flag: --disable-deposit-contract-sync
+    configPath: 
+    transform: isFlag
+    description: >-
+      Explicitly disables syncing of deposit logs from the execution node. This
+      overrides any previous option that depends on it. Useful if you intend to
+      run a non-validating beacon node.
+  - flag: --disable-enr-auto-update
+    configPath: 
+    transform: isFlag
+    description: >-
+      Discovery automatically updates the nodes local ENR with an external IP
+      address and port as seen by other peers on the network. This disables this
+      feature, fixing the ENR's IP/PORT to those specified on boot.
+  - flag: --disable-inbound-rate-limiter
+    configPath: 
+    transform: isFlag
+    description: >-
+      Disables the inbound rate limiter (requests received by this node).
+  - flag: --disable-light-client-server
+    configPath: 
+    transform: isFlag
+    description: Disables light client support on the p2p network
+  - flag: --disable-log-timestamp
+    configPath: 
+    transform: isFlag
+    description: If present, do not include timestamps in logging output.
+  - flag: --disable-malloc-tuning
+    configPath: 
+    transform: isFlag
+    description: >-
+      If present, do not configure the system allocator. Providing this flag will
+      generally increase memory usage, it should only be provided when debugging
+      specific memory allocation issues.
+  - flag: --disable-optimistic-finalized-sync
+    configPath: 
+    transform: isFlag
+    description: >-
+      Force Lighthouse to verify every execution block hash with the execution
+      client during finalized sync. By default block hashes will be checked in
+      Lighthouse and only passed to the EL if initial verification fails.
+  - flag: --disable-packet-filter
+    configPath: 
+    transform: isFlag
+    description: >-
+      Disables the discovery packet filter. Useful for testing in smaller
+      networks
+  - flag: --disable-proposer-reorgs
+    configPath: 
+    transform: isFlag
+    description: >-
+      Do not attempt to reorg late blocks from other validators when proposing.
+  - flag: --disable-quic
+    configPath: 
+    transform: isFlag
+    description: >-
+      Disables the quic transport. The node will rely solely on the TCP transport
+      for libp2p connections.
+  - flag: --disable-self-limiter
+    configPath: 
+    transform: isFlag
+    description: >-
+      Disables the outbound rate limiter (requests sent by this node).
+  - flag: --disable-upnp
+    configPath: 
+    transform: isFlag
+    description: >-
+      Disables UPnP support. Setting this will prevent Lighthouse from attempting
+      to automatically establish external port mappings.
+  - flag: --discovery-port
+    configPath: consensus.discoveryPort
+    description: >-
+      The UDP port that discovery will listen on. Defaults to `port`
+  - flag: --discovery-port6
+    configPath: 
+    description: >-
+      The UDP port that discovery will listen on over IPv6 if listening over both
+      IPv4 and IPv6. Defaults to `port6`
+  - flag: --enr-address
+    configPath: consensus.enrAddress
+    description: >-
+      The IP address/ DNS address to broadcast to other peers on how to reach
+      this node. If a DNS address is provided, the enr-address is set to the IP
+      address it resolves to and does not auto-update based on PONG responses in
+      discovery. Set this only if you are sure other nodes can connect to your
+      local node on this address. This will update the `ip4` or `ip6` ENR fields
+      accordingly. To update both, set this flag twice with the different values.
+  - flag: --enr-match
+    configPath: 
+    transform: isFlag
+    description: >-
+      Sets the local ENR IP address and port to match those set for lighthouse.
+      Specifically, the IP address will be the value of --listen-address and the
+      UDP port will be --discovery-port.
+  - flag: --enr-quic-port
+    configPath: 
+    description: >-
+      The quic UDP4 port that will be set on the local ENR. Set this only if you
+      are sure other nodes can connect to your local node on this port over IPv4.
+  - flag: --enr-quic6-port
+    configPath: 
+    description: >-
+      The quic UDP6 port that will be set on the local ENR. Set this only if you
+      are sure other nodes can connect to your local node on this port over IPv6.
+  - flag: --enr-tcp-port
+    configPath: 
+    description: >-
+      The TCP4 port of the local ENR. Set this only if you are sure other nodes
+      can connect to your local node on this port over IPv4. The --port flag is
+      used if this is not set.
+  - flag: --enr-tcp6-port
+    configPath: 
+    description: >-
+      The TCP6 port of the local ENR. Set this only if you are sure other nodes
+      can connect to your local node on this port over IPv6. The --port6 flag is
+      used if this is not set.
+  - flag: --enr-udp-port
+    configPath: 
+    description: >-
+      The UDP4 port of the local ENR. Set this only if you are sure other nodes
+      can connect to your local node on this port over IPv4.
+  - flag: --enr-udp6-port
+    configPath: 
+    description: >-
+      The UDP6 port of the local ENR. Set this only if you are sure other nodes
+      can connect to your local node on this port over IPv6.
+  - flag: --enable-private-discovery
+    configPath: 
+    transform: isFlag
+    description: >-
+      Lighthouse by default does not discover private IP addresses. Set this flag
+      to enable connection attempts to local addresses.
+  - flag: --epochs-per-blob-prune
+    configPath: 
+    description: >-
+      The epoch interval with which to prune blobs from Lighthouse's database
+      when they are older than the data availability boundary relative to the
+      current epoch. [default: 256]
+  - flag: --epochs-per-migration
+    configPath: 
+    description: >-
+      The number of epochs to wait between running the migration of data from the
+      hot DB to the cold DB. Less frequent runs can be useful for minimizing disk
+      writes [default: 1]
+  - flag: --eth1-blocks-per-log-query
+    configPath: 
+    description: >-
+      Specifies the number of blocks that a deposit log query should span. This
+      will reduce the size of responses from the Eth1 endpoint. [default: 1000]
+  - flag: --eth1-cache-follow-distance
+    configPath: 
+    description: >-
+      Specifies the distance between the Eth1 chain head and the last block which
+      should be imported into the cache. Setting this value lower can help
+      compensate for irregular Proof-of-Work block times, but setting it too low
+      can make the node vulnerable to re-orgs.
+  - flag: --eth1-purge-cache
+    configPath: 
+    transform: isFlag
+    description: Purges the eth1 block and deposit caches
+  - flag: --execution-endpoint
+    configPath: common.engine.url
+    transform: interpolate
+    enabled:
+      configPath: common.engine.communication
+      transform: jwtEnabled
+    description: >-
+      Server endpoint for an execution layer JWT-authenticated HTTP JSON-RPC
+      connection. Uses the same endpoint to populate the deposit cache.
+  - flag: --execution-jwt
+    configPath: common.engine.jwtFile
+    transform: interpolate
+    enabled: 
+      configPath: common.engine.communication
+      transform: jwtEnabled
+    description: >-
+      File path which contains the hex-encoded JWT secret for the execution
+      endpoint provided in the --execution-endpoint flag.
+  - flag: --execution-jwt-id
+    configPath: 
+    description: >-
+      Used by the beacon node to communicate a unique identifier to execution
+      nodes during JWT authentication. It corresponds to the 'id' field in the
+      JWT claims object.Set to empty by default
+  - flag: --execution-jwt-secret-key
+    configPath: 
+    description: >-
+      Hex-encoded JWT secret for the execution endpoint provided in the
+      --execution-endpoint flag.
+  - flag: --execution-jwt-version
+    configPath: 
+    description: >-
+      Used by the beacon node to communicate a client version to execution nodes
+      during JWT authentication. It corresponds to the 'clv' field in the JWT
+      claims object.Set to empty by default
+  - flag: --execution-timeout-multiplier
+    configPath: 
+    description: >-
+      Unsigned integer to multiply the default execution timeouts by.
+      [default: 1]
+  - flag: --fork-choice-before-proposal-timeout
+    configPath: 
+    description: >-
+      Set the maximum number of milliseconds to wait for fork choice before
+      proposing a block. You can prevent waiting at all by setting the timeout to
+      0, however you risk proposing atop the wrong parent block. [default: 250]
+  - flag: --freezer-dir
+    configPath: 
+    description: Data directory for the freezer database.
+  - flag: --genesis-backfill
+    configPath: 
+    transform: isFlag
+    description: >-
+      Attempts to download blocks all the way back to genesis when checkpoint
+      syncing.
+  - flag: --genesis-state-url
+    configPath: 
+    description: >-
+      A URL of a beacon-API compatible server from which to download the genesis
+      state. Checkpoint sync server URLs can generally be used with this flag. If
+      not supplied, a default URL or the --checkpoint-sync-url may be used. If
+      the genesis state is already included in this binary then this value will
+      be ignored.
+  - flag: --genesis-state-url-timeout
+    configPath: 
+    description: >-
+      The timeout in seconds for the request to --genesis-state-url.
+      [default: 180]
+  - flag: --graffiti
+    configPath: consensus.graffiti.message
+    enabled:
+      configPath: consensus.graffiti.enabled
+      transform: flagEnabled
+    description: >-
+      Specify your custom graffiti to be included in blocks. Defaults to the
+      current version and commit, truncated to fit in 32 bytes.
+  - flag: --gui
+    configPath: 
+    transform: isFlag
+    description: >-
+      Enable the graphical user interface and all its requirements. This enables
+      --http and --validator-monitor-auto and enables SSE logging.
+  - flag: --hdiff-buffer-cache-size
+    configPath: 
+    description: >-
+      Number of hierarchical diff (hdiff) buffers to cache in memory. Each buffer
+      is around the size of a BeaconState so you should be cautious about setting
+      this value too high. This flag is irrelevant for most nodes, which run with
+      state pruning enabled. [default: 16]
+  - flag: --hierarchy-exponents
+    configPath: 
+    description: >-
+      Specifies the frequency for storing full state snapshots and hierarchical
+      diffs in the freezer DB. Accepts a comma-separated list of ascending
+      exponents. Each exponent defines an interval for storing diffs to the layer
+      above. The last exponent defines the interval for full snapshots. For
+      example, a config of '4,8,12' would store a full snapshot every 4096 (2^12)
+      slots, first-level diffs every 256 (2^8) slots, and second-level diffs
+      every 16 (2^4) slots. Cannot be changed after initialization.
+      [default: 5,9,11,13,16,18,21]
+  - flag: --historic-state-cache-size
+    configPath: 
+    description: >-
+      Specifies how many states from the freezer database should be cached in
+      memory [default: 1]
+  - flag: --http
+    configPath: consensus.http.enabled
+    transform: flagEnabled
+    description: >-
+      Enable the RESTful HTTP API server. Disabled by default.
+  - flag: --http-address
+    configPath: consensus.http.address
+    enabled:
+      configPath: consensus.http
+      transform: flagEnabled
+    description: >-
+      Set the listen address for the RESTful HTTP API server.
+  - flag: --http-allow-origin
+    configPath: consensus.http.cors
+    enabled:
+      configPath: consensus.http
+      transform: flagEnabled
+    description: >-
+      Set the value of the Access-Control-Allow-Origin response HTTP header. Use *
+      to allow any origin (not recommended in production). If no value is
+      supplied, the CORS allowed origin is set to the listen address of this
+      server (e.g., http://localhost:5052).
+  - flag: --http-duplicate-block-status
+    configPath: 
+    description: >-
+      Status code to send when a block that is already known is POSTed to the
+      HTTP API.
+  - flag: --http-enable-beacon-processor
+    configPath: 
+    description: >-
+      The beacon processor is a scheduler which provides quality-of-service and
+      DoS protection. When set to "true", HTTP API requests will be queued and
+      scheduled alongside other tasks. When set to "false", HTTP API responses
+      will be executed immediately.
+  - flag: --http-enable-tls
+    configPath: 
+    transform: isFlag
+    description: >-
+      Serves the RESTful HTTP API server over TLS. This feature is currently
+      experimental.
+  - flag: --http-port
+    configPath: consensus.http.port
+    enabled: 
+      configPath: consensus.http.enabled
+      transform: flagEnabled
+    description: >-
+      Set the listen TCP port for the RESTful HTTP API server.
+  - flag: --http-sse-capacity-multiplier
+    configPath: 
+    description: >-
+      Multiplier to apply to the length of HTTP server-sent-event (SSE) channels.
+      Increasing this value can prevent messages from being dropped.
+  - flag: --http-tls-cert
+    configPath: 
+    description: >-
+      The path of the certificate to be used when serving the HTTP API server
+      over TLS.
+  - flag: --http-tls-key
+    configPath: 
+    description: >-
+      The path of the private key to be used when serving the HTTP API server
+      over TLS. Must not be password-protected.
+  - flag: --import-all-attestations
+    configPath: 
+    transform: isFlag
+    description: >-
+      Import and aggregate all attestations, regardless of validator
+      subscriptions. This will only import attestations from already-subscribed
+      subnets, use with --subscribe-all-subnets to ensure all attestations are
+      received for import.
+  - flag: --invalid-gossip-verified-blocks-path
+    configPath: 
+    description: >-
+      If a block succeeds gossip validation whilst failing full validation, store
+      the block SSZ as a file at this path. This feature is only recommended for
+      developers. This directory is not pruned, users should be careful to avoid
+      filling up their disks.
+  - flag: --libp2p-addresses
+    configPath: 
+    description: >-
+      One or more comma-delimited multiaddrs to manually connect to a libp2p peer
+      without an ENR.
+  - flag: --light-client-server
+    configPath: 
+    transform: isFlag
+    description: DEPRECATED
+  - flag: --listen-address
+    configPath: 
+    description: >-
+      The address lighthouse will listen for UDP and TCP connections. To listen
+      over IPv4 and IPv6 set this flag twice with the different values.
+      Examples:
+      - --listen-address '0.0.0.0' will listen over IPv4.
+      - --listen-address '::' will listen over IPv6.
+      - --listen-address '0.0.0.0' --listen-address '::' will listen over both
+      IPv4 and IPv6. The order of the given addresses is not relevant. However,
+      multiple IPv4, or multiple IPv6 addresses will not be accepted. If omitted,
+      Lighthouse will listen on all interfaces, for both IPv4 and IPv6.
+  - flag: --log-color
+    configPath: 
+    transform: isFlag
+    description: >-
+      Force outputting colors when emitting logs to the terminal.
+  - flag: --log-format
+    configPath: consensus.logFormat
+    description: >-
+      Specifies the log format used when emitting logs to the terminal.
+      [possible values: JSON]
+  - flag: --logfile
+    configPath: consensus.logFile
+    description: >-
+      File path where the log file will be stored. Once it grows to the value
+      specified in `--logfile-max-size` a new log file is generated where future
+      logs are stored. Once the number of log files exceeds the value specified
+      in `--logfile-max-number` the oldest log file will be overwritten.
+  - flag: --logfile-compress
+    configPath: 
+    transform: isFlag
+    description: >-
+      If present, compress old log files. This can help reduce the space needed
+      to store old logs.
+  - flag: --logfile-debug-level
+    configPath: 
+    description: >-
+      The verbosity level used when emitting logs to the log file. [default:
+      debug] [possible values: info, debug, trace, warn, error, crit]
+  - flag: --logfile-format
+    configPath: 
+    description: >-
+      Specifies the log format used when emitting logs to the logfile.
+      [possible values: DEFAULT, JSON]
+  - flag: --logfile-max-number
+    configPath: 
+    description: >-
+      The maximum number of log files that will be stored. If set to 0,
+      background file logging is disabled. [default: 10]
+  - flag: --logfile-max-size
+    configPath: 
+    description: >-
+      The maximum size (in MB) each log file can grow to before rotating. If set
+      to 0, background file logging is disabled. [default: 200]
+  - flag: --logfile-no-restricted-perms
+    configPath: 
+    transform: isFlag
+    description: >-
+      If present, log files will be generated as world-readable meaning they can
+      be read by any user on the machine. Note that logs can often contain
+      sensitive information about your validator and so this flag should be used
+      with caution. For Windows users, the log file permissions will be inherited
+      from the parent folder.
+  - flag: --max-skip-slots
+    configPath: 
+    description: >-
+      Refuse to skip more than this many slots when processing an attestation.
+      This prevents nodes on minority forks from wasting our time and disk space,
+      but could also cause unnecessary consensus failures, so is disabled by
+      default.
+  - flag: --metrics
+    configPath: consensus.metricsEnabled
+    transform: isFlag
+    description: >-
+      Enable the Prometheus metrics HTTP server. Disabled by default.
+  - flag: --metrics-address
+    configPath: consensus.metricsAddress
+    enabled:
+      configPath: consensus.metricsEnabled
+      transform: flagEnabled
+    description: >-
+      Set the listen address for the Prometheus metrics HTTP server.
+  - flag: --metrics-allow-origin
+    configPath: 
+    description: >-
+      Set the value of the Access-Control-Allow-Origin response HTTP header. Use *
+      to allow any origin (not recommended in production). If no value is
+      supplied, the CORS allowed origin is set to the listen address of this
+      server (e.g., http://localhost:5054).
+  - flag: --metrics-port
+    configPath: consensus.metricsPort
+    enabled:
+      configPath: consensus.metricsEnabled
+      transform: flagEnabled
+    description: >-
+      Set the listen TCP port for the Prometheus metrics HTTP server.
+  - flag: --monitoring-endpoint
+    configPath: consensus.monitoringEndpoint
+    description: >-
+      Enables the monitoring service for sending system metrics to a remote
+      endpoint. This can be used to monitor your setup on certain services (e.g.
+      beaconcha.in). This flag sets the endpoint where the beacon node metrics
+      will be sent. Note: This will send information to a remote sever which may
+      identify and associate your validators, IP address and other personal
+      information. Always use a HTTPS connection and never provide an untrusted
+      URL.
+  - flag: --monitoring-endpoint-period
+    configPath: 
+    description: >-
+      Defines how many seconds to wait between each message sent to the
+      monitoring-endpoint. Default: 60s
+  - flag: --network
+    configPath: common.network
+    description: >-
+      Name of the Eth2 chain Lighthouse will sync and follow. [possible values:
+      mainnet, gnosis, chiado, sepolia, holesky, hoodi]
+  - flag: --network-dir
+    configPath: 
+    description: >-
+      Data directory for network keys. Defaults to network/ inside the beacon
+      node dir.
+  - flag: --port
+    configPath: consensus.p2pPort
+    description: >-
+      The TCP/UDP ports to listen on. There are two UDP ports. The discovery UDP
+      port will be set to this value and the Quic UDP port will be set to this
+      value + 1. The discovery port can be modified by the --discovery-port flag
+      and the quic port can be modified by the --quic-port flag. If listening over
+      both IPv4 and IPv6 the --port flag will apply to the IPv4 address and --port6
+      to the IPv6 address. [default: 9000]
+  - flag: --port6
+    configPath: consensus.port6
+    description: >-
+      The TCP/UDP ports to listen on over IPv6 when listening over both IPv4 and
+      IPv6. Defaults to --port. The Quic UDP port will be set to this value + 1.
+  - flag: --prepare-payload-lookahead
+    configPath: 
+    description: >-
+      The time before the start of a proposal slot at which payload attributes
+      should be sent. Low values are useful for execution nodes which don't
+      improve their payload after the first call, and high values are useful for
+      ensuring the EL is given ample notice. Default: 1/3 of a slot.
+  - flag: --private
+    configPath: 
+    transform: isFlag
+    description: >-
+      Prevents sending various client identification information.
+  - flag: --proposer-only
+    configPath: 
+    transform: isFlag
+    description: >-
+      Sets this beacon node at be a block proposer only node. This will run the
+      beacon node in a minimal configuration that is sufficient for block
+      publishing only. This flag should be used for a beacon node being
+      referenced by validator client using the --proposer-node flag. This
+      configuration is for enabling more secure setups.
+  - flag: --proposer-reorg-cutoff
+    configPath: 
+    description: >-
+      Maximum delay after the start of the slot at which to propose a reorging
+      block. Lower values can prevent failed reorgs by ensuring the block has
+      ample time to propagate and be processed by the network. The default is
+      1/12th of a slot (1 second on mainnet)
+  - flag: --proposer-reorg-disallowed-offsets
+    configPath: 
+    description: >-
+      Comma-separated list of integer offsets which can be used to avoid
+      proposing reorging blocks at certain slots. An offset of N means that
+      reorging proposals will not be attempted at any slot such that `slot %
+      SLOTS_PER_EPOCH == N`. By default only re-orgs at offset 0 will be avoided.
+      Any offsets supplied with this flag will impose additional restrictions.
+  - flag: --proposer-reorg-epochs-since-finalization
+    configPath: 
+    description: >-
+      Maximum number of epochs since finalization at which proposer reorgs are
+      allowed. Default: 2
+  - flag: --proposer-reorg-parent-threshold
+    configPath: 
+    description: >-
+      Percentage of parent vote weight above which to attempt a proposer reorg.
+      Default: 160%
+  - flag: --proposer-reorg-threshold
+    configPath: 
+    description: >-
+      Percentage of head vote weight below which to attempt a proposer reorg.
+      Default: 20%
+  - flag: --prune-blobs
+    configPath: 
+    description: >-
+      Prune blobs from Lighthouse's database when they are older than the data
+      data availability boundary relative to the current epoch. [default: true]
+  - flag: --prune-payloads
+    configPath: 
+    description: >-
+      Prune execution payloads from Lighthouse's database. This saves space but
+      imposes load on the execution client, as payloads need to be reconstructed
+      and sent to syncing peers. [default: true]
+  - flag: --purge-db
+    configPath: 
+    transform: isFlag
+    description: >-
+      If present, the chain database will be deleted. Requires manual
+      confirmation.
+  - flag: --purge-db-force
+    configPath: 
+    transform: isFlag
+    description: >-
+      If present, the chain database will be deleted without confirmation. Use
+      with caution.
+  - flag: --quic-port
+    configPath: 
+    description: >-
+      The UDP port that quic will listen on. Defaults to `port` + 1
+  - flag: --quic-port6
+    configPath: 
+    description: >-
+      The UDP port that quic will listen on over IPv6 if listening over both IPv4
+      and IPv6. Defaults to `port6` + 1
+  - flag: --reconstruct-historic-states
+    configPath: 
+    transform: isFlag
+    description: >-
+      After a checkpoint sync, reconstruct historic states in the database. This
+      requires syncing all the way back to genesis.
+  - flag: --reset-payload-statuses
+    configPath: 
+    transform: isFlag
+    description: >-
+      When present, Lighthouse will forget the payload statuses of any
+      already-imported blocks. This can assist in the recovery from a consensus
+      failure caused by the execution layer.
+  - flag: --self-limiter-protocols
+    configPath: 
+    description: >-
+      Enables the outbound rate limiter (requests made by this node).Rate limit
+      quotas per protocol can be set in the form of
+      <protocol_name>:<tokens>/<time_in_seconds>. To set quotas for multiple
+      protocols, separate them by ';'. If the self rate limiter is enabled and a
+      protocol is not present in the configuration, the quotas used for the
+      inbound rate limiter will be used.
+  - flag: --shuffling-cache-size
+    configPath: 
+    description: >-
+      Some HTTP API requests can be optimised by caching the shufflings at each
+      epoch. This flag allows the user to set the shuffling cache size in epochs.
+      Shufflings are dependent on validator count and setting this value to a
+      large number can consume a large amount of memory.
+  - flag: --shutdown-after-sync
+    configPath: 
+    transform: isFlag
+    description: >-
+      Shutdown beacon node as soon as sync is completed. Backfill sync will not
+      be performed before shutdown.
+  - flag: --slasher
+    configPath: 
+    transform: isFlag
+    description: >-
+      Run a slasher alongside the beacon node. It is currently only recommended
+      for expert users because of the immaturity of the slasher UX and the extra
+      resources required.
+  - flag: --slasher-att-cache-size
+    configPath: 
+    description: >-
+      Set the maximum number of attestation roots for the slasher to cache
+  - flag: --slasher-backend
+    configPath: 
+    description: >-
+      Set the database backend to be used by the slasher. [possible values: lmdb,
+      disabled]
+  - flag: --slasher-broadcast
+    configPath: 
+    description: >-
+      Broadcast slashings found by the slasher to the rest of the network
+      [Enabled by default]. [default: true]
+  - flag: --slasher-chunk-size
+    configPath: 
+    description: >-
+      Number of epochs per validator per chunk stored on disk.
+  - flag: --slasher-dir
+    configPath: 
+    description: >-
+      Set the slasher's database directory.
+  - flag: --slasher-history-length
+    configPath: 
+    description: >-
+      Configure how many epochs of history the slasher keeps. Immutable after
+      initialization.
+  - flag: --slasher-max-db-size
+    configPath: 
+    description: >-
+      Maximum size of the MDBX database used by the slasher.
+  - flag: --slasher-slot-offset
+    configPath: 
+    description: >-
+      Set the delay from the start of the slot at which the slasher should
+      ingest attestations. Only effective if the slasher-update-period is a
+      multiple of the slot duration.
+  - flag: --slasher-update-period
+    configPath: 
+    description: >-
+      Configure how often the slasher runs batch processing.
+  - flag: --slasher-validator-chunk-size
+    configPath: 
+    description: >-
+      Number of validators per chunk stored on disk.
+  - flag: --staking
+    configPath: 
+    transform: isFlag
+    description: >-
+      Standard option for a staking beacon node. This will enable the HTTP server
+      on localhost:5052 and import deposit logs from the execution node.
+  - flag: --state-cache-headroom
+    configPath: 
+    description: >-
+      Minimum number of states to cull from the state cache when it gets full
+      [default: 1]
+  - flag: --state-cache-size
+    configPath: 
+    description: >-
+      Specifies the size of the state cache [default: 128]
+  - flag: --stdin-inputs
+    configPath: 
+    transform: isFlag
+    description: >-
+      If present, read all user inputs from stdin instead of tty.
+  - flag: --subscribe-all-subnets
+    configPath: 
+    transform: isFlag
+    description: >-
+      Subscribe to all subnets regardless of validator count. This will also
+      advertise the beacon node as being long-lived subscribed to all subnets.
+  - flag: --suggested-fee-recipient
+    configPath: 
+    description: >-
+      Emergency fallback fee recipient for use in case the validator client does
+      not have one configured. You should set this flag on the validator client
+      instead of (or in addition to) setting it here.
+  - flag: --target-peers
+    configPath: consensus.maxPeers
+    description: >-
+      The target number of peers.
+  - flag: --testnet-dir
+    configPath: consensus.testnetDir
+    description: >-
+      Path to directory containing eth2_testnet specs. Defaults to a hard-coded
+      Lighthouse testnet. Only effective if there is no existing database.
+  - flag: --trusted-peers
+    configPath: 
+    description: >-
+      One or more comma-delimited trusted peer ids which always have the highest
+      score according to the peer scoring system.
+  - flag: --trusted-setup-file-override
+    configPath: 
+    description: >-
+      Path to a json file containing the trusted setup params. NOTE: This will
+      override the trusted setup that is generated from the mainnet kzg ceremony.
+      Use with caution
+  - flag: --validator-monitor-auto
+    configPath: 
+    transform: isFlag
+    description: >-
+      Enables the automatic detection and monitoring of validators connected to
+      the HTTP API and using the subnet subscription endpoint. This generally has
+      the effect of providing additional logging and metrics for locally
+      controlled validators.
+  - flag: --validator-monitor-file
+    configPath: consensus.validatorMonitorFile
+    description: >-
+      As per --validator-monitor-pubkeys, but the comma-separated list is
+      contained within a file at the given path.
+  - flag: --validator-monitor-individual-tracking-threshold
+    configPath: 
+    description: >-
+      Once the validator monitor reaches this number of local validators it will
+      stop collecting per-validator Prometheus metrics and issuing per-validator
+      logs. Instead, it will provide aggregate metrics and logs. This avoids
+      infeasibly high cardinality in the Prometheus database and high log volume
+      when using many validators. Defaults to 64.
+  - flag: --validator-monitor-pubkeys
+    configPath: 
+    description: >-
+      A comma-separated list of 0x-prefixed validator public keys. These
+      validators will receive special monitoring and additional logging.
+  - flag: --wss-checkpoint
+    configPath: 
+    description: >-
+      Specify a weak subjectivity checkpoint in `block_root:epoch` format to
+      verify the node's sync against. The block root should be 0x-prefixed. Note
+      that this flag is for verification only, to perform a checkpoint sync from
+      a recent state use --checkpoint-sync-url.
+  - flag: --zero-ports
+    configPath: 
+    transform: isFlag
+    description: >-
+      Sets all listening TCP/UDP ports to 0, allowing the OS to choose some
+      arbitrary free ports.

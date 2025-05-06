@@ -1,10 +1,10 @@
 import * as fs from "fs-extra";
-import inquirer from "inquirer";
-import { GenerateOptions, NodeConfig, common, validator, ExecutionClientName, ConsensusClientName, ValidatorClientName, execution, consensus } from "@/lib/types";
+import { GenerateOptions, NodeConfig, ExecutionClientName, ConsensusClientName, ValidatorClientName, Execution, Consensus, Validator } from "@/lib/types";
 import { ConfigManager } from "@/utils/config";
 import { Logger } from "@/utils/logger";
 import { EXECUTION_CLIENTS, CONSENSUS_CLIENTS, VALIDATOR_CLIENTS } from "@/lib/client-names";
 import { CommandClientRegistry } from "@/builders/command/command-client-registry";
+import inquirer from "inquirer";
 
 /**
  * Generate Ethereum client commands
@@ -67,14 +67,14 @@ export async function generate(
       name: finalOptions.execution as ExecutionClientName,
       version: "",
     },
-  } as execution;
+  } as Execution;
   userConfig.consensus = {
     ...userConfig.consensus,
     client: {
       name: finalOptions.consensus as ConsensusClientName,
       version: "",
     },
-  } as consensus;
+  } as Consensus;
   userConfig.validator = {
     ...userConfig.validator,
     enabled: finalOptions.validator ? true : false,
@@ -82,7 +82,7 @@ export async function generate(
       name: finalOptions.validator as ValidatorClientName,
       version: "",
     },
-  } as validator;
+  } as Validator;
 
   try {
     const config = await configManager.processConfigWithPreset(userConfig, preset);

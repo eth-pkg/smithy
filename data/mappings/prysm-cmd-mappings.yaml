@@ -2,474 +2,397 @@ name: prysm
 version: 4.0.0
 valueFormat: space
 rules:
-  - configPath: common.network
-    flag: --mainnet
-    transform: network
-  - configPath: common.network
-    flag: --sepolia
-    transform: network
-  - configPath: common.network
-    flag: --holesky
-    transform: network
-  - configPath: common.network
-    flag: --ephemery
-    transform: network
-  - configPath: common.network
-    flag: --hoodi
-    transform: network
-  - configPath: consensus.dataDir
-    flag: --datadir
+  - flag: --accept-terms-of-use
+    configPath: common.acceptTermsOfUse
+    transform: flagEnabled
+    description: Accepts Terms and Conditions for non-interactive environments
+  - flag: --api-timeout
+    configPath:
+    description: Specifies the timeout value for API requests in seconds
+  - flag: --backfill-batch-size
+    configPath:
+    description: Number of blocks per backfill batch
+  - flag: --backfill-oldest-slot
+    configPath:
+    description: Specifies the oldest slot that backfill should download
+  - flag: --backfill-worker-count
+    configPath:
+    description: Number of concurrent backfill batch requests
+  - flag: --beacon-db-pruning
+    configPath:
+    description: Enables pruning of beacon db beyond MIN_EPOCHS_FOR_BLOCK_REQUESTS duration
+  - flag: --blob-batch-limit
+    configPath:
+    description: The amount of blobs the local peer is bounded to request and respond to in a batch
+  - flag: --blob-batch-limit-burst-factor
+    configPath:
+    description: The factor by which blob batch limit may increase on burst
+  - flag: --blob-path
+    configPath:
+    description: Location for blob storage
+  - flag: --blob-retention-epochs
+    configPath:
+    description: Override the default blob retention period in epochs
+  - flag: --blob-storage-layout
+    configPath:
+    description: Dictates how to organize the blob directory structure on disk
+  - flag: --block-batch-limit
+    configPath:
+    description: The amount of blocks the local peer is bounded to request and respond to in a batch
+  - flag: --block-batch-limit-burst-factor
+    configPath:
+    description: The factor by which block batch limit may increase on burst
+  - flag: --bootstrap-node
+    configPath: consensus.p2p.bootnodes
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: The enr/enode address of bootstrap node for peer discovery
+  - flag: --chain-config-file
+    configPath:
+    description: Path to a YAML file with chain config values
+  - flag: --chain-id
+    configPath: common.networkId
+    description: Sets the chain id of the beacon chain
+  - flag: --checkpoint-block
+    configPath: consensus.checkpoint.block
+    description: Local file containing the checkpoint Block to load for sync
+  - flag: --checkpoint-state
+    configPath: consensus.checkpoint.state
+    description: Local file containing the checkpoint BeaconState to load for sync
+  - flag: --checkpoint-sync-url
+    configPath: consensus.checkpoint.url
+    description: URL of a synced beacon node to trust for checkpoint sync data
+  - flag: --clear-db
+    configPath:
+    description: Prompt for clearing any previously stored data at the data directory
+  - flag: --config-file
+    configPath:
+    description: Filepath to a yaml file with flag values
+  - flag: --contract-deployment-block
+    configPath:
+    description: The eth1 block in which the deposit contract was deployed
+  - flag: --datadir
+    configPath: consensus.dataDir
     transform: interpolate
-  - configPath: execution.p2p.port
-    flag: --port
-  - configPath: execution.p2p.maxPeers
-    flag: --maxpeers
-  - configPath: execution.http.enabled
-    flag: --http
-  - configPath: common.engine.host
-    flag: --http.addr
-    parent: --http
-  - configPath: execution.http.port
-    flag: --http.port
-    parent: --http
-  - configPath: execution.http.apiPrefixes
-    flag: --http.api
-    transform: joinComma
-    parent: --http
-  - configPath: execution.ws.enabled
-    flag: --ws
-  - configPath: execution.ws.port
-    flag: --ws.port
-    parent: --ws
-  - configPath: common.engine.jwtFile
-    flag: --jwtsecret
-    transform: formatPath
-  - configPath: common.engine.host
-    flag: --engine.host
-  - configPath: common.engine.port
-    flag: --engine.port
-  - configPath: execution.base.syncMode
-    flag: --syncmode
-    transform: syncMode
-  - configPath: execution.metrics.enabled
-    flag: --metrics
-  - configPath: execution.metrics.port
-    flag: --metrics.port
-    parent: --metrics
-  - configPath: execution.metrics.addr
-    flag: --metrics.host
-    parent: --metrics
-  - configPath: todo
-    flag: --ethash.dagdir
-  - configPath: todo
-    flag: --externalcl
-  - configPath: todo
-    flag: --txpool.disable
-  - configPath: todo
-    flag: --txpool.pricelimit
-  - configPath: todo
-    flag: --txpool.pricebump
-  - configPath: todo
-    flag: --txpool.blobpricebump
-  - configPath: todo
-    flag: --txpool.accountslots
-  - configPath: todo
-    flag: --txpool.blobslots
-  - configPath: todo
-    flag: --txpool.totalblobpoollimit
-  - configPath: todo
-    flag: --txpool.globalslots
-  - configPath: todo
-    flag: --txpool.globalbasefeeslots
-  - configPath: todo
-    flag: --txpool.globalqueue
-  - configPath: todo
-    flag: --txpool.trace.senders
-  - configPath: todo
-    flag: --txpool.commit.every
-  - configPath: todo
-    flag: --prune.distance
-  - configPath: todo
-    flag: --prune.distance.blocks
-  - configPath: todo
-    flag: --prune.mode
-  - configPath: todo
-    flag: --batchSize
-  - configPath: todo
-    flag: --bodies.cache
-  - configPath: todo
-    flag: --database.verbosity
-  - configPath: todo
-    flag: --private.api.addr
-  - configPath: todo
-    flag: --private.api.ratelimit
-  - configPath: todo
-    flag: --etl.bufferSize
-  - configPath: todo
-    flag: --tls
-  - configPath: todo
-    flag: --tls.cert
-  - configPath: todo
-    flag: --tls.key
-  - configPath: todo
-    flag: --tls.cacert
-  - configPath: todo
-    flag: --state.stream.disable
-  - configPath: todo
-    flag: --sync.loop.throttle
-  - configPath: todo
-    flag: --bad.block
-  - configPath: todo
-    flag: --http.compression
-  - configPath: todo
-    flag: --http.corsdomain
-  - configPath: todo
-    flag: --http.vhosts
-  - configPath: todo
-    flag: --authrpc.vhosts
-  - configPath: todo
-    flag: --http.trace
-  - configPath: todo
-    flag: --http.dbg.single
-  - configPath: todo
-    flag: --state.cache
-  - configPath: todo
-    flag: --rpc.batch.concurrency
-  - configPath: todo
-    flag: --rpc.streaming.disable
-  - configPath: todo
-    flag: --db.read.concurrency
-  - configPath: todo
-    flag: --rpc.accessList
-  - configPath: todo
-    flag: --trace.compat
-  - configPath: todo
-    flag: --rpc.gascap
-  - configPath: todo
-    flag: --rpc.batch.limit
-  - configPath: todo
-    flag: --rpc.returndata.limit
-  - configPath: todo
-    flag: --rpc.allow-unprotected-txs
-  - configPath: todo
-    flag: --rpc.txfeecap
-  - configPath: todo
-    flag: --txpool.api.addr
-  - configPath: todo
-    flag: --trace.maxtraces
-  - configPath: todo
-    flag: --experimental.commitment-history
-  - configPath: todo
-    flag: --http.timeouts.read
-  - configPath: todo
-    flag: --http.timeouts.write
-  - configPath: todo
-    flag: --http.timeouts.idle
-  - configPath: todo
-    flag: --authrpc.timeouts.read
-  - configPath: todo
-    flag: --authrpc.timeouts.write
-  - configPath: todo
-    flag: --authrpc.timeouts.idle
-  - configPath: todo
-    flag: --rpc.evmtimeout
-  - configPath: todo
-    flag: --rpc.overlay.getlogstimeout
-  - configPath: todo
-    flag: --rpc.overlay.replayblocktimeout
-  - configPath: todo
-    flag: --rpc.subscription.filters.maxlogs
-  - configPath: todo
-    flag: --rpc.subscription.filters.maxheaders
-  - configPath: todo
-    flag: --rpc.subscription.filters.maxtxs
-  - configPath: todo
-    flag: --rpc.subscription.filters.maxaddresses
-  - configPath: todo
-    flag: --rpc.subscription.filters.maxtopics
-  - configPath: todo
-    flag: --snap.keepblocks
-  - configPath: todo
-    flag: --snap.stop
-  - configPath: todo
-    flag: --snap.state.stop
-  - configPath: todo
-    flag: --snap.skip-state-snapshot-download
-  - configPath: todo
-    flag: --db.pagesize
-  - configPath: todo
-    flag: --db.size.limit
-  - configPath: todo
-    flag: --db.writemap
-  - configPath: todo
-    flag: --torrent.port
-  - configPath: todo
-    flag: --torrent.maxpeers
-  - configPath: todo
-    flag: --torrent.conns.perfile
-  - configPath: todo
-    flag: --torrent.download.slots
-  - configPath: todo
-    flag: --torrent.staticpeers
-  - configPath: todo
-    flag: --torrent.upload.rate
-  - configPath: todo
-    flag: --torrent.download.rate
-  - configPath: todo
-    flag: --torrent.verbosity
-  - configPath: todo
-    flag: --p2p.protocol
-  - configPath: todo
-    flag: --p2p.allowed-ports
-  - configPath: todo
-    flag: --nat
-  - configPath: todo
-    flag: --nodiscover
-  - configPath: todo
-    flag: --v5disc
-  - configPath: todo
-    flag: --netrestrict
-  - configPath: todo
-    flag: --nodekey
-  - configPath: todo
-    flag: --nodekeyhex
-  - configPath: todo
-    flag: --discovery.dns
-  - configPath: todo
-    flag: --bootnodes
-  - configPath: todo
-    flag: --staticpeers
-  - configPath: todo
-    flag: --trustedpeers
-  - configPath: todo
-    flag: --dev.period
-  - configPath: todo
-    flag: --vmdebug
-  - configPath: common.networkId
-    flag: --network-id
-  - configPath: todo
-    flag: --experiment.persist.receipts
-  - configPath: todo
-    flag: --fakepow
-  - configPath: todo
-    flag: --gpo.blocks
-  - configPath: todo
-    flag: --gpo.percentile
-  - configPath: todo
-    flag: --allow-insecure-unlock
-  - configPath: todo
-    flag: --identity
-  - configPath: todo
-    flag: --clique.checkpoint
-  - configPath: todo
-    flag: --clique.snapshots
-  - configPath: todo
-    flag: --clique.signatures
-  - configPath: todo
-    flag: --clique.datadir
-  - configPath: todo
-    flag: --mine
-  - configPath: todo
-    flag: --proposer.disable
-  - configPath: todo
-    flag: --miner.notify
-  - configPath: todo
-    flag: --miner.gaslimit
-  - configPath: todo
-    flag: --miner.etherbase
-  - configPath: todo
-    flag: --miner.extradata
-  - configPath: todo
-    flag: --miner.noverify
-  - configPath: todo
-    flag: --miner.sigfile
-  - configPath: todo
-    flag: --miner.recommit
-  - configPath: todo
-    flag: --sentry.api.addr
-  - configPath: todo
-    flag: --sentry.log-peer-info
-  - configPath: todo
-    flag: --downloader.api.addr
-  - configPath: todo
-    flag: --downloader.disable.ipv4
-  - configPath: todo
-    flag: --downloader.disable.ipv6
-  - configPath: todo
-    flag: --no-downloader
-  - configPath: todo
-    flag: --downloader.verify
-  - configPath: todo
-    flag: --healthcheck
-  - configPath: todo
-    flag: --bor.heimdall
-  - configPath: todo
-    flag: --webseed
-  - configPath: todo
-    flag: --bor.withoutheimdall
-  - configPath: todo
-    flag: --bor.period
-  - configPath: todo
-    flag: --bor.minblocksize
-  - configPath: todo
-    flag: --bor.milestone
-  - configPath: todo
-    flag: --bor.waypoints
-  - configPath: todo
-    flag: --polygon.sync
-  - configPath: todo
-    flag: --polygon.sync.stage
-  - configPath: todo
-    flag: --ethstats
-  - configPath: todo
-    flag: --override.prague
-  - configPath: todo
-    flag: --caplin.discovery.addr
-  - configPath: todo
-    flag: --caplin.discovery.port
-  - configPath: todo
-    flag: --caplin.discovery.tcpport
-  - configPath: todo
-    flag: --caplin.checkpoint-sync-url
-  - configPath: todo
-    flag: --caplin.subscribe-all-topics
-  - configPath: todo
-    flag: --caplin.max-peer-count
-  - configPath: todo
-    flag: --caplin.enable-upnp
-  - configPath: todo
-    flag: --caplin.max-inbound-traffic-per-peer
-  - configPath: todo
-    flag: --caplin.max-outbound-traffic-per-peer
-  - configPath: todo
-    flag: --caplin.adaptable-maximum-traffic-requirements
-  - configPath: todo
-    flag: --sentinel.addr
-  - configPath: todo
-    flag: --sentinel.port
-  - configPath: todo
-    flag: --sentinel.bootnodes
-  - configPath: todo
-    flag: --sentinel.staticpeers
-  - configPath: todo
-    flag: --ots.search.max.pagesize
-  - configPath: todo
-    flag: --silkworm.exec
-  - configPath: todo
-    flag: --silkworm.rpc
-  - configPath: todo
-    flag: --silkworm.sentry
-  - configPath: todo
-    flag: --silkworm.verbosity
-  - configPath: todo
-    flag: --silkworm.contexts
-  - configPath: todo
-    flag: --silkworm.rpc.log
-  - configPath: todo
-    flag: --silkworm.rpc.log.maxsize
-  - configPath: todo
-    flag: --silkworm.rpc.log.maxfiles
-  - configPath: todo
-    flag: --silkworm.rpc.log.response
-  - configPath: todo
-    flag: --silkworm.rpc.workers
-  - configPath: todo
-    flag: --silkworm.rpc.compatibility
-  - configPath: todo
-    flag: --beacon.api
-  - configPath: todo
-    flag: --beacon.api.addr
-  - configPath: todo
-    flag: --beacon.api.cors.allow-methods
-  - configPath: todo
-    flag: --beacon.api.cors.allow-origins
-  - configPath: todo
-    flag: --beacon.api.cors.allow-credentials
-  - configPath: todo
-    flag: --beacon.api.port
-  - configPath: todo
-    flag: --beacon.api.read.timeout
-  - configPath: todo
-    flag: --beacon.api.write.timeout
-  - configPath: todo
-    flag: --beacon.api.protocol
-  - configPath: todo
-    flag: --beacon.api.ide.timeout
-  - configPath: todo
-    flag: --caplin.blocks-archive
-  - configPath: todo
-    flag: --caplin.blobs-archive
-  - configPath: todo
-    flag: --caplin.states-archive
-  - configPath: todo
-    flag: --caplin.blobs-immediate-backfill
-  - configPath: todo
-    flag: --caplin.blobs-no-pruning
-  - configPath: todo
-    flag: --caplin.checkpoint-sync.disable
-  - configPath: todo
-    flag: --caplin.snapgen
-  - configPath: todo
-    flag: --caplin.mev-relay-url
-  - configPath: todo
-    flag: --caplin.validator-monitor
-  - configPath: todo
-    flag: --caplin.custom-config
-  - configPath: todo
-    flag: --caplin.custom-genesis
-  - configPath: todo
-    flag: --trusted-setup-file
-  - configPath: todo
-    flag: --rpc.slow
-  - configPath: todo
-    flag: --txpool.gossip.disable
-  - configPath: todo
-    flag: --sync.loop.block.limit
-  - configPath: todo
-    flag: --sync.loop.break.after
-  - configPath: todo
-    flag: --sync.parallel-state-flushing
-  - configPath: todo
-    flag: --chaos.monkey
-  - configPath: todo
-    flag: --shutter
-  - configPath: todo
-    flag: --shutter.p2p.bootstrap.nodes
-  - configPath: todo
-    flag: --shutter.p2p.listen.port
-  - configPath: todo
-    flag: --polygon.pos.ssf
-  - configPath: todo
-    flag: --polygon.pos.ssf.block
-  - configPath: todo
-    flag: --pprof
-  - configPath: todo
-    flag: --pprof.addr
-  - configPath: todo
-    flag: --pprof.port
-  - configPath: todo
-    flag: --pprof.cpuprofile
-  - configPath: todo
-    flag: --trace
-  - configPath: todo
-    flag: --log.json
-  - configPath: todo
-    flag: --log.console.json
-  - configPath: todo
-    flag: --log.dir.json
-  - configPath: todo
-    flag: --verbosity
-  - configPath: todo
-    flag: --log.console.verbosity
-  - configPath: todo
-    flag: --log.dir.disable
-  - configPath: todo
-    flag: --log.dir.path
-  - configPath: todo
-    flag: --log.dir.prefix
-  - configPath: todo
-    flag: --log.dir.verbosity
-  - configPath: todo
-    flag: --log.delays
-  - configPath: todo
-    flag: --config 
+    description: Data directory for the databases
+  - flag: --deposit-contract
+    configPath:
+    description: Deposit contract address for validator eligibility
+  - flag: --disable-debug-rpc-endpoints
+    configPath:
+    description: Disables the debug Beacon API namespace
+  - flag: --disable-monitoring
+    configPath: consensus.metrics.enabled
+    transform: negate
+    description: Disables monitoring service
+  - flag: --e2e-config
+    configPath:
+    description: Enables the E2E testing config for end-to-end testing
+  - flag: --enable-builder-ssz
+    configPath: consensus.builder
+    description: Enables Builder APIs to send and receive in SSZ format
+  - flag: --enable-experimental-backfill
+    configPath:
+    description: Enables experimental backfill feature
+  - flag: --enable-tracing
+    configPath:
+    description: Enables request tracing
+  - flag: --enable-upnp
+    configPath:
+    description: Enable UPnP when possible
+  - flag: --engine-endpoint-timeout-seconds
+    configPath:
+    description: Sets the execution engine timeout for execution payload semantics
+  - flag: --ephemery
+    configPath: common.network
+    transform: network
+    description: Runs Prysm configured for the Ephemery test network
+  - flag: --eth1-header-req-limit
+    configPath:
+    description: Sets the maximum number of headers that a deposit log query can fetch
+  - flag: --execution-endpoint
+    configPath: common.engine.url
+    transform: interpolate
+    enabled: 
+      configPath: common.engine.enabled
+      transform: flagEnabled
+    description: An execution client http endpoint
+  - flag: --execution-headers
+    configPath:
+    description: HTTP headers for all execution client calls
+  - flag: --force-clear-db
+    configPath:
+    description: Clears any previously stored data at the data directory
+  - flag: --genesis-beacon-api-url
+    configPath: consensus.checkpoint.url
+    description: URL of a synced beacon node to trust for genesis state
+  - flag: --genesis-state
+    configPath:
+    description: Load a genesis state from ssz file
+  - flag: --grpc-max-msg-size
+    configPath:
+    description: Integer to define max receive message call size in bytes
+  - flag: --holesky
+    configPath: common.network
+    transform: network
+    description: Runs Prysm configured for the Holesky test network
+  - flag: --hoodi
+    configPath: common.network
+    transform: network
+    description: Runs Prysm configured for the Hoodi test network
+  - flag: --http-cors-domain
+    configPath: consensus.http.allowlist
+    enabled: 
+      configPath: consensus.http.enabled
+      transform: flagEnabled
+    description: Comma separated list of domains for cross origin requests
+  - flag: --http-host
+    configPath: consensus.http.address
+    enabled: 
+      configPath: consensus.http.enabled
+      transform: flagEnabled
+    description: Host on which the HTTP server runs on
+  - flag: --http-mev-relay
+    configPath: consensus.builder.url
+    enabled: 
+      configPath: consensus.builder.enabled
+      transform: flagEnabled
+    description: A MEV builder relay string http endpoint
+  - flag: --http-modules
+    configPath: consensus.http.api
+    enabled: 
+      configPath: consensus.http.enabled
+      transform: flagEnabled
+    description: Comma-separated list of API module names
+  - flag: --http-port
+    configPath: consensus.http.port
+    enabled: 
+      configPath: consensus.http.enabled
+      transform: flagEnabled
+    description: Port on which the HTTP server runs on
+  - flag: --interop-eth1data-votes
+    configPath:
+    description: Enable mocking of eth1 data votes for proposers
+  - flag: --jwt-id
+    configPath: common.engine.jwtId
+    enabled: 
+      configPath: common.engine.communication
+      transform: jwtEnabled
+    description: JWT claims id for client identification
+  - flag: --jwt-secret
+    configPath: common.engine.jwtFile
+    enabled: 
+      configPath: common.engine.communication
+      transform: jwtEnabled
+    description: Path to file containing hex-encoded 32 byte secret for execution node auth
+  - flag: --local-block-value-boost
+    configPath:
+    description: Percentage boost for local block construction
+  - flag: --mainnet
+    configPath: common.network
+    transform: network
+    description: Runs on Ethereum main network
+  - flag: --max-builder-consecutive-missed-slots
+    configPath:
+    enabled: 
+      configPath: consensus.builder.enabled
+      transform: flagEnabled
+    description: Number of consecutive skip slots to fallback from relay/builder
+  - flag: --max-builder-epoch-missed-slots
+    configPath:
+    enabled: 
+      configPath: consensus.builder.enabled
+      transform: flagEnabled
+    description: Number of total skip slots to fallback from relay/builder in epoch
+  - flag: --max-concurrent-dials
+    configPath:
+    description: Sets the maximum number of peers that a node will attempt to dial
+  - flag: --min-builder-bid
+    configPath:
+    enabled: 
+      configPath: consensus.builder.enabled
+      transform: flagEnabled
+    description: Absolute value in Gwei that the builder bid must have
+  - flag: --min-builder-to-local-difference
+    configPath:
+    enabled: 
+      configPath: consensus.builder.enabled
+      transform: flagEnabled
+    description: Absolute value in Gwei that the builder bid must have
+  - flag: --min-sync-peers
+    configPath:
+    description: The required number of valid peers to connect with before syncing
+  - flag: --minimal-config
+    configPath:
+    description: Uses minimal config with parameters as defined in the spec
+  - flag: --minimum-peers-per-subnet
+    configPath:
+    description: Sets the minimum number of peers per subnet
+  - flag: --monitor-indices
+    configPath:
+    enabled: 
+      configPath: consensus.metrics.enabled
+      transform: flagEnabled
+    description: List of validator indices to track performance
+  - flag: --monitoring-host
+    configPath: consensus.metrics.host
+    enabled: 
+      configPath: consensus.metrics.enabled
+      transform: flagEnabled
+    description: Host used for listening and responding metrics for prometheus
+  - flag: --network-id
+    configPath: common.networkId
+    description: Sets the network id of the beacon chain
+  - flag: --no-discovery
+    configPath: consensus.p2p.enabled
+    transform: negate
+    description: Enable only local network p2p without cloud bootstrap nodes
+  - flag: --p2p-allowlist
+    configPath: consensus.p2p.allowlist
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: The CIDR subnet for allowing only certain peer connections
+  - flag: --p2p-denylist
+    configPath: consensus.p2p.denylist
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: The CIDR subnets for denying certain peer connections
+  - flag: --p2p-host-dns
+    configPath:
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: The DNS address advertised by libp2p
+  - flag: --p2p-host-ip
+    configPath:
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: The IP address advertised by libp2p
+  - flag: --p2p-local-ip
+    configPath:
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: The local ip address to listen for incoming data
+  - flag: --p2p-max-peers
+    configPath: consensus.p2p.maxPeers
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: The max number of p2p peers to maintain
+  - flag: --p2p-metadata
+    configPath:
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: The file containing the metadata for peer communication
+  - flag: --p2p-priv-key
+    configPath:
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: The file containing the private key for peer communication
+  - flag: --p2p-quic-port
+    configPath: consensus.p2p.port
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: The QUIC port used by libp2p
+  - flag: --p2p-static-id
+    configPath:
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: Enables fixed peer id by saving network key
+  - flag: --p2p-tcp-port
+    configPath: consensus.p2p.port
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: The TCP port used by libp2p
+  - flag: --p2p-udp-port
+    configPath: consensus.p2p.udpPort
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: The UDP port used by the discovery service discv5
+  - flag: --peer
+    configPath: consensus.p2p.bootnodes
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: Connect with trusted peers in enode, multiaddr, or enr formats
+  - flag: --pruner-retention-epochs
+    configPath:
+    description: Specifies the retention period for the pruner service in epochs
+  - flag: --pubsub-queue-size
+    configPath:
+    description: The size of the pubsub validation and outbound queue
+  - flag: --relay-node
+    configPath: consensus.p2p.relayNode
+    enabled: 
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: The address of relay node for peer discovery
+  - flag: --restore-source-file
+    configPath:
+    description: Filepath to the backed-up database file for restoration
+  - flag: --restore-target-dir
+    configPath:
+    description: Target directory of the restored database
+  - flag: --rpc-host
+    configPath: consensus.http.address
+    enabled: 
+      configPath: consensus.http.enabled
+      transform: flagEnabled
+    description: Host on which the RPC server should listen
+  - flag: --rpc-max-page-size
+    configPath:
+    enabled: 
+      configPath: consensus.http.enabled
+      transform: flagEnabled
+    description: Max number of items returned per page in RPC responses
+  - flag: --rpc-port
+    configPath: consensus.http.port
+    enabled: 
+      configPath: consensus.http.enabled
+      transform: flagEnabled
+    description: RPC port exposed by a beacon node
+  - flag: --sepolia
+    configPath: common.network
+    transform: network
+    description: Runs Prysm configured for the Sepolia test network
+  - flag: --slots-per-archive-point
+    configPath:
+    description: The slot durations of when an archived state gets saved
+  - flag: --subscribe-all-subnets
+    configPath:
+    description: Subscribe to all possible attestation and sync subnets
+  - flag: --suggested-fee-recipient
+    configPath: validator.feeRecipientAddress
+    enabled: 
+      configPath: validator.enabled
+      transform: flagEnabled
+    description: Address to receive transaction fees from blocks
+  - flag: --tls-cert
+    configPath: consensus.http.tls.cert
+    enabled: 
+      configPath: consensus.http.tls.enabled
+      transform: flagEnabled
+    description: Certificate for secure gRPC
+  - flag: --tls-key
+    configPath: consensus.http.tls.key
+    enabled: 
+      configPath: consensus.http.tls.enabled
+      transform: flagEnabled
+    description: Key for secure gRPC
+  - flag: --weak-subjectivity-checkpoint
+    configPath: consensus.checkpoint.weakSubjectivity 
+    enabled: 
+      configPath: consensus.checkpoint.enabled
+      transform: flagEnabled
+    description: Input in block_root:epoch_number format for sync verification 

@@ -202,7 +202,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid consensus HTTP port values (minimum)
   it('should reject consensus HTTP port below minimum', async () => {
     const config = { ...testConfig };
-    config.consensus!.httpPort = 80;
+    config.consensus!.http.port = 80;
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -217,7 +217,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid consensus HTTP port values (maximum)
   it('should reject consensus HTTP port above maximum', async () => {
     const config = { ...testConfig };
-    config.consensus!.httpPort = 70000;
+    config.consensus!.http.port = 70000;
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -232,7 +232,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid consensus metrics port values (minimum)
   it('should reject consensus metrics port below minimum', async () => {
     const config = { ...testConfig };
-    config.consensus!.metricsPort = 80;
+    config.consensus!.metrics.port = 80;
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -247,7 +247,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid consensus P2P port values (minimum)
   it('should reject consensus P2P port below minimum', async () => {
     const config = { ...testConfig };
-    config.consensus!.p2pPort = 80;
+    config.consensus!.p2p.port = 80;
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -277,7 +277,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid validator metrics port
   it('should reject invalid validator metrics port', async () => {
     const config = { ...testConfig };
-    config.validator!.metricsPort = 'invalid_port';
+    config.validator!.metrics.port = 80;
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');

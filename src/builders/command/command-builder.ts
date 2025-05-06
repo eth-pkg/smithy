@@ -1,7 +1,6 @@
 import { OperatingSystem, NodeConfig } from "@/lib/types"
-
-type TransformFunction = (value: any, os: string, flag: string) => any
-type TransformFunctionWithConfig = (value: any, config: any) => any
+import { FlagEnabledFunction, transformers, TransformFunction, TransformFunctionWithConfig } from "./transformers"
+import { getValueFromPath } from "./utils"
 
 type Rule = {
   configPath: string
@@ -17,69 +16,6 @@ type Rule = {
 type Mappings = {
   rules: Rule[]
   valueFormat: 'equals' | 'space'
-}
-
-const transformers: Record<string, TransformFunction | TransformFunctionWithConfig> = {
-  formatPath: (value: string, os: string) => {
-    if (os === "windows") {
-      return value.replace(/\//g, "\\")
-    }
-    return value
-  },
-  joinComma: (value: string | string[]) => {
-    return Array.isArray(value) ? value.join(",") : value
-  },
-  flagEnabled: (value: string) => {
-    return value === "true" ? true : false
-  },
-  isFlag: () => {
-    return true
-  },
-  syncMode: (value: string) => {
-    const isFastSync = value.toLowerCase() === "fast" || value.toLowerCase() === "snap"
-    return isFastSync ? "fast" : "full"
-  },
-  network: (value: string, _os: string, flag: string) => {
-    // If the value matches the flag (without --), return empty string since flag already has --
-    const flagWithoutPrefix = flag.replace(/^--/, '')
-    return value === flagWithoutPrefix ? true : false
-  },
-  interpolate: (template: string, config: NodeConfig) => {
-    if (typeof template !== 'string') {
-      return template;
-    }
-    let result = template;
-    let previousResult;
-    let depth = 0;
-    const MAX_DEPTH = 10;
-    
-    do {
-      previousResult = result;
-      result = result.replace(/\{([^}]+)\}/g, (_, path) => {
-        // Special handling for HOME variable
-        if (path === 'HOME') {
-          return process.env.HOME || process.env.USERPROFILE || '';
-        }
-        const value = CommandBuilder.getValueFromPath(config, path);
-        return value !== undefined ? value : '';
-      });
-      depth++;
-    } while (result !== previousResult && depth < MAX_DEPTH);
-    
-    if (depth >= MAX_DEPTH) {
-      throw new Error(`Maximum interpolation depth (${MAX_DEPTH}) reached. This may indicate a circular reference in your configuration.`);
-    }
-    
-    return result;
-  },
-  hostAllowlist: (value: string | string[]) => {
-    if (typeof value === 'string') {
-      return `"${value}"`;
-    }
-    return value;
-  },
-  jwtEnabled: (value: any) => value === "jwt",
-  ipcEnabled: (value: string) => value === "ipc",
 }
 
 // Base builder class for all client commands
@@ -144,21 +80,22 @@ export class CommandBuilder {
     const builder = new CommandBuilder(baseCommand, mappings)
 
     for (const rule of mappings.rules) {
-      // Check if this rule is enabled via the 'enabled' property
+   
+    
       if (rule.enabled) {
-        let enabledValue = this.getValueFromPath(config, rule.enabled.configPath)
+        let enabledValue = getValueFromPath(config, rule.enabled.configPath)
         if (rule.enabled.transform) {
           if (!transformers[rule.enabled.transform]) {
             throw new Error(`Unknown transform function: ${rule.enabled.transform} for flag: ${rule.flag}`);
           }
-          enabledValue = (transformers[rule.enabled.transform] as TransformFunction)(enabledValue, os, rule.flag)
-        }
+          enabledValue = (transformers[rule.enabled.transform] as FlagEnabledFunction)(enabledValue)
+        }     
         if (!enabledValue) {
           continue
         }
       }
 
-      const value = this.getValueFromPath(config, rule.configPath)
+      const value = getValueFromPath(config, rule.configPath)
 
       if (value !== undefined) {
         let transformedValue = value
@@ -174,20 +111,6 @@ export class CommandBuilder {
           }
         }
 
-        // Check if this flag has a parent and if the parent is enabled
-        // todo remove this and use flagEnabled instead and enable the flag if the parent is enabled
-        if (typeof rule.parent === 'string') {
-          const parentRule = mappings.rules.find(r => r.flag === rule.parent)
-          if (typeof parentRule === 'undefined') {
-            continue
-          }
-          const parentConfigPath = parentRule.configPath
-          const parentValue = this.getValueFromPath(config, parentConfigPath)
-          if (parentValue === false) {
-            continue
-          }
-        }
-
         if (typeof transformedValue === 'boolean') {
           builder.addFlag(rule.flag, transformedValue)
         } else {
@@ -197,12 +120,5 @@ export class CommandBuilder {
     }
 
     return builder.build(os)
-  }
-
-  static getValueFromPath(obj: any, path: string): any {
-    return path.split(".").reduce((current, key) => {
-      if (current === undefined) return undefined
-      return current[key]
-    }, obj)
   }
 }

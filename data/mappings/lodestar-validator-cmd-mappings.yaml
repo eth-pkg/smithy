@@ -16,83 +16,27 @@ rules:
   - configPath: validator.metricsEnabled
     flag: --metrics
     parent: --metrics
-  - configPath: todo
-    flag: --beaconNodes
-  - configPath: todo
-    flag: --force
   - configPath: validator.graffiti
     flag: --graffiti
   - configPath: validator.proposerConfigFile
     flag: --proposerSettingsFile
   - configPath: validator.feeRecipientAddress
     flag: --suggestedFeeRecipient
-  - configPath: todo
-    flag: --strictFeeRecipientCheck
   - configPath: validator.defaultGasLimit
     flag: --defaultGasLimit
-  - configPath: todo
-    flag: --useProduceBlockV3
-  - configPath: todo
-    flag: --broadcastValidation
-  - configPath: todo
-    flag: --blindedLocal
-  - configPath: todo
-    flag: --importKeystores
-  - configPath: todo
-    flag: --importKeystoresPassword
   - configPath: validator.doppelgangerProtection
     flag: --doppelgangerProtection
   - configPath: validator.distributed
     flag: --distributed
-  - configPath: todo
-    flag: --keymanager
-  - configPath: todo
-    flag: --keymanager.auth
-  - configPath: todo
-    flag: --keymanager.tokenFile
-  - configPath: todo
-    flag: --keymanager.port
-  - configPath: todo
-    flag: --keymanager.address
-  - configPath: todo
-    flag: --keymanager.cors
   - configPath: validator.builderEnabled
     flag: --builder
-  - configPath: todo
-    flag: --builder.selection
-  - configPath: todo
-    flag: --builder.boostFactor
-  - configPath: todo
-    flag: --http.requestWireFormat
-  - configPath: todo
-    flag: --http.responseWireFormat
   - configPath: validator.externalSignerUrl
     flag: --externalSigner.url
   - configPath: validator.externalSignerPublicKeys
     flag: --externalSigner.pubkeys
-  - configPath: todo
-    flag: --externalSigner.fetch
-  - configPath: todo
-    flag: --externalSigner.fetchInterval
-  - configPath: todo
-    flag: --monitoring.endpoint
-  - configPath: todo
-    flag: --monitoring.interval
-  - configPath: todo
-    flag: --paramsFile
-  - configPath: todo
-    flag: --rcConfig
-  - configPath: todo
-    flag: --terminal-total-difficulty-override
-  - configPath: todo
-    flag: --terminal-block-hash-override
-  - configPath: todo
-    flag: --terminal-block-hash-epoch-override
   - configPath: validator.logLevel
     flag: --logLevel
   - configPath: validator.logFile
     flag: --logFile
   - configPath: validator.logLevel
-    flag: --logFileLevel
-  - configPath: todo
-    flag: --logFileDailyRotate 
+    flag: --logFileLevel 

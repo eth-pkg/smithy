@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { PresetManager } from '@/utils/preset';
-import { NodeConfig, common, ExecutionClientName, ConsensusClientName, ValidatorClientName } from '@/lib/types';
+import { NodeConfig, Common, Consensus, Execution, Validator, ExecutionClientName, ConsensusClientName, ValidatorClientName } from '@/lib/types';
 
 interface NetworkConfig {
   network: string;
@@ -8,14 +8,14 @@ interface NetworkConfig {
   dataDir: string;
 }
 
-export const baseConfig: common = {
+export const baseConfig: Common = {
   engine: {
     enabled: true,
     port: 8551,
     communication: 'jwt',
     url: 'http://localhost:8551',
     host: 'localhost',
-    hostAllowlist: 'localhost',
+    allowlist: ['localhost'],
     ip: '127.0.0.1',
     jwtFile: '$HOME/ethereum/jwt.hex',
     scheme: 'http'
@@ -38,11 +38,49 @@ export const testConfig: NodeConfig = {
       version: ''
     },
     dataDir: '{common.dataDir}/{consensus.client.name}',
-    httpPort: 5052,
-    metricsPort: 8008,
-    p2pPort: 9000
+    http: {
+      enabled: false,
+      port: 5052,
+      apiPrefixes: ['eth', 'net', 'web3'],
+      allowlist: ['localhost']
+    },
+    metrics: {
+      enabled: false,
+      port: 8008
+    },
+    p2p: {
+      enabled: false,
+      maxPeers: 50,
+      port: 9000,
+      port6: 9001,
+      bootnodes: [],
+      enrAddress: '',
+      allowlist: ['localhost'],
+      denylist: []
+    },
+    ws: {
+      enabled: false,
+      port: 8546
+    },
+    checkpoint: {
+      enabled: false,
+      url: '',
+      block: '',
+      state: ''
+    },
+    graffiti: {
+      enabled: false,
+      message: 'test'
+    },
+    log: {
+      enabled: false,
+      file: '',
+      level: 'info',
+      format: 'json'
+    },
   },
   validator: {
+    isExternal: true,
     client: {
       name: 'prysm',
       version: ''
@@ -52,9 +90,47 @@ export const testConfig: NodeConfig = {
     beaconRpcProvider: 'http://localhost:5052',
     numValidators: 1,
     feeRecipientAddress: '0x0000000000000000000000000000000000000000',
-    metricsPort: '8080'
+    metrics: {
+      enabled: false,
+      port: 8080
+    },
+    graffiti: {
+      enabled: false,
+      message: 'test'
+    },
+    log: {
+      enabled: false,
+      file: '',
+      level: 'info',
+      format: 'json'
+    },
+    proposerConfig: {
+      enabled: false,
+      file: '',
+      refreshEnabled: false,
+      blindedBlocksEnabled: false,
+      refreshInterval: 0,
+      maxValidators: 0,
+      maxProposerDelay: 0,
+      maxProposerPriority: 0
+    },
+    distributed: false,
+    secretsDir: '',
+    validatorsDir: '',
+    builderEnabled: false,
+    externalSigner: {
+      enabled: false,
+      url: '',
+      keystore: '',
+      keystorePasswordFile: '',
+      publicKeys: [],
+      timeout: 5000,
+      truststore: '',
+      truststorePasswordFile: ''
+    },
   },
   execution: {
+    isExternal: true,
     client: {
       name: 'geth',
       version: ''
@@ -64,15 +140,21 @@ export const testConfig: NodeConfig = {
       enabled: true,
       port: 8545,
       apiPrefixes: ['eth', 'net', 'web3'],
-      cors: []
+      allowlist: ['localhost']
     },
     metrics: {
       enabled: true,
       port: 6060
     },
     p2p: {
+      enabled: true,
       maxPeers: 50,
-      port: 30303
+      port: 30303,
+      port6: 30304,
+      bootnodes: [],
+      enrAddress: '',
+      allowlist: ['localhost'],
+      denylist: []
     },
     ws: {
       enabled: true,
@@ -81,7 +163,7 @@ export const testConfig: NodeConfig = {
   }
 };
 
-export const createNetworkConfig = (config: NetworkConfig): { common: common } => ({
+export const createNetworkConfig = (config: NetworkConfig): { common: Common } => ({
   common: {
     ...baseConfig,
     network: config.network,

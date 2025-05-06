@@ -39,7 +39,7 @@ allOf:
   # =============================================
   # Besu Security Configuration Rules
   # =============================================
-  # Enforces strict security rules for Besu's hostAllowlist configuration:
+  # Enforces strict security rules for Besu's allowlist configuration:
   # - Prevents mixing wildcards (*) or 'all' with specific hosts
   # - This prevents accidental exposure by ensuring the allowlist is either:
   #   * Completely open (just '*' or 'all')
@@ -67,7 +67,7 @@ allOf:
             engine:
               type: object
               properties:
-                hostAllowlist:
+                allowlist:
                   not:
                     anyOf:
                       - type: string
@@ -79,7 +79,7 @@ allOf:
                       - type: string
                         pattern: ".*,.*all.*"
                   errorMessage:
-                    not: "When using Besu, hostAllowlist cannot contain '*' or 'all' combined with other values"
+                    not: "When using Besu, allowlist cannot contain '*' or 'all' combined with other values"
 
   # =============================================
   # Client Compatibility Rules

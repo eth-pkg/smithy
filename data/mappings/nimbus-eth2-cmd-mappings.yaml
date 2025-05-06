@@ -2,461 +2,399 @@ name: nimbus
 version: 24.1.0
 valueFormat: space
 rules:
-  - configPath: consensus.dataDir
-    flag: --data-dir
+  - flag: --agent-string
+    configPath: 
+    description: >
+      Node agent string which is used as identifier in network [=nimbus].
+  - flag: --bootstrap-node
+    configPath: 
+    description: >
+      Specifies one or more bootstrap nodes to use when connecting to the network.
+  - flag: --bootstrap-file
+    configPath: 
+    description: >
+      Specifies a line-delimited file of bootstrap Ethereum network addresses.
+  - flag: --data-dir
+    configPath: consensus.dataDir
     transform: interpolate
-  - configPath: common.network
-    flag: --network
-  - configPath: execution.p2p.port
-    flag: --port
-  - configPath: execution.p2p.maxPeers
-    flag: --maxpeers
-  - configPath: execution.http.enabled
-    flag: --http
-  - configPath: common.engine.host
-    flag: --http.addr
-    parent: --http
-  - configPath: execution.http.port
-    flag: --http.port
-    parent: --http
-  - configPath: execution.http.apiPrefixes
-    flag: --http.api
-    transform: joinComma
-    parent: --http
-  - configPath: execution.ws.enabled
-    flag: --ws
-  - configPath: execution.ws.port
-    flag: --ws.port
-    parent: --ws
-  - configPath: common.engine.jwtFile
-    flag: --jwtsecret
-    transform: formatPath
-  - configPath: common.engine.host
-    flag: --engine.host
-  - configPath: common.engine.port
-    flag: --engine.port
-  - configPath: execution.base.syncMode
-    flag: --syncmode
-    transform: syncMode
-  - configPath: execution.metrics.enabled
-    flag: --metrics
-  - configPath: execution.metrics.port
-    flag: --metrics.port
-    parent: --metrics
-  - configPath: execution.metrics.addr
-    flag: --metrics.host
-    parent: --metrics
-  - configPath: todo
-    flag: --ethash.dagdir
-  - configPath: todo
-    flag: --externalcl
-  - configPath: todo
-    flag: --txpool.disable
-  - configPath: todo
-    flag: --txpool.pricelimit
-  - configPath: todo
-    flag: --txpool.pricebump
-  - configPath: todo
-    flag: --txpool.blobpricebump
-  - configPath: todo
-    flag: --txpool.accountslots
-  - configPath: todo
-    flag: --txpool.blobslots
-  - configPath: todo
-    flag: --txpool.totalblobpoollimit
-  - configPath: todo
-    flag: --txpool.globalslots
-  - configPath: todo
-    flag: --txpool.globalbasefeeslots
-  - configPath: todo
-    flag: --txpool.globalqueue
-  - configPath: todo
-    flag: --txpool.trace.senders
-  - configPath: todo
-    flag: --txpool.commit.every
-  - configPath: todo
-    flag: --prune.distance
-  - configPath: todo
-    flag: --prune.distance.blocks
-  - configPath: todo
-    flag: --prune.mode
-  - configPath: todo
-    flag: --batchSize
-  - configPath: todo
-    flag: --bodies.cache
-  - configPath: todo
-    flag: --database.verbosity
-  - configPath: todo
-    flag: --private.api.addr
-  - configPath: todo
-    flag: --private.api.ratelimit
-  - configPath: todo
-    flag: --etl.bufferSize
-  - configPath: todo
-    flag: --tls
-  - configPath: todo
-    flag: --tls.cert
-  - configPath: todo
-    flag: --tls.key
-  - configPath: todo
-    flag: --tls.cacert
-  - configPath: todo
-    flag: --state.stream.disable
-  - configPath: todo
-    flag: --sync.loop.throttle
-  - configPath: todo
-    flag: --bad.block
-  - configPath: todo
-    flag: --http.compression
-  - configPath: todo
-    flag: --http.corsdomain
-  - configPath: todo
-    flag: --http.vhosts
-  - configPath: todo
-    flag: --authrpc.vhosts
-  - configPath: todo
-    flag: --http.trace
-  - configPath: todo
-    flag: --http.dbg.single
-  - configPath: todo
-    flag: --state.cache
-  - configPath: todo
-    flag: --rpc.batch.concurrency
-  - configPath: todo
-    flag: --rpc.streaming.disable
-  - configPath: todo
-    flag: --db.read.concurrency
-  - configPath: todo
-    flag: --rpc.accessList
-  - configPath: todo
-    flag: --trace.compat
-  - configPath: todo
-    flag: --rpc.gascap
-  - configPath: todo
-    flag: --rpc.batch.limit
-  - configPath: todo
-    flag: --rpc.returndata.limit
-  - configPath: todo
-    flag: --rpc.allow-unprotected-txs
-  - configPath: todo
-    flag: --rpc.txfeecap
-  - configPath: todo
-    flag: --txpool.api.addr
-  - configPath: todo
-    flag: --trace.maxtraces
-  - configPath: todo
-    flag: --experimental.commitment-history
-  - configPath: todo
-    flag: --http.timeouts.read
-  - configPath: todo
-    flag: --http.timeouts.write
-  - configPath: todo
-    flag: --http.timeouts.idle
-  - configPath: todo
-    flag: --authrpc.timeouts.read
-  - configPath: todo
-    flag: --authrpc.timeouts.write
-  - configPath: todo
-    flag: --authrpc.timeouts.idle
-  - configPath: todo
-    flag: --rpc.evmtimeout
-  - configPath: todo
-    flag: --rpc.overlay.getlogstimeout
-  - configPath: todo
-    flag: --rpc.overlay.replayblocktimeout
-  - configPath: todo
-    flag: --rpc.subscription.filters.maxlogs
-  - configPath: todo
-    flag: --rpc.subscription.filters.maxheaders
-  - configPath: todo
-    flag: --rpc.subscription.filters.maxtxs
-  - configPath: todo
-    flag: --rpc.subscription.filters.maxaddresses
-  - configPath: todo
-    flag: --rpc.subscription.filters.maxtopics
-  - configPath: todo
-    flag: --snap.keepblocks
-  - configPath: todo
-    flag: --snap.stop
-  - configPath: todo
-    flag: --snap.state.stop
-  - configPath: todo
-    flag: --snap.skip-state-snapshot-download
-  - configPath: todo
-    flag: --db.pagesize
-  - configPath: todo
-    flag: --db.size.limit
-  - configPath: todo
-    flag: --db.writemap
-  - configPath: todo
-    flag: --torrent.port
-  - configPath: todo
-    flag: --torrent.maxpeers
-  - configPath: todo
-    flag: --torrent.conns.perfile
-  - configPath: todo
-    flag: --torrent.download.slots
-  - configPath: todo
-    flag: --torrent.staticpeers
-  - configPath: todo
-    flag: --torrent.upload.rate
-  - configPath: todo
-    flag: --torrent.download.rate
-  - configPath: todo
-    flag: --torrent.verbosity
-  - configPath: todo
-    flag: --p2p.protocol
-  - configPath: todo
-    flag: --p2p.allowed-ports
-  - configPath: todo
-    flag: --nat
-  - configPath: todo
-    flag: --nodiscover
-  - configPath: todo
-    flag: --v5disc
-  - configPath: todo
-    flag: --netrestrict
-  - configPath: todo
-    flag: --nodekey
-  - configPath: todo
-    flag: --nodekeyhex
-  - configPath: todo
-    flag: --discovery.dns
-  - configPath: todo
-    flag: --bootnodes
-  - configPath: todo
-    flag: --staticpeers
-  - configPath: todo
-    flag: --trustedpeers
-  - configPath: todo
-    flag: --dev.period
-  - configPath: todo
-    flag: --vmdebug
-  - configPath: todo
-    flag: --networkid
-  - configPath: todo
-    flag: --experiment.persist.receipts
-  - configPath: todo
-    flag: --fakepow
-  - configPath: todo
-    flag: --gpo.blocks
-  - configPath: todo
-    flag: --gpo.percentile
-  - configPath: todo
-    flag: --allow-insecure-unlock
-  - configPath: todo
-    flag: --identity
-  - configPath: todo
-    flag: --clique.checkpoint
-  - configPath: todo
-    flag: --clique.snapshots
-  - configPath: todo
-    flag: --clique.signatures
-  - configPath: todo
-    flag: --clique.datadir
-  - configPath: todo
-    flag: --mine
-  - configPath: todo
-    flag: --proposer.disable
-  - configPath: todo
-    flag: --miner.notify
-  - configPath: todo
-    flag: --miner.gaslimit
-  - configPath: todo
-    flag: --miner.etherbase
-  - configPath: todo
-    flag: --miner.extradata
-  - configPath: todo
-    flag: --miner.noverify
-  - configPath: todo
-    flag: --miner.sigfile
-  - configPath: todo
-    flag: --miner.recommit
-  - configPath: todo
-    flag: --sentry.api.addr
-  - configPath: todo
-    flag: --sentry.log-peer-info
-  - configPath: todo
-    flag: --downloader.api.addr
-  - configPath: todo
-    flag: --downloader.disable.ipv4
-  - configPath: todo
-    flag: --downloader.disable.ipv6
-  - configPath: todo
-    flag: --no-downloader
-  - configPath: todo
-    flag: --downloader.verify
-  - configPath: todo
-    flag: --healthcheck
-  - configPath: todo
-    flag: --bor.heimdall
-  - configPath: todo
-    flag: --webseed
-  - configPath: todo
-    flag: --bor.withoutheimdall
-  - configPath: todo
-    flag: --bor.period
-  - configPath: todo
-    flag: --bor.minblocksize
-  - configPath: todo
-    flag: --bor.milestone
-  - configPath: todo
-    flag: --bor.waypoints
-  - configPath: todo
-    flag: --polygon.sync
-  - configPath: todo
-    flag: --polygon.sync.stage
-  - configPath: todo
-    flag: --ethstats
-  - configPath: todo
-    flag: --override.prague
-  - configPath: todo
-    flag: --caplin.discovery.addr
-  - configPath: todo
-    flag: --caplin.discovery.port
-  - configPath: todo
-    flag: --caplin.discovery.tcpport
-  - configPath: todo
-    flag: --caplin.checkpoint-sync-url
-  - configPath: todo
-    flag: --caplin.subscribe-all-topics
-  - configPath: todo
-    flag: --caplin.max-peer-count
-  - configPath: todo
-    flag: --caplin.enable-upnp
-  - configPath: todo
-    flag: --caplin.max-inbound-traffic-per-peer
-  - configPath: todo
-    flag: --caplin.max-outbound-traffic-per-peer
-  - configPath: todo
-    flag: --caplin.adaptable-maximum-traffic-requirements
-  - configPath: todo
-    flag: --sentinel.addr
-  - configPath: todo
-    flag: --sentinel.port
-  - configPath: todo
-    flag: --sentinel.bootnodes
-  - configPath: todo
-    flag: --sentinel.staticpeers
-  - configPath: todo
-    flag: --ots.search.max.pagesize
-  - configPath: todo
-    flag: --silkworm.exec
-  - configPath: todo
-    flag: --silkworm.rpc
-  - configPath: todo
-    flag: --silkworm.sentry
-  - configPath: todo
-    flag: --silkworm.verbosity
-  - configPath: todo
-    flag: --silkworm.contexts
-  - configPath: todo
-    flag: --silkworm.rpc.log
-  - configPath: todo
-    flag: --silkworm.rpc.log.maxsize
-  - configPath: todo
-    flag: --silkworm.rpc.log.maxfiles
-  - configPath: todo
-    flag: --silkworm.rpc.log.response
-  - configPath: todo
-    flag: --silkworm.rpc.workers
-  - configPath: todo
-    flag: --silkworm.rpc.compatibility
-  - configPath: todo
-    flag: --beacon.api
-  - configPath: todo
-    flag: --beacon.api.addr
-  - configPath: todo
-    flag: --beacon.api.cors.allow-methods
-  - configPath: todo
-    flag: --beacon.api.cors.allow-origins
-  - configPath: todo
-    flag: --beacon.api.cors.allow-credentials
-  - configPath: todo
-    flag: --beacon.api.port
-  - configPath: todo
-    flag: --beacon.api.read.timeout
-  - configPath: todo
-    flag: --beacon.api.write.timeout
-  - configPath: todo
-    flag: --beacon.api.protocol
-  - configPath: todo
-    flag: --beacon.api.ide.timeout
-  - configPath: todo
-    flag: --caplin.blocks-archive
-  - configPath: todo
-    flag: --caplin.blobs-archive
-  - configPath: todo
-    flag: --caplin.states-archive
-  - configPath: todo
-    flag: --caplin.blobs-immediate-backfill
-  - configPath: todo
-    flag: --caplin.blobs-no-pruning
-  - configPath: todo
-    flag: --caplin.checkpoint-sync.disable
-  - configPath: todo
-    flag: --caplin.snapgen
-  - configPath: todo
-    flag: --caplin.mev-relay-url
-  - configPath: todo
-    flag: --caplin.validator-monitor
-  - configPath: todo
-    flag: --caplin.custom-config
-  - configPath: todo
-    flag: --caplin.custom-genesis
-  - configPath: todo
-    flag: --trusted-setup-file
-  - configPath: todo
-    flag: --rpc.slow
-  - configPath: todo
-    flag: --txpool.gossip.disable
-  - configPath: todo
-    flag: --sync.loop.block.limit
-  - configPath: todo
-    flag: --sync.loop.break.after
-  - configPath: todo
-    flag: --sync.parallel-state-flushing
-  - configPath: todo
-    flag: --chaos.monkey
-  - configPath: todo
-    flag: --shutter
-  - configPath: todo
-    flag: --shutter.p2p.bootstrap.nodes
-  - configPath: todo
-    flag: --shutter.p2p.listen.port
-  - configPath: todo
-    flag: --polygon.pos.ssf
-  - configPath: todo
-    flag: --polygon.pos.ssf.block
-  - configPath: todo
-    flag: --pprof
-  - configPath: todo
-    flag: --pprof.addr
-  - configPath: todo
-    flag: --pprof.port
-  - configPath: todo
-    flag: --pprof.cpuprofile
-  - configPath: todo
-    flag: --trace
-  - configPath: todo
-    flag: --log.json
-  - configPath: todo
-    flag: --log.console.json
-  - configPath: todo
-    flag: --log.dir.json
-  - configPath: todo
-    flag: --verbosity
-  - configPath: todo
-    flag: --log.console.verbosity
-  - configPath: todo
-    flag: --log.dir.disable
-  - configPath: todo
-    flag: --log.dir.path
-  - configPath: todo
-    flag: --log.dir.prefix
-  - configPath: todo
-    flag: --log.dir.verbosity
-  - configPath: todo
-    flag: --log.delays
-  - configPath: todo
-    flag: --config 
+    description: >
+      The directory where nimbus will store all blockchain data.
+  - flag: --direct-peer
+    configPath: 
+    description: >
+      The list of privileged, secure and known peers to connect and maintain the connection to.
+      This requires a not random netkey-file. In the multiaddress format like:
+      /ip4/<address>/tcp/<port>/p2p/<peerId-public-key>, or enr format (enr:-xx).
+      Peering agreements are established out of band and must be reciprocal.
+  - flag: --discv5
+    configPath: 
+    description: >
+      Enable Discovery v5 [=true].
+  - flag: --doppelganger-detection
+    configPath: consensus.doppelgangerProtection
+    description: >
+      If enabled, the beacon node prudently listens for 2 epochs for attestations from a
+      validator with the same index (a doppelganger), before sending an attestation itself.
+      This protects against slashing (due to double-voting) but means you will miss two
+      attestations when restarting. [=true].
+  - flag: --dump
+    configPath: 
+    description: >
+      Write SSZ dumps of blocks, attestations and states to data dir [=false].
+  - flag: --el
+    configPath: 
+    description: >
+      One or more execution layer Engine API URLs.
+  - flag: --enr-auto-update
+    configPath: 
+    description: >
+      Discovery can automatically update its ENR with the IP address and UDP port as seen by
+      other nodes it communicates with. This option allows to enable/disable this
+      functionality [=false].
+  - flag: --external-beacon-api-url
+    configPath: consensus.checkpoint.url
+    description: >
+      External beacon API to use for syncing (on empty database).
+  - flag: --finalized-checkpoint-state
+    configPath: 
+    description: >
+      SSZ file specifying a recent finalized state.
+  - flag: --finalized-deposit-tree-snapshot
+    configPath: 
+    description: >
+      SSZ file specifying a recent finalized EIP-4881 deposit tree snapshot.
+  - flag: --genesis-state
+    configPath: 
+    description: >
+      SSZ file specifying the genesis state of the network (for networks without a built-in
+      genesis state).
+  - flag: --genesis-state-url
+    configPath: 
+    description: >
+      URL for obtaining the genesis state of the network (for networks without a built-in
+      genesis state).
+  - flag: --graffiti
+    configPath: consensus.graffiti.message
+    enabled: 
+      configPath: consensus.graffiti.enabled
+      transform: flagEnabled
+    description: >
+      The graffiti value that will appear in proposed blocks. You can use a 0x-prefixed hex
+      encoded string to specify raw bytes.
+  - flag: --hard-max-peers
+    configPath: 
+    description: >
+      The maximum number of peers to connect to. Defaults to maxPeers * 1.5.
+  - flag: --history
+    configPath: 
+    description: >
+      Retention strategy for historical data (archive/prune) [=HistoryMode.Prune].
+  - flag: --in-process-validators
+    configPath: 
+    description: >
+      Disable the push model (the beacon node tells a signing process with the private keys
+      of the validators what to sign and when) and load the validators in the beacon node
+      itself [=true].
+  - flag: --insecure-netkey-password
+    configPath: 
+    description: >
+      Use pre-generated INSECURE password for network private key file [=false].
+  - flag: --jwt-secret
+    configPath: common.engine.jwtFile
+    transform: interpolate
+    enabled:
+      configPath: common.engine.communication
+      transform: jwtEnabled
+    description: >
+      A file containing the hex-encoded 256 bit secret key to be used for verifying/generating
+      JWT tokens.
+  - flag: --keymanager
+    configPath: 
+    description: >
+      Enable the REST keymanager API [=false].
+  - flag: --keymanager-address
+    configPath: 
+    description: >
+      Listening port for the REST keymanager API [=127.0.0.1].
+  - flag: --keymanager-allow-origin
+    configPath: 
+    description: >
+      Limit the access to the Keymanager API to a particular hostname (for CORS-enabled
+      clients such as browsers).
+  - flag: --keymanager-port
+    configPath: 
+    description: >
+      Listening port for the REST keymanager API [=5052].
+  - flag: --keymanager-token-file
+    configPath: 
+    description: >
+      A file specifying the authorization token required for accessing the keymanager API.
+  - flag: --light-client-data-import-mode
+    configPath: 
+    description: >
+      Which classes of light client data to import. Must be one of: none, only-new, full
+      (slow startup), on-demand (may miss validator duties) [=only-new].
+  - flag: --light-client-data-max-periods
+    configPath: 
+    description: >
+      Maximum number of sync committee periods to retain light client data.
+  - flag: --light-client-data-serve
+    configPath: 
+    description: >
+      Serve data for enabling light clients to stay in sync with the network [=true].
+  - flag: --listen-address
+    configPath: consensus.p2p.enrAddress
+    description: >
+      Listening address for the Ethereum LibP2P and Discovery v5 traffic [=*].
+  - flag: --local-block-value-boost
+    configPath: 
+    description: >
+      Increase execution layer block values for builder bid comparison by a percentage [=10].
+  - flag: --log-file
+    configPath: consensus.log.file
+    enabled:
+      configPath: consensus.log.enabled
+      transform: flagEnabled
+    description: >
+      Specifies a path for the written JSON log file (deprecated).
+  - flag: --log-level
+    configPath: consensus.log.level 
+    enabled:
+      configPath: consensus.log.enabled
+      transform: flagEnabled
+    description: >
+      Sets the log level for process and topics (e.g. "DEBUG; TRACE:discv5,libp2p;
+      REQUIRED:none; DISABLED:none") [=INFO].
+  - flag: --max-peers
+    configPath: consensus.p2p.maxPeers
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: >
+      The target number of peers to connect to [=160].
+  - flag: --metrics
+    configPath: consensus.metrics.enabled
+    transform: flagEnabled
+    description: >
+      Enable the metrics server [=false].
+  - flag: --metrics-address
+    configPath: consensus.metrics.host
+    enabled:
+      configPath: consensus.metrics.enabled
+      transform: flagEnabled
+    description: >
+      Listening address of the metrics server [=127.0.0.1].
+  - flag: --metrics-port
+    configPath: consensus.metrics.port
+    enabled:
+      configPath: consensus.metrics.enabled
+      transform: flagEnabled
+    description: >
+      Listening HTTP port of the metrics server [=8008].
+  - flag: --nat
+    configPath: consensus.p2p.nat
+    description: >
+      Specify method to use for determining public address. Must be one of: any, none, upnp,
+      pmp, extip:<IP> [=any].
+  - flag: --netkey-file
+    configPath: 
+    description: >
+      Source of network (secp256k1) private key file (random|<path>) [=random].
+  - flag: --network
+    configPath: common.network
+    description: >
+      The Eth2 network to join [=mainnet].
+  - flag: --node-name
+    configPath: 
+    description: >
+      A name for this node that will appear in the logs. If you set this to 'auto', a
+      persistent automatically generated ID will be selected for each --data-dir folder.
+  - flag: --no-el
+    configPath: 
+    description: >
+      Don't use an EL. The node will remain optimistically synced and won't be able to
+      perform validator duties [=false].
+  - flag: --non-interactive
+    configPath: 
+    description: >
+      Do not display interactive prompts. Quit on missing configuration.
+  - flag: --num-threads
+    configPath: 
+    description: >
+      Number of worker threads ("0" = use as many threads as there are CPU cores available)
+      [=0].
+  - flag: --payload-builder
+    configPath: consensus.builder
+    description: >
+      Enable external payload builder [=false].
+  - flag: --payload-builder-url
+    configPath: 
+    description: >
+      Payload builder URL.
+  - flag: --proven-block-property
+    configPath: 
+    description: >
+      The field path of a block property that will be sent for verification to the verifying
+      Web3Signer (for example ".execution_payload.fee_recipient").
+  - flag: --rest
+    configPath: consensus.http.enabled
+    transform: flagEnabled
+    description: >
+      Enable the REST server [=false].
+  - flag: --rest-address
+    configPath: consensus.http.address
+    enabled:
+      configPath: consensus.http.enabled
+      transform: flagEnabled
+    description: >
+      Listening address of the REST server [=127.0.0.1].
+  - flag: --rest-allow-origin
+    configPath: consensus.http.allowlist
+    enabled:
+      configPath: consensus.http.enabled
+      transform: flagEnabled
+    description: >
+      Limit the access to the REST API to a particular hostname (for CORS-enabled clients
+      such as browsers).
+  - flag: --rest-max-body-size
+    configPath: 
+    enabled:
+      configPath: consensus.http.enabled
+      transform: flagEnabled
+    description: >
+      Maximum size of REST request body (kilobytes) [=16384].
+  - flag: --rest-max-headers-size
+    configPath: 
+    enabled:
+      configPath: consensus.http.enabled
+      transform: flagEnabled
+    description: >
+      Maximum size of REST request headers (kilobytes) [=128].
+  - flag: --rest-port
+    configPath: consensus.http.port
+    enabled:
+      configPath: consensus.http.enabled
+      transform: flagEnabled
+    description: >
+      Port for the REST server [=5052].
+  - flag: --rest-request-timeout
+    configPath: 
+    enabled:
+      configPath: consensus.http.enabled
+      transform: flagEnabled
+    description: >
+      The number of seconds to wait until complete REST request will be received [=infinite].
+  - flag: --rest-statecache-size
+    configPath: 
+    enabled:
+      configPath: consensus.http.enabled
+      transform: flagEnabled
+    description: >
+      The maximum number of recently accessed states that are kept in memory. Speeds up
+      requests obtaining information for consecutive slots or epochs. [=3].
+  - flag: --rest-statecache-ttl
+    configPath: 
+    enabled:
+      configPath: consensus.http.enabled
+      transform: flagEnabled
+    description: >
+      The number of seconds to keep recently accessed states in memory [=60].
+  - flag: --secrets-dir
+    configPath: consensus.secretsDir
+    description: >
+      A directory containing validator keystore passwords.
+  - flag: --status-bar
+    configPath: 
+    description: >
+      Display a status bar at the bottom of the terminal screen [=true].
+  - flag: --status-bar-contents
+    configPath: 
+    description: >
+      Textual template for the contents of the status bar.
+  - flag: --subscribe-all-subnets
+    configPath: 
+    description: >
+      Subscribe to all subnet topics when gossiping [=false].
+  - flag: --suggested-fee-recipient
+    configPath: consensus.suggestedFeeRecipient
+    description: >
+      Suggested fee recipient.
+  - flag: --suggested-gas-limit
+    configPath: consensus.suggestedGasLimit
+    description: >
+      Suggested gas limit [=defaultGasLimit].
+  - flag: --sync-light-client
+    configPath: 
+    description: >
+      Accelerate sync using light client [=true].
+  - flag: --tcp-port
+    configPath: consensus.p2p.port
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: >
+      Listening TCP port for Ethereum LibP2P traffic [=9000].
+  - flag: --trusted-block-root
+    configPath: consensus.checkpoint.block
+    description: >
+      Recent trusted finalized block root to sync from external beacon API (with
+      `--external-beacon-api-url`). Uses the light client sync protocol to obtain the latest
+      finalized checkpoint (LC is initialized from trusted block root).
+  - flag: --trusted-state-root
+    configPath: consensus.checkpoint.state
+    description: >
+      Recent trusted finalized state root to sync from external beacon API (with
+      `--external-beacon-api-url`).
+  - flag: --udp-port
+    configPath: consensus.p2p.udpPort
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: >
+      Listening UDP port for node discovery [=9000].
+  - flag: --validator-monitor-auto
+    configPath: consensus.validatorMonitorFile
+    description: >
+      Monitor validator activity automatically for validators active on this beacon node
+      [=true].
+  - flag: --validator-monitor-details
+    configPath: consensus.validatorMonitorFile
+    description: >
+      Publish detailed metrics for each validator individually - may incur significant
+      overhead with large numbers of validators [=false].
+  - flag: --validator-monitor-pubkey
+    configPath: consensus.validatorMonitorFile
+    description: >
+      One or more validators to monitor - works best when --subscribe-all-subnets is enabled.
+  - flag: --validators-dir
+    configPath: consensus.validatorsDir
+    description: >
+      A directory containing validator keystores.
+  - flag: --verifying-web3-signer-url
+    configPath: 
+    description: >
+      Remote Web3Signer URL that will be used as a source of validators.
+  - flag: --weak-subjectivity-checkpoint
+    configPath: consensus.checkpoint.enabled
+    description: >
+      Weak subjectivity checkpoint in the format block_root:epoch_number.
+  - flag: --web3-signer-update-interval
+    configPath: 
+    description: >
+      Number of seconds between validator list updates [=3600].
+  - flag: --web3-signer-url
+    configPath: 
+    description: >
+      Remote Web3Signer URL that will be used as a source of validators.
+  - flag: --web3-url
+    configPath: common.engine.url
+    transform: interpolate
+    enabled:
+      configPath: common.engine.communication
+      transform: jwtEnabled
+    description: >
+      One or more execution layer Engine API URLs.
+  - flag: --wallets-dir
+    configPath: consensus.walletsDir
+    description: >
+      A directory containing wallet files. 

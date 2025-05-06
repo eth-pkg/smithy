@@ -128,6 +128,7 @@ try {
 Below is the core JSON schema structure for Smithy configurations, excluding validation rules and defaults for brevity. Currently, only `engine`, `dataDir`, and `client` names are mapped to client-specific flags, with other fields as work in progress.
 
 ```yaml
+$id: base.yml
 type: object
 required:
   - common
@@ -135,39 +136,87 @@ properties:
   common:
     type: object
     properties:
+      acceptTermsOfUse:
+        type: boolean
+        description: "Accept the terms of use"
       dataDir:
         type: string
+        description: "Base directory for storing Ethereum client data"
       engine:
         type: object
         properties:
           enabled:
             type: boolean
+            description: "Enable the Engine API"
           port:
             type: number
+            minimum: 1024
+            maximum: 65535
+            description: "Port number for the Engine API"
           communication:
             type: string
+            enum:
+              - jwt
+              - ipc
+            description: "Authentication method for Engine API communication"
           url:
             type: string
+            description: "URL for the Engine API endpoint"
           host:
             type: string
-          hostAllowlist:
-            type: string
+            description: "Hostname for the Engine API"
+          allowlist:
+            type: array
+            items:
+              type: string
+            description: "Allowed hostnames for the Engine API"
           ip:
             type: string
+            pattern: "^\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}$"
+            description: "IP address for the Engine API"
+          jwtId:
+            type: string
+            description: "JWT claims id for client identification"
           jwtFile:
             type: string
+            description: "Path to the JWT secret file for Engine API authentication"
           scheme:
             type: string
+            enum:
+              - http
+              - https
+            description: "Protocol scheme for Engine API communication"
           ipcPath:
             type: string
+            description: "Path to the IPC file for Engine API communication"
       network:
         type: string
+        enum:
+          - mainnet
+          - sepolia
+          - holesky
+          - hoodi
+          - ephemery
+          - custom
+        description: "Ethereum network to connect to"
       networkId:
         type: number
+        minimum: 1
+        description: "The Ethereum network ID (1 for mainnet, 11155111 for sepolia, etc.)"
       operatingSystem:
         type: string
+        enum:
+          - linux
+          - darwin
+          - windows
+        description: "Target operating system for client configuration"
       syncMode:
         type: string
+        enum:
+          - snap
+          - full
+          - light
+        description: "Blockchain synchronization mode"
   execution:
     type: object
     required: [client]
@@ -178,46 +227,118 @@ properties:
         properties:
           name:
             type: string
+            enum:
+              - besu
+              - erigon
+              - geth
+              - nethermind
+              - reth
+            description: "The execution client implementation to use"
           version:
             type: string
+            description: "The version of the execution client to use"
+      isExternal:
+        type: boolean
+        description: "Is the consensus client external to the node, in different process"
       http:
         type: object
         properties:
-          apiPrefixes:
-            type: array
-            items:
-              type: string
-          cors:
-            type: array
-            items:
-              type: string
           enabled:
             type: boolean
+            description: "Enable HTTP JSON-RPC API"
+          api:
+            type: array
+            minItems: 1
+            description: "List of JSON-RPC API namespaces to enable"
+            items:
+              type: string
+          address:
+            type: string
+          allowlist:
+            type: array
+            description: "List of allowed CORS origins for HTTP API"
+            items:
+              type: string
           port:
             type: number
+            minimum: 1024
+            maximum: 65535
+            description: "Port number for HTTP JSON-RPC API"
+          tls:
+            type: object
+            properties:
+              enabled:
+                type: boolean
+                description: "Enable TLS for HTTP JSON-RPC API"
+              cert:
+                type: string
+                description: "Path to the TLS certificate file"
+              key:
+                type: string
       metrics:
         type: object
         properties:
           enabled:
             type: boolean
+            description: "Enable metrics collection and reporting"
           port:
             type: number
+            minimum: 1024
+            maximum: 65535
+            description: "Port number for metrics server"
       p2p:
         type: object
         properties:
           maxPeers:
             type: number
+            minimum: 1
+            maximum: 1000
+            description: "Maximum number of P2P peers to connect to"
           port:
             type: number
+            minimum: 1024
+            maximum: 65535
+            description: "Port number for P2P networking"
+          bootnodes:
+            type: array
+            items:
+              type: string
+            description: "List of bootnode enode URLs for initial peer discovery"
+          enrAddress:
+            type: string
+            description: "ENR (Ethereum Node Record) address to advertise"
+          udpPort:
+            type: number
+            minimum: 1024
+            maximum: 65535
+            description: "Port number for P2P networking"
+          relayNode:
+            type: string
+            description: "Relay node address for P2P networking"
+          allowlist:
+            type: array
+            items:
+              type: string
+            description: "List of allowed CORS origins for P2P networking"
+          denylist:
+            type: array
+            items:
+              type: string
+            description: "List of denied CORS origins for P2P networking"
       ws:
         type: object
         properties:
           enabled:
             type: boolean
+            description: "Enable WebSocket JSON-RPC API"
           port:
             type: number
+            minimum: 1024
+            maximum: 65535
+            description: "Port number for WebSocket JSON-RPC API"
       dataDir:
         type: string
+        description: "Base directory for execution client data"
   consensus:
     type: object
     required: [client]
@@ -228,111 +349,433 @@ properties:
         properties:
           name:
             type: string
+            enum:
+              - lighthouse
+              - lodestar
+              - nimbus-eth2
+              - prysm
+              - teku
+            description: "The consensus client implementation to use"
           version:
             type: string
-      httpPort:
-        type: number
-      metricsPort:
-        type: number
-      p2pPort:
-        type: number
-      checkpointSyncUrl:
-        type: string
-      checkpointBlock:
-        type: string
-      checkpointState:
-        type: string
+            description: "The version of the consensus client to use"
+      http:
+        type: object
+        properties:
+          enabled:
+            type: boolean
+            description: "Enable HTTP JSON-RPC API"
+          api:
+            type: array
+            minItems: 1
+            description: "List of JSON-RPC API namespaces to enable"
+            items:
+              type: string
+          address:
+            type: string
+          allowlist:
+            type: array
+            description: "List of allowed CORS origins for HTTP API"
+            items:
+              type: string
+          port:
+            type: number
+            minimum: 1024
+            maximum: 65535
+            description: "Port number for HTTP JSON-RPC API"
+      metrics:
+        type: object
+        properties:
+          enabled:
+            type: boolean
+            description: "Enable metrics collection and reporting"
+          host:
+            type: string
+            description: "IP address to bind the metrics server to"
+          port:
+            type: number
+            minimum: 1024
+            maximum: 65535
+            description: "Port number for metrics server of the consensus client"
+      p2p:
+        type: object
+        properties:
+          enabled:
+            type: boolean
+            description: "Enable P2P networking of the consensus client"
+          port:
+            type: number
+            minimum: 1024
+            maximum: 65535
+            description: "Port number for P2P networking of the consensus client"
+          port6:
+            type: number
+            minimum: 1024
+            maximum: 65535
+            description: "IPv6 P2P port number (0 to disable IPv6)"    
+          udpPort:
+            type: number
+            minimum: 1024
+            maximum: 65535
+            description: "Port number for P2P networking of the consensus client"
+          bootnodes:
+            type: array
+            items:
+              type: string
+            description: "List of bootnode enode URLs for initial peer discovery"
+          enrAddress:
+            type: string
+            description: "ENR (Ethereum Node Record) address to advertise"    
+      ws: 
+        type: object
+        properties:
+          enabled:
+            type: boolean
+            description: "Enable WebSocket JSON-RPC API"
+          port:
+            type: number
+            minimum: 1024
+            maximum: 65535
+            description: "Port number for WebSocket JSON-RPC API"
+      checkpoint:
+        type: object
+        properties:
+          enabled:
+            type: boolean
+            description: "Enable checkpoint sync"
+          url:
+            type: string
+            description: "URL of a trusted beacon node for checkpoint sync"
+          block:
+            type: string
+            description: "Block root hash to use for checkpoint sync"
+          state:
+            type: string
+            description: "State root hash to use for checkpoint sync"
+          weakSubjectivity:
+            type: string
+            description: "Weak subjectivity checkpoint to use for checkpoint sync"
       graffiti:
-        type: string
-      logFile:
-        type: string
-      logFormat:
-        type: string
-      metricsAddress:
-        type: string
-      monitoringEndpoint:
-        type: string
-      bootnodes:
-        type: array
-        items:
-          type: string
-      enrAddress:
-        type: string
-      port6:
-        type: number
-      discoveryPort:
-        type: number
+        type: object
+        properties:
+          enabled:
+            type: boolean
+            description: "Enable graffiti on proposed blocks"
+          message:
+            type: string
+            description: "Custom graffiti message to include in proposed blocks"
+          file:
+            type: string
+            description: "Path to file containing graffiti messages"
+      log: 
+        type: object
+        properties:
+          enabled:
+            type: boolean
+            description: "Enable logging of the consensus client"
+          file:
+            type: string
+            description: "Path to store consensus client logs"
+          format:
+            type: string
+            enum:
+              - auto
+              - json
+              - plain
       testnetDir:
         type: string
+        description: "Path to testnet configuration directory"
       validatorMonitorFile:
         type: string
+        description: "Path to file for validator monitoring data"
       builder:
-        type: boolean
+        type: object
+        properties:
+          enabled:
+            type: boolean
+            description: "Enable block builder API for MEV"
+          url:
+            type: string
+            description: "URL for the block builder API"
       dataDir:
         type: string
+        description: "Base directory for consensus client data"
   validator:
     type: object
     properties:
       enabled:
         type: boolean
+        description: "Enable validator functionality"
+      isExternal:
+        type: boolean
+        description: "Is the validator external to the node, in different process"
       client:
         type: object
         required: [name]
         properties:
           name:
             type: string
+            enum:
+              - lighthouse
+              - lodestar
+              - nimbus-eth2
+              - prysm
+              - teku
+              - ""
+            description: "The validator client implementation to use"
           version:
             type: string
+            description: "The version of the validator client to use"
       dataDir:
         type: string
+        description: "Base directory for validator data"
       beaconRpcProvider:
         type: string
+        description: "Beacon node RPC endpoint (host:port)"
       numValidators:
         type: number
+        minimum: 1
+        description: "Number of validators to run"
       feeRecipientAddress:
         type: string
-      metricsPort:
-        type: string
-      graffiti:
-        type: string
-      graffitiFile:
-        type: string
-      proposerConfigFile:
-        type: string
+        description: "Ethereum address to receive transaction fees"
+      metrics:
+        type: object
+        properties:
+          enabled:
+            type: boolean
+            description: "Enable validator metrics collection"  
+          host:
+            type: string
+            description: "IP address to bind the metrics server to"
+          port:
+            type: number
+            minimum: 1024
+      graffiti: 
+        type: object
+        properties:
+          enabled:
+            type: boolean
+            description: "Enable graffiti on proposed blocks"
+          message:
+            type: string
+            description: "Custom graffiti message to include in proposed blocks"
+          file:
+            type: string
+            description: "Path to file containing graffiti messages"
       suggestedGasLimit:
         type: number
+        description: "Suggested gas limit for proposed blocks"
       doppelgangerProtection:
         type: boolean
+        description: "Enable protection against duplicate validator instances"
       builderEnabled:
         type: boolean
-      externalSignerUrl:
-        type: string
-      externalSignerKeystore:
-        type: string
-      externalSignerKeystorePasswordFile:
-        type: string
-      externalSignerPublicKeys:
-        type: array
-        items:
-          type: string
-      externalSignerTimeout:
-        type: number
-      externalSignerTruststore:
-        type: string
-      externalSignerTruststorePasswordFile:
-        type: string
-      proposerBlindedBlocksEnabled:
-        type: boolean
-      proposerConfigRefreshEnabled:
-        type: boolean
-      metricsEnabled:
-        type: boolean
+        description: "Enable block builder API"
+      externalSigner:
+        type: object
+        properties:
+          enabled:
+            type: boolean
+            description: "Enable external signer"
+          url:
+            type: string
+            description: "URL for external signer service"
+          keystore:
+            type: string
+            description: "Path to external signer keystore"
+          keystorePasswordFile:
+            type: string
+            description: "Path to file containing external signer keystore password"
+          publicKeys:
+            type: array
+            items:
+              type: string
+            description: "List of public keys for external signer"
+          timeout:
+            type: number
+            description: "Timeout in milliseconds for external signer requests"
+          truststore:
+            type: string
+            description: "Path to external signer truststore"
+          truststorePasswordFile:
+            type: string
+            description: "Path to file containing external signer truststore password"
+      proposerConfig:
+        type: object
+        properties:
+          enabled:
+            type: boolean
+            description: "Enable proposer configuration"
+          file:
+            type: string
+            description: "Path to proposer configuration file"
+          refreshEnabled:
+            type: boolean
+            description: "Enable refresh of proposer configuration"
+          blindedBlocksEnabled:
+            type: boolean
+            description: "Enable blinded block proposals"
+          refreshInterval:
+            type: number
+            description: "Refresh interval for proposer configuration"
+          maxValidators:
+            type: number
+            description: "Maximum number of validators"
+          maxProposerDelay:
+            type: number
+            description: "Maximum proposer delay"
       validatorsDir:
         type: string
+        description: "Directory containing validator keys"
       secretsDir:
         type: string
+        description: "Directory containing validator secrets"
       distributed:
         type: boolean
+        description: "Enable distributed validator mode"
+```
+
+And as an overridable config file 
+```yaml 
+common:
+  acceptTermsOfUse: false
+  dataDir: "{HOME}/{common.network}"
+  engine:
+    enabled: true
+    port: 8551
+    communication: "jwt"
+    url: "{common.engine.scheme}://{common.engine.host}:{common.engine.port}"
+    host: "localhost"
+    allowlist: ["localhost"]
+    ip: "127.0.0.1"
+    jwtId: ""
+    jwtFile: "{common.dataDir}/jwt.hex"
+    scheme: "http"
+    ipcPath: "{common.dataDir}/engine.ipc"
+  network: "mainnet"
+  networkId: 1
+  operatingSystem: "linux"
+  syncMode: "snap"
+
+execution:
+  client:
+    name: ""  # Required, no default
+    version: ""
+  isExternal: true
+  http:
+    enabled: true
+    api: ["eth", "net", "web3"]
+    address: "localhost"
+    allowlist: ["*"]
+    port: 8545
+    tls:
+      enabled: false
+      cert: ""
+      key: ""
+  metrics:
+    enabled: true
+    port: 6060
+  p2p:
+    maxPeers: 50
+    port: 30303
+    bootnodes: []
+    enrAddress: ""
+    udpPort: 30303
+    relayNode: ""
+    allowlist: ["*"]
+    denylist: []
+  ws:
+    enabled: false
+    port: 8546
+  dataDir: "{common.dataDir}/{execution.client.name}"
+
+consensus:
+  client:
+    name: ""  # Required, no default
+    version: ""
+  http:
+    enabled: false
+    api: ["eth", "net", "web3"]
+    address: "localhost"
+    allowlist: ["*"]
+    port: 8545
+  metrics:
+    enabled: false
+    host: "127.0.0.1"
+    port: 8008
+  p2p:
+    enabled: true
+    port: 9000
+    port6: 9000
+    udpPort: 9000
+    bootnodes: []
+    enrAddress: ""
+  ws:
+    enabled: false
+    port: 8546
+  checkpoint:
+    enabled: false
+    url: ""
+    block: ""
+    state: ""
+    weakSubjectivity: ""
+  graffiti:
+    enabled: true
+    message: ""
+    file: ""
+  log:
+    enabled: true
+    file: ""
+    format: "auto"
+  testnetDir: ""
+  validatorMonitorFile: ""
+  builder:
+    enabled: false
+    url: ""
+  dataDir: "{common.dataDir}/{consensus.client.name}"
+
+validator:
+  enabled: false
+  isExternal: true
+  client:
+    name: ""
+    version: ""
+  dataDir: "{common.dataDir}/{validator.client.name}-validator"
+  beaconRpcProvider: "localhost:5052"
+  numValidators: 1
+  feeRecipientAddress: "0x0000000000000000000000000000000000000000"
+  metrics:
+    enabled: true
+    host: "127.0.0.1"
+    port: null  # Default not specified in the schema
+  graffiti:
+    enabled: true
+    message: ""
+    file: ""
+  suggestedGasLimit: 30000000
+  doppelgangerProtection: true
+  builderEnabled: false
+  externalSigner:
+    enabled: false
+    url: ""
+    keystore: ""
+    keystorePasswordFile: ""
+    publicKeys: []
+    timeout: 5000
+    truststore: ""
+    truststorePasswordFile: ""
+  proposerConfig:
+    enabled: false
+    file: ""
+    refreshEnabled: false
+    blindedBlocksEnabled: false
+    refreshInterval: 0
+    maxValidators: 1000000
+    maxProposerDelay: 0
+  validatorsDir: "$HOME/ethereum/validator/keys"
+  secretsDir: "$HOME/ethereum/validator/secrets"
+  distributed: false
 ```
 
 ## Supported Schema Fields
