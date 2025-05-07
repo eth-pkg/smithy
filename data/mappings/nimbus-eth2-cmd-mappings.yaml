@@ -100,10 +100,10 @@ rules:
     description: >
       Use pre-generated INSECURE password for network private key file [=false].
   - flag: --jwt-secret
-    configPath: common.engine.jwtFile
+    configPath: common.engine.communication.jwt.file
     transform: interpolate
     enabled:
-      configPath: common.engine.communication
+      configPath: common.engine.communication.method
       transform: jwtEnabled
     description: >
       A file containing the hex-encoded 256 bit secret key to be used for verifying/generating
@@ -201,7 +201,7 @@ rules:
     description: >
       Source of network (secp256k1) private key file (random|<path>) [=random].
   - flag: --network
-    configPath: common.network
+    configPath: common.network.name   
     description: >
       The Eth2 network to join [=mainnet].
   - flag: --node-name
@@ -387,10 +387,10 @@ rules:
     description: >
       Remote Web3Signer URL that will be used as a source of validators.
   - flag: --web3-url
-    configPath: common.engine.url
+    configPath: common.engine.api.url
     transform: interpolate
     enabled:
-      configPath: common.engine.communication
+      configPath: common.engine.communication.method
       transform: jwtEnabled
     description: >
       One or more execution layer Engine API URLs.

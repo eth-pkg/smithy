@@ -5,32 +5,32 @@ rules:
   - configPath: execution.dataDir
     flag: --datadir
     transform: interpolate
-  - configPath: common.network
+  - configPath: common.network.name
     flag: --chain
-  - configPath: common.networkId
+  - configPath: common.network.id
     flag: --networkid
-  - configPath: common.engine.host
+  - configPath: common.engine.api.host
     flag: --authrpc.addr
     enabled:
-      configPath: common.engine.communication
+      configPath: common.engine.communication.method
       transform: jwtEnabled
-  - configPath: common.engine.port
+  - configPath: common.engine.api.port
     flag: --authrpc.port
     enabled:
-      configPath: common.engine.communication
+      configPath: common.engine.communication.method
       transform: jwtEnabled
-  - configPath: common.engine.allowlist
+  - configPath: common.engine.api.allowlist
     flag: --authrpc.vhosts
     transform: allowlist
     enabled:
-      configPath: common.engine.communication
+      configPath: common.engine.communication.method
       transform: jwtEnabled
   - configPath: execution.isExternal
     flag: --externalcl  
     transform: flagEnabled
-  - configPath: common.engine.jwtFile
+  - configPath: common.engine.communication.jwt.file
     flag: --authrpc.jwtsecret
     transform: interpolate
     enabled: 
-      configPath: common.engine.communication
+      configPath: common.engine.communication.method
       transform: jwtEnabled

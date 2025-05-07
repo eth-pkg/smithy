@@ -31,10 +31,6 @@ export type ConsensusClientName = Prysm | Lighthouse | Teku | NimbusEth2 | Lodes
 export type ValidatorClientName = Prysm | Lighthouse | Teku | NimbusEth2 | Lodestar
 export type ClientName = ExecutionClientName | ConsensusClientName | ValidatorClientName
 
-// Common Configuration Interfaces
-export interface EngineBaseConfig {
-  enabled: boolean
-}
 
 export interface HttpConfig {
   apiPrefixes: string[]
@@ -107,14 +103,17 @@ export interface ExternalSignerConfig {
   truststorePasswordFile: string
 }
 
+export interface NetworkConfig {
+  name: NetworkName
+  id: number
+}
+
 // Main Configuration Interfaces
 export interface Common {
-  networkId: number
   dataDir: string
   engine: EngineConfig
-  network: NetworkName
+  network: NetworkConfig
   operatingSystem: OperatingSystem
-  syncMode: SyncMode
 }
 
 export interface Consensus {
@@ -176,32 +175,28 @@ export interface NodeConfig {
   execution: Execution
 }
 
-// Engine Configuration Types
-export type EngineConfigWithJwt = EngineBaseConfig & {
-  communication: "jwt"
-  jwtFile: string
-  ipcPath?: never
-  scheme: EngineScheme
-  host: string
-  port: number
-  url: string
-  ip: string
-  allowlist: string[]
-}
 
-export type EngineConfigWithIpc = EngineBaseConfig & {
-  communication: "ipc"
-  ipcPath: string
-  jwtFile?: never
-  scheme?: never
-  host?: never
-  port?: never
-  url?: never
-  ip?: never
-  allowlist?: never
+export type EngineConfig = {
+  enabled: boolean
+  communication: {
+    method: Communication
+    jwt: {
+      file: string
+      id: string
+    }
+    ipc: {
+      path: string
+    }
+  }
+  api: {
+    scheme: EngineScheme,
+    host: string
+    port: number
+    url: string
+    ip: string
+    allowlist: string[]
+  }
 }
-
-export type EngineConfig = EngineConfigWithJwt | EngineConfigWithIpc
 
 // Generation Options
 export interface GenerateOptions {

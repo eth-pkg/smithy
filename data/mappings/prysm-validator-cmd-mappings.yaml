@@ -2,19 +2,19 @@ name: prysm-validator
 version: 6.0.0
 valueFormat: space
 rules:
-  - configPath: common.network
+  - configPath: common.network.name
     flag: --mainnet
     transform: network
-  - configPath: common.network
+  - configPath: common.network.name
     flag: --sepolia
     transform: network
-  - configPath: common.network
+  - configPath: common.network.name
     flag: --holesky
     transform: network
-  - configPath: common.network
+  - configPath: common.network.name
     flag: --ephemery
     transform: network
-  - configPath: common.network
+  - configPath: common.network.name 
     flag: --hoodi
     transform: network
   - configPath: validator.dataDir

@@ -399,7 +399,7 @@ rules:
       Timeout in milliseconds for execution engine API HTTP client requests.
 
   - flag: --execution.urls
-    configPath: common.engine.url
+    configPath: common.engine.api.url
     transform: interpolate
     description: >-
       URLs to execution client engine API endpoints.
@@ -536,13 +536,19 @@ rules:
       Ignore checkpoint sync state failing weak subjectivity check (not recommended for mainnet).
 
   - flag: --jwtId
-    configPath:
+    configPath: common.engine.communication.jwt.id
+    enabled:
+      configPath: common.engine.communication.method
+      transform: jwtEnabled
     description: >-
       Optional identifier for JWT tokens used in execution client authentication.
 
-  - flag: --jwtsecret
-    configPath: common.engine.jwtFile
+  - flag: --jwtSecret
+    configPath: common.engine.communication.jwt.file
     transform: interpolate
+    enabled:
+      configPath: common.engine.communication.method
+      transform: jwtEnabled
     description: >-
       Path to JWT secret file for authenticating with execution client.
 
@@ -714,12 +720,12 @@ rules:
       Enable NAT port mapping for better connectivity behind routers.
 
   - flag: --network
-    configPath: common.network
+    configPath: common.network.name
     description: >-
       Ethereum network to connect to (mainnet, sepolia, holesky, etc).
 
   - flag: --networkid
-    configPath:
+    configPath: common.network.id
     description: >-
       Ethereum network ID.
 

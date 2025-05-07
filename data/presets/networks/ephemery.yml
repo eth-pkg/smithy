@@ -7,15 +7,20 @@ properties:
     type: object
     required:
       - network
-      - networkId
     properties:
       network:
-        type: string
-        const: ephemery
-        errorMessage:
-          const: "Network must be set to 'ephemery'"
-      networkId:
-        type: number
-        const: 31337
-        errorMessage:
-          const: "Network ID must be set to 31337" 
+        type: object
+        required:
+          - name
+          - id
+        properties:
+          name:
+            type: string
+            const: ephemery
+            errorMessage:
+              const: "Network must be set to 'ephemery'"
+          id:
+            type: number
+            const: 31337
+            errorMessage:
+              const: "Network ID must be set to 31337" 

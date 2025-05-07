@@ -154,11 +154,19 @@ properties:
             maximum: 65535
             description: "Port number for the Engine API"
           communication:
-            type: string
-            enum:
-              - jwt
-              - ipc
-            description: "Authentication method for Engine API communication"
+            type: object
+            method:
+              type: string
+              enum:
+                - jwt
+                - ipc
+              description: "Authentication method for Engine API communication"
+            jwtId:
+              type: string
+              description: "JWT claims id for client identification"
+            jwtFile:
+              type: string
+              description: "Path to the JWT secret file for Engine API authentication"  
           url:
             type: string
             description: "URL for the Engine API endpoint"
@@ -174,12 +182,7 @@ properties:
             type: string
             pattern: "^\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}$"
             description: "IP address for the Engine API"
-          jwtId:
-            type: string
-            description: "JWT claims id for client identification"
-          jwtFile:
-            type: string
-            description: "Path to the JWT secret file for Engine API authentication"
+       
           scheme:
             type: string
             enum:
@@ -190,19 +193,21 @@ properties:
             type: string
             description: "Path to the IPC file for Engine API communication"
       network:
-        type: string
-        enum:
-          - mainnet
-          - sepolia
-          - holesky
-          - hoodi
-          - ephemery
-          - custom
-        description: "Ethereum network to connect to"
-      networkId:
-        type: number
-        minimum: 1
-        description: "The Ethereum network ID (1 for mainnet, 11155111 for sepolia, etc.)"
+        type: object
+        name:
+          type: string
+          enum:
+            - mainnet
+            - sepolia
+            - holesky
+            - hoodi
+            - ephemery
+            - custom
+          description: "Ethereum network to connect to"
+        id:
+          type: number
+          minimum: 1
+          description: "The Ethereum network ID (1 for mainnet, 11155111 for sepolia, etc.)"
       operatingSystem:
         type: string
         enum:

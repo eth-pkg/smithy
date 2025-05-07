@@ -11,20 +11,29 @@ interface NetworkConfig {
 export const baseConfig: Common = {
   engine: {
     enabled: true,
-    port: 8551,
-    communication: 'jwt',
-    url: 'http://localhost:8551',
-    host: 'localhost',
-    allowlist: ['localhost'],
-    ip: '127.0.0.1',
-    jwtFile: '$HOME/ethereum/jwt.hex',
-    scheme: 'http'
+    communication: {
+      method: 'jwt',
+      jwt: {
+        file: '{common.dataDir}/{common.network.name}/engine.jwt',
+        id: ''
+      },
+      ipc: { path: '' }
+    },
+    api: {
+      url: 'http://localhost:8551',
+      host: 'localhost',
+      allowlist: ['localhost'],
+      ip: '127.0.0.1',
+      scheme: 'http',
+      port: 8551
+    }
+  },
+  network: {
+    name: 'mainnet',
+    id: 1
   },
   operatingSystem: 'linux',
-  syncMode: 'snap',
-  networkId: 1,
-  dataDir: '$HOME/ethereum/mainnet',
-  network: 'mainnet'
+  dataDir: '{common.dataDir}/{common.network.name}',
 };
 
 export const testConfig: NodeConfig = {
@@ -37,7 +46,7 @@ export const testConfig: NodeConfig = {
       name: 'lighthouse',
       version: ''
     },
-    dataDir: '{common.dataDir}/{consensus.client.name}',
+    dataDir: '{common.dataDir}/{common.network.name}/{consensus.client.name}',
     http: {
       enabled: false,
       port: 5052,
@@ -86,7 +95,7 @@ export const testConfig: NodeConfig = {
       version: ''
     },
     enabled: false,
-    dataDir: '{common.dataDir}/{validator.client.name}',
+    dataDir: '{common.dataDir}/{common.network.name}/{validator.client.name}',
     beaconRpcProvider: 'http://localhost:5052',
     numValidators: 1,
     feeRecipientAddress: '0x0000000000000000000000000000000000000000',
@@ -135,7 +144,7 @@ export const testConfig: NodeConfig = {
       name: 'geth',
       version: ''
     },
-    dataDir: '{common.dataDir}/{execution.client.name}',
+    dataDir: '{common.dataDir}/{common.network.name}/{execution.client.name}',
     http: {
       enabled: true,
       port: 8545,
@@ -166,8 +175,10 @@ export const testConfig: NodeConfig = {
 export const createNetworkConfig = (config: NetworkConfig): { common: Common } => ({
   common: {
     ...baseConfig,
-    network: config.network,
-    networkId: config.networkId,
+    network: {
+      name: config.network,
+      id: config.networkId
+    },
     dataDir: config.dataDir
   }
 });
@@ -183,8 +194,8 @@ export const runNetworkPresetTests = (config: NetworkConfig) => {
     const testConfig = createNetworkConfig(config);
     const presetName = `combined/${config.network}-non-staker`;
     const result = await presetManager.validateAndApplyRules(testConfig, presetName);
-    expect(result.common?.network).to.equal(config.network);
-    expect(result.common?.networkId).to.equal(config.networkId);
+    expect(result.common?.network.name).to.equal(config.network);
+    expect(result.common?.network.id).to.equal(config.networkId);
   });
 
   it('should reject config with wrong network', async () => {

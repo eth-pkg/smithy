@@ -62,7 +62,7 @@ rules:
     description: |
       Enable validators doppelganger detection
   - flag: --ee-endpoint
-    configPath: common.engine.url
+    configPath: common.engine.api.url
     transform: interpolate
     enabled: 
       configPath: common.engine.enabled
@@ -70,17 +70,18 @@ rules:
     description: |
       URL for Execution Engine node
   - flag: --ee-jwt-claim-id
-    configPath: common.engine.jwtId
+    configPath: common.engine.communication.jwt.id
     enabled: 
-      configPath: common.engine.communication
+      configPath: common.engine.communication.method
       transform: jwtEnabled
     description: |
       A unique identifier for the consensus layer client. This identifier will be added to the JWT
       claims as an 'id' claim
   - flag: --ee-jwt-secret-file
-    configPath: common.engine.jwtFile
+    configPath: common.engine.communication.jwt.file
+    transform: interpolate
     enabled: 
-      configPath: common.engine.communication
+      configPath: common.engine.communication.method
       transform: jwtEnabled
     description: |
       Location of the file specifying the hex-encoded 256 bit secret key to be used for
@@ -221,7 +222,7 @@ rules:
     description: |
       Interval between metric publications to the external service (measured in seconds)
   - flag: --network
-    configPath: common.network
+    configPath: common.network.name
     description: |
       Represents which network to use
   - flag: --p2p-advertised-ip

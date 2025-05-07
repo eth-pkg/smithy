@@ -26,7 +26,14 @@ describe('Network Mappings Tests', () => {
       describe(`${client}`, () => {
         networks.forEach(network => {
           it(`should correctly map ${network} network`, () => {
-            const config = { ...testConfig, common: { ...testConfig.common, network, networkId: getNetworkId(network) } };
+            const config = {
+              ...testConfig, common: {
+                ...testConfig.common, network: {
+                  name: network,
+                  id: getNetworkId(network)
+                }
+              }
+            };
             const scriptContent = registry.getScriptContent(client, config);
             const scriptString = scriptContent.toString();
             switch (client) {
@@ -75,7 +82,14 @@ describe('Network Mappings Tests', () => {
       describe(`${client}`, () => {
         networks.forEach(network => {
           it(`should correctly map ${network} network`, () => {
-            const config = { ...testConfig, common: { ...testConfig.common, network, networkId: getNetworkId(network) } };
+            const config = {
+              ...testConfig, common: {
+                ...testConfig.common, network: {
+                  name: network,
+                  id: getNetworkId(network)
+                }
+              }
+            };
             const scriptContent = registry.getScriptContent(client, config);
             const scriptString = scriptContent.toString();
 
@@ -87,7 +101,7 @@ describe('Network Mappings Tests', () => {
                 break;
               case 'lodestar':
                 expect(scriptString).to.contain(`--network ${network}`);
-                expect(scriptString).to.not.contain(`--networkid ${getNetworkId(network)}`);
+                expect(scriptString).to.contain(`--networkid ${getNetworkId(network)}`);
                 break;
               case 'nimbus-eth2':
                 expect(scriptString).to.contain(`--network ${network}`);
@@ -126,7 +140,14 @@ describe('Network Mappings Tests', () => {
       describe(`${client}`, () => {
         networks.forEach(network => {
           it(`should correctly map ${network} network`, () => {
-            const config = { ...testConfig, common: { ...testConfig.common, network, networkId: getNetworkId(network) } };
+            const config = {
+              ...testConfig, common: {
+                ...testConfig.common, network: {
+                  name: network,
+                  id: getNetworkId(network)
+                }
+              }
+            };
             const scriptContent = registry.getScriptContent(client, config, true);
             const scriptString = scriptContent.toString();
 

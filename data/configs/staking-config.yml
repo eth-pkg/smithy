@@ -1,17 +1,25 @@
 common:
   dataDir: $HOME/ethereum/mainnet
   engine:
-    port: 8551
-    communication: jwt
-    endpointUrl: http://localhost:8551
-    host: localhost
-    ip: 127.0.0.1
-    jwtFile: $HOME/ethereum/jwt.hex
-    scheme: http
-  network: mainnet
-  networkId: 1
+    enabled: true
+    api:
+      port: 8551
+      communication: jwt
+      endpointUrl: http://localhost:8551
+      host: localhost
+      ip: 127.0.0.1
+      scheme: http
+      allowlist:
+        - '*'
+    communication:
+      method: jwt
+      jwt:
+        file: $HOME/ethereum/jwt.hex
+        id: ''
+  network:
+    name: mainnet
+    id: 1
   operatingSystem: linux
-  syncMode: snap
 
 consensus:
   client:

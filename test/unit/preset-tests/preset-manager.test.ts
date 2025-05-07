@@ -94,15 +94,17 @@ describe('PresetManager', () => {
         ...testConfig,
         common: {
           ...baseConfig,
-          network: 'mainnet',
-          networkId: 1,
+          network: {
+            name: 'mainnet',
+            id: 1
+          },
           dataDir: '$HOME/ethereum/mainnet'
         }
       };
 
       const result = await presetManager.validateAndApplyRules(config);
-      expect(result.common?.network).to.equal('mainnet');
-      expect(result.common?.syncMode).to.equal('snap');
+      expect(result.common?.network.name).to.equal('mainnet');
+      expect(result.common?.network.id).to.equal(1);
     });
 
     it('should reject config with empty client values', async () => {
@@ -110,8 +112,10 @@ describe('PresetManager', () => {
         ...testConfig,
         common: {
           ...baseConfig,
-          network: 'mainnet',
-          networkId: 1,
+          network: {
+            name: 'mainnet',
+            id: 1
+          },
           dataDir: '$HOME/ethereum/mainnet'
         },
         execution: {

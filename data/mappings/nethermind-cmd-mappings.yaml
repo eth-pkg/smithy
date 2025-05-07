@@ -5,33 +5,33 @@ rules:
   - configPath: execution.dataDir
     flag: --datadir
     transform: interpolate
-  - configPath: common.engine.jwtFile
+  - configPath: common.engine.communication.jwt.file
     flag: --JsonRpc.JwtSecretFile
     transform: interpolate
     enabled:
-      configPath: common.engine.communication
+      configPath: common.engine.communication.method
       transform: jwtEnabled
-  - configPath: common.engine.host
+  - configPath: common.engine.api.host
     flag: --JsonRpc.EngineHost
     enabled:
-      configPath: common.engine.communication
+      configPath: common.engine.communication.method
       transform: jwtEnabled
-  - configPath: common.engine.port
+  - configPath: common.engine.api.port
     flag: --JsonRpc.EnginePort
     enabled:
-      configPath: common.engine.communication
+      configPath: common.engine.communication.method
       transform: jwtEnabled
-  - configPath: common.engine.allowlist
+  - configPath: common.engine.api.allowlist
     flag: --JsonRpc.EngineEnabledModules
     transform: allowlist
     enabled:
-      configPath: common.engine.communication
+      configPath: common.engine.communication.method
       transform: jwtEnabled
-  - configPath: common.engine.ipcPath
+  - configPath: common.engine.communication.ipc.path
     flag: --JsonRpc.IpcUnixDomainSocketPath
     transform: interpolate
     enabled:
-      configPath: common.engine.communication
+      configPath: common.engine.communication.method
       transform: ipcEnabled
-  - configPath: common.networkId
+  - configPath: common.network.id
     flag: --networkid

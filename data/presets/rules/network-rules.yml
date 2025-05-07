@@ -22,17 +22,25 @@ allOf:
           type: object
           properties:
             network:
-              const: mainnet
+              type: object
+              properties:
+                name:
+                  type: string
+                  const: mainnet
     then:
       type: object
       properties:
         common:
           type: object
           properties:
-            networkId:
-              const: 1
-              errorMessage:
-                const: "mainnet must have networkId 1"
+            network:
+              type: object
+              properties:
+                id:
+                  type: number
+                  const: 1
+                  errorMessage:
+                    const: "mainnet must have networkId 1"
   - if:
       type: object
       properties:
@@ -40,17 +48,25 @@ allOf:
           type: object
           properties:
             network:
-              const: sepolia
+              type: object
+              properties:
+                name:
+                  type: string
+                  const: sepolia
     then:
       type: object
       properties:
         common:
           type: object
           properties:
-            networkId:
-              const: 11155111
-              errorMessage:
-                const: "sepolia must have networkId 11155111"
+            network:
+              type: object
+              properties:
+                id:
+                  type: number
+                  const: 11155111
+                  errorMessage:
+                    const: "sepolia must have networkId 11155111"
   - if:
       type: object
       properties:
@@ -58,17 +74,25 @@ allOf:
           type: object
           properties:
             network:
-              const: holesky
+              type: object
+              properties:
+                name:
+                  type: string
+                  const: holesky
     then:
       type: object
       properties:
         common:
           type: object
           properties:
-            networkId:
-              const: 17000
-              errorMessage:
-                const: "holesky must have networkId 17000"
+            network:
+              type: object
+              properties:
+                id:
+                  type: number
+                  const: 17000
+                  errorMessage:
+                    const: "holesky must have networkId 17000"
   - if:
       type: object
       properties:
@@ -76,14 +100,22 @@ allOf:
           type: object
           properties:
             network:
-              const: hoodi
+              type: object
+              properties:
+                name:
+                  type: string
+                  const: hoodi
     then:
       type: object
       properties:
         common:
           type: object
           properties:
-            networkId:
-              const: 17001
-              errorMessage:
-                const: "hoodi must have networkId 17001"
+            network:
+              type: object
+              properties:
+                id:
+                  type: number
+                  const: 17001
+                  errorMessage:
+                    const: "hoodi must have networkId 17001"

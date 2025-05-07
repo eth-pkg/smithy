@@ -5,7 +5,7 @@ rules:
   - configPath: validator.dataDir
     flag: --dataDir
     transform: interpolate
-  - configPath: common.network
+  - configPath: common.network.name
     flag: --network
   - configPath: validator.metricsPort
     flag: --metrics.port

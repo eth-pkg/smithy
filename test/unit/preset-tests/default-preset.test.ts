@@ -16,15 +16,17 @@ describe('Default Preset Tests', () => {
       ...testConfig,
       common: {
         ...baseConfig,
-        network: 'mainnet',
-        networkId: 1,
+        network: {
+          name: 'mainnet',
+          id: 1
+        },
         dataDir: '$HOME/ethereum/mainnet'
       }
     };
 
     const result = await presetManager.validateAndApplyRules(config, 'default');
-    expect(result.common?.network).to.equal('mainnet');
-    expect(result.common?.networkId).to.equal(1);
+    expect(result.common?.network.name).to.equal('mainnet');
+    expect(result.common?.network.id).to.equal(1);
   });
 
   it('should reject config with invalid network', async () => {
@@ -32,8 +34,10 @@ describe('Default Preset Tests', () => {
       ...testConfig,
       common: {
         ...baseConfig,
-        network: 'invalid',
-        networkId: 1,
+        network: {
+          name: 'invalid',
+          id: 1
+        },
         dataDir: '$HOME/ethereum/mainnet'
       }
     };

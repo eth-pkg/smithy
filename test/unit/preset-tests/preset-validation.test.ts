@@ -28,7 +28,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid networkId values
   it('should reject invalid networkId value', async () => {
     const config = { ...testConfig };
-    config.common!.networkId = 0;
+    config.common!.network.id = 0;
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -97,7 +97,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid engine port values (minimum)
   it('should reject engine port below minimum', async () => {
     const config = { ...testConfig };
-    config.common!.engine.port = 80;
+    config.common!.engine.api.port = 80;
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -112,7 +112,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid engine port values (maximum)
   it('should reject engine port above maximum', async () => {
     const config = { ...testConfig };
-    config.common!.engine.port = 70000;
+    config.common!.engine.api.port = 70000;
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -142,7 +142,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid engine IP address
   it('should reject invalid engine IP address', async () => {
     const config = { ...testConfig };
-    config.common!.engine.ip = 'invalid.ip.address';
+    config.common!.engine.api.ip = 'invalid.ip.address';
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -157,7 +157,7 @@ describe.skip('Preset Validation Tests', () => {
   // Test invalid engine scheme
   it('should reject invalid engine scheme', async () => {
     const config = { ...testConfig };
-    config.common!.engine.scheme = 'invalid' as any;
+    config.common!.engine.api.scheme = 'invalid' as any;
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');
@@ -184,20 +184,6 @@ describe.skip('Preset Validation Tests', () => {
     }
   });
 
-  // Test invalid sync mode values
-  it('should reject invalid sync mode value', async () => {
-    const config = { ...testConfig };
-    config.common!.syncMode = 'invalid_mode' as any;
-
-    try {
-      await presetManager.validateAndApplyRules(config, 'default');
-      expect.fail('Should have thrown an error');
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        expect(error.message).to.include('Sync mode must be one of: snap, full, light');
-      }
-    }
-  });
 
   // Test invalid consensus HTTP port values (minimum)
   it('should reject consensus HTTP port below minimum', async () => {

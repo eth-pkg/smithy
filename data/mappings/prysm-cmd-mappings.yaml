@@ -52,7 +52,7 @@ rules:
     configPath:
     description: Path to a YAML file with chain config values
   - flag: --chain-id
-    configPath: common.networkId
+    configPath: common.network.id
     description: Sets the chain id of the beacon chain
   - flag: --checkpoint-block
     configPath: consensus.checkpoint.block
@@ -105,14 +105,14 @@ rules:
     configPath:
     description: Sets the execution engine timeout for execution payload semantics
   - flag: --ephemery
-    configPath: common.network
+    configPath: common.network.name
     transform: network
     description: Runs Prysm configured for the Ephemery test network
   - flag: --eth1-header-req-limit
     configPath:
     description: Sets the maximum number of headers that a deposit log query can fetch
   - flag: --execution-endpoint
-    configPath: common.engine.url
+    configPath: common.engine.api.url
     transform: interpolate
     enabled: 
       configPath: common.engine.enabled
@@ -134,11 +134,11 @@ rules:
     configPath:
     description: Integer to define max receive message call size in bytes
   - flag: --holesky
-    configPath: common.network
+    configPath: common.network.name
     transform: network
     description: Runs Prysm configured for the Holesky test network
   - flag: --hoodi
-    configPath: common.network
+    configPath: common.network.name
     transform: network
     description: Runs Prysm configured for the Hoodi test network
   - flag: --http-cors-domain
@@ -175,22 +175,23 @@ rules:
     configPath:
     description: Enable mocking of eth1 data votes for proposers
   - flag: --jwt-id
-    configPath: common.engine.jwtId
+    configPath: common.engine.communication.jwt.id
     enabled: 
-      configPath: common.engine.communication
+      configPath: common.engine.communication.method
       transform: jwtEnabled
     description: JWT claims id for client identification
   - flag: --jwt-secret
-    configPath: common.engine.jwtFile
+    configPath: common.engine.communication.jwt.file
+    transform: interpolate
     enabled: 
-      configPath: common.engine.communication
+      configPath: common.engine.communication.method
       transform: jwtEnabled
     description: Path to file containing hex-encoded 32 byte secret for execution node auth
   - flag: --local-block-value-boost
     configPath:
     description: Percentage boost for local block construction
   - flag: --mainnet
-    configPath: common.network
+    configPath: common.network.name
     transform: network
     description: Runs on Ethereum main network
   - flag: --max-builder-consecutive-missed-slots
@@ -242,7 +243,7 @@ rules:
       transform: flagEnabled
     description: Host used for listening and responding metrics for prometheus
   - flag: --network-id
-    configPath: common.networkId
+    configPath: common.network.id
     description: Sets the network id of the beacon chain
   - flag: --no-discovery
     configPath: consensus.p2p.enabled
@@ -363,7 +364,7 @@ rules:
       transform: flagEnabled
     description: RPC port exposed by a beacon node
   - flag: --sepolia
-    configPath: common.network
+    configPath: common.network.name
     transform: network
     description: Runs Prysm configured for the Sepolia test network
   - flag: --slots-per-archive-point

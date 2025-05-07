@@ -5,51 +5,48 @@ rules:
   - configPath: execution.dataDir
     flag: --datadir
     transform: interpolate
-  - configPath: common.network
+  - configPath: common.network.name
     flag: --mainnet
     transform: network
-  - configPath: common.network
+  - configPath: common.network.name
     flag: --sepolia
     transform: network  
-  - configPath: common.network
+  - configPath: common.network.name
     flag: --holesky
     transform: network  
-  - configPath: common.network
+  - configPath: common.network.name
     flag: --ephemery
     transform: network
-  - configPath: common.network
+  - configPath: common.network.name
     flag: --hoodi
     transform: network
-  - configPath: common.networkId
+  - configPath: common.network.id
     flag: --networkid
-  - configPath: common.engine.jwtFile
+  - configPath: common.engine.communication.jwt.file
     flag: --authrpc.jwtsecret
     transform: interpolate
     enabled:
-      configPath: common.engine.communication
+      configPath: common.engine.communication.method
       transform: jwtEnabled
-  - configPath: common.engine.host
+  - configPath: common.engine.api.host
     flag: --authrpc.addr
     enabled:
-      configPath: common.engine.communication
+      configPath: common.engine.communication.method
       transform: jwtEnabled
-  - configPath: common.engine.port
+  - configPath: common.engine.api.port
     flag: --authrpc.port
     enabled:
-      configPath: common.engine.communication
+      configPath: common.engine.communication.method
       transform: jwtEnabled
-  - configPath: common.engine.ipcPath
+  - configPath: common.engine.communication.ipc.path
     flag: --ipcpath
     transform: interpolate
     enabled:
-      configPath: common.engine.communication
+      configPath: common.engine.communication.method
       transform: ipcEnabled
-  - configPath: common.engine.communication
+  - configPath: common.engine.communication.method
     flag: --ipcdisable
-    transform: isFlag
-    enabled:
-      configPath: common.engine.communication
-      transform: jwtEnabled
-  - configPath: common.engine.allowlist
+    transform: jwtEnabled
+  - configPath: common.engine.api.allowlist
     flag: --authrpc.vhosts
     transform: allowlist 

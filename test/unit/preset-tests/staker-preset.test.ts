@@ -15,8 +15,10 @@ describe('Staker Preset Tests', () => {
     const config: Partial<NodeConfig> = {
       common: {
         ...baseConfig,
-        network: 'mainnet',
-        networkId: 1,
+        network: {
+          name: 'mainnet',
+          id: 1
+        },
         dataDir: '$HOME/ethereum/mainnet'
       },
       validator: {
@@ -33,8 +35,10 @@ describe('Staker Preset Tests', () => {
     const config: Partial<NodeConfig> = {
       common: {
         ...baseConfig,
-        network: 'mainnet',
-        networkId: 1,
+        network: {
+          name: 'mainnet',
+          id: 1
+        },
         dataDir: '$HOME/ethereum/mainnet'
       },
       validator: {

@@ -23,7 +23,7 @@ rules:
     flag: --metrics
   - configPath: validator.metricsAddress
     flag: --metrics-address
-  - configPath: common.network
+  - configPath: common.network.name
     flag: --network
   - configPath: validator.secretsDir
     flag: --secrets-dir
