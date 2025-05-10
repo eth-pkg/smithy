@@ -1,0 +1,38 @@
+$id: client-compatibility-rules.yml
+allOf:
+  # =============================================
+  # Client Compatibility Rules
+  # =============================================
+  # Enforces known client compatibility constraints:
+  # - Specifically prevents the Lighthouse consensus client with Prysm validator combination
+  # - This combination is known to have compatibility issues
+  # - All other client combinations are allowed
+  - if:
+      type: object
+      properties:
+        consensus:
+          type: object
+          properties:
+            client:
+              type: object
+              properties:
+                name:
+                  const: lighthouse
+              required: ["name"]    
+          required: ["client"]        
+        validator:
+          type: object
+          properties:
+            client:
+              type: object
+              properties:
+                name:
+                  const: prysm 
+              required: ["name"]
+          required: ["client"]           
+      required: ["consensus", "validator"]                  
+    then:
+      errorMessage: |
+        The combination of Lighthouse consensus client with Prysm validator is not currently supported.
+        All other client combinations are supported.
+        If you need this specific combination, please check with the clients team. 

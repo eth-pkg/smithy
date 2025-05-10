@@ -1,5 +1,5 @@
 $id: holesky-staker.yml
 allOf:
-  - $ref: ../default.yml
-  - $ref: ../networks/holesky.yml
-  - $ref: ../features/staker.yml
+  - $ref: ./default.yml
+  - $ref: ./networks/holesky.yml
+  - $ref: ./features/staker.yml

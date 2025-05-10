@@ -1,10 +1,9 @@
 import { expect } from 'chai';
 import { describe, it, beforeEach } from 'mocha';
 import { PresetManager } from '@/utils/preset';
-import { NodeConfig } from '@/lib/types';
-import { baseConfig, testConfig } from './network-preset.test-helper';
+import { DeepPartial, NodeConfig } from '@/lib/types';
 
-describe.skip('Non-Staker Preset Tests', () => {
+describe('Non-Staker Preset Tests', () => {
   let presetManager: PresetManager;
 
   beforeEach(() => {
@@ -12,15 +11,20 @@ describe.skip('Non-Staker Preset Tests', () => {
   });
 
   it('should validate a correct non-staker config', async () => {
-    const config: Partial<NodeConfig> = {
-      common: {
-        ...baseConfig,
-        network: {
-          name: 'mainnet',
-          id: 1
-        },
-        dataDir: '$HOME/ethereum/mainnet'
-      }
+    const config: DeepPartial<NodeConfig> = {
+      consensus: {
+        client: {
+          name: 'lighthouse',
+          version: 'latest'
+        }
+      },
+      execution: {
+        client: {
+          name: 'geth',
+          version: 'latest'
+        }
+      },
+      
     };
 
     const result = await presetManager.validateAndApplyRules(config, 'combined/mainnet-non-staker');
@@ -28,18 +32,26 @@ describe.skip('Non-Staker Preset Tests', () => {
   });
 
   it('should reject non-staker preset with staking set to true', async () => {
-    const config: Partial<NodeConfig> = {
-      common: {
-        ...baseConfig,
-        network: {
-          name: 'mainnet',
-          id: 1
-        },
-        dataDir: '$HOME/ethereum/mainnet'
+    const config: DeepPartial<NodeConfig> = {
+      consensus: {
+        client: {
+          name: 'lighthouse',
+          version: 'latest'
+        }
       },
+      execution: {
+        client: {
+          name: 'geth',
+          version: 'latest'
+        }
+      },
+
       validator: {
-        ...testConfig.validator,
-        enabled: true
+        enabled: true,
+        client: {
+          name: 'lighthouse',
+          version: 'latest'
+        }
       }
     };
 
@@ -56,17 +68,21 @@ describe.skip('Non-Staker Preset Tests', () => {
   });
 
   it('should reject staker preset with empty validator client', async () => {
-    const config: Partial<NodeConfig> = {
-      common: {
-        ...baseConfig,
-        network: {
-          name: 'mainnet',
-          id: 1
-        },
-        dataDir: '$HOME/ethereum/mainnet',
+    const config: DeepPartial<NodeConfig> = {
+      consensus: {
+        client: {
+          name: 'lighthouse',
+          version: 'latest'
+        }
       },
+      execution: {
+        client: {
+          name: 'geth',
+          version: 'latest'
+        }
+      },
+      
       validator: {
-        ...testConfig.validator,
         enabled: true,
         client: {
           name: '',
@@ -80,7 +96,7 @@ describe.skip('Non-Staker Preset Tests', () => {
       expect.fail('Should have thrown an error');
     } catch (error: unknown) {
       if (error instanceof Error) {
-        expect(error.message).to.include('Validator client must be specified');
+        expect(error.message).to.include('Validator cannot be enabled when non-staker preset is selected');
       } else {
         expect.fail('Expected an Error object');
       }

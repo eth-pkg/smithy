@@ -1,5 +1,5 @@
 $id: hoodi-staker.yml
 allOf:
-  - $ref: ../default.yml
-  - $ref: ../networks/hoodi.yml
-  - $ref: ../features/staker.yml
+  - $ref: ./default.yml
+  - $ref: ./networks/hoodi.yml
+  - $ref: ./features/staker.yml

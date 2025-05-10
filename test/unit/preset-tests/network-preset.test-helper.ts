@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { PresetManager } from '@/utils/preset';
-import { NodeConfig, Common, Consensus, Execution, Validator, ExecutionClientName, ConsensusClientName, ValidatorClientName } from '@/lib/types';
+import { NodeConfig, Common, Consensus, Execution, Validator, ExecutionClientName, ConsensusClientName, ValidatorClientName, DeepPartial } from '@/lib/types';
 
 interface NetworkConfig {
   network: string;
@@ -172,14 +172,28 @@ export const testConfig: NodeConfig = {
   }
 };
 
-export const createNetworkConfig = (config: NetworkConfig): { common: Common } => ({
+export const createNetworkConfig = (config: NetworkConfig): DeepPartial<NodeConfig> => ({
   common: {
-    ...baseConfig,
     network: {
       name: config.network,
       id: config.networkId
     },
     dataDir: config.dataDir
+  },
+  execution: {
+    client: {
+      name: 'geth',
+      version: 'latest'
+    }
+  },
+  consensus: {
+    client: {
+      name: 'lighthouse',
+      version: 'latest'
+    }
+  },
+  validator: {
+    enabled: false,
   }
 });
 

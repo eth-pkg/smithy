@@ -27,13 +27,11 @@ describe('Config Generation', () => {
 
     await generate(options);
 
-    // Check if all expected files were generated
     const files = await fs.readdir(testOutputDir);
     expect(files).to.include('geth.sh');
     expect(files).to.include('lighthouse.sh');
     expect(files).to.include('nimbus-eth2-validator.sh');
 
-    // Check if files have content
     const gethConfig = await fs.readFile(path.join(testOutputDir, 'geth.sh'), 'utf-8');
     const lighthouseConfig = await fs.readFile(path.join(testOutputDir, 'lighthouse.sh'), 'utf-8');
     const validator = await fs.readFile(path.join(testOutputDir, 'nimbus-eth2-validator.sh'), 'utf-8');

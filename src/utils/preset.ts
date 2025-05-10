@@ -3,8 +3,9 @@ import * as path from "path";
 import * as yaml from "js-yaml";
 import Ajv from "ajv";
 import ajvErrors from "ajv-errors";
-import { NodeConfig } from "@/lib/types";
+import { NodeConfig, DeepPartial } from "@/lib/types";
 import { Logger } from "./logger";
+import SchemaUtils from "./schema";
 
 interface SchemaProperty {
   type?: string;
@@ -22,10 +23,10 @@ export class PresetManager {
 
   constructor(verbose = false) {
     this.logger = new Logger(verbose ? "verbose" : "info");
-    this.ajv = new Ajv({ 
+    this.ajv = new Ajv({
       allErrors: true,
-      useDefaults: true, 
-      coerceTypes: true,  
+      useDefaults: true,
+      coerceTypes: true,
       loadSchema: this.loadSchema.bind(this),
       strict: true
     });
@@ -56,7 +57,7 @@ export class PresetManager {
       if (error instanceof Error) {
         this.logger.error(error.message);
       }
-      return ["default"]; 
+      return ["default"];
     }
   }
 
@@ -77,15 +78,15 @@ export class PresetManager {
       if (error instanceof Error) {
         this.logger.error(error.message);
       }
-      return ["default"]; 
+      return ["default"];
     }
   }
 
   /**
    * Get the path to the configs directory
    */
-  getConfigsDir(): string { 
-      return path.join(__dirname, "..", "..", "configs");
+  getConfigsDir(): string {
+    return path.join(__dirname, "..", "..", "configs");
   }
 
   /**
@@ -154,88 +155,6 @@ export class PresetManager {
 
 
   /**
-   * Extract defaults from a schema
-   */
-  private extractDefaults(schema: any): any {
-    if (!schema || typeof schema !== 'object') {
-      return undefined;
-    }
-
-    // If there's a direct default value, use it
-    if (schema.default !== undefined) {
-      return schema.default;
-    }
-
-    // Handle references
-    if (schema.$ref) {
-      const refSchema = this.loadSchemaSync(schema.$ref);
-      if (refSchema) {
-        return this.extractDefaults(refSchema);
-      }
-    }
-
-    // Handle allOf/anyOf/oneOf
-    if (schema.allOf || schema.anyOf || schema.oneOf) {
-      const schemas = schema.allOf || schema.anyOf || schema.oneOf;
-      const results = schemas.map((s: any) => this.extractDefaults(s)).filter((r: any) => r !== undefined);
-      
-      if (schema.allOf) {
-        // For allOf, merge all results
-        return results.reduce((acc: any, curr: any) => {
-          if (typeof curr === 'object' && curr !== null) {
-            return { ...acc, ...curr };
-          }
-          return curr;
-        }, {});
-      } else {
-        // For anyOf/oneOf, use the first valid result
-        return results[0];
-      }
-    }
-
-    // Handle object types
-    if (schema.type === 'object' && schema.properties) {
-      const result: any = {};
-      for (const [key, value] of Object.entries(schema.properties)) {
-        if (typeof value === 'object' && value !== null) {
-          const defaultValue = this.extractDefaults(value);
-          if (defaultValue !== undefined) {
-            result[key] = defaultValue;
-          }
-        }
-      }
-      return Object.keys(result).length > 0 ? result : undefined;
-    }
-
-    // Handle array types
-    if (schema.type === 'array' && schema.items) {
-      const itemDefault = this.extractDefaults(schema.items);
-      return itemDefault !== undefined ? [itemDefault] : undefined;
-    }
-
-    return undefined;
-  }
-
-  /**
-   * Synchronously load a schema from a reference
-   */
-  private loadSchemaSync(ref: string): any {
-    try {
-      const presetsDir = this.getPresetsDir();
-      const refPath = ref.startsWith('./') ? ref.substring(2) : ref;
-      const schemaPath = path.join(presetsDir, refPath);
-      
-      if (fs.existsSync(schemaPath)) {
-        const fileContent = fs.readFileSync(schemaPath, 'utf-8');
-        return yaml.load(fileContent);
-      }
-    } catch (error) {
-      this.logger.debug(`Failed to load schema reference: ${ref}`);
-    }
-    return null;
-  }
-
-  /**
    * Check if the config is trying to override any constant values from the preset
    */
   private checkConstantOverrides(config: any, schema: SchemaProperty, path: string[] = []): string[] {
@@ -245,7 +164,7 @@ export class PresetManager {
       for (const [key, value] of Object.entries(schema.properties)) {
         const currentPath = [...path, key];
         const fullPath = currentPath.join('.');
-        
+
         if (value && typeof value === 'object') {
           if (value.const !== undefined) {
             let current = config;
@@ -261,7 +180,7 @@ export class PresetManager {
               overrides.push(fullPath);
             }
           }
-          
+
           if (config && typeof config === 'object' && config[key]) {
             overrides.push(...this.checkConstantOverrides(config[key], value, currentPath));
           }
@@ -275,10 +194,7 @@ export class PresetManager {
   /**
    * Validate and apply preset rules to a configuration
    */
-  async validateAndApplyRules(
-    config: Partial<NodeConfig>, 
-    presetName: string = "default"
-  ): Promise<NodeConfig> {
+  public async validateAndApplyRules(config: DeepPartial<NodeConfig>, presetName: string = "default"): Promise<NodeConfig> {
     try {
       const preset = await this.loadPreset(presetName);
       const validationSchema = preset.schema || preset;
@@ -288,7 +204,7 @@ export class PresetManager {
         throw new Error(`Cannot override constant values in preset: ${constantOverrides.join(', ')}`);
       }
 
-      const ajv = new Ajv({ 
+      const ajv = new Ajv({
         allErrors: true,
         useDefaults: true,
         coerceTypes: true,
@@ -300,27 +216,28 @@ export class PresetManager {
       const validate = await ajv.compileAsync(validationSchema);
 
       // Extract defaults from the schema
-      const defaults = this.extractDefaults(validationSchema) || {};
+      const schemaLoader = new SchemaUtils(this.getPresetsDir());
+      const schemaPath = schemaLoader.resolvePath(presetName);
+      const defaults = schemaLoader.extractDefaults(schemaPath) || {};
       // Create a new config object with defaults applied
       const configWithDefaults = { ...defaults };
-      
       // Deep merge the user's config on top of the defaults
       this.deepMerge(configWithDefaults, config);
-      
+
       // Validate the final config
       const valid = validate(configWithDefaults);
-      
+
       if (!valid) {
         const formattedErrors = this.formatValidationErrors(validate.errors || []);
         throw new Error(formattedErrors);
       }
-      
+
       return configWithDefaults as NodeConfig;
     } catch (error) {
-      if (error instanceof Error && 
-          (error.message.includes('Cannot override constant values') || 
-           error.message.includes('Network must be set to') ||
-           error.message.includes('Network ID must be set to'))) {
+      if (error instanceof Error &&
+        (error.message.includes('Cannot override constant values') ||
+          error.message.includes('Network must be set to') ||
+          error.message.includes('Network ID must be set to'))) {
         throw error;
       }
       if (error instanceof Error) {
@@ -335,7 +252,7 @@ export class PresetManager {
    */
   private deepMerge(target: any, source: any): any {
     if (!source) return target;
-    
+
     Object.keys(source).forEach(key => {
       if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
         if (!target[key] || typeof target[key] !== 'object') {
@@ -346,7 +263,7 @@ export class PresetManager {
         target[key] = source[key];
       }
     });
-    
+
     return target;
   }
 

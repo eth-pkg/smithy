@@ -1,0 +1,8 @@
+$id: all-rules.yml
+allOf:
+  - $ref: ./rules/network-rules.yml
+  - $ref: ./rules/validator-rules.yml
+  - $ref: ./rules/besu-rules.yml
+  - $ref: ./rules/client-compatibility-rules.yml
+  - $ref: ./rules/ipc-communication-rules.yml
+

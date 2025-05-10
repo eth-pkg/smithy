@@ -1,0 +1,46 @@
+$id: besu-security-rules.yml
+allOf:
+  # =============================================
+  # Besu Security Configuration Rules
+  # =============================================
+  # Enforces strict security rules for Besu's allowlist configuration:
+  # - Prevents mixing wildcards (*) or 'all' with specific hosts
+  # - This prevents accidental exposure by ensuring the allowlist is either:
+  #   * Completely open (just '*' or 'all')
+  #   * Completely closed (specific hosts only)
+  # - Prevents ambiguous configurations that could lead to security vulnerabilities
+  - if:
+      type: object
+      properties:
+        execution:
+          type: object
+          properties:
+            client:
+              type: object
+              properties:
+                name:
+                  const: "besu"
+          required: ["client"]
+      required: ["execution"]
+    then:
+      type: object
+      properties:
+        common:
+          type: object
+          properties:
+            engine:
+              type: object
+              properties:
+                allowlist:
+                  not:
+                    anyOf:
+                      - type: string
+                        pattern: ".*\\*.*,.*"
+                      - type: string
+                        pattern: ".*,.*\\*.*"
+                      - type: string
+                        pattern: ".*all.*,.*"
+                      - type: string
+                        pattern: ".*,.*all.*"
+                  errorMessage:
+                    not: "When using Besu, allowlist cannot contain '*' or 'all' combined with other values" 

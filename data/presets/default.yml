@@ -2,5 +2,4 @@ $id: default.yml
 allOf:
   - $ref: ./node/base.yml
   # - $ref: ./features/versions.yml
-  - $ref: ./rules/misc.yml
-  - $ref: ./rules/network-rules.yml
+  - $ref: ./rules/all-rules.yml

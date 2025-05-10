@@ -1,0 +1,209 @@
+$id: consensus.yml
+type: object
+required: [client]
+properties:
+  client:
+    type: object
+    required: [name]
+    properties:
+      name:
+        type: string
+        enum:
+          - lighthouse
+          - lodestar
+          - nimbus-eth2
+          - prysm
+          - teku
+        description: "The consensus client implementation to use"
+        errorMessage:
+          enum: "Consensus client must be one of: lighthouse, lodestar, nimbus-eth2, prysm, teku"
+      version:
+        type: string
+        default: ""
+        description: "The version of the consensus client to use"
+        errorMessage:
+          pattern: "Version must be a valid semver string"
+  http:
+    type: object
+    properties:
+      enabled:
+        type: boolean
+        default: false
+        description: "Enable HTTP JSON-RPC API"
+      api:
+        type: array
+        minItems: 1
+        default: ["eth", "net", "web3"]
+        description: "List of JSON-RPC API namespaces to enable"
+        items:
+          type: string
+      address:
+        type: string
+        default: "localhost"
+      allowlist:
+        type: array
+        default: ["*"]
+        description: "List of allowed CORS origins for HTTP API"
+        items:
+          type: string
+      port:
+        type: number
+        minimum: 1024
+        maximum: 65535
+        default: 8545
+        description: "Port number for HTTP JSON-RPC API"
+        errorMessage:
+          minimum: "HTTP port must be >= 1024"
+          maximum: "HTTP port must be <= 65535"
+  metrics:
+    type: object
+    properties:
+      enabled:
+        type: boolean
+        default: false
+        description: "Enable metrics collection and reporting"
+      host:
+        type: string
+        default: "127.0.0.1"
+        description: "IP address to bind the metrics server to"
+      port:
+        type: number
+        minimum: 1024
+        maximum: 65535
+        default: 8008
+        description: "Port number for metrics server of the consensus client"
+        errorMessage:
+          minimum: "Metrics port must be >= 1024"
+          maximum: "Metrics port must be <= 65535"
+  p2p:
+    type: object
+    properties:
+      enabled:
+        type: boolean
+        default: true
+        description: "Enable P2P networking of the consensus client"
+      port:
+        type: number
+        minimum: 1024
+        maximum: 65535
+        default: 9000
+        description: "Port number for P2P networking of the consensus client"
+        errorMessage:
+          minimum: "P2P port must be >= 1024"
+      port6:
+        type: number
+        minimum: 1024
+        maximum: 65535
+        default: 9000
+        description: "IPv6 P2P port number (0 to disable IPv6)"    
+      udpPort:
+        type: number
+        minimum: 1024
+        maximum: 65535
+        default: 9000
+        description: "Port number for P2P networking of the consensus client"
+        errorMessage:
+          minimum: "P2P port must be >= 1024"
+      bootnodes:
+        type: array
+        items:
+          type: string
+        default: []
+        description: "List of bootnode enode URLs for initial peer discovery"
+      enrAddress:
+        type: string
+        default: ""
+        description: "ENR (Ethereum Node Record) address to advertise"    
+  ws: 
+    type: object
+    properties:
+      enabled:
+        type: boolean
+        default: false
+        description: "Enable WebSocket JSON-RPC API"
+      port:
+        type: number
+        minimum: 1024
+        maximum: 65535
+        default: 8546
+        description: "Port number for WebSocket JSON-RPC API"
+        errorMessage:
+          minimum: "WebSocket port must be >= 1024"
+  checkpoint:
+    type: object
+    properties:
+      enabled:
+        type: boolean
+        default: false
+        description: "Enable checkpoint sync"
+      url:
+        type: string
+        default: ""
+        description: "URL of a trusted beacon node for checkpoint sync"
+      block:
+        type: string
+        default: ""
+        description: "Block root hash to use for checkpoint sync"
+      state:
+        type: string
+        default: ""
+        description: "State root hash to use for checkpoint sync"
+      weakSubjectivity:
+        type: string
+        default: ""
+        description: "Weak subjectivity checkpoint to use for checkpoint sync"
+  graffiti:
+    type: object
+    properties:
+      enabled:
+        type: boolean
+        default: false
+        description: "Enable graffiti on proposed blocks"
+      message:
+        type: string
+        default: ""
+        description: "Custom graffiti message to include in proposed blocks"
+      file:
+        type: string
+        default: ""
+        description: "Path to file containing graffiti messages"
+  log: 
+    type: object
+    properties:
+      enabled:
+        type: boolean
+        default: false
+        description: "Enable logging of the consensus client"
+      file:
+        type: string
+        default: ""
+        description: "Path to store consensus client logs"
+      format:
+        type: string
+        enum:
+          - auto
+          - json
+          - plain
+  testnetDir:
+    type: string
+    default: ""
+    description: "Path to testnet configuration directory"
+  validatorMonitorFile:
+    type: string
+    default: ""
+    description: "Path to file for validator monitoring data"
+  builder:
+    type: object
+    properties:
+      enabled:
+        type: boolean
+        default: false
+        description: "Enable block builder API for MEV"
+      url:
+        type: string
+        default: ""
+        description: "URL for the block builder API"
+  dataDir:
+    type: string
+    default: "{common.dataDir}/{consensus.client.name}"
+    description: "Base directory for consensus client data. Interpolated from common.dataDir and consensus.client.name." 

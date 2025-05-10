@@ -1,5 +1,5 @@
 $id: mainnet-non-staker.yml
 allOf:
-  - $ref: ../default.yml
-  - $ref: ../networks/mainnet.yml
-  - $ref: ../features/non-staker.yml
+  - $ref: ./default.yml
+  - $ref: ./networks/mainnet.yml
+  - $ref: ./features/non-staker.yml

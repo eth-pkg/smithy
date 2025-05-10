@@ -1,0 +1,118 @@
+$id: ipc-communication-rules.yml
+allOf:
+  # =============================================
+  # IPC Communication OS Restriction Rule
+  # =============================================
+  # Ensures that IPC communication is only supported on Linux:
+  # - If engine.communication is set to 'ipc', operatingSystem must be 'linux'
+  # - For Besu, IPC support (--Xrpc-ipc-enabled) is still early access and should be used with caution
+  - if:
+      type: object
+      properties:
+        common:
+          type: object
+          properties:
+            engine:
+              type: object
+              properties:
+                communication:
+                  const: ipc
+    then:
+      type: object
+      properties:
+        common:
+          type: object
+          properties:
+            operatingSystem:
+              const: linux
+              errorMessage: "IPC communication is only supported on Linux. Please set operatingSystem to 'linux' or use a different communication method."
+
+  # Warning for Besu IPC early access
+  - if:
+      type: object
+      properties:
+        common:
+          type: object
+          properties:
+            engine:
+              type: object
+              properties:
+                communication:
+                  const: ipc
+              required: ["communication"]
+          required: ["engine"]        
+        execution:   
+          type: object
+          properties:       
+            client:
+              type: object
+              properties:
+                name:
+                  const: besu
+              required: ["name"]
+          required: ["client"]
+      required: ["common", "execution"]
+    then:
+      errorMessage: "Warning: Besu support for IPC (--Xrpc-ipc-enabled) is still early access. Use with caution."
+
+  - if:
+      type: object
+      properties:
+        execution:
+          type: object
+          properties:
+            client:
+              type: object
+              properties:
+                name:
+                  enum: [erigon, reth]
+              required: ["name"]
+          required: ["client"]        
+        common:
+          type: object
+          properties:
+            engine:
+              type: object
+              properties:
+                communication:
+                  type: object
+                  properties:
+                    method:
+                      const: ipc
+                  required: ["method"]
+              required: ["communication"]
+          required: ["engine"]        
+      required: ["execution", "common"]          
+    then:
+      errorMessage: "Erigon and Reth do not support IPC communication. Please use a different communication method."
+
+  - if:
+      type: object
+      properties:
+        consensus:
+          type: object
+          properties:
+            client:
+              type: object
+              properties:
+                name:
+                  enum: [lodestar, lighthouse, nimbus-eth2, teku]
+              required: ["name"]
+          required: ["client"]        
+        common:
+          type: object
+          properties:
+            engine:
+              type: object
+              properties:
+                communication:
+                  type: object
+                  properties:
+                    method:
+                      const: ipc
+                  required: ["method"]
+              required: ["communication"]
+          required: ["engine"]        
+      required: ["consensus", "common"]          
+    then:
+      errorMessage: "Lodestar, Lighthouse, Nimbus-eth2, and Teku do not support IPC communication. Please use a different communication method." 

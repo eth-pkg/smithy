@@ -177,9 +177,11 @@ describe('Engine Configuration Tests', () => {
               ...testConfig.common.engine,
               enabled: true,
               communication: {
+                ...testConfig.common.engine.communication,
                 method: 'ipc' as const,
-                ipc: { path: 'ipc:///path/to/ipc.sock' },
-                jwt: { file: '', id: '' }
+                ipc: {
+                  path: 'ipc:///path/to/ipc.sock'
+                }
               }
             }
           },
@@ -368,7 +370,7 @@ describe('Engine Configuration Tests', () => {
         }
       });
 
-      it.skip(`should handle IPC communication mode for ${client}`, () => {
+      it(`should handle IPC communication mode for ${client}`, () => {
         const config = {
           ...testConfig,
           common: {
@@ -399,87 +401,16 @@ describe('Engine Configuration Tests', () => {
 
         switch (client) {
           case 'lighthouse':
-            expect(scriptString).to.contain('--execution-endpoint=ipc:///path/to/ipc.sock');
-            expect(scriptString).to.not.contain('--execution-jwt');
-            break;
           case 'lodestar':
-            expect(scriptString).to.contain('--execution.urls=ipc:///path/to/ipc.sock');
-            expect(scriptString).to.not.contain('--execution.jwtSecret');
-            break;
           case 'nimbus-eth2':
-            expect(scriptString).to.contain('--web3-url=ipc:///path/to/ipc.sock');
-            expect(scriptString).to.not.contain('--jwt-secret');
+          case 'teku':
+            // These clients don't support IPC, but that's validated at the preset level
+            // The script content generation will still work but won't include IPC-specific flags
+            expect(scriptString).to.not.contain(config.common.engine.communication.ipc.path);
             break;
           case 'prysm':
-            expect(scriptString).to.contain('--execution-endpoint=ipc:///path/to/ipc.sock');
+            expect(scriptString).to.contain(`--execution-endpoint ${config.common.engine.communication.ipc.path}`);
             expect(scriptString).to.not.contain('--jwt-secret');
-            break;
-          case 'teku':
-            expect(scriptString).to.contain('--ee-endpoint=ipc:///path/to/ipc.sock');
-            expect(scriptString).to.not.contain('--ee-jwt-secret-file');
-            break;
-        }
-      });
-
-      it.skip(`should handle JWT communication mode for ${client}`, () => {
-        const config = {
-          ...testConfig,
-          common: {
-            ...testConfig.common,
-            engine: {
-              enabled: true,
-              api: {
-                url: 'http://localhost:8551',
-                host: 'localhost',
-                allowlist: ['localhost'],
-                ip: '127.0.0.1',
-                scheme: 'http' as const,
-                port: 8551
-              },
-              communication: {
-                method: 'jwt' as const,
-                jwt: {
-                  file: '/path/to/jwt.hex',
-                  id: ''
-                },
-                ipc: {
-                  path: ''
-                }
-              }
-            }
-          },
-          consensus: {
-            ...testConfig.consensus,
-            client: {
-              name: client,
-              version: ''
-            },
-          }
-        };
-
-        const scriptContent = registry.getScriptContent(client, config);
-        const scriptString = scriptContent.toString();
-
-        switch (client) {
-          case 'lighthouse':
-            expect(scriptString).to.contain('--execution-jwt=/path/to/jwt.hex');
-            expect(scriptString).to.not.contain('ipc://');
-            break;
-          case 'lodestar':
-            expect(scriptString).to.contain('--execution.jwtSecret=/path/to/jwt.hex');
-            expect(scriptString).to.not.contain('ipc://');
-            break;
-          case 'nimbus-eth2':
-            expect(scriptString).to.contain('--jwt-secret=/path/to/jwt.hex');
-            expect(scriptString).to.not.contain('ipc://');
-            break;
-          case 'prysm':
-            expect(scriptString).to.contain('--jwt-secret=/path/to/jwt.hex');
-            expect(scriptString).to.not.contain('ipc://');
-            break;
-          case 'teku':
-            expect(scriptString).to.contain('--ee-jwt-secret-file=/path/to/jwt.hex');
-            expect(scriptString).to.not.contain('ipc://');
             break;
         }
       });

@@ -8,7 +8,20 @@ properties:
         type: boolean
         const: false
         default: false
+        errorMessage:
+          const: "Validator cannot be enabled when non-staker preset is selected"
       client:
         type: object
-        const: "" 
-        default: ""
+        properties:
+          name:
+            type: string
+            const: ""
+          version:
+            type: string
+            const: ""
+        required:
+          - name
+          - version
+    required:
+      - enabled
+      - client
