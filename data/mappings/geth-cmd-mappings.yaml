@@ -2,51 +2,429 @@ name: geth
 version: 1.13.14
 valueFormat: space
 rules:
-  - configPath: execution.dataDir
-    flag: --datadir
-    transform: interpolate
-  - configPath: common.network.name
-    flag: --mainnet
-    transform: network
-  - configPath: common.network.name
-    flag: --sepolia
-    transform: network  
-  - configPath: common.network.name
-    flag: --holesky
-    transform: network  
-  - configPath: common.network.name
-    flag: --ephemery
-    transform: network
-  - configPath: common.network.name
-    flag: --hoodi
-    transform: network
-  - configPath: common.network.id
-    flag: --networkid
-  - configPath: common.engine.communication.jwt.file
-    flag: --authrpc.jwtsecret
+  - flag: --allow-insecure-unlock
+    configPath: 
+  - flag: --authrpc.addr
+    configPath: common.engine.api.host
+    enabled:
+      configPath: common.engine.communication.method
+      transform: jwtEnabled
+  - flag: --authrpc.jwtsecret
+    configPath: common.engine.communication.jwt.file
     transform: interpolate
     enabled:
       configPath: common.engine.communication.method
       transform: jwtEnabled
-  - configPath: common.engine.api.host
-    flag: --authrpc.addr
+  - flag: --authrpc.port
+    configPath: common.engine.api.port
     enabled:
       configPath: common.engine.communication.method
       transform: jwtEnabled
-  - configPath: common.engine.api.port
-    flag: --authrpc.port
+  - flag: --authrpc.vhosts
+    configPath: common.engine.api.allowlist
+    transform: allowlist
     enabled:
       configPath: common.engine.communication.method
       transform: jwtEnabled
-  - configPath: common.engine.communication.ipc.path
-    flag: --ipcpath
+  - flag: --beacon.api
+    configPath: 
+  - flag: --beacon.api.header
+    configPath: 
+  - flag: --beacon.checkpoint
+    configPath: 
+  - flag: --beacon.checkpoint.file
+    configPath: 
+  - flag: --beacon.config
+    configPath: 
+  - flag: --beacon.genesis.gvroot
+    configPath: 
+  - flag: --beacon.genesis.time
+    configPath: 
+  - flag: --beacon.nofilter
+    configPath: 
+  - flag: --beacon.threshold
+    configPath: 
+  - flag: --blobpool.datacap
+    configPath: 
+  - flag: --blobpool.datadir
+    configPath: 
+  - flag: --blobpool.pricebump
+    configPath: 
+  - flag: --bootnodes
+    configPath: execution.p2p.bootnodes
+    enabled:
+      configPath: execution.p2p.enabled
+      transform: flagEnabled
+  - flag: --cache
+    configPath: 
+  - flag: --cache.blocklogs
+    configPath: 
+  - flag: --cache.database
+    configPath: 
+  - flag: --cache.gc
+    configPath: 
+  - flag: --cache.noprefetch
+    configPath: 
+  - flag: --cache.preimages
+    configPath: 
+  - flag: --cache.snapshot
+    configPath: 
+  - flag: --cache.trie
+    configPath: 
+  - flag: --cache.trie.journal
+    configPath: 
+  - flag: --cache.trie.rejournal
+    configPath: 
+  - flag: --config
+    configPath: 
+  - flag: --crypto.kzg
+    configPath: 
+  - flag: --datadir
+    configPath: execution.dataDir
+    transform: interpolate
+  - flag: --datadir.ancient
+    configPath: 
+  - flag: --datadir.minfreedisk
+    configPath: 
+  - flag: --db.engine
+    configPath: 
+  - flag: --dev
+    configPath: 
+  - flag: --dev.gaslimit
+    configPath: 
+  - flag: --dev.period
+    configPath: 
+  - flag: --discovery.dns
+    configPath: 
+  - flag: --discovery.port
+    configPath: 
+  - flag: --discovery.v4
+    configPath: 
+  - flag: --discovery.v5
+    configPath: 
+  - flag: --eth.requiredblocks
+    configPath: 
+  - flag: --ethstats
+    configPath: 
+  - flag: --ephemery
+    configPath: common.network.name
+    transform: network
+  - flag: --exec
+    configPath: 
+  - flag: --exitwhensynced
+    configPath: 
+  - flag: --fdlimit
+    configPath: 
+  - flag: --gcmode
+    configPath: 
+  - flag: --go-execution-trace
+    configPath: 
+  - flag: --gpo.blocks
+    configPath: 
+  - flag: --gpo.ignoreprice
+    configPath: 
+  - flag: --gpo.maxprice
+    configPath: 
+  - flag: --gpo.percentile
+    configPath: 
+  - flag: --graphql
+    configPath: 
+  - flag: --graphql.corsdomain
+    configPath: 
+  - flag: --graphql.vhosts
+    configPath: 
+  - flag: --header
+    configPath: 
+  - flag: --history.chain
+    configPath: 
+  - flag: --history.logs
+    configPath: 
+  - flag: --history.logs.disable
+    configPath: 
+  - flag: --history.logs.export
+    configPath: 
+  - flag: --history.state
+    configPath: 
+  - flag: --history.transactions
+    configPath: 
+  - flag: --holesky
+    configPath: common.network.name
+    transform: network
+  - flag: --hoodi
+    configPath: common.network.name
+    transform: network
+  - flag: --http
+    configPath: execution.http.enabled
+    transform: flagEnabled
+    enabled:
+      configPath: execution.http.enabled
+      transform: flagEnabled
+  - flag: --http.addr
+    configPath: execution.http.address
+    enabled:
+      configPath: execution.http.enabled
+      transform: flagEnabled
+  - flag: --http.api
+    configPath: execution.http.modules
+    transform: allowlist
+    enabled:
+      configPath: execution.http.enabled
+      transform: flagEnabled
+  - flag: --http.corsdomain
+    configPath: execution.http.allowlist
+    transform: allowlist
+    enabled:
+      configPath: execution.http.enabled
+      transform: flagEnabled
+  - flag: --http.port
+    configPath: execution.http.port
+    enabled:
+      configPath: execution.http.enabled
+      transform: flagEnabled
+  - flag: --http.rpcprefix
+    configPath: 
+  - flag: --http.vhosts
+    configPath: execution.http.allowlist
+    transform: allowlist
+    enabled:
+      configPath: execution.http.enabled
+      transform: flagEnabled
+  - flag: --identity
+    configPath: execution.p2p.identity
+  - flag: --ipcdisable
+    configPath: common.engine.communication.method
+    transform: jwtEnabled
+  - flag: --ipcpath
+    configPath: common.engine.communication.ipc.path
     transform: interpolate
     enabled:
       configPath: common.engine.communication.method
       transform: ipcEnabled
-  - configPath: common.engine.communication.method
-    flag: --ipcdisable
-    transform: jwtEnabled
-  - configPath: common.engine.api.allowlist
-    flag: --authrpc.vhosts
-    transform: allowlist 
+  - flag: --jspath
+    configPath: 
+  - flag: --keystore
+    configPath: 
+  - flag: --light.egress
+    configPath: 
+  - flag: --light.ingress
+    configPath: 
+  - flag: --light.maxpeers
+    configPath: 
+  - flag: --light.nopruning
+    configPath: 
+  - flag: --light.nosyncserve
+    configPath: 
+  - flag: --light.serve
+    configPath: 
+  - flag: --lightkdf
+    configPath: 
+  - flag: --log.backtrace
+    configPath: 
+  - flag: --log.compress
+    configPath: 
+  - flag: --log.debug
+    configPath: 
+  - flag: --log.file
+    configPath: 
+  - flag: --log.format
+    configPath: 
+  - flag: --log.maxage
+    configPath: 
+  - flag: --log.maxbackups
+    configPath: 
+  - flag: --log.maxsize
+    configPath: 
+  - flag: --log.rotate
+    configPath: 
+  - flag: --log.vmodule
+    configPath: 
+  - flag: --mainnet
+    configPath: common.network.name
+    transform: network
+  - flag: --maxpeers
+    configPath: execution.p2p.maxPeers
+    enabled:
+      configPath: execution.p2p.enabled
+      transform: flagEnabled
+  - flag: --maxpendpeers
+    configPath: 
+  - flag: --metrics
+    configPath: execution.metrics.enabled
+    transform: flagEnabled
+  - flag: --metrics.addr
+    configPath: execution.metrics.host
+    enabled:
+      configPath: execution.metrics.enabled
+      transform: flagEnabled
+  - flag: --metrics.expensive
+    configPath: 
+  - flag: --metrics.influxdb
+    configPath: 
+  - flag: --metrics.influxdb.bucket
+    configPath: 
+  - flag: --metrics.influxdb.database
+    configPath: 
+  - flag: --metrics.influxdb.endpoint
+    configPath: 
+  - flag: --metrics.influxdb.organization
+    configPath: 
+  - flag: --metrics.influxdb.password
+    configPath: 
+  - flag: --metrics.influxdb.tags
+    configPath: 
+  - flag: --metrics.influxdb.token
+    configPath: 
+  - flag: --metrics.influxdb.username
+    configPath: 
+  - flag: --metrics.influxdbv2
+    configPath: 
+  - flag: --metrics.port
+    configPath: execution.metrics.port
+    enabled:
+      configPath: execution.metrics.enabled
+      transform: flagEnabled
+  - flag: --mine
+    configPath: 
+  - flag: --miner.etherbase
+    configPath: 
+  - flag: --miner.extradata
+    configPath: 
+  - flag: --miner.gaslimit
+    configPath: 
+  - flag: --miner.gasprice
+    configPath: 
+  - flag: --miner.newpayload-timeout
+    configPath: 
+  - flag: --miner.pending.feeRecipient
+    configPath: 
+  - flag: --miner.recommit
+    configPath: 
+  - flag: --nat
+    configPath: execution.p2p.nat.method
+  - flag: --netrestrict
+    configPath: 
+  - flag: --networkid
+    configPath: common.network.id
+  - flag: --nodekey
+    configPath: 
+  - flag: --nodekeyhex
+    configPath: 
+  - flag: --nodiscover
+    configPath: 
+  - flag: --nousb
+    configPath: 
+  - flag: --override.prague
+    configPath: 
+  - flag: --override.verkle
+    configPath: 
+  - flag: --password
+    configPath: 
+  - flag: --pcscdpath
+    configPath: 
+  - flag: --port
+    configPath: execution.p2p.port
+  - flag: --pprof
+    configPath: 
+  - flag: --pprof.addr
+    configPath: 
+  - flag: --pprof.blockprofilerate
+    configPath: 
+  - flag: --pprof.cpuprofile
+    configPath: 
+  - flag: --pprof.memprofilerate
+    configPath: 
+  - flag: --pprof.port
+    configPath: 
+  - flag: --preload
+    configPath: 
+  - flag: --remotedb
+    configPath: 
+  - flag: --rpc.allow-unprotected-txs
+    configPath: 
+  - flag: --rpc.batch-request-limit
+    configPath: 
+  - flag: --rpc.batch-response-max-size
+    configPath: 
+  - flag: --rpc.evmtimeout
+    configPath: 
+  - flag: --rpc.gascap
+    configPath: 
+  - flag: --rpc.txfeecap
+    configPath: 
+  - flag: --sepolia
+    configPath: common.network.name
+    transform: network
+  - flag: --signer
+    configPath: 
+  - flag: --snapshot
+    configPath: 
+  - flag: --state.scheme
+    configPath: 
+  - flag: --syncmode
+    configPath: 
+  - flag: --synctarget
+    configPath: 
+  - flag: --txlookuplimit
+    configPath: 
+  - flag: --txpool.accountqueue
+    configPath: 
+  - flag: --txpool.accountslots
+    configPath: 
+  - flag: --txpool.globalqueue
+    configPath: 
+  - flag: --txpool.globalslots
+    configPath: 
+  - flag: --txpool.journal
+    configPath: 
+  - flag: --txpool.lifetime
+    configPath: 
+  - flag: --txpool.locals
+    configPath: 
+  - flag: --txpool.nolocals
+    configPath: 
+  - flag: --txpool.pricebump
+    configPath: 
+  - flag: --txpool.pricelimit
+    configPath: 
+  - flag: --txpool.rejournal
+    configPath: 
+  - flag: --unlock
+    configPath: 
+  - flag: --usb
+    configPath: 
+  - flag: --verbosity
+    configPath: 
+  - flag: --vmdebug
+    configPath: 
+  - flag: --vmtrace
+    configPath: 
+  - flag: --vmtrace.jsonconfig
+    configPath: 
+  - flag: --whitelist
+    configPath: 
+  - flag: --ws
+    configPath: execution.ws.enabled
+    transform: flagEnabled
+  - flag: --ws.addr
+    configPath: execution.ws.address
+    enabled:
+      configPath: execution.ws.enabled
+      transform: flagEnabled
+  - flag: --ws.api
+    configPath: execution.ws.modules 
+    enabled:
+      configPath: execution.ws.enabled
+      transform: flagEnabled
+    transform: allowlist
+  - flag: --ws.origins
+    configPath: execution.ws.allowlist
+    enabled:
+      configPath: execution.ws.enabled
+      transform: flagEnabled
+  - flag: --ws.port
+    configPath: execution.ws.port
+    enabled:
+      configPath: execution.ws.enabled
+      transform: flagEnabled
+  - flag: --ws.rpcprefix
+    configPath: 

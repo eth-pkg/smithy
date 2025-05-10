@@ -89,6 +89,7 @@ properties:
             default: "any"
             description: "NAT configuration"
             enum:
+              - any
               - none
               - upnp
               - pmp
@@ -223,6 +224,22 @@ properties:
         errorMessage:
           minimum: "WebSocket port must be >= 1024"
           maximum: "WebSocket port must be <= 65535"
+      address:
+        type: string
+        default: "localhost"
+        description: "Address to listen on for WebSocket JSON-RPC API"
+      modules:
+        type: array
+        default: ["eth", "net", "web3"]
+        description: "List of JSON-RPC API namespaces to enable"
+        items:
+          type: string
+      allowlist:
+        type: array
+        default: ["*"]
+        description: "List of allowed CORS origins for WebSocket JSON-RPC API"
+        items:
+          type: string
   logging:
     type: object
     properties:
@@ -286,6 +303,14 @@ properties:
         type: boolean
         default: false
         description: "Enable builder"
+  pruning:
+    type: object
+    properties:
+      enabled:
+        type: boolean
+        default: false
+        description: "Enable pruning"
+        
   dataDir:
     type: string
     default: "{common.dataDir}/{execution.client.name}"

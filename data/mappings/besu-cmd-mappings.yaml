@@ -2,41 +2,418 @@ name: besu
 version: 25.4.1
 valueFormat: equals
 rules:
-  - configPath: execution.dataDir
-    flag: --data-path
-    transform: interpolate
-  - configPath: common.network.name
-    flag: --network
-  - configPath: common.network.id
-    flag: --network-id
-  - configPath: common.engine.communication.jwt.file
-    flag: --engine-jwt-secret
-    transform: interpolate
+  - flag: --api-gas-price-blocks
+    configPath:
+  - flag: --api-gas-price-max
+    configPath:
+  - flag: --api-gas-price-percentile
+    configPath:
+  - flag: --auto-log-bloom-caching-enabled
+    configPath:
+  - flag: --banned-node-id
+    configPath:
+  - flag: --block-txs-selection-max-time
+    configPath:
+  - flag: --bonsai-historical-block-limit
+    configPath:
+  - flag: --bonsai-limit-trie-logs-enabled
+    configPath:
+  - flag: --bonsai-trie-logs-pruning-window-size
+    configPath:
+  - flag: --bootnodes
+    configPath: execution.p2p.bootnodes
     enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
-  - configPath: common.engine.api.port
-    flag: --engine-rpc-port
-    enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
-  - configPath: common.engine.api.allowlist
-    flag: --engine-host-allowlist
+      configPath: execution.p2p.enabled
+      transform: flagEnabled
+  - flag: --cache-last-blocks
+    configPath:
+  - flag: --cache-precompiles
+    configPath:
+  - flag: --color-enabled
+    configPath:
+  - flag: --config-file
+    configPath:
+  - flag: --data-path
+    configPath: execution.dataDir
+    transform: interpolate
+  - flag: --data-storage-format
+    configPath:
+  - flag: --discovery-dns-url
+    configPath:
+  - flag: --discovery-enabled
+    configPath:
+  - flag: --engine-host-allowlist
+    configPath: common.engine.api.allowlist
     transform: allowlist
     enabled:
       configPath: common.engine.communication.method
       transform: jwtEnabled
-  - configPath: common.engine.api.host
-    flag: --engine-jwt-disabled
+  - flag: --engine-jwt-disabled
+    configPath: common.engine.api.host
     transform: isFlag
     enabled:
       configPath: common.engine.communication.method
       transform: ipcEnabled
-  - configPath: common.engine.communication.ipc.path
-    flag: --Xrpc-ipc-enabled
+  - flag: --engine-jwt-secret
+    configPath: common.engine.communication.jwt.file
+    transform: interpolate
+    enabled:
+      configPath: common.engine.communication.method
+      transform: jwtEnabled
+  - flag: --engine-rpc-enabled
+    configPath: common.engine.enabled
+    transform: isFlag
+  - flag: --engine-rpc-port
+    configPath: common.engine.api.port
+    enabled:
+      configPath: common.engine.communication.method
+      transform: jwtEnabled
+  - flag: --ethstats
+    configPath:
+  - flag: --ethstats-cacert-file
+    configPath:
+  - flag: --ethstats-contact
+    configPath:
+  - flag: --genesis-file
+    configPath:
+  - flag: --genesis-state-hash-cache-enabled
+    configPath:
+  - flag: --graphql-http-cors-origins
+    configPath:
+  - flag: --graphql-http-enabled
+    configPath:
+  - flag: --graphql-http-host
+    configPath:
+  - flag: --graphql-http-port
+    configPath:
+  - flag: --graphql-mtls-enabled
+    configPath:
+  - flag: --graphql-tls-enabled
+    configPath:
+  - flag: --graphql-tls-keystore-file
+    configPath:
+  - flag: --graphql-tls-keystore-password-file
+    configPath:
+  - flag: --graphql-tls-truststore-file
+    configPath:
+  - flag: --graphql-tls-truststore-password-file
+    configPath:
+  - flag: --host-allowlist
+    configPath: execution.p2p.allowlist
+    transform: allowlist
+    enabled:
+      configPath: execution.p2p.enabled
+      transform: flagEnabled
+  - flag: --identity
+    configPath: execution.p2p.identity
+  - flag: --json-pretty-print-enabled
+    configPath:
+  - flag: --key-value-storage
+    configPath:
+  - flag: --kzg-trusted-setup
+    configPath:
+  - flag: --logging
+    configPath:
+  - flag: --max-peers
+    configPath: execution.p2p.maxPeers
+    enabled:
+      configPath: execution.p2p.enabled
+      transform: flagEnabled
+  - flag: --metrics-category
+    configPath:
+  - flag: --metrics-enabled
+    configPath: execution.metrics.enabled
+    transform: flagEnabled
+  - flag: --metrics-host
+    configPath: execution.metrics.host
+    enabled:
+      configPath: execution.metrics.enabled
+      transform: flagEnabled
+  - flag: --metrics-port
+    configPath: execution.metrics.port
+    enabled:
+      configPath: execution.metrics.enabled
+      transform: flagEnabled
+  - flag: --metrics-protocol
+    configPath:
+  - flag: --metrics-push-enabled
+    configPath:
+  - flag: --metrics-push-host
+    configPath:
+  - flag: --metrics-push-interval
+    configPath:
+  - flag: --metrics-push-port
+    configPath:
+  - flag: --metrics-push-prometheus-job
+    configPath:
+  - flag: --min-block-occupancy-ratio
+    configPath:
+  - flag: --min-gas-price
+    configPath:
+  - flag: --min-priority-fee
+    configPath:
+  - flag: --miner-coinbase
+    configPath:
+  - flag: --miner-enabled
+    configPath:
+  - flag: --miner-extra-data
+    configPath:
+  - flag: --miner-stratum-enabled
+    configPath:
+  - flag: --miner-stratum-host
+    configPath:
+  - flag: --miner-stratum-port
+    configPath:
+  - flag: --nat-method
+    configPath: execution.p2p.nat.method
+    enabled:
+      configPath: execution.p2p.nat.enabled
+      transform: flagEnabled
+  - flag: --net-restrict
+    configPath:
+  - flag: --network
+    configPath: common.network.name
+  - flag: --network-id
+    configPath: common.network.id
+  - flag: --node-private-key-file
+    configPath:
+  - flag: --p2p-enabled
+    configPath: execution.p2p.enabled
+    transform: flagEnabled
+  - flag: --p2p-host
+    configPath: execution.p2p.host
+  - flag: --p2p-interface
+    configPath: 
+  - flag: --p2p-port
+    configPath: execution.p2p.port
+    enabled:
+      configPath: execution.p2p.enabled
+      transform: flagEnabled
+  - flag: --permissions-accounts-config-file
+    configPath:
+  - flag: --permissions-accounts-config-file-enabled
+    configPath:
+  - flag: --permissions-accounts-contract-address
+    configPath:
+  - flag: --permissions-accounts-contract-enabled
+    configPath:
+  - flag: --permissions-nodes-config-file
+    configPath:
+  - flag: --permissions-nodes-config-file-enabled
+    configPath:
+  - flag: --permissions-nodes-contract-address
+    configPath:
+  - flag: --permissions-nodes-contract-enabled
+    configPath:
+  - flag: --permissions-nodes-contract-version
+    configPath:
+  - flag: --pid-path
+    configPath:
+  - flag: --plugin-continue-on-error
+    configPath:
+  - flag: --plugins
+    configPath:
+  - flag: --poa-block-txs-selection-max-time
+    configPath:
+  - flag: --poa-discovery-retry-bootnodes
+    configPath:
+  - flag: --print-paths-and-exit
+    configPath:
+  - flag: --profile
+    configPath:
+  - flag: --random-peer-priority-enabled
+    configPath:
+  - flag: --receipt-compaction-enabled
+    configPath:
+  - flag: --remote-connections-limit-enabled
+    configPath:
+  - flag: --remote-connections-max-percentage
+    configPath:
+  - flag: --reorg-logging-threshold
+    configPath:
+  - flag: --required-block
+    configPath:
+  - flag: --revert-reason-enabled
+    configPath:
+  - flag: --rpc-gas-cap
+    configPath:
+  - flag: --rpc-http-api
+    configPath: execution.http.modules
+    transform: allowlist
+    enabled:
+      configPath: execution.http.enabled
+      transform: flagEnabled
+  - flag: --rpc-http-api-method-no-auth
+    configPath:
+  - flag: --rpc-http-authentication-credentials-file
+    configPath:
+  - flag: --rpc-http-authentication-enabled
+    configPath:
+  - flag: --rpc-http-authentication-jwt-algorithm
+    configPath:
+  - flag: --rpc-http-authentication-jwt-public-key-file
+    configPath:
+  - flag: --rpc-http-cors-origins
+    configPath: execution.http.allowlist
+    transform: allowlist
+    enabled:
+      configPath: execution.http.enabled
+      transform: flagEnabled
+  - flag: --rpc-http-enabled
+    configPath: execution.http.enabled
+    transform: flagEnabled
+  - flag: --rpc-http-host
+    configPath: execution.http.address
+    enabled:
+      configPath: execution.http.enabled
+      transform: flagEnabled
+  - flag: --rpc-http-max-active-connections
+    configPath:
+  - flag: --rpc-http-max-batch-size
+    configPath:
+  - flag: --rpc-http-max-request-content-length
+    configPath:
+  - flag: --rpc-http-port
+    configPath: execution.http.port
+    enabled:
+      configPath: execution.http.enabled
+      transform: flagEnabled
+  - flag: --rpc-http-tls-ca-clients-enabled
+    configPath:
+  - flag: --rpc-http-tls-cipher-suite
+    configPath:
+  - flag: --rpc-http-tls-client-auth-enabled
+    configPath:
+  - flag: --rpc-http-tls-enabled
+    configPath: execution.http.tls.enabled
+    enabled:
+      configPath: execution.http.enabled
+      transform: flagEnabled
+  - flag: --rpc-http-tls-keystore-file
+    configPath: execution.http.tls.keystore.file
+  - flag: --rpc-http-tls-keystore-password-file
+    configPath:
+  - flag: --rpc-http-tls-known-clients-file
+    configPath:
+  - flag: --rpc-http-tls-protocol
+    configPath:
+  - flag: --rpc-http-tls-truststore-file
+    configPath:
+  - flag: --rpc-http-tls-truststore-password-file
+    configPath:
+  - flag: --rpc-max-logs-range
+    configPath:
+  - flag: --rpc-max-trace-filter-range
+    configPath:
+  - flag: --rpc-tx-feecap
+    configPath:
+  - flag: --rpc-ws-api
+    configPath: execution.ws.modules
+    transform: allowlist
+    enabled:
+      configPath: execution.ws.enabled
+      transform: flagEnabled
+  - flag: --rpc-ws-api-method-no-auth
+    configPath: 
+  - flag: --rpc-ws-authentication-credentials-file
+    configPath:
+  - flag: --rpc-ws-authentication-enabled
+    configPath:
+  - flag: --rpc-ws-authentication-jwt-algorithm
+    configPath:
+  - flag: --rpc-ws-authentication-jwt-public-key-file
+    configPath:
+  - flag: --rpc-ws-enabled
+    configPath: execution.ws.enabled
+    transform: flagEnabled
+  - flag: --rpc-ws-host
+    configPath: execution.ws.address
+    enabled:
+      configPath: execution.ws.enabled
+      transform: flagEnabled
+  - flag: --rpc-ws-max-active-connections
+    configPath:
+  - flag: --rpc-ws-max-frame-size
+    configPath:
+  - flag: --rpc-ws-port
+    configPath: execution.ws.port
+    enabled:
+      configPath: execution.ws.enabled
+      transform: flagEnabled
+  - flag: --rpc-ws-ssl-cert-file
+    configPath:
+  - flag: --rpc-ws-ssl-client-auth-enabled
+    configPath:
+  - flag: --rpc-ws-ssl-enabled
+    configPath:
+  - flag: --rpc-ws-ssl-key-file
+    configPath:
+  - flag: --rpc-ws-ssl-keystore-file
+    configPath:
+  - flag: --rpc-ws-ssl-keystore-password
+    configPath:
+  - flag: --rpc-ws-ssl-keystore-password-file
+    configPath:
+  - flag: --rpc-ws-ssl-keystore-type
+    configPath:
+  - flag: --rpc-ws-ssl-trustcert-file
+    configPath:
+  - flag: --rpc-ws-ssl-truststore-file
+    configPath:
+  - flag: --rpc-ws-ssl-truststore-password
+    configPath:
+  - flag: --rpc-ws-ssl-truststore-password-file
+    configPath:
+  - flag: --rpc-ws-ssl-truststore-type
+    configPath:
+  - flag: --security-module
+    configPath:
+  - flag: --static-nodes-file
+    configPath:
+  - flag: --strict-tx-replay-protection-enabled
+    configPath:
+  - flag: --sync-min-peers
+    configPath:
+  - flag: --sync-mode
+    configPath:
+  - flag: --target-gas-limit
+    configPath:
+  - flag: --tx-pool
+    configPath:
+  - flag: --tx-pool-blob-price-bump
+    configPath:
+  - flag: --tx-pool-disable-locals
+    configPath:
+  - flag: --tx-pool-enable-save-restore
+    configPath:
+  - flag: --tx-pool-layer-max-capacity
+    configPath:
+  - flag: --tx-pool-limit-by-account-percentage
+    configPath:
+  - flag: --tx-pool-max-future-by-sender
+    configPath:
+  - flag: --tx-pool-max-prioritized
+    configPath:
+  - flag: --tx-pool-max-prioritized-by-type
+    configPath:
+  - flag: --tx-pool-max-size
+    configPath:
+  - flag: --tx-pool-min-gas-price
+    configPath:
+  - flag: --tx-pool-min-score
+    configPath:
+  - flag: --tx-pool-price-bump
+    configPath:
+  - flag: --tx-pool-priority-senders
+    configPath:
+  - flag: --tx-pool-retention-hours
+    configPath:
+  - flag: --tx-pool-save-file
+    configPath:
+  - flag: --version-compatibility-protection
+    configPath:
+  - flag: --Xrpc-ipc-enabled
+    configPath: common.engine.communication.ipc.path
     enabled:
       configPath: common.engine.communication.method
       transform: ipcEnabled
-  - configPath: common.engine.enabled
-    flag: --engine-rpc-enabled
-    transform: isFlag

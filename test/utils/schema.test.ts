@@ -25,7 +25,7 @@ describe('SchemaUtils', () => {
       expect(defaults.execution.http, 'execution.http object should exist').to.exist;
       expect(defaults.execution.metrics, 'execution.metrics object should exist').to.exist;
       expect(defaults.execution.http, 'Missing execution.http.enabled property').to.haveOwnProperty('enabled');
-      expect(defaults.execution.http, 'Missing execution.http.api property').to.haveOwnProperty('api');
+      expect(defaults.execution.http, 'Missing execution.http.modules property').to.haveOwnProperty('modules');
       expect(defaults.execution.http, 'Missing execution.http.address property').to.haveOwnProperty('address');
       expect(defaults.execution.http, 'Missing execution.http.port property').to.haveOwnProperty('port');
       expect(defaults.execution.metrics, 'Missing execution.metrics.enabled property').to.haveOwnProperty('enabled');
@@ -68,7 +68,7 @@ describe('SchemaUtils', () => {
       // Verify execution default values
       expect(defaults.execution.isExternal).to.equal(true, 'execution.isExternal should default to true');
       expect(defaults.execution.http.enabled).to.equal(false, 'execution.http.enabled should default to true');
-      expect(defaults.execution.http.api).to.deep.equal(['eth', 'net', 'web3'], 'execution.http.api should have correct default values');
+      expect(defaults.execution.http.modules).to.deep.equal(['eth', 'net', 'web3'], 'execution.http.modules should have correct default values');
       expect(defaults.execution.http.address).to.equal('localhost', 'execution.http.address should default to localhost');
       expect(defaults.execution.http.port).to.equal(8545, 'execution.http.port should default to 8545');
       expect(defaults.execution.metrics.enabled).to.equal(false, 'execution.metrics.enabled should default to true');
@@ -110,7 +110,7 @@ describe('SchemaUtils', () => {
       expect(defaults.execution.http, 'execution.http object should exist').to.exist;
       expect(defaults.execution.metrics, 'execution.metrics object should exist').to.exist;
       expect(defaults.execution.http, 'Missing execution.http.enabled property').to.haveOwnProperty('enabled');
-      expect(defaults.execution.http, 'Missing execution.http.api property').to.haveOwnProperty('api');
+      expect(defaults.execution.http, 'Missing execution.http.modules property').to.haveOwnProperty('modules');
       expect(defaults.execution.http, 'Missing execution.http.address property').to.haveOwnProperty('address');
       expect(defaults.execution.http, 'Missing execution.http.port property').to.haveOwnProperty('port');
       expect(defaults.execution.metrics, 'Missing execution.metrics.enabled property').to.haveOwnProperty('enabled');
@@ -153,7 +153,7 @@ describe('SchemaUtils', () => {
       // Verify execution default values
       expect(defaults.execution.isExternal).to.equal(true, 'execution.isExternal should default to true');
       expect(defaults.execution.http.enabled).to.equal(false, 'execution.http.enabled should default to true');
-      expect(defaults.execution.http.api).to.deep.equal(['eth', 'net', 'web3'], 'execution.http.api should have correct default values');
+      expect(defaults.execution.http.modules).to.deep.equal(['eth', 'net', 'web3'], 'execution.http.modules should have correct default values');
       expect(defaults.execution.http.address).to.equal('localhost', 'execution.http.address should default to localhost');
       expect(defaults.execution.http.port).to.equal(8545, 'execution.http.port should default to 8545');
       expect(defaults.execution.metrics.enabled).to.equal(false, 'execution.metrics.enabled should default to true');

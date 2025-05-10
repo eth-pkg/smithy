@@ -2,36 +2,535 @@ name: nethermind
 version: 1.25.0
 valueFormat: space
 rules:
-  - configPath: execution.dataDir
-    flag: --datadir
-    transform: interpolate
-  - configPath: common.engine.communication.jwt.file
-    flag: --JsonRpc.JwtSecretFile
-    transform: interpolate
+  - flag: --Aura.AllowAuRaPrivateChains
+    configPath:
+  - flag: --Aura.ForceSealing
+    configPath:
+  - flag: --Aura.Minimum2MlnGasPerBlockWhenUsingBlockGasLimitContract
+    configPath:
+  - flag: --Aura.TxPriorityConfigFilePath
+    configPath:
+  - flag: --Aura.TxPriorityContractAddress
+    configPath:
+  - flag: --Blocks.BlockProductionTimeoutMs
+    configPath:
+  - flag: --Blocks.ExtraData
+    configPath:
+  - flag: --Blocks.GenesisTimeoutMs
+    configPath:
+  - flag: --Blocks.MinGasPrice
+    configPath:
+  - flag: --Blocks.PreWarmStateOnBlockProcessing
+    configPath:
+  - flag: --Blocks.RandomizedBlocks
+    configPath:
+  - flag: --Blocks.SecondsPerSlot
+    configPath:
+  - flag: --Blocks.TargetBlockGasLimit
+    configPath:
+  - flag: --Bloom.Index
+    configPath:
+  - flag: --Bloom.IndexLevelBucketSizes
+    configPath:
+  - flag: --Bloom.Migration
+    configPath:
+  - flag: --Bloom.MigrationStatistics
+    configPath:
+  - flag: --CL.Enabled
+    configPath:
+  - flag: --CL.L1BeaconApiEndpoint
+    configPath:
+  - flag: --CL.L1EthApiEndpoint
+    configPath:
+  - flag: --CL.P2PHost
+    configPath:
+  - flag: --CL.P2PPort
+    configPath:
+  - flag: --CensorshipDetector.AddressesForCensorshipDetection
+    configPath:
+  - flag: --CensorshipDetector.BlockCensorshipThreshold
+    configPath:
+  - flag: --CensorshipDetector.Enabled
+    configPath:
+  - flag: --Clique.BlockPeriod
+    configPath:
+  - flag: --Clique.Epoch
+    configPath:
+  - flag: --Clique.MinimumOutOfTurnDelay
+    configPath:
+  - flag: --Era.ExportDirectory
+    configPath:
+  - flag: --Era.From
+    configPath:
+  - flag: --Era.ImportDirectory
+    configPath:
+  - flag: --Era.To
+    configPath:
+  - flag: --Era.TrustedAccumulatorFile
+    configPath:
+  - flag: --EthStats.Contact
+    configPath:
+  - flag: --EthStats.Enabled
+    configPath:
+  - flag: --EthStats.Name
+    configPath:
+  - flag: --EthStats.Secret
+    configPath:
+  - flag: --EthStats.SendInterval
+    configPath:
+  - flag: --EthStats.Server
+    configPath:
+  - flag: --HealthChecks.Enabled
+    configPath:
+  - flag: --HealthChecks.LowStorageCheckAwaitOnStartup
+    configPath:
+  - flag: --HealthChecks.LowStorageSpaceShutdownThreshold
+    configPath:
+  - flag: --HealthChecks.LowStorageSpaceWarningThreshold
+    configPath:
+  - flag: --HealthChecks.MaxIntervalClRequestTime
+    configPath:
+  - flag: --HealthChecks.MaxIntervalWithoutProcessedBlock
+    configPath:
+  - flag: --HealthChecks.MaxIntervalWithoutProducedBlock
+    configPath:
+  - flag: --HealthChecks.PollingInterval
+    configPath:
+  - flag: --HealthChecks.Slug
+    configPath:
+  - flag: --HealthChecks.UIEnabled
+    configPath:
+  - flag: --HealthChecks.WebhooksEnabled
+    configPath:
+  - flag: --HealthChecks.WebhooksPayload
+    configPath:
+  - flag: --HealthChecks.WebhooksRestorePayload
+    configPath:
+  - flag: --HealthChecks.WebhooksUri
+    configPath:
+  - flag: --Hive.BlocksDir
+    configPath:
+  - flag: --Hive.ChainFile
+    configPath:
+  - flag: --Hive.Enabled
+    configPath:
+  - flag: --Hive.GenesisFilePath
+    configPath:
+  - flag: --Hive.KeysDir
+    configPath:
+  - flag: --Init.AutoDump
+    configPath:
+  - flag: --Init.BadBlocksStored
+    configPath:
+  - flag: --Init.BaseDbPath
+    configPath:
+  - flag: --Init.ChainSpecPath
+    configPath:
+  - flag: --Init.DiagnosticMode
+    configPath:
+  - flag: --Init.DiscoveryEnabled
+    configPath:
+  - flag: --Init.EnableUnsecuredDevWallet
+    configPath:
+  - flag: --Init.GenesisHash
+    configPath:
+  - flag: --Init.IsMining
+    configPath:
+  - flag: --Init.KeepDevWalletInMemory
+    configPath:
+  - flag: --Init.KzgSetupPath
+    configPath:
+  - flag: --Init.LogDirectory
+    configPath:
+  - flag: --Init.LogFileName
+    configPath:
+  - flag: --Init.LogRules
+    configPath:
+  - flag: --Init.MemoryHint
+    configPath:
+  - flag: --Init.PeerManagerEnabled
+    configPath:
+  - flag: --Init.ProcessingEnabled
+    configPath:
+  - flag: --Init.RpcDbUrl
+    configPath:
+  - flag: --Init.StaticNodesPath
+    configPath:
+  - flag: --Init.WebSocketsEnabled
+    configPath: execution.ws.enabled
+    transform: flagEnabled
+  - flag: --JsonRpc.AdditionalRpcUrls
+    configPath: 
+  - flag: --JsonRpc.BufferResponses
+    configPath:
+  - flag: --JsonRpc.CallsFilterFilePath
+    configPath:
+  - flag: --JsonRpc.CorsOrigins
+    configPath: execution.http.allowlist
+    transform: allowlist
     enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
-  - configPath: common.engine.api.host
-    flag: --JsonRpc.EngineHost
+      configPath: execution.http.enabled
+      transform: flagEnabled
+  - flag: --JsonRpc.Enabled
+    configPath: execution.http.enabled
+    transform: flagEnabled
+  - flag: --JsonRpc.EnabledModules
+    configPath: execution.http.modules
+    transform: allowlist
     enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
-  - configPath: common.engine.api.port
-    flag: --JsonRpc.EnginePort
-    enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
-  - configPath: common.engine.api.allowlist
-    flag: --JsonRpc.EngineEnabledModules
+      configPath: execution.http.enabled
+      transform: flagEnabled
+  - flag: --JsonRpc.EngineEnabledModules
+    configPath: common.engine.api.allowlist
     transform: allowlist
     enabled:
       configPath: common.engine.communication.method
       transform: jwtEnabled
-  - configPath: common.engine.communication.ipc.path
-    flag: --JsonRpc.IpcUnixDomainSocketPath
+  - flag: --JsonRpc.EngineHost
+    configPath: common.engine.api.host
+    enabled:
+      configPath: common.engine.communication.method
+      transform: jwtEnabled
+  - flag: --JsonRpc.EnginePort
+    configPath: common.engine.api.port
+    enabled:
+      configPath: common.engine.communication.method
+      transform: jwtEnabled
+  - flag: --JsonRpc.EstimateErrorMargin
+    configPath:
+  - flag: --JsonRpc.EthModuleConcurrentInstances
+    configPath:
+  - flag: --JsonRpc.GasCap
+    configPath:
+  - flag: --JsonRpc.Host
+    configPath: execution.http.address 
+    enabled:
+      configPath: execution.http.enabled
+      transform: flagEnabled
+  - flag: --JsonRpc.IpcUnixDomainSocketPath
+    configPath: common.engine.communication.ipc.path
     transform: interpolate
     enabled:
       configPath: common.engine.communication.method
       transform: ipcEnabled
-  - configPath: common.network.id
-    flag: --networkid
+  - flag: --JsonRpc.JwtSecretFile
+    configPath: common.engine.communication.jwt.file
+    transform: interpolate
+    enabled:
+      configPath: common.engine.communication.method
+      transform: jwtEnabled
+  - flag: --JsonRpc.MaxBatchResponseBodySize
+    configPath:
+  - flag: --JsonRpc.MaxBatchSize
+    configPath:
+  - flag: --JsonRpc.MaxLoggedRequestParametersCharacters
+    configPath:
+  - flag: --JsonRpc.MaxLogsPerResponse
+    configPath:
+  - flag: --JsonRpc.MaxRequestBodySize
+    configPath:
+  - flag: --JsonRpc.MaxSimulateBlocksCap
+    configPath:
+  - flag: --JsonRpc.MethodsLoggingFiltering
+    configPath:
+  - flag: --JsonRpc.Port
+    configPath: execution.http.port
+    enabled:
+      configPath: execution.http.enabled
+      transform: flagEnabled
+  - flag: --JsonRpc.ReportIntervalSeconds
+    configPath:
+  - flag: --JsonRpc.RequestQueueLimit
+    configPath:
+  - flag: --JsonRpc.RpcRecorderBaseFilePath
+    configPath:
+  - flag: --JsonRpc.RpcRecorderState
+    configPath:
+  - flag: --JsonRpc.Timeout
+    configPath:
+  - flag: --JsonRpc.WebSocketsPort
+    configPath: execution.ws.port
+    enabled:
+      configPath: execution.ws.enabled
+      transform: flagEnabled
+  - flag: --KeyStore.BlockAuthorAccount
+    configPath:
+  - flag: --KeyStore.Cipher
+    configPath:
+  - flag: --KeyStore.EnodeAccount
+    configPath:
+  - flag: --KeyStore.EnodeKeyFile
+    configPath:
+  - flag: --KeyStore.IVSize
+    configPath:
+  - flag: --KeyStore.Kdf
+    configPath:
+  - flag: --KeyStore.KdfparamsDklen
+    configPath:
+  - flag: --KeyStore.KdfparamsN
+    configPath:
+  - flag: --KeyStore.KdfparamsP
+    configPath:
+  - flag: --KeyStore.KdfparamsR
+    configPath:
+  - flag: --KeyStore.KdfparamsSaltLen
+    configPath:
+  - flag: --KeyStore.KeyStoreDirectory
+    configPath:
+  - flag: --KeyStore.KeyStoreEncoding
+    configPath:
+  - flag: --KeyStore.PasswordFiles
+    configPath:
+  - flag: --KeyStore.Passwords
+    configPath:
+  - flag: --KeyStore.SymmetricEncrypterBlockSize
+    configPath:
+  - flag: --KeyStore.SymmetricEncrypterKeySize
+    configPath:
+  - flag: --KeyStore.TestNodeKey
+    configPath:
+  - flag: --KeyStore.UnlockAccounts
+    configPath:
+  - flag: --Merge.BuilderRelayUrl
+    configPath:
+  - flag: --Merge.CollectionsPerDecommit
+    configPath:
+  - flag: --Merge.CompactMemory
+    configPath:
+  - flag: --Merge.Enabled
+    configPath:
+  - flag: --Merge.FinalTotalDifficulty
+    configPath:
+  - flag: --Merge.PrioritizeBlockLatency
+    configPath:
+  - flag: --Merge.SweepMemory
+    configPath:
+  - flag: --Merge.TerminalBlockHash
+    configPath:
+  - flag: --Merge.TerminalBlockNumber
+    configPath:
+  - flag: --Merge.TerminalTotalDifficulty
+    configPath:
+  - flag: --Metrics.CountersEnabled
+    configPath:
+  - flag: --Metrics.EnableDbSizeMetrics
+    configPath:
+  - flag: --Metrics.Enabled
+    configPath: execution.metrics.enabled
+    transform: flagEnabled
+  - flag: --Metrics.ExposeHost
+    configPath: 
+  - flag: --Metrics.ExposePort
+    configPath: execution.metrics.port
+    enabled:
+      configPath: execution.metrics.enabled
+      transform: flagEnabled
+  - flag: --Metrics.IntervalSeconds
+    configPath:
+  - flag: --Metrics.MonitoringGroup
+    configPath:
+  - flag: --Metrics.MonitoringJob
+    configPath:
+  - flag: --Metrics.NodeName
+    configPath:
+  - flag: --Metrics.PushGatewayUrl
+    configPath:
+  - flag: --Mining.Enabled
+    configPath:
+  - flag: --Mining.Signer
+    configPath:
+  - flag: --Network.Bootnodes
+    configPath:
+  - flag: --Network.DiagTracerEnabled
+    configPath:
+  - flag: --Network.DiscoveryDns
+    configPath:
+  - flag: --Network.DiscoveryPort
+    configPath:
+  - flag: --Network.EnableUPnP
+    configPath:
+  - flag: --Network.ExternalIp
+    configPath:
+  - flag: --Network.LocalIp
+    configPath:
+  - flag: --Network.MaxActivePeers
+    configPath:
+  - flag: --Network.MaxNettyArenaCount
+    configPath:
+  - flag: --Network.NettyArenaOrder
+    configPath:
+  - flag: --Network.OnlyStaticPeers
+    configPath:
+  - flag: --Network.P2PPort
+    configPath:
+  - flag: --Network.PriorityPeersMaxCount
+    configPath:
+  - flag: --Network.StaticPeers
+    configPath:
+  - flag: --Optimism.SequencerUrl
+    configPath:
+  - flag: --Pruning.AvailableSpaceCheckEnabled
+    configPath:
+  - flag: --Pruning.CacheMb
+    configPath:
+  - flag: --Pruning.FullPruningCompletionBehavior
+    configPath:
+  - flag: --Pruning.FullPruningDisableLowPriorityWrites
+    configPath:
+  - flag: --Pruning.FullPruningMaxDegreeOfParallelism
+    configPath:
+  - flag: --Pruning.FullPruningMemoryBudgetMb
+    configPath:
+  - flag: --Pruning.FullPruningMinimumDelayHours
+    configPath:
+  - flag: --Pruning.FullPruningThresholdMb
+    configPath:
+  - flag: --Pruning.FullPruningTrigger
+    configPath:
+  - flag: --Pruning.Mode
+    configPath:
+  - flag: --Pruning.PersistenceInterval
+    configPath:
+  - flag: --Pruning.PruningBoundary
+    configPath:
+  - flag: --Pruning.TrackedPastKeyCountMemoryRatio
+    configPath:
+  - flag: --Receipt.CompactReceiptStore
+    configPath:
+  - flag: --Receipt.CompactTxIndex
+    configPath:
+  - flag: --Receipt.ReceiptsMigration
+    configPath:
+  - flag: --Receipt.StoreReceipts
+    configPath:
+  - flag: --Receipt.TxLookupLimit
+    configPath:
+  - flag: --Seq.ApiKey
+    configPath:
+  - flag: --Seq.MinLevel
+    configPath:
+  - flag: --Seq.ServerUrl
+    configPath:
+  - flag: --Shutter.BootnodeP2PAddresses
+    configPath:
+  - flag: --Shutter.Enabled
+    configPath:
+  - flag: --Shutter.InstanceID
+    configPath:
+  - flag: --Shutter.KeyBroadcastContractAddress
+    configPath:
+  - flag: --Shutter.KeyperSetManagerContractAddress
+    configPath:
+  - flag: --Shutter.P2PPort
+    configPath:
+  - flag: --Shutter.SequencerContractAddress
+    configPath:
+  - flag: --Shutter.ShutterKeyFile
+    configPath:
+  - flag: --Shutter.ValidatorInfoFile
+    configPath:
+  - flag: --Shutter.ValidatorRegistryContractAddress
+    configPath:
+  - flag: --Snapshot.Checksum
+    configPath:
+  - flag: --Snapshot.DownloadUrl
+    configPath:
+  - flag: --Snapshot.Enabled
+    configPath:
+  - flag: --Snapshot.SnapshotDirectory
+    configPath:
+  - flag: --Snapshot.SnapshotFileName
+    configPath:
+  - flag: --Sync.AncientBodiesBarrier
+    configPath:
+  - flag: --Sync.AncientReceiptsBarrier
+    configPath:
+  - flag: --Sync.DownloadBodiesInFastSync
+    configPath:
+  - flag: --Sync.DownloadHeadersInFastSync
+    configPath:
+  - flag: --Sync.DownloadReceiptsInFastSync
+    configPath:
+  - flag: --Sync.ExitOnSynced
+    configPath:
+  - flag: --Sync.ExitOnSyncedWaitTimeSec
+    configPath:
+  - flag: --Sync.FastSync
+    configPath:
+  - flag: --Sync.FastSyncCatchUpHeightDelta
+    configPath:
+  - flag: --Sync.FixReceipts
+    configPath:
+  - flag: --Sync.FixTotalDifficulty
+    configPath:
+  - flag: --Sync.FixTotalDifficultyLastBlock
+    configPath:
+  - flag: --Sync.FixTotalDifficultyStartingBlock
+    configPath:
+  - flag: --Sync.MaxAttemptsToUpdatePivot
+    configPath:
+  - flag: --Sync.MaxProcessingThreads
+    configPath:
+  - flag: --Sync.NetworkingEnabled
+    configPath:
+  - flag: --Sync.NonValidatorNode
+    configPath:
+  - flag: --Sync.PivotHash
+    configPath:
+  - flag: --Sync.PivotNumber
+    configPath:
+  - flag: --Sync.PivotTotalDifficulty
+    configPath:
+  - flag: --Sync.SnapSync
+    configPath:
+  - flag: --Sync.SnapSyncAccountRangePartitionCount
+    configPath:
+  - flag: --Sync.StrictMode
+    configPath:
+  - flag: --Sync.SynchronizationEnabled
+    configPath:
+  - flag: --Sync.UseGethLimitsInFastBlocks
+    configPath:
+  - flag: --TraceStore.BlocksToKeep
+    configPath:
+  - flag: --TraceStore.DeserializationParallelization
+    configPath:
+  - flag: --TraceStore.Enabled
+    configPath:
+  - flag: --TraceStore.TraceTypes
+    configPath:
+  - flag: --TxPool.BlobCacheSize
+    configPath:
+  - flag: --TxPool.BlobsSupport
+    configPath:
+  - flag: --TxPool.GasLimit
+    configPath:
+  - flag: --TxPool.HashCacheSize
+    configPath:
+  - flag: --TxPool.InMemoryBlobPoolSize
+    configPath:
+  - flag: --TxPool.MaxBlobTxSize
+    configPath:
+  - flag: --TxPool.MaxPendingBlobTxsPerSender
+    configPath:
+  - flag: --TxPool.MaxPendingTxsPerSender
+    configPath:
+  - flag: --TxPool.MaxTxSize
+    configPath:
+  - flag: --TxPool.MinBaseFeeThreshold
+    configPath:
+  - flag: --TxPool.PeerNotificationThreshold
+    configPath:
+  - flag: --TxPool.PersistentBlobStorageSize
+    configPath:
+  - flag: --TxPool.ReportMinutes
+    configPath:
+  - flag: --TxPool.Size
+    configPath:
+  - flag: --Wallet.DevAccounts
+    configPath:
+  - flag: --datadir
+    configPath: execution.dataDir
+    transform: interpolate
+  - flag: --networkid
+    configPath: common.network.id

@@ -2,35 +2,528 @@ name: erigon
 version: 3.0.2
 valueFormat: space
 rules:
-  - configPath: execution.dataDir
-    flag: --datadir
-    transform: interpolate
-  - configPath: common.network.name
-    flag: --chain
-  - configPath: common.network.id
-    flag: --networkid
-  - configPath: common.engine.api.host
-    flag: --authrpc.addr
+  - flag: --allow-insecure-unlock
+    configPath: 
+  - flag: --authrpc.addr
+    configPath: common.engine.api.host
     enabled:
       configPath: common.engine.communication.method
       transform: jwtEnabled
-  - configPath: common.engine.api.port
-    flag: --authrpc.port
-    enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
-  - configPath: common.engine.api.allowlist
-    flag: --authrpc.vhosts
-    transform: allowlist
-    enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
-  - configPath: execution.isExternal
-    flag: --externalcl  
-    transform: flagEnabled
-  - configPath: common.engine.communication.jwt.file
-    flag: --authrpc.jwtsecret
+  - flag: --authrpc.jwtsecret
+    configPath: common.engine.communication.jwt.file
     transform: interpolate
     enabled: 
       configPath: common.engine.communication.method
       transform: jwtEnabled
+  - flag: --authrpc.port
+    configPath: common.engine.api.port
+    enabled:
+      configPath: common.engine.communication.method
+      transform: jwtEnabled
+  - flag: --authrpc.timeouts.idle
+    configPath: 
+  - flag: --authrpc.timeouts.read
+    configPath: 
+  - flag: --authrpc.timeouts.write
+    configPath: 
+  - flag: --authrpc.vhosts
+    configPath: common.engine.api.allowlist
+    transform: allowlist
+    enabled:
+      configPath: common.engine.communication.method
+      transform: jwtEnabled
+  - flag: --bad.block
+    configPath: 
+  - flag: --batchSize
+    configPath: 
+  - flag: --beacon.api
+    configPath: 
+  - flag: --beacon.api.addr
+    configPath: 
+  - flag: --beacon.api.cors.allow-credentials
+    configPath: 
+  - flag: --beacon.api.cors.allow-methods
+    configPath: 
+  - flag: --beacon.api.cors.allow-origins
+    configPath: 
+  - flag: --beacon.api.ide.timeout
+    configPath: 
+  - flag: --beacon.api.port
+    configPath: 
+  - flag: --beacon.api.protocol
+    configPath: 
+  - flag: --beacon.api.read.timeout
+    configPath: 
+  - flag: --beacon.api.write.timeout
+    configPath: 
+  - flag: --bodies.cache
+    configPath: 
+  - flag: --bootnodes
+    configPath: execution.p2p.bootnodes
+    enabled:
+      configPath: execution.p2p.enabled
+      transform: flagEnabled
+  - flag: --bor.heimdall
+    configPath: 
+  - flag: --bor.milestone
+    configPath: 
+  - flag: --bor.minblocksize
+    configPath: 
+  - flag: --bor.period
+    configPath: 
+  - flag: --bor.waypoints
+    configPath: 
+  - flag: --bor.withoutheimdall
+    configPath: 
+  - flag: --caplin.adaptable-maximum-traffic-requirements
+    configPath: 
+  - flag: --caplin.blocks-archive
+    configPath: 
+  - flag: --caplin.blobs-archive
+    configPath: 
+  - flag: --caplin.blobs-immediate-backfill
+    configPath: 
+  - flag: --caplin.blobs-no-pruning
+    configPath: 
+  - flag: --caplin.checkpoint-sync-url
+    configPath: 
+  - flag: --caplin.checkpoint-sync.disable
+    configPath: 
+  - flag: --caplin.custom-config
+    configPath: 
+  - flag: --caplin.custom-genesis
+    configPath: 
+  - flag: --caplin.discovery.addr
+    configPath: 
+  - flag: --caplin.discovery.port
+    configPath: 
+  - flag: --caplin.discovery.tcpport
+    configPath: 
+  - flag: --caplin.enable-upnp
+    configPath: 
+  - flag: --caplin.max-inbound-traffic-per-peer
+    configPath: 
+  - flag: --caplin.max-outbound-traffic-per-peer
+    configPath: 
+  - flag: --caplin.max-peer-count
+    configPath: 
+  - flag: --caplin.mev-relay-url
+    configPath: 
+  - flag: --caplin.snapgen
+    configPath: 
+  - flag: --caplin.states-archive
+    configPath: 
+  - flag: --caplin.subscribe-all-topics
+    configPath: 
+  - flag: --caplin.validator-monitor
+    configPath: 
+  - flag: --chain
+    configPath: common.network.name
+  - flag: --chaos.monkey
+    configPath: 
+  - flag: --clique.checkpoint
+    configPath: 
+  - flag: --clique.datadir
+    configPath: 
+  - flag: --clique.signatures
+    configPath: 
+  - flag: --clique.snapshots
+    configPath: 
+  - flag: --config
+    configPath: 
+  - flag: --database.verbosity
+    configPath: 
+  - flag: --datadir
+    configPath: execution.dataDir
+    transform: interpolate
+  - flag: --db.pagesize
+    configPath: 
+  - flag: --db.read.concurrency
+    configPath: 
+  - flag: --db.size.limit
+    configPath: 
+  - flag: --db.writemap
+    configPath: 
+  - flag: --dev.period
+    configPath: 
+  - flag: --diagnostics.disabled
+    configPath: 
+  - flag: --diagnostics.endpoint.addr
+    configPath: 
+  - flag: --diagnostics.endpoint.port
+    configPath: 
+  - flag: --diagnostics.speedtest
+    configPath: 
+  - flag: --discovery.dns
+    configPath: 
+  - flag: --downloader.api.addr
+    configPath: 
+  - flag: --downloader.disable.ipv4
+    configPath: 
+  - flag: --downloader.disable.ipv6
+    configPath: 
+  - flag: --downloader.verify
+    configPath: 
+  - flag: --etl.bufferSize
+    configPath: 
+  - flag: --ethash.dagdir
+    configPath: 
+  - flag: --ethstats
+    configPath: 
+  - flag: --experiment.persist.receipts
+    configPath: 
+  - flag: --experimental.commitment-history
+    configPath: 
+  - flag: --externalcl
+    configPath: execution.isExternal
+    transform: flagEnabled
+  - flag: --fakepow
+    configPath: 
+  - flag: --gpo.blocks
+    configPath: 
+  - flag: --gpo.percentile
+    configPath: 
+  - flag: --graphql
+    configPath: 
+  - flag: --healthcheck
+    configPath: 
+  - flag: --help
+    configPath: 
+  - flag: --http
+    configPath: execution.http.enabled
+    transform: flagEnabled
+  - flag: --http.addr
+    configPath: execution.http.address
+    enabled:
+      configPath: execution.http.enabled
+      transform: flagEnabled
+  - flag: --http.api
+    configPath: execution.http.modules
+    transform: allowlist
+    enabled:
+      configPath: execution.http.enabled
+      transform: flagEnabled
+  - flag: --http.compression
+    configPath: 
+  - flag: --http.corsdomain
+    configPath: execution.http.allowlist
+    transform: allowlist
+    enabled:
+      configPath: execution.http.enabled
+      transform: flagEnabled
+  - flag: --http.dbg.single
+    configPath: 
+  - flag: --http.enabled
+    configPath: execution.http.enabled
+    transform: flagEnabled
+  - flag: --http.port
+    configPath: execution.http.port
+    enabled:
+      configPath: execution.http.enabled
+      transform: flagEnabled
+  - flag: --http.timeouts.idle
+    configPath: 
+  - flag: --http.timeouts.read
+    configPath: 
+  - flag: --http.timeouts.write
+    configPath: 
+  - flag: --http.trace
+    configPath: 
+  - flag: --http.vhosts
+    configPath: execution.http.allowlist
+    transform: allowlist
+    enabled:
+      configPath: execution.http.enabled
+      transform: flagEnabled
+  - flag: --identity
+    configPath: execution.p2p.identity
+  - flag: --log.console.json
+    configPath: execution.logging.stdout.enabled
+    transform: flagEnabled
+  - flag: --log.console.verbosity
+    configPath: execution.logging.stdout.level
+  - flag: --log.delays
+    configPath: 
+  - flag: --log.dir.disable
+    configPath: 
+  - flag: --log.dir.json
+    configPath: 
+  - flag: --log.dir.path
+    configPath: 
+  - flag: --log.dir.prefix
+    configPath: 
+  - flag: --log.dir.verbosity
+    configPath: 
+  - flag: --log.json
+    configPath: execution.logging.json.enabled
+    transform: flagEnabled
+  - flag: --maxpeers
+    configPath: execution.p2p.maxPeers
+    enabled:
+      configPath: execution.p2p.enabled
+      transform: flagEnabled
+  - flag: --metrics
+    configPath: execution.metrics.enabled
+    transform: flagEnabled
+  - flag: --metrics.addr
+    configPath: execution.metrics.host
+    enabled:
+      configPath: execution.metrics.enabled
+      transform: flagEnabled
+  - flag: --metrics.port
+    configPath: execution.metrics.port
+    enabled:
+      configPath: execution.metrics.enabled
+      transform: flagEnabled
+  - flag: --mine
+    configPath: 
+  - flag: --miner.etherbase
+    configPath: 
+  - flag: --miner.extradata
+    configPath: 
+  - flag: --miner.gaslimit
+    configPath: 
+  - flag: --miner.noverify
+    configPath: 
+  - flag: --miner.notify
+    configPath: 
+  - flag: --miner.recommit
+    configPath: 
+  - flag: --miner.sigfile
+    configPath: 
+  - flag: --nat
+    configPath: execution.p2p.nat.method 
+    enabled:
+      configPath: execution.p2p.nat.enabled
+      transform: flagEnabled
+  - flag: --networkid
+    configPath: common.network.id
+  - flag: --netrestrict
+    configPath: 
+  - flag: --nodekey
+    configPath: 
+  - flag: --nodekeyhex
+    configPath: 
+  - flag: --nodiscover
+    configPath: 
+  - flag: --no-downloader
+    configPath: 
+  - flag: --ots.search.max.pagesize
+    configPath: 
+  - flag: --override.prague
+    configPath: 
+  - flag: --p2p.allowed-ports
+    configPath: 
+  - flag: --p2p.protocol
+    configPath: 
+  - flag: --polygon.pos.ssf
+    configPath: 
+  - flag: --polygon.pos.ssf.block
+    configPath: 
+  - flag: --polygon.sync
+    configPath: 
+  - flag: --polygon.sync.stage
+    configPath: 
+  - flag: --port
+    configPath: execution.p2p.port
+    enabled:
+      configPath: execution.p2p.enabled
+      transform: flagEnabled
+  - flag: --pprof
+    configPath: 
+  - flag: --pprof.addr
+    configPath: 
+  - flag: --pprof.cpuprofile
+    configPath: 
+  - flag: --pprof.port
+    configPath: 
+  - flag: --private.api.addr
+    configPath: 
+  - flag: --private.api.ratelimit
+    configPath: 
+  - flag: --prune.distance
+    configPath: 
+  - flag: --prune.distance.blocks
+    configPath: 
+  - flag: --prune.mode
+    configPath: 
+  - flag: --proposer.disable
+    configPath: 
+  - flag: --rpc.accessList
+    configPath: 
+  - flag: --rpc.allow-unprotected-txs
+    configPath: 
+  - flag: --rpc.batch.concurrency
+    configPath: 
+  - flag: --rpc.batch.limit
+    configPath: 
+  - flag: --rpc.evmtimeout
+    configPath: 
+  - flag: --rpc.gascap
+    configPath: 
+  - flag: --rpc.overlay.getlogstimeout
+    configPath: 
+  - flag: --rpc.overlay.replayblocktimeout
+    configPath: 
+  - flag: --rpc.returndata.limit
+    configPath: 
+  - flag: --rpc.slow
+    configPath: 
+  - flag: --rpc.streaming.disable
+    configPath: 
+  - flag: --rpc.subscription.filters.maxaddresses
+    configPath: 
+  - flag: --rpc.subscription.filters.maxheaders
+    configPath: 
+  - flag: --rpc.subscription.filters.maxlogs
+    configPath: 
+  - flag: --rpc.subscription.filters.maxtopics
+    configPath: 
+  - flag: --rpc.subscription.filters.maxtxs
+    configPath: 
+  - flag: --rpc.txfeecap
+    configPath: 
+  - flag: --sentinel.addr
+    configPath: 
+  - flag: --sentinel.bootnodes
+    configPath: 
+  - flag: --sentinel.port
+    configPath: 
+  - flag: --sentinel.staticpeers
+    configPath: 
+  - flag: --sentry.api.addr
+    configPath: 
+  - flag: --sentry.log-peer-info
+    configPath: 
+  - flag: --shutter
+    configPath: 
+  - flag: --shutter.p2p.bootstrap.nodes
+    configPath: 
+  - flag: --shutter.p2p.listen.port
+    configPath: 
+  - flag: --silkworm.contexts
+    configPath: 
+  - flag: --silkworm.exec
+    configPath: 
+  - flag: --silkworm.rpc
+    configPath: 
+  - flag: --silkworm.rpc.compatibility
+    configPath: 
+  - flag: --silkworm.rpc.log
+    configPath: 
+  - flag: --silkworm.rpc.log.maxfiles
+    configPath: 
+  - flag: --silkworm.rpc.log.maxsize
+    configPath: 
+  - flag: --silkworm.rpc.log.response
+    configPath: 
+  - flag: --silkworm.rpc.workers
+    configPath: 
+  - flag: --silkworm.sentry
+    configPath: 
+  - flag: --silkworm.verbosity
+    configPath: 
+  - flag: --snap.keepblocks
+    configPath: 
+  - flag: --snap.skip-state-snapshot-download
+    configPath: 
+  - flag: --snap.state.stop
+    configPath: 
+  - flag: --snap.stop
+    configPath: 
+  - flag: --state.cache
+    configPath: 
+  - flag: --state.stream.disable
+    configPath: 
+  - flag: --staticpeers
+    configPath: 
+  - flag: --sync.loop.block.limit
+    configPath: 
+  - flag: --sync.loop.break.after
+    configPath: 
+  - flag: --sync.loop.throttle
+    configPath: 
+  - flag: --sync.parallel-state-flushing
+    configPath: 
+  - flag: --tls
+    configPath: 
+  - flag: --tls.cacert
+    configPath: 
+  - flag: --tls.cert
+    configPath: 
+  - flag: --tls.key
+    configPath: 
+  - flag: --torrent.conns.perfile
+    configPath: 
+  - flag: --torrent.download.rate
+    configPath: 
+  - flag: --torrent.download.slots
+    configPath: 
+  - flag: --torrent.maxpeers
+    configPath: 
+  - flag: --torrent.port
+    configPath: 
+  - flag: --torrent.staticpeers
+    configPath: 
+  - flag: --torrent.upload.rate
+    configPath: 
+  - flag: --torrent.verbosity
+    configPath: 
+  - flag: --trace
+    configPath: 
+  - flag: --trace.compat
+    configPath: 
+  - flag: --trace.maxtraces
+    configPath: 
+  - flag: --trusted-setup-file
+    configPath: 
+  - flag: --trustedpeers
+    configPath: 
+  - flag: --txpool.accountslots
+    configPath: 
+  - flag: --txpool.api.addr
+    configPath: 
+  - flag: --txpool.blobpricebump
+    configPath: 
+  - flag: --txpool.blobslots
+    configPath: 
+  - flag: --txpool.commit.every
+    configPath: 
+  - flag: --txpool.disable
+    configPath: 
+  - flag: --txpool.globalbasefeeslots
+    configPath: 
+  - flag: --txpool.globalqueue
+    configPath: 
+  - flag: --txpool.globalslots
+    configPath: 
+  - flag: --txpool.gossip.disable
+    configPath: 
+  - flag: --txpool.pricelimit
+    configPath: 
+  - flag: --txpool.pricebump
+    configPath: 
+  - flag: --txpool.trace.senders
+    configPath: 
+  - flag: --txpool.totalblobpoollimit
+    configPath: 
+  - flag: --v5disc
+    configPath: 
+  - flag: --verbosity
+    configPath: 
+  - flag: --version
+    configPath: 
+  - flag: --vmdebug
+    configPath: 
+  - flag: --webseed
+    configPath: 
+  - flag: --ws
+    configPath: execution.ws.enabled
+    transform: flagEnabled
+  - flag: --ws.compression
+    configPath: 
+  - flag: --ws.port
+    configPath: execution.ws.port
+    enabled:
+      configPath: execution.ws.enabled
+      transform: flagEnabled

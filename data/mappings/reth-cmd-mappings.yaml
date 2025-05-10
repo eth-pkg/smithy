@@ -57,6 +57,9 @@ rules:
     configPath:
   - flag: --config
     configPath:
+  - flag: --datadir
+    configPath: execution.dataDir
+    transform: interpolate
   - flag: --db.exclusive
     configPath:
   - flag: --db.growth-step
@@ -181,7 +184,7 @@ rules:
       transform: flagEnabled
   - flag: --http.api
     configPath: execution.http.modules
-    transform: joinComma
+    transform: allowlist
     enabled:
       configPath: execution.http.enabled
       transform: flagEnabled
