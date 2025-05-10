@@ -2,36 +2,424 @@ name: reth
 version: 0.1.0
 valueFormat: space
 rules:
-  - configPath: execution.dataDir
-    flag: --datadir
-    transform: interpolate
-  - configPath: common.network.name
-    flag: --chain
-  - configPath: common.engine.communication.jwt.file
-    flag: --authrpc.jwtsecret
-    transform: interpolate
-    enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
-  - configPath: common.engine.api.host
-    flag: --authrpc.addr
-    enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
-  - configPath: common.engine.api.port
-    flag: --authrpc.port
-    enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
-  - configPath: common.engine.communication.ipc.path
-    flag: --auth-ipc.path
+  - flag: --addr
+    configPath: execution.p2p.address
+  - flag: --auth-ipc
+    configPath: common.engine.communication.method
+    transform: ipcEnabled
+  - flag: --auth-ipc.path
+    configPath: common.engine.communication.ipc.path
     transform: interpolate
     enabled:
       configPath: common.engine.communication.method
       transform: ipcEnabled
-  - configPath: common.engine.communication.method
-    flag: --auth-ipc
-    transform: ipcEnabled
-  - configPath: common.engine.api.allowlist
-    flag: --authrpc.vhosts
+  - flag: --authrpc.addr
+    configPath: common.engine.api.host
+    enabled:
+      configPath: common.engine.communication.method
+      transform: jwtEnabled
+  - flag: --authrpc.jwtsecret
+    configPath: common.engine.communication.jwt.file
+    transform: interpolate
+    enabled:
+      configPath: common.engine.communication.method
+      transform: jwtEnabled
+  - flag: --authrpc.port
+    configPath: common.engine.api.port
+    enabled:
+      configPath: common.engine.communication.method
+      transform: jwtEnabled
+  - flag: --authrpc.vhosts
+    configPath: common.engine.api.allowlist
     transform: allowlist
+  - flag: --blobpool.pricebump
+    configPath:
+  - flag: --block-interval
+    configPath:
+  - flag: --bootnodes
+    configPath: execution.p2p.bootnodes
+    transform: joinComma
+  - flag: --builder.deadline
+    configPath:
+  - flag: --builder.disallow
+    configPath:
+  - flag: --builder.extradata
+    configPath:
+  - flag: --builder.gaslimit
+    configPath:
+  - flag: --builder.interval
+    configPath:
+  - flag: --builder.max-tasks
+    configPath:
+  - flag: --chain
+    configPath: common.network.name
+  - flag: --color
+    configPath:
+  - flag: --config
+    configPath:
+  - flag: --db.exclusive
+    configPath:
+  - flag: --db.growth-step
+    configPath:
+  - flag: --db.log-level
+    configPath:
+  - flag: --db.max-size
+    configPath:
+  - flag: --db.read-transaction-timeout
+    configPath:
+  - flag: --debug.engine-api-store
+    configPath:
+  - flag: --debug.etherscan
+    configPath:
+  - flag: --debug.healthy-node-rpc-url
+    configPath:
+  - flag: --debug.invalid-block-hook
+    configPath:
+  - flag: --debug.max-block
+    configPath:
+  - flag: --debug.reorg-depth
+    configPath:
+  - flag: --debug.reorg-frequency
+    configPath:
+  - flag: --debug.rpc-consensus-ws
+    configPath:
+  - flag: --debug.skip-fcu
+    configPath:
+  - flag: --debug.skip-new-payload
+    configPath:
+  - flag: --debug.terminate
+    configPath:
+  - flag: --debug.tip
+    configPath:
+  - flag: --dev
+    configPath:
+  - flag: --dev.block-max-transactions
+    configPath:
+  - flag: --dev.block-time
+    configPath:
+  - flag: --disable-discovery
+    configPath:
+  - flag: --disable-discv4-discovery
+    configPath: execution.p2p.disv4.enabled
+    transform: negate
+  - flag: --disable-dns-discovery
+    configPath: execution.p2p.dnsDiscovery
+    transform: negate
+  - flag: --disable-nat
+    configPath: execution.p2p.nat.enabled
+    transform: negate
+  - flag: --discovery.addr
+    configPath: execution.p2p.disv4.address
+    enabled:
+      configPath: execution.p2p.disv4.enabled
+      transform: flagEnabled
+  - flag: --discovery.port
+    configPath: execution.p2p.disv4.port
+    enabled:
+      configPath: execution.p2p.disv4.enabled
+      transform: flagEnabled
+  - flag: --discovery.v5.addr
+    configPath: execution.p2p.disv5.address
+    enabled:
+      configPath: execution.p2p.disv5.enabled
+      transform: flagEnabled
+  - flag: --discovery.v5.addr.ipv6
+    configPath: 
+  - flag: --discovery.v5.bootstrap.lookup-countdown
+    configPath:
+  - flag: --discovery.v5.bootstrap.lookup-interval
+    configPath:
+  - flag: --discovery.v5.lookup-interval
+    configPath:
+  - flag: --discovery.v5.port
+    configPath: execution.p2p.disv5.port
+    enabled:
+      configPath: execution.p2p.disv5.enabled
+      transform: flagEnabled
+  - flag: --discovery.v5.port.ipv6
+    configPath:
+  - flag: --dns-retries
+    configPath: execution.p2p.dnsDiscovery.retries
+  - flag: --enable-discv5-discovery
+    configPath: execution.p2p.disv5.enabled
+    transform: flagEnabled
+  - flag: --engine.accept-execution-requests-hash
+    configPath:
+  - flag: --engine.caching-and-prewarming
+    configPath:
+  - flag: --engine.cross-block-cache-size
+    configPath:
+  - flag: --engine.legacy-state-root
+    configPath:
+  - flag: --engine.max-proof-task-concurrency
+    configPath:
+  - flag: --engine.memory-block-buffer-target
+    configPath:
+  - flag: --engine.persistence-threshold
+    configPath:
+  - flag: --engine.reserved-cpu-cores
+    configPath:
+  - flag: --engine.state-root-task-compare-updates
+    configPath:
+  - flag: --full
+    configPath:
+  - flag: --gpo.blocks
+    configPath:
+  - flag: --gpo.ignoreprice
+    configPath:
+  - flag: --gpo.maxprice
+    configPath:
+  - flag: --gpo.percentile
+    configPath:
+  - flag: --http
+    configPath: execution.http.enabled
+    transform: flagEnabled
+  - flag: --http.addr
+    configPath: execution.http.address
+    enabled:
+      configPath: execution.http.enabled
+      transform: flagEnabled
+  - flag: --http.api
+    configPath: execution.http.modules
+    transform: joinComma
+    enabled:
+      configPath: execution.http.enabled
+      transform: flagEnabled
+  - flag: --http.corsdomain
+    configPath: execution.http.allowlist
+    transform: allowlist
+    enabled:
+      configPath: execution.http.enabled
+      transform: flagEnabled
+  - flag: --http.port
+    configPath: execution.http.port
+    enabled:
+      configPath: execution.http.enabled
+      transform: flagEnabled
+  - flag: --identity
+    configPath: execution.p2p.identity
+  - flag: --instance
+    configPath:
+  - flag: --ipcdisable
+    configPath:
+  - flag: --ipcpath
+    configPath:
+  - flag: --log.file.directory
+    configPath:
+  - flag: --log.file.filter
+    configPath:
+  - flag: --log.file.format
+    configPath:
+  - flag: --log.file.max-files
+    configPath:
+  - flag: --log.file.max-size
+    configPath:
+  - flag: --log.journald
+    configPath:
+  - flag: --log.journald.filter
+    configPath:
+  - flag: --log.stdout.filter
+    configPath:
+  - flag: --log.stdout.format
+    configPath:
+  - flag: --max-inbound-peers
+    configPath:
+  - flag: --max-outbound-peers
+    configPath:
+  - flag: --max-pending-imports
+    configPath:
+  - flag: --max-seen-tx-history
+    configPath:
+  - flag: --max-tx-pending-fetch
+    configPath:
+  - flag: --max-tx-reqs
+    configPath:
+  - flag: --max-tx-reqs-peer
+    configPath:
+  - flag: --metrics
+    configPath: execution.metrics.enabled
+    transform: flagEnabled
+  - flag: --nat
+    configPath: execution.p2p.nat.method
+    enabled:
+      configPath: execution.p2p.nat.enabled
+      transform: flagEnabled
+  - flag: --net-if.experimental
+    configPath:
+  - flag: --no-persist-peers
+    configPath:
+  - flag: --p2p-secret-key
+    configPath:
+  - flag: --peers-file
+    configPath:
+  - flag: --pooled-tx-pack-soft-limit
+    configPath:
+  - flag: --pooled-tx-response-soft-limit
+    configPath:
+  - flag: --port
+    configPath: execution.p2p.port
+  - flag: --prune.accounthistory.before
+    configPath:
+  - flag: --prune.accounthistory.distance
+    configPath:
+  - flag: --prune.accounthistory.full
+    configPath:
+  - flag: --prune.receipts.before
+    configPath:
+  - flag: --prune.receipts.distance
+    configPath:
+  - flag: --prune.receipts.full
+    configPath:
+  - flag: --prune.receiptslogfilter
+    configPath:
+  - flag: --prune.senderrecovery.before
+    configPath:
+  - flag: --prune.senderrecovery.distance
+    configPath:
+  - flag: --prune.senderrecovery.full
+    configPath:
+  - flag: --prune.storagehistory.before
+    configPath:
+  - flag: --prune.storagehistory.distance
+    configPath:
+  - flag: --prune.storagehistory.full
+    configPath:
+  - flag: --prune.transactionlookup.before
+    configPath:
+  - flag: --prune.transactionlookup.distance
+    configPath:
+  - flag: --prune.transactionlookup.full
+    configPath:
+  - flag: --quiet
+    configPath:
+  - flag: --ress.enable
+    configPath:
+  - flag: --ress.max-active-connections
+    configPath:
+  - flag: --ress.max-witness-window
+    configPath:
+  - flag: --ress.witness-cache-size
+    configPath:
+  - flag: --ress.witness-max-parallel
+    configPath:
+  - flag: --rpc-cache.max-blocks
+    configPath:
+  - flag: --rpc-cache.max-concurrent-db-requests
+    configPath:
+  - flag: --rpc-cache.max-headers
+    configPath:
+  - flag: --rpc-cache.max-receipts
+    configPath:
+  - flag: --rpc.eth-proof-window
+    configPath:
+  - flag: --rpc.gascap
+    configPath:
+  - flag: --rpc.jwtsecret
+    configPath:
+  - flag: --rpc.max-blocks-per-filter
+    configPath:
+  - flag: --rpc.max-connections
+    configPath:
+  - flag: --rpc.max-logs-per-response
+    configPath:
+  - flag: --rpc.max-request-size
+    configPath:
+  - flag: --rpc.max-response-size
+    configPath:
+  - flag: --rpc.max-simulate-blocks
+    configPath:
+  - flag: --rpc.max-subscriptions-per-connection
+    configPath:
+  - flag: --rpc.max-trace-filter-blocks
+    configPath:
+  - flag: --rpc.max-tracing-requests
+    configPath:
+  - flag: --rpc.proof-permits
+    configPath:
+  - flag: --rpc.txfeecap
+    configPath:
+  - flag: --tx-propagation-policy
+    configPath:
+  - flag: --txpool.additional-validation-tasks
+    configPath:
+  - flag: --txpool.basefee-max-count
+    configPath:
+  - flag: --txpool.basefee-max-size
+    configPath:
+  - flag: --txpool.blob-cache-size
+    configPath:
+  - flag: --txpool.blobpool-max-count
+    configPath:
+  - flag: --txpool.blobpool-max-size
+    configPath:
+  - flag: --txpool.disable-transactions-backup
+    configPath:
+  - flag: --txpool.gas-limit
+    configPath:
+  - flag: --txpool.lifetime
+    configPath:
+  - flag: --txpool.locals
+    configPath:
+  - flag: --txpool.max-account-slots
+    configPath:
+  - flag: --txpool.max-cached-entries
+    configPath:
+  - flag: --txpool.max-new-pending-txs-notifications
+    configPath:
+  - flag: --txpool.max-new-txns
+    configPath:
+  - flag: --txpool.max-pending-txns
+    configPath:
+  - flag: --txpool.max-tx-input-bytes
+    configPath:
+  - flag: --txpool.minimal-protocol-fee
+    configPath:
+  - flag: --txpool.no-local-transactions-propagation
+    configPath:
+  - flag: --txpool.nolocals
+    configPath:
+  - flag: --txpool.pending-max-count
+    configPath:
+  - flag: --txpool.pending-max-size
+    configPath:
+  - flag: --txpool.pricebump
+    configPath:
+  - flag: --txpool.queued-max-count
+    configPath:
+  - flag: --txpool.queued-max-size
+    configPath:
+  - flag: --txpool.transactions-backup
+    configPath:
+  - flag: --trusted-only
+    configPath:
+  - flag: --trusted-peers
+    configPath:
+  - flag: --verbosity
+    configPath:
+  - flag: --with-unused-ports
+    configPath:
+  - flag: --ws
+    configPath: execution.ws.enabled
+    transform: flagEnabled
+  - flag: --ws.addr
+    configPath: execution.ws.address
+    enabled:
+      configPath: execution.ws.enabled
+      transform: flagEnabled
+  - flag: --ws.api
+    configPath: execution.ws.modules
+    transform: joinComma
+    enabled:
+      configPath: execution.ws.enabled
+      transform: flagEnabled
+  - flag: --ws.origins
+    configPath: execution.ws.allowlist
+    transform: allowlist
+    enabled:
+      configPath: execution.ws.enabled
+      transform: flagEnabled
+  - flag: --ws.port
+    configPath: execution.ws.port
+    enabled:
+      configPath: execution.ws.enabled
+      transform: flagEnabled

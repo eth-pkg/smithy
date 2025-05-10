@@ -46,7 +46,7 @@ execution:
     name: geth
     version: ''
   http:
-    apiPrefixes:
+    modules:
       - eth
       - net
       - web3

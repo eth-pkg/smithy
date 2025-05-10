@@ -50,8 +50,14 @@ export const testConfig: NodeConfig = {
     http: {
       enabled: false,
       port: 5052,
-      apiPrefixes: ['eth', 'net', 'web3'],
-      allowlist: ['localhost']
+      modules: ['eth', 'net', 'web3'],
+      allowlist: ['localhost'],
+      address: 'localhost',
+      tls: {
+        enabled: false,
+        cert: '',
+        key: ''
+      }
     },
     metrics: {
       enabled: false,
@@ -148,15 +154,21 @@ export const testConfig: NodeConfig = {
     http: {
       enabled: true,
       port: 8545,
-      apiPrefixes: ['eth', 'net', 'web3'],
-      allowlist: ['localhost']
+      modules: ['eth', 'net', 'web3'],
+      allowlist: ['localhost'],
+      address: 'localhost',
+      tls: {
+        enabled: false,
+        cert: '',
+        key: ''
+      }
     },
     metrics: {
-      enabled: true,
+      enabled: false,
       port: 6060
     },
     p2p: {
-      enabled: true,
+      enabled: false,
       maxPeers: 50,
       port: 30303,
       port6: 30304,
@@ -166,7 +178,7 @@ export const testConfig: NodeConfig = {
       denylist: []
     },
     ws: {
-      enabled: true,
+      enabled: false,
       port: 8546
     }
   }

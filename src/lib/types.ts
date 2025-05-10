@@ -31,12 +31,18 @@ export type ConsensusClientName = Prysm | Lighthouse | Teku | NimbusEth2 | Lodes
 export type ValidatorClientName = Prysm | Lighthouse | Teku | NimbusEth2 | Lodestar
 export type ClientName = ExecutionClientName | ConsensusClientName | ValidatorClientName
 
-
+export type HttpModules = "eth" | "net" | "web3" | "debug" | "admin" | "txpool" | "trace";
 export interface HttpConfig {
-  apiPrefixes: string[]
+  modules: HttpModules[]
   allowlist: string[]
   enabled: boolean
   port: number
+  address: string
+  tls: {
+    enabled: boolean
+    cert: string
+    key: string
+  }
 }
 
 export interface MetricsConfig {

@@ -27,6 +27,124 @@ properties:
     type: boolean
     default: true
     description: "Is the consensus client external to the node, in different process"
+  p2p:
+    type: object
+    properties:
+      address:
+        type: string
+        default: "localhost"
+        description: "Network interface to listen on"
+      port:
+        type: number
+        minimum: 1024
+        maximum: 65535
+        default: 30303
+        description: "Port number for P2P networking"
+        errorMessage:
+          minimum: "P2P port must be >= 1024"
+          maximum: "P2P port must be <= 65535"
+      dnsDiscovery:
+        type: boolean
+        default: true
+        description: "Enable DNS discovery"
+      disv5:
+        type: object
+        properties:
+          enabled:
+            type: boolean
+            default: true
+            description: "Enable discovery v5"
+          port:
+            type: number
+            minimum: 1024
+            maximum: 65535
+            default: 30303
+            description: "Port number for discovery v5"
+          address:
+            type: string
+            default: "localhost"
+            description: "Address to listen on for discovery v5"
+      disv4:
+        type: object
+        properties:
+          enabled:
+            type: boolean
+            default: true
+            description: "Enable discovery v4"
+          port:
+            type: number
+            minimum: 1024
+            maximum: 65535
+            default: 30303
+            description: "Port number for discovery v4"
+          address:
+            type: string
+            default: "localhost"
+            description: "Address to listen on for discovery v4"
+      nat: 
+        type: object
+        properties:
+          mode:
+            type: string
+            default: "any"
+            description: "NAT configuration"
+            enum:
+              - none
+              - upnp
+              - pmp
+              - extip
+              - listen
+          enabled:
+            type: boolean
+            default: true
+            description: "Enable NAT configuration"
+      identity:
+        type: string
+        default: ""
+        description: "Identity of the node"
+      maxPeers:
+        type: number
+        minimum: 1
+        maximum: 1000
+        default: 50
+        description: "Maximum number of P2P peers to connect to"
+        errorMessage:
+          minimum: "Max peers must be at least 1"
+          maximum: "Max peers should not exceed 1000"
+      bootnodes:
+        type: array
+        items:
+          type: string
+        default: []
+        description: "List of bootnode enode URLs for initial peer discovery"
+      enrAddress:
+        type: string
+        default: ""
+        description: "ENR (Ethereum Node Record) address to advertise"
+      udpPort:
+        type: number
+        minimum: 1024
+        maximum: 65535
+        default: 30303
+        description: "Port number for P2P networking"
+        errorMessage:
+          minimum: "P2P port must be >= 1024"
+      relayNode:
+        type: string
+        default: ""
+        description: "Relay node address for P2P networking"
+      allowlist:
+        type: array
+        items:
+          type: string
+        default: ["*"]
+        description: "List of allowed CORS origins for P2P networking"
+      denylist:
+        type: array
+        items:
+          type: string
+        default: []
+        description: "List of denied CORS origins for P2P networking"
   http:
     type: object
     properties:
@@ -34,7 +152,7 @@ properties:
         type: boolean
         default: false
         description: "Enable HTTP JSON-RPC API"
-      api:
+      modules:
         type: array
         minItems: 1
         default: ["eth", "net", "web3"]
@@ -89,61 +207,6 @@ properties:
         errorMessage:
           minimum: "Metrics port must be >= 1024"
           maximum: "Metrics port must be <= 65535"
-  p2p:
-    type: object
-    properties:
-      maxPeers:
-        type: number
-        minimum: 1
-        maximum: 1000
-        default: 50
-        description: "Maximum number of P2P peers to connect to"
-        errorMessage:
-          minimum: "Max peers must be at least 1"
-          maximum: "Max peers should not exceed 1000"
-      port:
-        type: number
-        minimum: 1024
-        maximum: 65535
-        default: 30303
-        description: "Port number for P2P networking"
-        errorMessage:
-          minimum: "P2P port must be >= 1024"
-          maximum: "P2P port must be <= 65535"
-      bootnodes:
-        type: array
-        items:
-          type: string
-        default: []
-        description: "List of bootnode enode URLs for initial peer discovery"
-      enrAddress:
-        type: string
-        default: ""
-        description: "ENR (Ethereum Node Record) address to advertise"
-      udpPort:
-        type: number
-        minimum: 1024
-        maximum: 65535
-        default: 30303
-        description: "Port number for P2P networking"
-        errorMessage:
-          minimum: "P2P port must be >= 1024"
-      relayNode:
-        type: string
-        default: ""
-        description: "Relay node address for P2P networking"
-      allowlist:
-        type: array
-        items:
-          type: string
-        default: ["*"]
-        description: "List of allowed CORS origins for P2P networking"
-      denylist:
-        type: array
-        items:
-          type: string
-        default: []
-        description: "List of denied CORS origins for P2P networking"
   ws:
     type: object
     properties:
@@ -160,6 +223,69 @@ properties:
         errorMessage:
           minimum: "WebSocket port must be >= 1024"
           maximum: "WebSocket port must be <= 65535"
+  logging:
+    type: object
+    properties:
+      stdout:
+        type: object
+        properties:
+          enabled:
+            type: boolean
+            default: false
+            description: "Enable stdout logging"
+          level:
+            type: string
+            default: "info"
+            description: "Logging level"
+          format:
+            type: string
+            default: "text"
+            description: "Logging format"
+      file:
+        type: object
+        properties:
+          enabled:
+            type: boolean
+            default: false
+            description: "Enable file logging"
+          directory:
+            type: string
+            default: ""
+            description: "Directory to write logs to"
+          level:
+            type: string
+            default: "info"
+            description: "Logging level"
+          format:
+            type: string
+            default: "text"
+            description: "Logging format"
+
+      journald:
+        type: object
+        properties:
+          enabled:
+            type: boolean
+            default: false
+            description: "Enable journald logging"
+          level:
+            type: string
+            default: ""
+            description: "Logging filter"
+  txpool:
+    type: object
+    properties:
+      enabled:
+        type: boolean
+        default: false
+        description: "Enable transaction pool"
+  builder:
+    type: object
+    properties:
+      enabled:
+        type: boolean
+        default: false
+        description: "Enable builder"
   dataDir:
     type: string
     default: "{common.dataDir}/{execution.client.name}"

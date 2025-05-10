@@ -862,7 +862,7 @@ Smithy uses JSON schema-based presets with:
 
 Example mapping:
 ```yaml
-- configPath: execution.http.apiPrefixes
+- configPath: execution.http.modules
   flag: --http.api
   transform: joinComma
   parent: --http
