@@ -100,6 +100,8 @@ Run the generated commands to start your clients.
 
 Config files allow overriding all schema-defined values (e.g., ports, directories, networks) while enforcing preset validation rules, ensuring compatibility and correctness across clients with differing expectations.
 
+For detailed information about the configuration schema and supported fields, see [Configuration.md](Configuration.md).
+
 ## As a Library
 
 Use Smithy in Node.js to generate commands, which are written to files in the specified output directory or throw an error if generation fails:
@@ -890,4 +892,4 @@ common:
 
 ## License
 
-“Licensed under Apache 2.0, see LICENSE file.
+"Licensed under Apache 2.0, see LICENSE file.
