@@ -4,426 +4,1087 @@ valueFormat: space
 rules:
   - flag: --addr
     configPath: execution.p2p.address
+    description: >
+      Network listening address
+      
+      [default: 0.0.0.0]
   - flag: --auth-ipc
     configPath: common.engine.communication.method
     transform: ipcEnabled
+    description: >
+      Enable auth engine API over IPC
   - flag: --auth-ipc.path
     configPath: common.engine.communication.ipc.path
     transform: interpolate
     enabled:
       configPath: common.engine.communication.method
       transform: ipcEnabled
+    description: >
+      Filename for auth IPC socket/pipe within the datadir
+      
+      [default: /tmp/reth_engine_api.ipc]
   - flag: --authrpc.addr
     configPath: common.engine.api.host
     enabled:
       configPath: common.engine.communication.method
       transform: jwtEnabled
+    description: >
+      Auth server address to listen on
+      
+      [default: 127.0.0.1]
   - flag: --authrpc.jwtsecret
     configPath: common.engine.communication.jwt.file
     transform: interpolate
     enabled:
       configPath: common.engine.communication.method
       transform: jwtEnabled
+    description: >
+      Path to a JWT secret to use for the authenticated engine-API RPC server.
+      
+      This will enforce JWT authentication for all requests coming from the consensus layer.
+      
+      If no path is provided, a secret will be generated and stored in the datadir under 
+      `<DIR>/<CHAIN_ID>/jwt.hex`. For mainnet this would be `~/.reth/mainnet/jwt.hex` by default.
   - flag: --authrpc.port
     configPath: common.engine.api.port
     enabled:
       configPath: common.engine.communication.method
       transform: jwtEnabled
+    description: >
+      Auth server port to listen on
+      
+      [default: 8551]
   - flag: --authrpc.vhosts
     configPath: common.engine.api.allowlist
     transform: allowlist
+    description: >
+      Http Corsdomain to allow request from
   - flag: --blobpool.pricebump
     configPath:
+    description: >
+      Price bump percentage to replace an already existing blob transaction
+      
+      [default: 100]
   - flag: --block-interval
     configPath:
+    description: >
+      Minimum pruning interval measured in blocks
   - flag: --bootnodes
     configPath: execution.p2p.bootnodes
     transform: joinComma
+    description: >
+      Comma separated enode URLs for P2P discovery bootstrap.
+      
+      Will fall back to a network-specific default if not specified.
   - flag: --builder.deadline
     configPath:
+    description: >
+      The deadline for when the payload builder job should resolve
+      
+      [default: 12]
   - flag: --builder.disallow
     configPath:
+    description: >
+      Path to file containing disallowed addresses, json-encoded list of strings. Block validation 
+      API will reject blocks containing transactions from these addresses
   - flag: --builder.extradata
     configPath:
+    description: >
+      Block extra data set by the payload builder
+      
+      [default: reth/v1.3.12/linux]
   - flag: --builder.gaslimit
     configPath:
+    description: >
+      Target gas limit for built blocks
+      
+      [default: 36000000]
   - flag: --builder.interval
     configPath:
+    description: >
+      The interval at which the job should build a new payload after the last.
+      
+      Interval is specified in seconds or in milliseconds if the value ends with `ms`: 
+      * `50ms` -> 50 milliseconds 
+      * `1` -> 1 second
+      
+      [default: 1]
   - flag: --builder.max-tasks
     configPath:
+    description: >
+      Maximum number of tasks to spawn for building a payload
+      
+      [default: 3]
   - flag: --chain
     configPath: common.network.name
+    description: >
+      The chain this node is running.
+      Possible values are either a built-in chain or the path to a chain specification file.
+      
+      Built-in chains:
+          mainnet, sepolia, holesky, hoodi, dev
+      
+      [default: mainnet]
   - flag: --color
     configPath:
+    description: >
+      Sets whether or not the formatter emits ANSI terminal escape codes for colors and other text 
+      formatting
+      
+      [default: always]
+      
+      Possible values:
+      - always: Colors on
+      - auto:   Colors on
+      - never:  Colors off
   - flag: --config
     configPath:
+    description: >
+      The path to the configuration file to use.
   - flag: --datadir
     configPath: execution.dataDir
     transform: interpolate
+    description: >
+      The path to the data dir for all reth files and subdirectories.
+      
+      Defaults to the OS-specific data directory:
+      
+      - Linux: `$XDG_DATA_HOME/reth/` or `$HOME/.local/share/reth/`
+      - Windows: `{FOLDERID_RoamingAppData}/reth/`
+      - macOS: `$HOME/Library/Application Support/reth/`
+      
+      [default: default]
   - flag: --db.exclusive
     configPath:
+    description: >
+      Open environment in exclusive/monopolistic mode. Makes it possible to open a database on an 
+      NFS volume
+      
+      [possible values: true, false]
   - flag: --db.growth-step
     configPath:
+    description: >
+      Database growth step (e.g., 4GB, 4KB)
   - flag: --db.log-level
     configPath:
+    description: >
+      Database logging level. Levels higher than "notice" require a debug build
+      
+      Possible values:
+      - fatal:   Enables logging for critical conditions, i.e. assertion failures
+      - error:   Enables logging for error conditions
+      - warn:    Enables logging for warning conditions
+      - notice:  Enables logging for normal but significant condition
+      - verbose: Enables logging for verbose informational
+      - debug:   Enables logging for debug-level messages
+      - trace:   Enables logging for trace debug-level messages
+      - extra:   Enables logging for extra debug-level messages
   - flag: --db.max-size
     configPath:
+    description: >
+      Maximum database size (e.g., 4TB, 8MB)
   - flag: --db.read-transaction-timeout
     configPath:
+    description: >
+      Read transaction timeout in seconds, 0 means no timeout
   - flag: --debug.engine-api-store
     configPath:
+    description: >
+      The path to store engine API messages at. If specified, all of the intercepted engine API 
+      messages will be written to specified location
   - flag: --debug.etherscan
     configPath:
+    description: >
+      Runs a fake consensus client that advances the chain using recent block hashes on Etherscan. 
+      If specified, requires an `ETHERSCAN_API_KEY` environment variable
   - flag: --debug.healthy-node-rpc-url
     configPath:
+    description: >
+      The RPC URL of a healthy node to use for comparing invalid block hook results against.
   - flag: --debug.invalid-block-hook
     configPath:
+    description: >
+      Determines which type of invalid block hook to install
+      
+      Example: `witness,prestate`
+      
+      [default: witness]
+      [possible values: witness, pre-state, opcode]
   - flag: --debug.max-block
     configPath:
+    description: >
+      Runs the sync only up to the specified block
   - flag: --debug.reorg-depth
     configPath:
+    description: >
+      The reorg depth for chain reorgs
   - flag: --debug.reorg-frequency
     configPath:
+    description: >
+      If provided, the chain will be reorged at specified frequency
   - flag: --debug.rpc-consensus-ws
     configPath:
+    description: >
+      Runs a fake consensus client using blocks fetched from an RPC `WebSocket` endpoint
   - flag: --debug.skip-fcu
     configPath:
+    description: >
+      If provided, the engine will skip `n` consecutive FCUs
   - flag: --debug.skip-new-payload
     configPath:
+    description: >
+      If provided, the engine will skip `n` consecutive new payloads
   - flag: --debug.terminate
     configPath:
+    description: >
+      Flag indicating whether the node should be terminated after the pipeline sync
   - flag: --debug.tip
     configPath:
+    description: >
+      Set the chain tip manually for testing purposes.
+      
+      NOTE: This is a temporary flag
   - flag: --dev
     configPath:
+    description: >
+      Start the node in dev mode
+      
+      This mode uses a local proof-of-authority consensus engine with either fixed block times
+      or automatically mined blocks.
+      Disables network discovery and enables local http server.
+      Prefunds 20 accounts derived by mnemonic "test test test test test test test test test test
+      test junk" with 10 000 ETH each.
   - flag: --dev.block-max-transactions
     configPath:
+    description: >
+      How many transactions to mine per block
   - flag: --dev.block-time
     configPath:
+    description: >
+      Interval between blocks.
+      
+      Parses strings using [`humantime::parse_duration`]
+      --dev.block-time 12s
   - flag: --disable-discovery
     configPath: execution.p2p.discovery.enabled
     transform: negate
+    description: >
+      Disable the discovery service
   - flag: --disable-discv4-discovery
     configPath: execution.p2p.discovery.v4.enabled
     transform: negate
+    description: >
+      Disable Discv4 discovery
   - flag: --disable-dns-discovery
     configPath: execution.p2p.discovery.dns.enabled
     transform: negate
+    description: >
+      Disable the DNS discovery
   - flag: --disable-nat
     configPath: execution.p2p.nat.enabled
     transform: negate
+    description: >
+      Disable Nat discovery
   - flag: --discovery.addr
     configPath: execution.p2p.discovery.v4.address
     enabled:
       configPath: execution.p2p.discovery.v4.enabled
       transform: flagEnabled
+    description: >
+      The UDP address to use for devp2p peer discovery version 4
+      
+      [default: 0.0.0.0]
   - flag: --discovery.port
     configPath: execution.p2p.discovery.v4.port
     enabled:
       configPath: execution.p2p.discovery.v4.enabled
       transform: flagEnabled
+    description: >
+      The UDP port to use for devp2p peer discovery version 4
+      
+      [default: 30303]
   - flag: --discovery.v5.addr
     configPath: execution.p2p.discovery.v5.address
     enabled:
       configPath: execution.p2p.discovery.v5.enabled
       transform: flagEnabled
+    description: >
+      The UDP IPv4 address to use for devp2p peer discovery version 5. Overwritten by `RLPx` 
+      address, if it's also IPv4
   - flag: --discovery.v5.addr.ipv6
     configPath: 
+    description: >
+      The UDP IPv6 address to use for devp2p peer discovery version 5. Overwritten by `RLPx` 
+      address, if it's also IPv6
   - flag: --discovery.v5.bootstrap.lookup-countdown
     configPath:
+    description: >
+      The number of times to carry out boost lookup queries at bootstrap
+      
+      [default: 200]
   - flag: --discovery.v5.bootstrap.lookup-interval
     configPath:
+    description: >
+      The interval in seconds at which to carry out boost lookup queries, for a fixed number of 
+      times, at bootstrap
+      
+      [default: 5]
   - flag: --discovery.v5.lookup-interval
     configPath:
+    description: >
+      The interval in seconds at which to carry out periodic lookup queries, for the whole run of 
+      the program
+      
+      [default: 20]
   - flag: --discovery.v5.port
     configPath: execution.p2p.discovery.v5.port
     enabled:
       configPath: execution.p2p.discovery.v5.enabled
       transform: flagEnabled
+    description: >
+      The UDP IPv4 port to use for devp2p peer discovery version 5. Not used unless `--addr` is 
+      IPv4, or `--discovery.v5.addr` is set
+      
+      [default: 9200]
   - flag: --discovery.v5.port.ipv6
     configPath:
+    description: >
+      The UDP IPv6 port to use for devp2p peer discovery version 5. Not used unless `--addr` is 
+      IPv6, or `--discovery.addr.ipv6` is set
+      
+      [default: 9200]
   - flag: --dns-retries
     configPath: 
+    description: >
+      Amount of DNS resolution requests retries to perform when peering
+      
+      [default: 0]
   - flag: --enable-discv5-discovery
     configPath: execution.p2p.discovery.v5.enabled
     transform: flagEnabled
+    description: >
+      Enable discovery v5
   - flag: --engine.accept-execution-requests-hash
     configPath:
+    description: >
+      Enables accepting requests hash instead of an array of requests in `engine_newPayloadV4`
   - flag: --engine.caching-and-prewarming
     configPath:
+    description: >
+      Enable cross-block caching and parallel prewarming
   - flag: --engine.cross-block-cache-size
     configPath:
+    description: >
+      Configure the size of cross-block cache in megabytes
+      
+      [default: 4096]
   - flag: --engine.legacy-state-root
     configPath:
+    description: >
+      Enable legacy state root
   - flag: --engine.max-proof-task-concurrency
     configPath:
+    description: >
+      Configure the maximum number of concurrent proof tasks
+      
+      [default: 256]
   - flag: --engine.memory-block-buffer-target
     configPath:
+    description: >
+      Configure the target number of blocks to keep in memory
+      
+      [default: 2]
   - flag: --engine.persistence-threshold
     configPath:
+    description: >
+      Configure persistence threshold for engine experimental
+      
+      [default: 2]
   - flag: --engine.reserved-cpu-cores
     configPath:
+    description: >
+      Configure the number of reserved CPU cores for non-reth processes
+      
+      [default: 1]
   - flag: --engine.state-root-task-compare-updates
     configPath:
+    description: >
+      Enable comparing trie updates from the state root task to the trie updates from the regular 
+      state root calculation
   - flag: --full
     configPath:
+    description: >
+      Run full node. Only the most recent [`MINIMUM_PRUNING_DISTANCE`] block states are stored
   - flag: --gpo.blocks
     configPath:
+    description: >
+      Number of recent blocks to check for gas price
+      
+      [default: 20]
   - flag: --gpo.ignoreprice
     configPath:
+    description: >
+      Gas Price below which gpo will ignore transactions
+      
+      [default: 2]
   - flag: --gpo.maxprice
     configPath:
+    description: >
+      Maximum transaction priority fee(or gasprice before London Fork) to be recommended by gpo
+      
+      [default: 500000000000]
   - flag: --gpo.percentile
     configPath:
+    description: >
+      The percentile of gas prices to use for the estimate
+      
+      [default: 60]
   - flag: --http
     configPath: execution.http.enabled
     transform: flagEnabled
+    description: >
+      Enable the HTTP-RPC server
   - flag: --http.addr
     configPath: execution.http.address
     enabled:
       configPath: execution.http.enabled
       transform: flagEnabled
+    description: >
+      Http server address to listen on
+      
+      [default: 127.0.0.1]
   - flag: --http.api
     configPath: execution.http.modules
     transform: allowlist
     enabled:
       configPath: execution.http.enabled
       transform: flagEnabled
+    description: >
+      Rpc Modules to be configured for the HTTP server
+      
+      [possible values: admin, debug, eth, net, trace, txpool, web3, rpc, reth, ots, flashbots, 
+      miner, mev]
   - flag: --http.corsdomain
     configPath: execution.http.allowlist
     transform: allowlist
     enabled:
       configPath: execution.http.enabled
       transform: flagEnabled
+    description: >
+      Http Corsdomain to allow request from
   - flag: --http.port
     configPath: execution.http.port
     enabled:
       configPath: execution.http.enabled
       transform: flagEnabled
+    description: >
+      Http server port to listen on
+      
+      [default: 8545]
   - flag: --identity
     configPath: execution.p2p.identity
+    description: >
+      Custom node identity
+      
+      [default: reth/v1.3.12-6f8e725/x86_64-unknown-linux-gnu]
   - flag: --instance
     configPath:
+    description: >
+      Add a new instance of a node.
+      
+      Configures the ports of the node to avoid conflicts with the defaults. This is useful for 
+      running multiple nodes on the same machine.
+      
+      Max number of instances is 200. It is chosen in a way so that it's not possible to have port 
+      numbers that conflict with each other.
+      
+      Changes to the following port numbers: 
+      - `DISCOVERY_PORT`: default + `instance` - 1 
+      - `AUTH_PORT`: default + `instance` * 100 - 100 
+      - `HTTP_RPC_PORT`: default - `instance` + 1 
+      - `WS_RPC_PORT`: default + `instance` * 2 - 2 
+      - `IPC_PATH`: default + `-instance`
   - flag: --ipcdisable
     configPath:
+    description: >
+      Disable the IPC-RPC server
   - flag: --ipcpath
     configPath:
+    description: >
+      Filename for IPC socket/pipe within the datadir
+      
+      [default: /tmp/reth.ipc]
   - flag: --log.file.directory
     configPath:
+    description: >
+      The path to put log files in
+      
+      [default: /home/eniko/.cache/reth/logs]
   - flag: --log.file.filter
     configPath:
+    description: >
+      The filter to use for logs written to the log file
+      
+      [default: debug]
   - flag: --log.file.format
     configPath:
+    description: >
+      The format to use for logs written to the log file
+      
+      [default: terminal]
+      
+      Possible values:
+      - json:     Represents JSON formatting for logs. This format outputs log records as JSON 
+        objects, making it suitable for structured logging
+      - log-fmt:  Represents logfmt (key=value) formatting for logs. This format is concise and 
+        human-readable, typically used in command-line applications
+      - terminal: Represents terminal-friendly formatting for logs
   - flag: --log.file.max-files
     configPath:
+    description: >
+      The maximum amount of log files that will be stored. If set to 0, background file logging is 
+      disabled
+      
+      [default: 5]
   - flag: --log.file.max-size
     configPath:
+    description: >
+      The maximum size (in MB) of one log file
+      
+      [default: 200]
   - flag: --log.journald
     configPath:
+    description: >
+      Write logs to journald
   - flag: --log.journald.filter
     configPath:
+    description: >
+      The filter to use for logs written to journald
+      
+      [default: error]
   - flag: --log.stdout.filter
     configPath:
+    description: >
+      The filter to use for logs written to stdout
+      
+      [default: ]
   - flag: --log.stdout.format
     configPath:
-  - flag: --max-inbound-peers
-    configPath:
-  - flag: --max-outbound-peers
-    configPath:
-  - flag: --max-pending-imports
-    configPath:
-  - flag: --max-seen-tx-history
-    configPath:
-  - flag: --max-tx-pending-fetch
-    configPath:
-  - flag: --max-tx-reqs
-    configPath:
-  - flag: --max-tx-reqs-peer
-    configPath:
+    description: >
+      The format to use for logs written to stdout
+      
+      [default: terminal]
+      
+      Possible values:
+      - json:     Represents JSON formatting for logs. This format outputs log records as JSON 
+        objects, making it suitable for structured logging
+      - log-fmt:  Represents logfmt (key=value) formatting for logs. This format is concise and 
+        human-readable, typically used in command-line applications
+      - terminal: Represents terminal-friendly formatting for logs
   - flag: --metrics
     configPath: execution.metrics.enabled
     transform: flagEnabled
+    description: >
+      Enable Prometheus metrics.
+      
+      The metrics will be served at the given interface and port.
   - flag: --nat
     configPath: execution.p2p.nat.method
     enabled:
       configPath: execution.p2p.nat.enabled
       transform: flagEnabled
+    description: >
+      NAT resolution method (any|none|upnp|publicip|extip:\<IP\>)
+      
+      [default: any]
   - flag: --net-if.experimental
     configPath:
+    description: >
+      Name of network interface used to communicate with peers.
+      
+      If flag is set, but no value is passed, the default interface for docker `eth0` is tried.
   - flag: --no-persist-peers
     configPath:
+    description: >
+      Do not persist peers.
   - flag: --p2p-secret-key
     configPath:
+    description: >
+      Secret key to use for this node.
+      
+      This will also deterministically set the peer ID. If not specified, it will be set in the 
+      data dir for the chain being used.
   - flag: --peers-file
     configPath:
-  - flag: --pooled-tx-pack-soft-limit
-    configPath:
+    description: >
+      The path to the known peers file. Connected peers are dumped to this file on nodes
+      shutdown, and read on startup. Cannot be used with `--no-persist-peers`.
   - flag: --pooled-tx-response-soft-limit
     configPath:
+    description: >
+      Experimental, for usage in research. Sets the max accumulated byte size of transactions
+      to pack in one response.
+      Spec'd at 2MiB.
+      
+      [default: 2097152]
+  - flag: --pooled-tx-pack-soft-limit
+    configPath:
+    description: >
+      Experimental, for usage in research. Sets the max accumulated byte size of transactions to
+      request in one request.
+      
+      Since `RLPx` protocol version 68, the byte size of a transaction is shared as metadata in a
+      transaction announcement (see `RLPx` specs). This allows a node to request a specific size
+      response.
+      
+      By default, nodes request only 128 KiB worth of transactions, but should a peer request
+      more, up to 2 MiB, a node will answer with more than 128 KiB.
+      
+      Default is 128 KiB.
+      
+      [default: 131072]
   - flag: --port
     configPath: execution.p2p.port
+    enabled:
+      configPath: execution.p2p.enabled
+      transform: flagEnabled
+    description: >
+      Network listening port
+      
+      [default: 30303]
   - flag: --prune.accounthistory.before
     configPath:
+    description: >
+      Prune account history before the specified block number. The specified block number is not 
+      pruned
   - flag: --prune.accounthistory.distance
     configPath:
+    description: >
+      Prune account before the `head-N` block number. In other words, keep last N + 1 blocks
   - flag: --prune.accounthistory.full
     configPath:
+    description: >
+      Prunes all account history
   - flag: --prune.receipts.before
     configPath:
+    description: >
+      Prune receipts before the specified block number. The specified block number is not pruned
   - flag: --prune.receipts.distance
     configPath:
+    description: >
+      Prune receipts before the `head-N` block number. In other words, keep last N + 1 blocks
   - flag: --prune.receipts.full
     configPath:
+    description: >
+      Prunes all receipt data
   - flag: --prune.receiptslogfilter
     configPath:
+    description: >
+      Configure receipts log filter. Format: <`address`>:<`prune_mode`>[,<`address`>:<`prune_mode`>...] 
+      Where <`prune_mode`> can be 'full', 'distance:<`blocks`>', or 'before:<`block_number`>'
   - flag: --prune.senderrecovery.before
     configPath:
+    description: >
+      Prune sender recovery data before the specified block number. The specified block number is 
+      not pruned
   - flag: --prune.senderrecovery.distance
     configPath:
+    description: >
+      Prune sender recovery data before the `head-N` block number. In other words, keep last N + 1 
+      blocks
   - flag: --prune.senderrecovery.full
     configPath:
+    description: >
+      Prunes all sender recovery data
   - flag: --prune.storagehistory.before
     configPath:
+    description: >
+      Prune storage history before the specified block number. The specified block number is not 
+      pruned
   - flag: --prune.storagehistory.distance
     configPath:
+    description: >
+      Prune storage history before the `head-N` block number. In other words, keep last N + 1 
+      blocks
   - flag: --prune.storagehistory.full
     configPath:
+    description: >
+      Prunes all storage history data
   - flag: --prune.transactionlookup.before
     configPath:
+    description: >
+      Prune transaction lookup data before the specified block number. The specified block number 
+      is not pruned
   - flag: --prune.transactionlookup.distance
     configPath:
+    description: >
+      Prune transaction lookup data before the `head-N` block number. In other words, keep last N 
+      + 1 blocks
   - flag: --prune.transactionlookup.full
     configPath:
+    description: >
+      Prunes all transaction lookup data
   - flag: --quiet
     configPath:
+    description: >
+      Silence all log output
   - flag: --ress.enable
     configPath:
+    description: >
+      Enable support for `ress` subprotocol
   - flag: --ress.max-active-connections
     configPath:
+    description: >
+      The maximum number of active connections for `ress` subprotocol
+      
+      [default: 5]
   - flag: --ress.max-witness-window
     configPath:
+    description: >
+      The maximum witness lookback window
+      
+      [default: 1024]
   - flag: --ress.witness-cache-size
     configPath:
+    description: >
+      Witness cache size
+      
+      [default: 10]
   - flag: --ress.witness-max-parallel
     configPath:
+    description: >
+      The maximum number of witnesses to generate in parallel
+      
+      [default: 5]
   - flag: --rpc-cache.max-blocks
     configPath:
+    description: >
+      Max number of blocks in cache
+      
+      [default: 5000]
   - flag: --rpc-cache.max-concurrent-db-requests
     configPath:
+    description: >
+      Max number of concurrent database requests
+      
+      [default: 512]
   - flag: --rpc-cache.max-headers
     configPath:
+    description: >
+      Max number of headers in cache
+      
+      [default: 1000]
   - flag: --rpc-cache.max-receipts
     configPath:
+    description: >
+      Max number receipts in cache
+      
+      [default: 2000]
   - flag: --rpc.eth-proof-window
     configPath:
+    description: >
+      The maximum proof window for historical proof generation. This value allows for generating 
+      historical proofs up to configured number of blocks from current tip (up to `tip - window`)
+      
+      [default: 0]
   - flag: --rpc.gascap
     configPath:
+    description: >
+      Maximum gas limit for `eth_call` and call tracing RPC methods
+      
+      [default: 50000000]
   - flag: --rpc.jwtsecret
     configPath:
+    description: >
+      Hex encoded JWT secret to authenticate the regular RPC server(s), see `--http.api` and 
+      `--ws.api`.
+      
+      This is __not__ used for the authenticated engine-API RPC server, see `--authrpc.jwtsecret`.
   - flag: --rpc.max-blocks-per-filter
     configPath:
+    description: >
+      Maximum number of blocks that could be scanned per filter request. (0 = entire chain)
+      
+      [default: 100000]
   - flag: --rpc.max-connections
     configPath:
+    description: >
+      Maximum number of RPC server connections
+      
+      [default: 500]
   - flag: --rpc.max-logs-per-response
     configPath:
+    description: >
+      Maximum number of logs that can be returned in a single response. (0 = no limit)
+      
+      [default: 20000]
   - flag: --rpc.max-request-size
     configPath:
+    description: >
+      Set the maximum RPC request payload size for both HTTP and WS in megabytes
+      
+      [default: 15]
   - flag: --rpc.max-response-size
     configPath:
+    description: >
+      Set the maximum RPC response payload size for both HTTP and WS in megabytes
+      
+      [default: 160]
+      [aliases: rpc.returndata.limit]
   - flag: --rpc.max-simulate-blocks
     configPath:
+    description: >
+      Maximum number of blocks for `eth_simulateV1` call
+      
+      [default: 256]
   - flag: --rpc.max-subscriptions-per-connection
     configPath:
+    description: >
+      Set the maximum concurrent subscriptions per connection
+      
+      [default: 1024]
   - flag: --rpc.max-trace-filter-blocks
     configPath:
+    description: >
+      Maximum number of blocks for `trace_filter` requests
+      
+      [default: 100]
   - flag: --rpc.max-tracing-requests
     configPath:
+    description: >
+      Maximum number of concurrent tracing requests.
+      
+      By default this chooses a sensible value based on the number of available cores. Tracing 
+      requests are generally CPU bound. Choosing a value that is higher than the available CPU 
+      cores can have a negative impact on the performance of the node and affect the node's 
+      ability to maintain sync.
+      
+      [default: 14]
   - flag: --rpc.proof-permits
     configPath:
+    description: >
+      Maximum number of concurrent getproof requests
+      
+      [default: 25]
   - flag: --rpc.txfeecap
     configPath:
+    description: >
+      Maximum eth transaction fee that can be sent via the RPC APIs (0 = no cap)
+      
+      [default: 1.0]
   - flag: --tx-propagation-policy
     configPath:
+    description: >
+      Transaction Propagation Policy
+      
+      The policy determines which peers transactions are gossiped to.
+      
+      [default: All]
   - flag: --txpool.additional-validation-tasks
     configPath:
+    description: >
+      Number of additional transaction validation tasks to spawn
+      
+      [default: 1]
   - flag: --txpool.basefee-max-count
     configPath:
+    description: >
+      Max number of transaction in the basefee sub-pool
+      
+      [default: 10000]
   - flag: --txpool.basefee-max-size
     configPath:
+    description: >
+      Max size of the basefee sub-pool in megabytes
+      
+      [default: 20]
   - flag: --txpool.blob-cache-size
     configPath:
+    description: >
+      Max number of entries for the in memory cache of the blob store
   - flag: --txpool.blobpool-max-count
     configPath:
+    description: >
+      Max number of transaction in the blobpool
+      
+      [default: 10000]
   - flag: --txpool.blobpool-max-size
     configPath:
+    description: >
+      Max size of the blobpool in megabytes
+      
+      [default: 20]
   - flag: --txpool.disable-transactions-backup
     configPath:
+    description: >
+      Disables transaction backup to disk on node shutdown
   - flag: --txpool.gas-limit
     configPath:
+    description: >
+      The default enforced gas limit for transactions entering the pool
+      
+      [default: 30000000]
   - flag: --txpool.lifetime
     configPath:
+    description: >
+      Maximum amount of time non-executable transaction are queued
+      
+      [default: 10800]
   - flag: --txpool.locals
     configPath:
+    description: >
+      Flag to allow certain addresses as local
   - flag: --txpool.max-account-slots
     configPath:
+    description: >
+      Max number of executable transaction slots guaranteed per account
+      
+      [default: 16]
   - flag: --txpool.max-cached-entries
     configPath:
+    description: >
+      The maximum number of blobs to keep in the in memory blob cache
+      
+      [default: 100]
   - flag: --txpool.max-new-pending-txs-notifications
     configPath:
+    description: >
+      How many new pending transactions to buffer and send to in progress pending transaction 
+      iterators
+      
+      [default: 200]
   - flag: --txpool.max-new-txns
     configPath:
+    description: >
+      Maximum number of new transactions to buffer
+      
+      [default: 1024]
   - flag: --txpool.max-pending-txns
     configPath:
+    description: >
+      Maximum number of pending transactions from the network to buffer
+      
+      [default: 2048]
   - flag: --txpool.max-tx-input-bytes
     configPath:
+    description: >
+      Max size in bytes of a single transaction allowed to enter the pool
+      
+      [default: 131072]
   - flag: --txpool.minimal-protocol-fee
     configPath:
+    description: >
+      Minimum base fee required by the protocol
+      
+      [default: 7]
   - flag: --txpool.no-local-transactions-propagation
     configPath:
+    description: >
+      Flag to toggle local transaction propagation
   - flag: --txpool.nolocals
     configPath:
+    description: >
+      Flag to disable local transaction exemptions
   - flag: --txpool.pending-max-count
     configPath:
+    description: >
+      Max number of transaction in the pending sub-pool
+      
+      [default: 10000]
   - flag: --txpool.pending-max-size
     configPath:
+    description: >
+      Max size of the pending sub-pool in megabytes
+      
+      [default: 20]
   - flag: --txpool.pricebump
     configPath:
+    description: >
+      Price bump (in %) for the transaction pool underpriced check
+      
+      [default: 10]
   - flag: --txpool.queued-max-count
     configPath:
+    description: >
+      Max number of transaction in the queued sub-pool
+      
+      [default: 10000]
   - flag: --txpool.queued-max-size
     configPath:
+    description: >
+      Max size of the queued sub-pool in megabytes
+      
+      [default: 20]
   - flag: --txpool.transactions-backup
     configPath:
+    description: >
+      Path to store the local transaction backup at, to survive node restarts
   - flag: --trusted-only
     configPath:
+    description: >
+      Connect to or accept from trusted peers only
   - flag: --trusted-peers
     configPath:
+    description: >
+      Comma separated enode URLs of trusted peers for P2P connections.
+      
+      --trusted-peers enode://abcd@192.168.0.1:30303
   - flag: --verbosity
     configPath:
+    description: >
+      Set the minimum log level.
+      
+      -v      Errors
+      -vv     Warnings
+      -vvv    Info
+      -vvvv   Debug
+      -vvvvv  Traces (warning: very verbose!)
   - flag: --with-unused-ports
     configPath:
+    description: >
+      Sets all ports to unused, allowing the OS to choose random unused ports when sockets are 
+      bound.
+      
+      Mutually exclusive with `--instance`.
   - flag: --ws
     configPath: execution.ws.enabled
     transform: flagEnabled
+    description: >
+      Enable the WS-RPC server
   - flag: --ws.addr
     configPath: execution.ws.address
     enabled:
       configPath: execution.ws.enabled
       transform: flagEnabled
+    description: >
+      Ws server address to listen on
+      
+      [default: 127.0.0.1]
   - flag: --ws.api
     configPath: execution.ws.modules
     transform: joinComma
     enabled:
       configPath: execution.ws.enabled
       transform: flagEnabled
+    description: >
+      Rpc Modules to be configured for the WS server
+      
+      [possible values: admin, debug, eth, net, trace, txpool, web3, rpc, reth, ots, flashbots, 
+      miner, mev]
   - flag: --ws.origins
     configPath: execution.ws.allowlist
     transform: allowlist
     enabled:
       configPath: execution.ws.enabled
       transform: flagEnabled
+    description: >
+      Origins from which to accept `WebSocket` requests
   - flag: --ws.port
     configPath: execution.ws.port
     enabled:
       configPath: execution.ws.enabled
       transform: flagEnabled
+    description: >
+      Ws server port to listen on
+      
+      [default: 8546]

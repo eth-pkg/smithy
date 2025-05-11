@@ -59,6 +59,13 @@ export const flagFunctions: Record<string, FlagEnabledFunction | FlagTransformFu
     }
     return value === "true"
   },
+  // same as flagEnabled but the difference is that it will concanate the value with the flag name
+  booleanFlag: (value: string | boolean): boolean => {
+    if (typeof value === 'boolean') {
+      return value
+    }
+    return value === "true"
+  },
 
   negate: (value: string | boolean): boolean => {
     if (typeof value === 'boolean') {

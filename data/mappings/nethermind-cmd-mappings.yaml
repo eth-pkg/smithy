@@ -276,7 +276,10 @@ rules:
       The diagnostic mode.
   - flag: --Init.DiscoveryEnabled
     configPath: execution.p2p.discovery.enabled
-    transform: flagEnabled
+    transform: booleanFlag
+    enabled:
+      configPath: execution.p2p.enabled
+      transform: booleanFlag
     description: >
       Whether to enable the node discovery. If disabled, Nethermind doesn't look 
       for other nodes beyond the bootnodes specified.

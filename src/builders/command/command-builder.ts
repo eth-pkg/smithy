@@ -119,7 +119,7 @@ export class CommandBuilder {
           }
         }
 
-        if (typeof transformedValue === 'boolean') {
+        if (typeof transformedValue === 'boolean' && rule.transform !== 'booleanFlag') {
           builder.addFlag(rule.flag, transformedValue)
         } else {
           builder.addArg(rule.flag, transformedValue)

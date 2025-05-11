@@ -82,7 +82,8 @@ rules:
     description: >
       Specifies the URL to use for DNS discovery
   - flag: --discovery-enabled
-    configPath:
+    configPath: execution.p2p.discovery.enabled
+    transform: booleanFlag
     description: >
       Enable P2P discovery (default: true)
   - flag: --engine-host-allowlist

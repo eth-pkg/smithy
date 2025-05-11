@@ -577,7 +577,10 @@ rules:
     description: |
       P2P node key as hex (for testing)
   - flag: --nodiscover
-    configPath: execution.p2p.enabled
+    configPath: execution.p2p.discovery.enabled
+    enabled:
+      configPath: execution.p2p.enabled
+      transform: flagEnabled
     transform: negate
     description: |
       Disables the peer discovery mechanism (manual peer addition)
@@ -1010,7 +1013,7 @@ rules:
     configPath: execution.p2p.discovery.v5.enabled
     transform: flagEnabled
     enabled:
-      configPath: execution.p2p.discovery.enabled
+      configPath: execution.p2p.discovery.v5.enabled
       transform: flagEnabled
     description: |
       Enables the experimental RLPx V5 (Topic Discovery) mechanism

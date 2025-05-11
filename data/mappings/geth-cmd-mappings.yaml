@@ -623,6 +623,9 @@ rules:
       Path to the smartcard daemon (pcscd) socket file
   - flag: --port
     configPath: execution.p2p.port
+    enabled:
+      configPath: execution.p2p.enabled
+      transform: flagEnabled
     description: |
       Network listening port
   - flag: --pprof
