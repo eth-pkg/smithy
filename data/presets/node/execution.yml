@@ -44,43 +44,64 @@ properties:
           minimum: "P2P port must be >= 1024"
           maximum: "P2P port must be <= 65535"
       dnsDiscovery:
-        type: boolean
-        default: true
-        description: "Enable DNS discovery"
-      disv5:
         type: object
         properties:
           enabled:
             type: boolean
             default: true
-            description: "Enable discovery v5"
-          port:
-            type: number
-            minimum: 1024
-            maximum: 65535
-            default: 30303
-            description: "Port number for discovery v5"
-          address:
+            description: "Enable DNS discovery"
+          url:
             type: string
-            default: "localhost"
-            description: "Address to listen on for discovery v5"
-      disv4:
+            default: ""
+            description: "URL for DNS discovery"
+      discovery:
         type: object
         properties:
           enabled:
             type: boolean
             default: true
-            description: "Enable discovery v4"
+            description: "Enable discovery"
           port:
             type: number
             minimum: 1024
             maximum: 65535
             default: 30303
-            description: "Port number for discovery v4"
-          address:
-            type: string
-            default: "localhost"
-            description: "Address to listen on for discovery v4"
+            description: "Port number for discovery"
+          v4:
+            type: object
+            properties:
+              enabled:
+                type: boolean
+                default: true
+                description: "Enable discovery v4"
+              port:
+                type: number
+                minimum: 1024
+                maximum: 65535
+                default: 30303
+                description: "Port number for discovery v4"
+              address:
+                type: string
+                default: "localhost"
+                description: "Address to listen on for discovery v4"
+                
+          v5:
+            type: object
+            properties:
+              enabled:
+                type: boolean
+                default: true
+                description: "Enable discovery v5"
+              port:
+                type: number
+                minimum: 1024
+                maximum: 65535
+                default: 30303
+                description: "Port number for discovery v5"
+              address:
+                type: string
+                default: "localhost"
+                description: "Address to listen on for discovery v5"
       nat: 
         type: object
         properties:
@@ -289,6 +310,34 @@ properties:
             type: string
             default: ""
             description: "Logging filter"
+  graphql:
+    type: object
+    properties:
+      enabled:
+        type: boolean
+        default: false
+        description: "Enable GraphQL API"
+  beacon:
+    type: object
+    properties:
+      enabled:
+        type: boolean
+        default: false
+        description: "Enable beacon"
+  miner:
+    type: object
+    properties:
+      enabled:
+        type: boolean
+        default: false
+        description: "Enable miner"
+  gas_price_oracle:
+    type: object
+    properties:
+      enabled:
+        type: boolean
+        default: false
+        description: "Enable gas price oracle"
   txpool:
     type: object
     properties:

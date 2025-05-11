@@ -4,416 +4,865 @@ valueFormat: equals
 rules:
   - flag: --api-gas-price-blocks
     configPath:
+    description: >
+      Number of blocks to consider for eth_gasPrice (default: 100)
   - flag: --api-gas-price-max
     configPath:
+    description: >
+      Maximum gas price for eth_gasPrice (default: 500000000000)
   - flag: --api-gas-price-percentile
     configPath:
+    description: >
+      Percentile value to measure for eth_gasPrice (default: 50.0)
   - flag: --auto-log-bloom-caching-enabled
     configPath:
+    description: >
+      Enable automatic log bloom caching (default: true)
   - flag: --banned-node-id
     configPath:
+    description: >
+      A list of node IDs to ban from the P2P network.
   - flag: --block-txs-selection-max-time
     configPath:
+    description: >
+      Deprecated. PoW consensus is deprecated. See CHANGELOG for alternative options.
+      Specifies the maximum time, in milliseconds, that could be spent selecting
+      transactions to be included in the block.
   - flag: --bonsai-historical-block-limit
     configPath:
+    description: >
+      Limit of historical layers that can be loaded with BONSAI (default: 512).
+      When using --bonsai-limit-trie-logs-enabled it will also be used as the
+      number of layers of trie logs to retain.
   - flag: --bonsai-limit-trie-logs-enabled
     configPath:
+    description: >
+      Limit the number of trie logs that are retained. (default: true)
   - flag: --bonsai-trie-logs-pruning-window-size
     configPath:
+    description: >
+      The max number of blocks to load and prune trie logs for at startup.
+      (default: 5000)
   - flag: --bootnodes
     configPath: execution.p2p.bootnodes
     enabled:
       configPath: execution.p2p.enabled
       transform: flagEnabled
+    description: >
+      Comma separated enode URLs for P2P discovery bootstrap. Default is a
+      predefined list.
   - flag: --cache-last-blocks
     configPath:
+    description: >
+      Specifies the number of last blocks to cache (default: 0)
   - flag: --cache-precompiles
     configPath:
+    description: >
+      Specifies whether to cache precompile results (default: false)
   - flag: --color-enabled
     configPath:
+    description: >
+      Force color output to be enabled/disabled (default: colorized only if
+      printing to console)
   - flag: --config-file
     configPath:
+    description: >
+      TOML config file (default: none)
   - flag: --data-path
     configPath: execution.dataDir
     transform: interpolate
+    description: >
+      The path to Besu data directory (default: /usr/lib/eth-node-besu/besu)
   - flag: --data-storage-format
     configPath:
+    description: >
+      Format to store trie data in. Either FOREST or BONSAI (default: BONSAI).
   - flag: --discovery-dns-url
     configPath:
+    description: >
+      Specifies the URL to use for DNS discovery
   - flag: --discovery-enabled
     configPath:
+    description: >
+      Enable P2P discovery (default: true)
   - flag: --engine-host-allowlist
     configPath: common.engine.api.allowlist
     transform: allowlist
     enabled:
       configPath: common.engine.communication.method
       transform: jwtEnabled
+    description: >
+      Comma separated list of hostnames to allow for ENGINE API access (applies
+      to both HTTP and websockets), or * to accept any host (default:
+      localhost,127.0.0.1)
   - flag: --engine-jwt-disabled
     configPath: common.engine.api.host
     transform: isFlag
     enabled:
       configPath: common.engine.communication.method
       transform: ipcEnabled
+    description: >
+      Disable authentication for Engine APIs (default: false)
   - flag: --engine-jwt-secret
     configPath: common.engine.communication.jwt.file
     transform: interpolate
     enabled:
       configPath: common.engine.communication.method
       transform: jwtEnabled
+    description: >
+      Path to file containing shared secret key for JWT signature verification
   - flag: --engine-rpc-enabled
     configPath: common.engine.enabled
     transform: isFlag
+    description: >
+      enable the engine api, even in the absence of merge-specific
+      configurations.
   - flag: --engine-rpc-port
     configPath: common.engine.api.port
     enabled:
       configPath: common.engine.communication.method
       transform: jwtEnabled
+    description: >
+      Port to provide consensus client APIS on (default: 8551)
   - flag: --ethstats
     configPath:
+    description: >
+      Reporting URL of a ethstats server. Scheme and port can be omitted.
   - flag: --ethstats-cacert-file
     configPath:
+    description: >
+      Specifies the path to the root CA (Certificate Authority) certificate
+      file that has signed ethstats server certificate. This option is optional.
   - flag: --ethstats-contact
     configPath:
+    description: >
+      Contact address to send to ethstats server
   - flag: --genesis-file
     configPath:
+    description: >
+      Genesis file for your custom network. Setting this option requires
+      --network-id to be set. (Cannot be used with --network)
   - flag: --genesis-state-hash-cache-enabled
     configPath:
+    description: >
+      Use genesis state hash from data on startup if specified (default: false)
   - flag: --graphql-http-cors-origins
     configPath:
+    description: >
+      Comma separated origin domain URLs for CORS validation (default: none)
   - flag: --graphql-http-enabled
     configPath:
+    description: >
+      Set to start the GraphQL HTTP service (default: false)
   - flag: --graphql-http-host
     configPath:
+    description: >
+      Host for GraphQL HTTP to listen on (default: null)
   - flag: --graphql-http-port
     configPath:
+    description: >
+      Port for GraphQL HTTP to listen on (default: 8547)
   - flag: --graphql-mtls-enabled
     configPath:
+    description: >
+      Enable mTLS for GraphQL HTTP service
   - flag: --graphql-tls-enabled
     configPath:
+    description: >
+      Enable TLS for GraphQL HTTP service
   - flag: --graphql-tls-keystore-file
     configPath:
+    description: >
+      Path to the TLS keystore file for GraphQL HTTP service
   - flag: --graphql-tls-keystore-password-file
     configPath:
+    description: >
+      Path to the file containing the password for the TLS keystore
   - flag: --graphql-tls-truststore-file
     configPath:
+    description: >
+      Path to the TLS truststore file for GraphQL HTTP service
   - flag: --graphql-tls-truststore-password-file
     configPath:
+    description: >
+      Path to the file containing the password for the TLS truststore
   - flag: --host-allowlist
     configPath: execution.p2p.allowlist
     transform: allowlist
     enabled:
       configPath: execution.p2p.enabled
       transform: flagEnabled
+    description: >
+      Comma separated list of hostnames to allow for RPC access, or * to accept
+      any host (default: localhost,127.0.0.1)
   - flag: --identity
     configPath: execution.p2p.identity
+    description: >
+      Identification for this node in the Client ID
   - flag: --json-pretty-print-enabled
     configPath:
+    description: >
+      Enable JSON pretty print format (default: false)
   - flag: --key-value-storage
     configPath:
+    description: >
+      Identity for the key-value storage to be used.
   - flag: --kzg-trusted-setup
     configPath:
+    description: >
+      Path to file containing the KZG trusted setup, mandatory for custom
+      networks that support data blobs, optional for overriding named networks
+      default.
   - flag: --logging
     configPath:
+    description: >
+      Logging verbosity levels: OFF, ERROR, WARN, INFO, DEBUG, TRACE, ALL
   - flag: --max-peers
     configPath: execution.p2p.maxPeers
     enabled:
       configPath: execution.p2p.enabled
       transform: flagEnabled
+    description: >
+      Maximum P2P connections that can be established (default: 25)
   - flag: --metrics-category
     configPath:
+    description: >
+      Comma separated list of categories to track metrics for (default: [jvm,
+      blockchain, ethereum, executors, process, synchronizer, permissioning,
+      stratum, network, peers, rpc, transaction_pool, block_processing, pruner])
   - flag: --metrics-enabled
     configPath: execution.metrics.enabled
     transform: flagEnabled
+    description: >
+      Set to start the metrics exporter (default: false)
   - flag: --metrics-host
     configPath: execution.metrics.host
     enabled:
       configPath: execution.metrics.enabled
       transform: flagEnabled
+    description: >
+      Host for the metrics exporter to listen on (default: 127.0.0.1)
   - flag: --metrics-port
     configPath: execution.metrics.port
     enabled:
       configPath: execution.metrics.enabled
       transform: flagEnabled
+    description: >
+      Port for the metrics exporter to listen on (default: 9545)
   - flag: --metrics-protocol
     configPath:
+    description: >
+      Metrics protocol, one of PROMETHEUS, OPENTELEMETRY or NONE.
+      (default: PROMETHEUS)
   - flag: --metrics-push-enabled
     configPath:
+    description: >
+      Enable the metrics push gateway integration (default: false)
   - flag: --metrics-push-host
     configPath:
+    description: >
+      Host of the Prometheus Push Gateway for push mode (default: 127.0.0.1)
   - flag: --metrics-push-interval
     configPath:
+    description: >
+      Interval in seconds to push metrics when in push mode (default: 15)
   - flag: --metrics-push-port
     configPath:
+    description: >
+      Port of the Prometheus Push Gateway for push mode (default: 9001)
   - flag: --metrics-push-prometheus-job
     configPath:
+    description: >
+      Job name to use when in push mode (default: besu-client)
   - flag: --min-block-occupancy-ratio
     configPath:
+    description: >
+      Minimum occupancy ratio for a mined block (default: 0.8)
   - flag: --min-gas-price
     configPath:
+    description: >
+      Minimum price (in Wei) offered by a transaction for it to be included in
+      a mined block (default: 0x00000000000000000000000000000000000000000000000
+      000000000000003e8)
   - flag: --min-priority-fee
     configPath:
+    description: >
+      Minimum priority fee per gas (in Wei) offered by a transaction for it to
+      be included in a block (default: 0x000000000000000000000000000000000000000
+      000000000000000000000000)
   - flag: --miner-coinbase
     configPath:
+    description: >
+      Account to which mining rewards are paid. You must specify a valid
+      coinbase if mining is enabled using --miner-enabled option
   - flag: --miner-enabled
     configPath:
+    description: >
+      Deprecated. PoW consensus is deprecated. See CHANGELOG for alternative
+      options. Set if node will perform mining (default: false)
   - flag: --miner-extra-data
     configPath:
+    description: >
+      A hex string representing the (32) bytes to be included in the extra data
+      field of a mined block (default: 0x626573752032352e342e31)
   - flag: --miner-stratum-enabled
     configPath:
+    description: >
+      Deprecated. PoW consensus is deprecated. See CHANGELOG for alternative
+      options. Set if node will perform Stratum mining (default: false).
+      Compatible with Proof of Work (PoW) only. Requires the network option
+      (--network) to be set to CLASSIC.
   - flag: --miner-stratum-host
     configPath:
+    description: >
+      Deprecated. PoW consensus is deprecated. See CHANGELOG for alternative
+      options. Host for Stratum network mining service (default: 0.0.0.0)
   - flag: --miner-stratum-port
     configPath:
+    description: >
+      Deprecated. PoW consensus is deprecated. See CHANGELOG for alternative
+      options. Stratum port binding (default: 8008)
   - flag: --nat-method
     configPath: execution.p2p.nat.method
     enabled:
       configPath: execution.p2p.nat.enabled
       transform: flagEnabled
+    description: >
+      Specify the NAT circumvention method to be used, possible values are
+      UPNP, UPNPP2PONLY, DOCKER, AUTO, NONE. NONE disables NAT functionality.
+      (default: AUTO)
   - flag: --net-restrict
     configPath:
+    description: >
+      Comma-separated list of allowed IP subnets (e.g., '192.168.1.0/24,10.0.0.0/8').
   - flag: --network
     configPath: common.network.name
+    description: >
+      Synchronize against the indicated network, possible values are MAINNET,
+      SEPOLIA, HOLESKY, HOODI, EPHEMERY, LUKSO, DEV, FUTURE_EIPS,
+      EXPERIMENTAL_EIPS, CLASSIC, MORDOR. (default: MAINNET)
   - flag: --network-id
     configPath: common.network.id
+    description: >
+      P2P network identifier. (default: the selected network chain ID or custom
+      genesis chain ID)
   - flag: --node-private-key-file
     configPath:
+    description: >
+      The node's private key file (default: a file named "key" in the Besu data
+      directory)
   - flag: --p2p-enabled
     configPath: execution.p2p.enabled
     transform: flagEnabled
+    description: >
+      Enable P2P functionality (default: true)
   - flag: --p2p-host
-    configPath: execution.p2p.host
+    configPath: execution.p2p.address
+    enabled:
+      configPath: execution.p2p.enabled
+      transform: flagEnabled
+    description: >
+      IP address this node advertises to its peers (default: 127.0.0.1)
   - flag: --p2p-interface
     configPath: 
+    description: >
+      The network interface address on which this node listens for P2P
+      communication (default: 0.0.0.0)
   - flag: --p2p-port
     configPath: execution.p2p.port
     enabled:
       configPath: execution.p2p.enabled
       transform: flagEnabled
+    description: >
+      Port on which to listen for P2P communication (default: 30303)
   - flag: --permissions-accounts-config-file
     configPath:
+    description: >
+      Account permissioning config TOML file (default: a file named
+      "permissions_config.toml" in the Besu data folder)
   - flag: --permissions-accounts-config-file-enabled
     configPath:
+    description: >
+      Enable account level permissions (default: false)
   - flag: --permissions-accounts-contract-address
     configPath:
+    description: >
+      Deprecated. Onchain permissioning is deprecated. See CHANGELOG for
+      alternative options. Address of the account permissioning smart contract
   - flag: --permissions-accounts-contract-enabled
     configPath:
+    description: >
+      Deprecated. Onchain permissioning is deprecated. See CHANGELOG for
+      alternative options. Enable account level permissions via smart contract
+      (default: false)
   - flag: --permissions-nodes-config-file
     configPath:
+    description: >
+      Node permissioning config TOML file (default: a file named
+      "permissions_config.toml" in the Besu data folder)
   - flag: --permissions-nodes-config-file-enabled
     configPath:
+    description: >
+      Enable node level permissions (default: false)
   - flag: --permissions-nodes-contract-address
     configPath:
+    description: >
+      Deprecated. Onchain permissioning is deprecated. See CHANGELOG for
+      alternative options. Address of the node permissioning smart contract
   - flag: --permissions-nodes-contract-enabled
     configPath:
+    description: >
+      Deprecated. Onchain permissioning is deprecated. See CHANGELOG for
+      alternative options. Enable node level permissions via smart contract
+      (default: false)
   - flag: --permissions-nodes-contract-version
     configPath:
+    description: >
+      Deprecated. Onchain permissioning is deprecated. See CHANGELOG for
+      alternative options. Version of the EEA Node Permissioning interface
+      (default: 1)
   - flag: --pid-path
     configPath:
+    description: >
+      Path to PID file (optional)
   - flag: --plugin-continue-on-error
     configPath:
+    description: >
+      Allow Besu startup even if any plugins fail to initialize correctly
+      (default: false)
   - flag: --plugins
     configPath:
+    description: >
+      Comma-separated list of plugin names to load
   - flag: --poa-block-txs-selection-max-time
     configPath:
+    description: >
+      Specifies the maximum time that could be spent selecting transactions to
+      be included in the block, as a percentage of the fixed block time of the
+      PoA network. To be only used on PoA networks, for other networks see
+      block-txs-selection-max-time. (default: +75)
   - flag: --poa-discovery-retry-bootnodes
     configPath:
+    description: >
+      Always use of bootnodes for discovery in PoA networks. Disabling this
+      reverts to the same behaviour as non-PoA networks, where neighbours are
+      only discovered from bootnodes on first startup.(default: true)
   - flag: --print-paths-and-exit
     configPath:
+    description: >
+      Print the configured paths and exit without starting the node.
   - flag: --profile
     configPath:
+    description: >
+      Overwrite default settings. Possible values are dev, enterprise,
+      minimalist_staker, private, staker. (default: none)
   - flag: --random-peer-priority-enabled
     configPath:
+    description: >
+      Allow for incoming connections to be prioritized randomly. This will
+      prevent (typically small, stable) networks from forming impenetrable peer
+      cliques. (default: false)
   - flag: --receipt-compaction-enabled
     configPath:
+    description: >
+      Enables compact storing of receipts (default: true)
   - flag: --remote-connections-limit-enabled
     configPath:
+    description: >
+      Whether to limit the number of P2P connections initiated remotely.
+      (default: true)
   - flag: --remote-connections-max-percentage
     configPath:
+    description: >
+      The maximum percentage of P2P connections that can be initiated remotely.
+      Must be between 0 and 100 inclusive. (default: 60)
   - flag: --reorg-logging-threshold
     configPath:
+    description: >
+      How deep a chain reorganization must be in order for it to be logged
+      (default: 6)
   - flag: --required-block
     configPath:
+    description: >
+      Block number and hash peers are required to have.
   - flag: --revert-reason-enabled
     configPath:
+    description: >
+      Enable passing the revert reason back through TransactionReceipts
+      (default: false)
   - flag: --rpc-gas-cap
     configPath:
+    description: >
+      Specifies the gasLimit cap for transaction simulation RPC methods. Must
+      be >=0. 0 specifies no limit (default: 50000000)
   - flag: --rpc-http-api
     configPath: execution.http.modules
     transform: allowlist
     enabled:
       configPath: execution.http.enabled
       transform: flagEnabled
+    description: >
+      Comma separated list of APIs to enable on JSON-RPC HTTP service (default:
+      [ETH, NET, WEB3])
   - flag: --rpc-http-api-method-no-auth
     configPath:
+    description: >
+      Comma separated list of API methods to exclude from RPC authentication
+      services, RPC HTTP authentication must be enabled
   - flag: --rpc-http-authentication-credentials-file
     configPath:
+    description: >
+      Storage file for JSON-RPC HTTP authentication credentials (default: null)
   - flag: --rpc-http-authentication-enabled
     configPath:
+    description: >
+      Require authentication for the JSON-RPC HTTP service (default: false)
   - flag: --rpc-http-authentication-jwt-algorithm
     configPath:
+    description: >
+      Encryption algorithm used for HTTP JWT public key. Possible values are
+      RS256, RS384, RS512, ES256, ES384, HS256, ES512 (default: RS256)
   - flag: --rpc-http-authentication-jwt-public-key-file
     configPath:
+    description: >
+      JWT public key file for JSON-RPC HTTP authentication
   - flag: --rpc-http-cors-origins
     configPath: execution.http.allowlist
     transform: allowlist
     enabled:
       configPath: execution.http.enabled
       transform: flagEnabled
+    description: >
+      Comma separated origin domain URLs for CORS validation (default: none)
   - flag: --rpc-http-enabled
     configPath: execution.http.enabled
     transform: flagEnabled
+    description: >
+      Set to start the JSON-RPC HTTP service (default: false)
   - flag: --rpc-http-host
     configPath: execution.http.address
     enabled:
       configPath: execution.http.enabled
       transform: flagEnabled
+    description: >
+      Host for JSON-RPC HTTP to listen on (default: 127.0.0.1)
   - flag: --rpc-http-max-active-connections
     configPath:
+    description: >
+      Maximum number of HTTP connections allowed for JSON-RPC (default: 80).
+      Once this limit is reached, incoming connections will be rejected.
   - flag: --rpc-http-max-batch-size
     configPath:
+    description: >
+      Specifies the maximum number of requests in a single RPC batch request
+      via RPC. -1 specifies no limit (default: 1024)
   - flag: --rpc-http-max-request-content-length
     configPath:
+    description: >
+      Specifies the maximum request content length. (default: 5242880)
   - flag: --rpc-http-port
     configPath: execution.http.port
     enabled:
       configPath: execution.http.enabled
       transform: flagEnabled
+    description: >
+      Port for JSON-RPC HTTP to listen on (default: 8545)
   - flag: --rpc-http-tls-ca-clients-enabled
     configPath:
+    description: >
+      Enable to accept clients certificate signed by a valid CA for client
+      authentication (default: false)
   - flag: --rpc-http-tls-cipher-suite
     configPath:
+    description: >
+      Comma separated list of TLS cipher suites to support
   - flag: --rpc-http-tls-client-auth-enabled
     configPath:
+    description: >
+      Enable TLS client authentication for the JSON-RPC HTTP service (default:
+      false)
   - flag: --rpc-http-tls-enabled
     configPath: execution.http.tls.enabled
     enabled:
       configPath: execution.http.enabled
       transform: flagEnabled
+    description: >
+      Enable TLS for the JSON-RPC HTTP service (default: false)
   - flag: --rpc-http-tls-keystore-file
     configPath: execution.http.tls.keystore.file
+    description: >
+      Keystore (PKCS#12) containing key/certificate for the JSON-RPC HTTP
+      service. Required if TLS is enabled.
   - flag: --rpc-http-tls-keystore-password-file
     configPath:
+    description: >
+      File containing password to unlock keystore for the JSON-RPC HTTP
+      service. Required if TLS is enabled.
   - flag: --rpc-http-tls-known-clients-file
     configPath:
+    description: >
+      Path to file containing clients certificate common name and fingerprint
+      for client authentication
   - flag: --rpc-http-tls-protocol
     configPath:
+    description: >
+      Comma separated list of TLS protocols to support (default: [TLSv1.3,
+      TLSv1.2])
   - flag: --rpc-http-tls-truststore-file
     configPath:
+    description: >
+      Path to the truststore file for the JSON-RPC HTTP service.
   - flag: --rpc-http-tls-truststore-password-file
     configPath:
+    description: >
+      Path to the file containing the password for the truststore.
   - flag: --rpc-max-logs-range
     configPath:
+    description: >
+      Specifies the maximum number of blocks to retrieve logs from via RPC.
+      Must be >=0. 0 specifies no limit (default: 5000)
   - flag: --rpc-max-trace-filter-range
     configPath:
+    description: >
+      Specifies the maximum number of blocks for the trace_filter method. Must
+      be >=0. 0 specifies no limit (default: 1000)
   - flag: --rpc-tx-feecap
     configPath:
+    description: >
+      Maximum transaction fees (in Wei) accepted for transaction submitted
+      through RPC (default: 0x00000000000000000000000000000000000000000000000
+      00de0b6b3a7640000)
   - flag: --rpc-ws-api
     configPath: execution.ws.modules
     transform: allowlist
     enabled:
       configPath: execution.ws.enabled
       transform: flagEnabled
+    description: >
+      Comma separated list of APIs to enable on JSON-RPC WebSocket service
+      (default: [ETH, NET, WEB3])
   - flag: --rpc-ws-api-method-no-auth
     configPath: 
+    description: >
+      Comma separated list of RPC methods to exclude from RPC authentication
+      services, RPC WebSocket authentication must be enabled
   - flag: --rpc-ws-authentication-credentials-file
     configPath:
+    description: >
+      Storage file for JSON-RPC WebSocket authentication credentials (default:
+      null)
   - flag: --rpc-ws-authentication-enabled
     configPath:
+    description: >
+      Require authentication for the JSON-RPC WebSocket service (default:
+      false)
   - flag: --rpc-ws-authentication-jwt-algorithm
     configPath:
+    description: >
+      Encryption algorithm used for Websockets JWT public key. Possible values
+      are RS256, RS384, RS512, ES256, ES384, HS256, ES512 (default: RS256)
   - flag: --rpc-ws-authentication-jwt-public-key-file
     configPath:
+    description: >
+      JWT public key file for JSON-RPC WebSocket authentication
   - flag: --rpc-ws-enabled
     configPath: execution.ws.enabled
     transform: flagEnabled
+    description: >
+      Set to start the JSON-RPC WebSocket service (default: false)
   - flag: --rpc-ws-host
     configPath: execution.ws.address
     enabled:
       configPath: execution.ws.enabled
       transform: flagEnabled
+    description: >
+      Host for JSON-RPC WebSocket service to listen on (default: null)
   - flag: --rpc-ws-max-active-connections
     configPath:
+    description: >
+      Maximum number of WebSocket connections allowed for JSON-RPC (default:
+      80). Once this limit is reached, incoming connections will be rejected.
   - flag: --rpc-ws-max-frame-size
     configPath:
+    description: >
+      Maximum size in bytes for JSON-RPC WebSocket frames (default: 1048576).
+      If this limit is exceeded, the websocket will be disconnected.
   - flag: --rpc-ws-port
     configPath: execution.ws.port
     enabled:
       configPath: execution.ws.enabled
       transform: flagEnabled
+    description: >
+      Port for JSON-RPC WebSocket service to listen on (default: 8546)
   - flag: --rpc-ws-ssl-cert-file
     configPath:
+    description: >
+      Path to the PEM cert file for the WebSocket RPC service
   - flag: --rpc-ws-ssl-client-auth-enabled
     configPath:
+    description: >
+      Enable client authentication for the WebSocket RPC service
   - flag: --rpc-ws-ssl-enabled
     configPath:
+    description: >
+      Enable SSL/TLS for the WebSocket RPC service
   - flag: --rpc-ws-ssl-key-file
     configPath:
+    description: >
+      Path to the PEM key file for the WebSocket RPC service
   - flag: --rpc-ws-ssl-keystore-file
     configPath:
+    description: >
+      Path to the keystore file for the WebSocket RPC service
   - flag: --rpc-ws-ssl-keystore-password
     configPath:
+    description: >
+      Password for the WebSocket RPC keystore file
   - flag: --rpc-ws-ssl-keystore-password-file
     configPath:
+    description: >
+      File containing the password for WebSocket keystore.
   - flag: --rpc-ws-ssl-keystore-type
     configPath:
+    description: >
+      Type of the WebSocket RPC keystore (JKS, PKCS12, PEM)
   - flag: --rpc-ws-ssl-trustcert-file
     configPath:
+    description: >
+      Path to the PEM trustcert file for the WebSocket RPC service
   - flag: --rpc-ws-ssl-truststore-file
     configPath:
+    description: >
+      Path to the truststore file for the WebSocket RPC service
   - flag: --rpc-ws-ssl-truststore-password
     configPath:
+    description: >
+      Password for the WebSocket RPC truststore file
   - flag: --rpc-ws-ssl-truststore-password-file
     configPath:
+    description: >
+      File containing the password for WebSocket truststore.
   - flag: --rpc-ws-ssl-truststore-type
     configPath:
+    description: >
+      Type of the truststore (JKS, PKCS12, PEM)
   - flag: --security-module
     configPath:
+    description: >
+      Identity for the Security Module to be used.
   - flag: --static-nodes-file
     configPath:
+    description: >
+      Specifies the static node file containing the static nodes for this node
+      to connect to
   - flag: --strict-tx-replay-protection-enabled
     configPath:
+    description: >
+      Require transactions submitted via JSON-RPC to use replay protection in
+      accordance with EIP-155 (default: false)
   - flag: --sync-min-peers
     configPath:
+    description: >
+      Minimum number of peers required before starting sync. Has effect only on
+      non-PoS networks. (default: 5)
   - flag: --sync-mode
     configPath:
+    description: >
+      Synchronization mode, possible values are FULL, FAST, SNAP, CHECKPOINT
+      (default: SNAP if a --network is supplied and privacy isn't enabled.
+      FULL otherwise.)
   - flag: --target-gas-limit
     configPath:
+    description: >
+      Sets target gas limit per block. If set, each block's gas limit will
+      approach this setting over time.
   - flag: --tx-pool
     configPath:
+    description: >
+      The Transaction Pool implementation to use (default: LAYERED)
   - flag: --tx-pool-blob-price-bump
     configPath:
+    description: >
+      Blob price bump percentage to replace an already existing transaction
+      blob tx (default: 100)
   - flag: --tx-pool-disable-locals
     configPath:
+    description: >
+      Set to true if senders of transactions sent via RPC should not have
+      priority (default: false)
   - flag: --tx-pool-enable-save-restore
     configPath:
+    description: >
+      Set to true to enable saving the txpool content to file on shutdown and
+      reloading it on startup (default: false)
   - flag: --tx-pool-layer-max-capacity
     configPath:
+    description: >
+      Max amount of memory space, in bytes, that any layer within the
+      transaction pool could occupy (default: 25000000)
   - flag: --tx-pool-limit-by-account-percentage
     configPath:
+    description: >
+      Maximum portion of the transaction pool which a single account may occupy
+      with future transactions (default: 0.001)
   - flag: --tx-pool-max-future-by-sender
     configPath:
+    description: >
+      Max number of future pending transactions allowed for a single sender
+      (default: 200)
   - flag: --tx-pool-max-prioritized
     configPath:
+    description: >
+      Max number of pending transactions that are prioritized and thus kept
+      sorted (default: 4000)
   - flag: --tx-pool-max-prioritized-by-type
     configPath:
-  - flag: --tx-pool-max-size
-    configPath:
+    description: >
+      Max number of pending transactions, of a specific type, that are
+      prioritized and thus kept sorted (default: {BLOB=9})
   - flag: --tx-pool-min-gas-price
     configPath:
+    description: >
+      Transactions with gas price (in Wei) lower than this minimum will not be
+      accepted into the txpool (not to be confused with min-gas-price, that is
+      applied on block creation) (default: 0x000000000000000000000000000000000
+      000000000000000000000000003e8)
   - flag: --tx-pool-min-score
     configPath:
+    description: >
+      Remove a pending transaction from the txpool if its score is lower than
+      this value.Accepts values between -128 and 127 (default: -128)
   - flag: --tx-pool-price-bump
     configPath:
+    description: >
+      Price bump percentage to replace an already existing transaction
+      (default: 10)
   - flag: --tx-pool-priority-senders
     configPath:
+    description: >
+      Pending transactions sent exclusively by these addresses, from any
+      source, are prioritized and only evicted after all others. If not
+      specified, then only the senders submitting transactions via RPC have
+      priority (default: [])
   - flag: --tx-pool-retention-hours
     configPath:
+    description: >
+      Maximum retention period of pending transactions in hours (default: 13)
   - flag: --tx-pool-save-file
     configPath:
+    description: >
+      If saving the txpool content is enabled, define a custom path for the
+      save file (default: txpool.dump in the data-dir)
   - flag: --version-compatibility-protection
     configPath:
+    description: >
+      Perform compatibility checks between the version of Besu being started
+      and the version of Besu that last started with this data directory.
+      (default: null)
   - flag: --Xrpc-ipc-enabled
     configPath: common.engine.communication.ipc.path
     enabled:
       configPath: common.engine.communication.method
       transform: ipcEnabled
+    description: >
+      Enable IPC communication for the Engine API

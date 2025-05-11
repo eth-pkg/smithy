@@ -59,6 +59,24 @@ export interface P2PConfig {
   enrAddress: string
   allowlist: string[]
   denylist: string[]
+  discovery: {
+    enabled: boolean
+    port: number,
+    dns: {
+      enabled: boolean
+      url: string
+    },
+    v4: {
+      enabled: boolean
+      port: number
+      address: string
+    }
+    v5: {
+      enabled: boolean
+      port: number
+      address: string
+    }
+  }
 }
 
 export interface WebSocketConfig {

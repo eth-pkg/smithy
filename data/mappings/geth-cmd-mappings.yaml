@@ -4,427 +4,822 @@ valueFormat: space
 rules:
   - flag: --allow-insecure-unlock
     configPath: 
+    description: |
+      Allow insecure account unlocking when account-related RPCs are exposed by http
+      (deprecated)
   - flag: --authrpc.addr
     configPath: common.engine.api.host
+    description: |
+      Listening address for authenticated APIs
     enabled:
       configPath: common.engine.communication.method
       transform: jwtEnabled
   - flag: --authrpc.jwtsecret
     configPath: common.engine.communication.jwt.file
+    description: |
+      Path to a JWT secret to use for authenticated RPC endpoints
     transform: interpolate
     enabled:
       configPath: common.engine.communication.method
       transform: jwtEnabled
   - flag: --authrpc.port
     configPath: common.engine.api.port
+    description: |
+      Listening port for authenticated APIs
     enabled:
       configPath: common.engine.communication.method
       transform: jwtEnabled
   - flag: --authrpc.vhosts
     configPath: common.engine.api.allowlist
+    description: |
+      Comma separated list of virtual hostnames from which to accept requests (server
+      enforced). Accepts '*' wildcard.
     transform: allowlist
     enabled:
       configPath: common.engine.communication.method
       transform: jwtEnabled
   - flag: --beacon.api
     configPath: 
+    description: |
+      Beacon node (CL) light client API URL. This flag can be given multiple times.
   - flag: --beacon.api.header
     configPath: 
+    description: |
+      Pass custom HTTP header fields to the remote beacon node API in "key:value"
+      format. This flag can be given multiple times.
   - flag: --beacon.checkpoint
     configPath: 
+    description: |
+      Beacon chain weak subjectivity checkpoint block hash
   - flag: --beacon.checkpoint.file
     configPath: 
+    description: |
+      Beacon chain weak subjectivity checkpoint import/export file
   - flag: --beacon.config
     configPath: 
+    description: |
+      Beacon chain config YAML file
   - flag: --beacon.genesis.gvroot
     configPath: 
+    description: |
+      Beacon chain genesis validators root
   - flag: --beacon.genesis.time
     configPath: 
+    description: |
+      Beacon chain genesis time
   - flag: --beacon.nofilter
     configPath: 
+    description: |
+      Disable future slot signature filter
   - flag: --beacon.threshold
     configPath: 
+    description: |
+      Beacon sync committee participation threshold
   - flag: --blobpool.datacap
     configPath: 
+    description: |
+      Disk space to allocate for pending blob transactions (soft limit)
   - flag: --blobpool.datadir
     configPath: 
+    description: |
+      Data directory to store blob transactions in
   - flag: --blobpool.pricebump
     configPath: 
+    description: |
+      Price bump percentage to replace an already existing blob transaction
   - flag: --bootnodes
     configPath: execution.p2p.bootnodes
+    transform: joinComma
+    description: |
+      Comma separated enode URLs for P2P discovery bootstrap
     enabled:
       configPath: execution.p2p.enabled
       transform: flagEnabled
   - flag: --cache
     configPath: 
+    description: |
+      Megabytes of memory allocated to internal caching (default = 4096 mainnet full
+      node, 128 light mode)
   - flag: --cache.blocklogs
     configPath: 
+    description: |
+      Size (in number of blocks) of the log cache for filtering
   - flag: --cache.database
     configPath: 
+    description: |
+      Percentage of cache memory allowance to use for database io
   - flag: --cache.gc
     configPath: 
+    description: |
+      Percentage of cache memory allowance to use for trie pruning (default = 25% full
+      mode, 0% archive mode)
   - flag: --cache.noprefetch
     configPath: 
+    description: |
+      Disable heuristic state prefetch during block import (less CPU and disk IO, more
+      time waiting for data)
   - flag: --cache.preimages
     configPath: 
+    description: |
+      Enable recording the SHA3/keccak preimages of trie keys
   - flag: --cache.snapshot
     configPath: 
+    description: |
+      Percentage of cache memory allowance to use for snapshot caching (default = 10%
+      full mode, 20% archive mode)
   - flag: --cache.trie
     configPath: 
+    description: |
+      Percentage of cache memory allowance to use for trie caching (default = 15% full
+      mode, 30% archive mode)
   - flag: --cache.trie.journal
     configPath: 
+    description: |
+      Disk journal directory for trie cache to survive node restarts
   - flag: --cache.trie.rejournal
     configPath: 
+    description: |
+      Time interval to regenerate the trie cache journal
   - flag: --config
     configPath: 
+    description: |
+      TOML configuration file
   - flag: --crypto.kzg
     configPath: 
+    description: |
+      KZG library implementation to use; gokzg (recommended) or ckzg
   - flag: --datadir
     configPath: execution.dataDir
+    description: |
+      Data directory for the databases and keystore
     transform: interpolate
   - flag: --datadir.ancient
     configPath: 
+    description: |
+      Root directory for ancient data (default = inside chaindata)
   - flag: --datadir.minfreedisk
     configPath: 
+    description: |
+      Minimum free disk space in MB, once reached triggers auto shut down (default =
+      --cache.gc converted to MB, 0 = disabled)
   - flag: --db.engine
     configPath: 
+    description: |
+      Backing database implementation to use ('pebble' or 'leveldb')
   - flag: --dev
     configPath: 
+    description: |
+      Ephemeral proof-of-authority network with a pre-funded developer account, mining
+      enabled
   - flag: --dev.gaslimit
     configPath: 
+    description: |
+      Initial block gas limit
   - flag: --dev.period
     configPath: 
+    description: |
+      Block period to use in developer mode (0 = mine only if transaction pending)
   - flag: --discovery.dns
-    configPath: 
+    configPath: execution.p2p.discovery.dns.url
+    enabled:
+      configPath: execution.p2p.discovery.dns.enabled
+      transform: flagEnabled
+    description: |
+      Sets DNS discovery entry points (use "" to disable DNS)
   - flag: --discovery.port
-    configPath: 
+    configPath: execution.p2p.discovery.port
+    enabled:
+      configPath: execution.p2p.discovery.enabled
+      transform: flagEnabled
+    description: |
+      Use a custom UDP port for P2P discovery
   - flag: --discovery.v4
-    configPath: 
+    configPath: execution.p2p.discovery.v4.enabled
+    transform: flagEnabled
+    description: |
+      Enables the V4 discovery mechanism
   - flag: --discovery.v5
-    configPath: 
+    configPath: execution.p2p.discovery.v5.enabled
+    transform: flagEnabled
+    description: |
+      Enables the V5 discovery mechanism
   - flag: --eth.requiredblocks
     configPath: 
+    description: |
+      Comma separated block number-to-hash mappings to require for peering
+      (<number>=<hash>)
   - flag: --ethstats
     configPath: 
+    description: |
+      Reporting URL of a ethstats service (nodename:secret@host:port)
   - flag: --ephemery
     configPath: common.network.name
+    description: |
+      Ephemery network: pre-configured proof-of-stake test network
     transform: network
   - flag: --exec
     configPath: 
+    description: |
+      Execute JavaScript statement
   - flag: --exitwhensynced
     configPath: 
+    description: |
+      Exits after block synchronisation completes
   - flag: --fdlimit
     configPath: 
+    description: |
+      Raise the open file descriptor resource limit (default = system fd limit)
   - flag: --gcmode
     configPath: 
+    description: |
+      Blockchain garbage collection mode, only relevant in state.scheme=hash ("full",
+      "archive")
   - flag: --go-execution-trace
     configPath: 
+    description: |
+      Write Go execution trace to the given file
   - flag: --gpo.blocks
     configPath: 
+    description: |
+      Number of recent blocks to check for gas prices
   - flag: --gpo.ignoreprice
     configPath: 
+    description: |
+      Gas price below which gpo will ignore transactions
   - flag: --gpo.maxprice
     configPath: 
+    description: |
+      Maximum transaction priority fee (or gasprice before London fork) to be
+      recommended by gpo
   - flag: --gpo.percentile
     configPath: 
+    description: |
+      Suggested gas price is the given percentile of a set of recent transaction gas
+      prices
   - flag: --graphql
     configPath: 
+    description: |
+      Enable GraphQL on the HTTP-RPC server. Note that GraphQL can only be started if
+      an HTTP server is started as well.
   - flag: --graphql.corsdomain
     configPath: 
+    description: |
+      Comma separated list of domains from which to accept cross origin requests
+      (browser enforced)
   - flag: --graphql.vhosts
     configPath: 
+    description: |
+      Comma separated list of virtual hostnames from which to accept requests (server
+      enforced). Accepts '*' wildcard.
   - flag: --header
     configPath: 
+    description: |
+      Pass custom headers to the RPC server when using --remotedb or the geth attach
+      console. This flag can be given multiple times.
   - flag: --history.chain
     configPath: 
+    description: |
+      Blockchain history retention ("all" or "postmerge")
   - flag: --history.logs
     configPath: 
+    description: |
+      Number of recent blocks to maintain log search index for (default = about one
+      year, 0 = entire chain)
   - flag: --history.logs.disable
     configPath: 
+    description: |
+      Do not maintain log search index
   - flag: --history.logs.export
     configPath: 
+    description: |
+      Export checkpoints to file in go source file format
   - flag: --history.state
     configPath: 
+    description: |
+      Number of recent blocks to retain state history for, only relevant in
+      state.scheme=path (default = 90,000 blocks, 0 = entire chain)
   - flag: --history.transactions
     configPath: 
+    description: |
+      Number of recent blocks to maintain transactions index for (default = about one
+      year, 0 = entire chain)
   - flag: --holesky
     configPath: common.network.name
+    description: |
+      Holesky network: pre-configured proof-of-stake test network
     transform: network
   - flag: --hoodi
     configPath: common.network.name
+    description: |
+      Hoodi network: pre-configured proof-of-stake test network
     transform: network
   - flag: --http
     configPath: execution.http.enabled
+    description: |
+      Enable the HTTP-RPC server
     transform: flagEnabled
     enabled:
       configPath: execution.http.enabled
       transform: flagEnabled
   - flag: --http.addr
     configPath: execution.http.address
+    description: |
+      HTTP-RPC server listening interface
     enabled:
       configPath: execution.http.enabled
       transform: flagEnabled
   - flag: --http.api
     configPath: execution.http.modules
+    description: |
+      API's offered over the HTTP-RPC interface
     transform: allowlist
     enabled:
       configPath: execution.http.enabled
       transform: flagEnabled
   - flag: --http.corsdomain
     configPath: execution.http.allowlist
+    description: |
+      Comma separated list of domains from which to accept cross origin requests
+      (browser enforced)
     transform: allowlist
     enabled:
       configPath: execution.http.enabled
       transform: flagEnabled
   - flag: --http.port
     configPath: execution.http.port
+    description: |
+      HTTP-RPC server listening port
     enabled:
       configPath: execution.http.enabled
       transform: flagEnabled
   - flag: --http.rpcprefix
     configPath: 
+    description: |
+      HTTP path prefix on which JSON-RPC is served. Use '/' to serve on all paths.
   - flag: --http.vhosts
     configPath: execution.http.allowlist
+    description: |
+      Comma separated list of virtual hostnames from which to accept requests (server
+      enforced). Accepts '*' wildcard.
     transform: allowlist
     enabled:
       configPath: execution.http.enabled
       transform: flagEnabled
   - flag: --identity
     configPath: execution.p2p.identity
+    description: |
+      Custom node name
   - flag: --ipcdisable
     configPath: common.engine.communication.method
+    description: |
+      Disable the IPC-RPC server
     transform: jwtEnabled
   - flag: --ipcpath
     configPath: common.engine.communication.ipc.path
+    description: |
+      Filename for IPC socket/pipe within the datadir (explicit paths escape it)
     transform: interpolate
     enabled:
       configPath: common.engine.communication.method
       transform: ipcEnabled
   - flag: --jspath
     configPath: 
+    description: |
+      JavaScript root path for `loadScript`
   - flag: --keystore
     configPath: 
+    description: |
+      Directory for the keystore (default = inside the datadir)
   - flag: --light.egress
     configPath: 
+    description: |
+      Outgoing bandwidth limit for serving light clients (deprecated)
   - flag: --light.ingress
     configPath: 
+    description: |
+      Incoming bandwidth limit for serving light clients (deprecated)
   - flag: --light.maxpeers
     configPath: 
+    description: |
+      Maximum number of light clients to serve, or light servers to attach to
+      (deprecated)
   - flag: --light.nopruning
     configPath: 
+    description: |
+      Disable ancient light chain data pruning (deprecated)
   - flag: --light.nosyncserve
     configPath: 
+    description: |
+      Enables serving light clients before syncing (deprecated)
   - flag: --light.serve
     configPath: 
+    description: |
+      Maximum percentage of time allowed for serving LES requests (deprecated)
   - flag: --lightkdf
     configPath: 
+    description: |
+      Reduce key-derivation RAM & CPU usage at some expense of KDF strength
   - flag: --log.backtrace
     configPath: 
+    description: |
+      Request a stack trace at a specific logging statement (deprecated)
   - flag: --log.compress
     configPath: 
+    description: |
+      Compress the log files
   - flag: --log.debug
     configPath: 
+    description: |
+      Prepends log messages with call-site location (deprecated)
   - flag: --log.file
     configPath: 
+    description: |
+      Write logs to a file
   - flag: --log.format
     configPath: 
+    description: |
+      Log format to use (json|logfmt|terminal)
   - flag: --log.maxage
     configPath: 
+    description: |
+      Maximum number of days to retain a log file
   - flag: --log.maxbackups
     configPath: 
+    description: |
+      Maximum number of log files to retain
   - flag: --log.maxsize
     configPath: 
+    description: |
+      Maximum size in MBs of a single log file
   - flag: --log.rotate
     configPath: 
+    description: |
+      Enables log file rotation
   - flag: --log.vmodule
     configPath: 
+    description: |
+      Per-module verbosity: comma-separated list of <pattern>=<level> (e.g.
+      eth/*=5,p2p=4)
   - flag: --mainnet
     configPath: common.network.name
+    description: |
+      Ethereum mainnet
     transform: network
   - flag: --maxpeers
     configPath: execution.p2p.maxPeers
+    description: |
+      Maximum number of network peers (network disabled if set to 0)
     enabled:
       configPath: execution.p2p.enabled
       transform: flagEnabled
   - flag: --maxpendpeers
     configPath: 
+    description: |
+      Maximum number of pending connection attempts (defaults used if set to 0)
   - flag: --metrics
     configPath: execution.metrics.enabled
+    description: |
+      Enable metrics collection and reporting
     transform: flagEnabled
   - flag: --metrics.addr
     configPath: execution.metrics.host
+    description: |
+      Enable stand-alone metrics HTTP server listening interface.
     enabled:
       configPath: execution.metrics.enabled
       transform: flagEnabled
   - flag: --metrics.expensive
     configPath: 
+    description: |
+      Enable expensive metrics collection and reporting (deprecated)
   - flag: --metrics.influxdb
     configPath: 
+    description: |
+      Enable metrics export/push to an external InfluxDB database
   - flag: --metrics.influxdb.bucket
     configPath: 
+    description: |
+      InfluxDB bucket name to push reported metrics to (v2 only)
   - flag: --metrics.influxdb.database
     configPath: 
+    description: |
+      InfluxDB database name to push reported metrics to
   - flag: --metrics.influxdb.endpoint
     configPath: 
+    description: |
+      InfluxDB API endpoint to report metrics to
   - flag: --metrics.influxdb.organization
     configPath: 
+    description: |
+      InfluxDB organization name (v2 only)
   - flag: --metrics.influxdb.password
     configPath: 
+    description: |
+      Password to authorize access to the database
   - flag: --metrics.influxdb.tags
     configPath: 
+    description: |
+      Comma-separated InfluxDB tags (key/values) attached to all measurements
   - flag: --metrics.influxdb.token
     configPath: 
+    description: |
+      Token to authorize access to the database (v2 only)
   - flag: --metrics.influxdb.username
     configPath: 
+    description: |
+      Username to authorize access to the database
   - flag: --metrics.influxdbv2
     configPath: 
+    description: |
+      Enable metrics export/push to an external InfluxDB v2 database
   - flag: --metrics.port
     configPath: execution.metrics.port
+    description: |
+      Metrics HTTP server listening port.
+      Please note that --metrics.addr must be set
+      to start the server.
     enabled:
       configPath: execution.metrics.enabled
       transform: flagEnabled
   - flag: --mine
     configPath: 
+    description: |
+      Enable mining (deprecated)
   - flag: --miner.etherbase
     configPath: 
+    description: |
+      0x prefixed public address for block mining rewards (deprecated)
   - flag: --miner.extradata
     configPath: 
+    description: |
+      Block extra data set by the miner (default = client version)
   - flag: --miner.gaslimit
     configPath: 
+    description: |
+      Target gas ceiling for mined blocks
   - flag: --miner.gasprice
     configPath: 
+    description: |
+      Minimum gas price for mining a transaction
   - flag: --miner.newpayload-timeout
     configPath: 
+    description: |
+      Specify the maximum time allowance for creating a new payload (deprecated)
   - flag: --miner.pending.feeRecipient
     configPath: 
+    description: |
+      0x prefixed public address for the pending block producer (not used for actual
+      block production)
   - flag: --miner.recommit
     configPath: 
+    description: |
+      Time interval to recreate the block being mined
   - flag: --nat
     configPath: execution.p2p.nat.method
+    description: |
+      NAT port mapping mechanism
+      (any|none|upnp|pmp|pmp:<IP>|extip:<IP>|stun:<IP:PORT>)
   - flag: --netrestrict
     configPath: 
+    description: |
+      Restricts network communication to the given IP networks (CIDR masks)
   - flag: --networkid
     configPath: common.network.id
+    description: |
+      Explicitly set network id (integer)(For testnets: use --sepolia, --holesky,
+      --hoodi instead)
   - flag: --nodekey
     configPath: 
+    description: |
+      P2P node key file
   - flag: --nodekeyhex
     configPath: 
+    description: |
+      P2P node key as hex (for testing)
   - flag: --nodiscover
-    configPath: 
+    configPath: execution.p2p.discovery.enabled
+    transform: negate
+    description: |
+      Disables the peer discovery mechanism (manual peer addition)
   - flag: --nousb
     configPath: 
+    description: |
+      Disables monitoring for and managing USB hardware wallets (deprecated)
   - flag: --override.prague
     configPath: 
+    description: |
+      Manually specify the Prague fork timestamp, overriding the bundled setting
   - flag: --override.verkle
     configPath: 
+    description: |
+      Manually specify the Verkle fork timestamp, overriding the bundled setting
   - flag: --password
     configPath: 
+    description: |
+      Password file to use for non-interactive password input
   - flag: --pcscdpath
     configPath: 
+    description: |
+      Path to the smartcard daemon (pcscd) socket file
   - flag: --port
     configPath: execution.p2p.port
+    description: |
+      Network listening port
   - flag: --pprof
     configPath: 
+    description: |
+      Enable the pprof HTTP server
   - flag: --pprof.addr
     configPath: 
+    description: |
+      pprof HTTP server listening interface
   - flag: --pprof.blockprofilerate
     configPath: 
+    description: |
+      Turn on block profiling with the given rate
   - flag: --pprof.cpuprofile
     configPath: 
+    description: |
+      Write CPU profile to the given file
   - flag: --pprof.memprofilerate
     configPath: 
+    description: |
+      Turn on memory profiling with the given rate
   - flag: --pprof.port
     configPath: 
+    description: |
+      pprof HTTP server listening port
   - flag: --preload
     configPath: 
+    description: |
+      Comma separated list of JavaScript files to preload into the console
   - flag: --remotedb
     configPath: 
+    description: |
+      URL for remote database
   - flag: --rpc.allow-unprotected-txs
     configPath: 
+    description: |
+      Allow for unprotected (non EIP155 signed) transactions to be submitted via RPC
   - flag: --rpc.batch-request-limit
     configPath: 
+    description: |
+      Maximum number of requests in a batch
   - flag: --rpc.batch-response-max-size
     configPath: 
+    description: |
+      Maximum number of bytes returned from a batched call
   - flag: --rpc.evmtimeout
     configPath: 
+    description: |
+      Sets a timeout used for eth_call (0=infinite)
   - flag: --rpc.gascap
     configPath: 
+    description: |
+      Sets a cap on gas that can be used in eth_call/estimateGas (0=infinite)
   - flag: --rpc.txfeecap
     configPath: 
+    description: |
+      Sets a cap on transaction fee (in ether) that can be sent via the RPC APIs (0 =
+      no cap)
   - flag: --sepolia
     configPath: common.network.name
+    description: |
+      Sepolia network: pre-configured proof-of-work test network
     transform: network
   - flag: --signer
     configPath: 
+    description: |
+      External signer (url or path to ipc file)
   - flag: --snapshot
     configPath: 
+    description: |
+      Enables snapshot-database mode (default = enable)
   - flag: --state.scheme
     configPath: 
+    description: |
+      Scheme to use for storing ethereum state ('hash' or 'path')
   - flag: --syncmode
     configPath: 
+    description: |
+      Blockchain sync mode ("snap" or "full")
   - flag: --synctarget
     configPath: 
+    description: |
+      Hash of the block to full sync to (dev testing feature)
   - flag: --txlookuplimit
     configPath: 
+    description: |
+      Number of recent blocks to maintain transactions index for (default = about one
+      year, 0 = entire chain) (deprecated, use history.transactions instead)
   - flag: --txpool.accountqueue
     configPath: 
+    description: |
+      Maximum number of non-executable transaction slots permitted per account
   - flag: --txpool.accountslots
     configPath: 
+    description: |
+      Minimum number of executable transaction slots guaranteed per account
   - flag: --txpool.globalqueue
     configPath: 
+    description: |
+      Maximum number of non-executable transaction slots for all accounts
   - flag: --txpool.globalslots
     configPath: 
+    description: |
+      Maximum number of executable transaction slots for all accounts
   - flag: --txpool.journal
     configPath: 
+    description: |
+      Disk journal for local transaction to survive node restarts
   - flag: --txpool.lifetime
     configPath: 
+    description: |
+      Maximum amount of time non-executable transaction are queued
   - flag: --txpool.locals
     configPath: 
+    description: |
+      Comma separated accounts to treat as locals (no flush, priority inclusion)
   - flag: --txpool.nolocals
     configPath: 
+    description: |
+      Disables price exemptions for locally submitted transactions
   - flag: --txpool.pricebump
     configPath: 
+    description: |
+      Price bump percentage to replace an already existing transaction
   - flag: --txpool.pricelimit
     configPath: 
+    description: |
+      Minimum gas price tip to enforce for acceptance into the pool
   - flag: --txpool.rejournal
     configPath: 
+    description: |
+      Time interval to regenerate the local transaction journal
   - flag: --unlock
     configPath: 
+    description: |
+      Comma separated list of accounts to unlock (deprecated)
   - flag: --usb
     configPath: 
+    description: |
+      Enable monitoring and management of USB hardware wallets
   - flag: --verbosity
     configPath: 
+    description: |
+      Logging verbosity: 0=silent, 1=error, 2=warn, 3=info, 4=debug, 5=detail
   - flag: --vmdebug
     configPath: 
+    description: |
+      Record information useful for VM and contract debugging
   - flag: --vmtrace
     configPath: 
+    description: |
+      Name of tracer which should record internal VM operations (costly)
   - flag: --vmtrace.jsonconfig
     configPath: 
+    description: |
+      Tracer configuration (JSON)
   - flag: --whitelist
     configPath: 
+    description: |
+      Comma separated block number-to-hash mappings to enforce (<number>=<hash>)
+      (deprecated in favor of --eth.requiredblocks)
   - flag: --ws
     configPath: execution.ws.enabled
+    description: |
+      Enable the WS-RPC server
     transform: flagEnabled
   - flag: --ws.addr
     configPath: execution.ws.address
+    description: |
+      WS-RPC server listening interface
     enabled:
       configPath: execution.ws.enabled
       transform: flagEnabled
   - flag: --ws.api
     configPath: execution.ws.modules 
+    description: |
+      API's offered over the WS-RPC interface
     enabled:
       configPath: execution.ws.enabled
       transform: flagEnabled
     transform: allowlist
   - flag: --ws.origins
     configPath: execution.ws.allowlist
+    description: |
+      Origins from which to accept websockets requests
     enabled:
       configPath: execution.ws.enabled
       transform: flagEnabled
   - flag: --ws.port
     configPath: execution.ws.port
+    description: |
+      WS-RPC server listening port
     enabled:
       configPath: execution.ws.enabled
       transform: flagEnabled
   - flag: --ws.rpcprefix
     configPath: 
+    description: |
+      HTTP path prefix on which JSON-RPC is served. Use '/' to serve on all paths.

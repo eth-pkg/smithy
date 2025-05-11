@@ -252,7 +252,6 @@ describe('Preset Validation Tests', () => {
       expect.fail('Should have thrown an error');
     } catch (error: unknown) {
       if (error instanceof Error) {
-        console.log(error.message);
         expect(error.message).to.include('Metrics port must be >= 1024');
       }
     }

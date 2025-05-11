@@ -101,30 +101,31 @@ rules:
   - flag: --dev.block-time
     configPath:
   - flag: --disable-discovery
-    configPath:
+    configPath: execution.p2p.discovery.enabled
+    transform: negate
   - flag: --disable-discv4-discovery
-    configPath: execution.p2p.disv4.enabled
+    configPath: execution.p2p.discovery.v4.enabled
     transform: negate
   - flag: --disable-dns-discovery
-    configPath: execution.p2p.dnsDiscovery
+    configPath: execution.p2p.discovery.dns.enabled
     transform: negate
   - flag: --disable-nat
     configPath: execution.p2p.nat.enabled
     transform: negate
   - flag: --discovery.addr
-    configPath: execution.p2p.disv4.address
+    configPath: execution.p2p.discovery.v4.address
     enabled:
-      configPath: execution.p2p.disv4.enabled
+      configPath: execution.p2p.discovery.v4.enabled
       transform: flagEnabled
   - flag: --discovery.port
-    configPath: execution.p2p.disv4.port
+    configPath: execution.p2p.discovery.v4.port
     enabled:
-      configPath: execution.p2p.disv4.enabled
+      configPath: execution.p2p.discovery.v4.enabled
       transform: flagEnabled
   - flag: --discovery.v5.addr
-    configPath: execution.p2p.disv5.address
+    configPath: execution.p2p.discovery.v5.address
     enabled:
-      configPath: execution.p2p.disv5.enabled
+      configPath: execution.p2p.discovery.v5.enabled
       transform: flagEnabled
   - flag: --discovery.v5.addr.ipv6
     configPath: 
@@ -135,16 +136,16 @@ rules:
   - flag: --discovery.v5.lookup-interval
     configPath:
   - flag: --discovery.v5.port
-    configPath: execution.p2p.disv5.port
+    configPath: execution.p2p.discovery.v5.port
     enabled:
-      configPath: execution.p2p.disv5.enabled
+      configPath: execution.p2p.discovery.v5.enabled
       transform: flagEnabled
   - flag: --discovery.v5.port.ipv6
     configPath:
   - flag: --dns-retries
-    configPath: execution.p2p.dnsDiscovery.retries
+    configPath: 
   - flag: --enable-discv5-discovery
-    configPath: execution.p2p.disv5.enabled
+    configPath: execution.p2p.discovery.v5.enabled
     transform: flagEnabled
   - flag: --engine.accept-execution-requests-hash
     configPath:

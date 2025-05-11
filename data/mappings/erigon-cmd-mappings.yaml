@@ -4,526 +4,1046 @@ valueFormat: space
 rules:
   - flag: --allow-insecure-unlock
     configPath: 
+    description: |
+      Allow insecure account unlocking when account-related RPCs are exposed by http
   - flag: --authrpc.addr
     configPath: common.engine.api.host
     enabled:
       configPath: common.engine.communication.method
       transform: jwtEnabled
+    description: |
+      HTTP-RPC server listening interface for the Engine API
   - flag: --authrpc.jwtsecret
     configPath: common.engine.communication.jwt.file
     transform: interpolate
     enabled: 
       configPath: common.engine.communication.method
       transform: jwtEnabled
+    description: |
+      Path to the token that ensures safe connection between CL and EL
   - flag: --authrpc.port
     configPath: common.engine.api.port
     enabled:
       configPath: common.engine.communication.method
       transform: jwtEnabled
+    description: |
+      HTTP-RPC server listening port for the Engine API
   - flag: --authrpc.timeouts.idle
     configPath: 
+    description: |
+      Maximum amount of time to wait for the next request when keep-alives are enabled. 
+      If authrpc.timeouts.idle is zero, the value of authrpc.timeouts.read is used.
   - flag: --authrpc.timeouts.read
     configPath: 
+    description: |
+      Maximum duration for reading the entire request, including the body.
   - flag: --authrpc.timeouts.write
     configPath: 
+    description: |
+      Maximum duration before timing out writes of the response. 
+      It is reset whenever a new request's header is read.
   - flag: --authrpc.vhosts
     configPath: common.engine.api.allowlist
     transform: allowlist
     enabled:
       configPath: common.engine.communication.method
       transform: jwtEnabled
+    description: |
+      Comma separated list of virtual hostnames from which to accept Engine API requests 
+      (server enforced). Accepts 'any' or '*' as wildcard.
   - flag: --bad.block
     configPath: 
+    description: |
+      Marks block with given hex string as bad and forces initial reorg before normal staged sync
   - flag: --batchSize
     configPath: 
+    description: |
+      Batch size for the execution stage
   - flag: --beacon.api
     configPath: 
+    description: |
+      Enable beacon API (available endpoints: beacon, builder, config, debug, events, node, validator, lighthouse)
   - flag: --beacon.api.addr
     configPath: 
+    description: |
+      sets the host to listen for beacon api requests
   - flag: --beacon.api.cors.allow-credentials
     configPath: 
+    description: |
+      set the cors' allow credentials
   - flag: --beacon.api.cors.allow-methods
     configPath: 
+    description: |
+      set the cors' allow methods
   - flag: --beacon.api.cors.allow-origins
     configPath: 
+    description: |
+      set the cors' allow origins
   - flag: --beacon.api.ide.timeout
     configPath: 
+    description: |
+      Sets the seconds for a write time out in the beacon api
   - flag: --beacon.api.port
     configPath: 
+    description: |
+      sets the port to listen for beacon api requests
   - flag: --beacon.api.protocol
     configPath: 
+    description: |
+      Protocol for beacon API
   - flag: --beacon.api.read.timeout
     configPath: 
+    description: |
+      Sets the seconds for a read time out in the beacon api
   - flag: --beacon.api.write.timeout
     configPath: 
+    description: |
+      Sets the seconds for a write time out in the beacon api
   - flag: --bodies.cache
     configPath: 
+    description: |
+      Limit on the cache for block bodies
   - flag: --bootnodes
     configPath: execution.p2p.bootnodes
     enabled:
       configPath: execution.p2p.enabled
       transform: flagEnabled
+    description: |
+      Comma separated enode URLs for P2P discovery bootstrap
   - flag: --bor.heimdall
     configPath: 
+    description: |
+      URL of Heimdall service
   - flag: --bor.milestone
     configPath: 
+    description: |
+      Enabling bor milestone processing
   - flag: --bor.minblocksize
     configPath: 
+    description: |
+      Ignore the bor block period and wait for 'blocksize' transactions (for testing purposes)
   - flag: --bor.period
     configPath: 
+    description: |
+      Override the bor block period (for testing purposes)
   - flag: --bor.waypoints
     configPath: 
+    description: |
+      Enabling bor waypont recording
   - flag: --bor.withoutheimdall
     configPath: 
+    description: |
+      Run without Heimdall service (for testing purposes)
   - flag: --caplin.adaptable-maximum-traffic-requirements
     configPath: 
+    description: |
+      Make the node adaptable to the maximum traffic requirement based on how many validators are being ran
   - flag: --caplin.blocks-archive
     configPath: 
+    description: |
+      sets whether backfilling is enabled for caplin
   - flag: --caplin.blobs-archive
     configPath: 
+    description: |
+      sets whether backfilling is enabled for caplin
   - flag: --caplin.blobs-immediate-backfill
     configPath: 
+    description: |
+      sets whether caplin should immediatelly backfill blobs (4096 epochs)
   - flag: --caplin.blobs-no-pruning
     configPath: 
+    description: |
+      disable blob pruning in caplin
   - flag: --caplin.checkpoint-sync-url
     configPath: 
+    description: |
+      checkpoint sync endpoint
   - flag: --caplin.checkpoint-sync.disable
     configPath: 
+    description: |
+      disable checkpoint sync in caplin
   - flag: --caplin.custom-config
     configPath: 
+    description: |
+      set the custom config for caplin
   - flag: --caplin.custom-genesis
     configPath: 
+    description: |
+      set the custom genesis for caplin
   - flag: --caplin.discovery.addr
-    configPath: 
+    configPath: execution.p2p.discovery.v5.address
+    enabled:
+      configPath: execution.p2p.discovery.v5.enabled
+      transform: flagEnabled
+    description: |
+      Address for Caplin DISCV5 protocol
   - flag: --caplin.discovery.port
-    configPath: 
+    configPath: execution.p2p.discovery.v5.port
+    enabled:
+      configPath: execution.p2p.discovery.v5.enabled
+      transform: flagEnabled
+    description: |
+      Port for Caplin DISCV5 protocol
   - flag: --caplin.discovery.tcpport
-    configPath: 
+    configPath: execution.p2p.disv5.port
+    enabled:
+      configPath: execution.p2p.disv5.enabled
+      transform: flagEnabled
+    description: |
+      TCP Port for Caplin DISCV5 protocol
   - flag: --caplin.enable-upnp
     configPath: 
+    description: |
+      Enable NAT porting for Caplin
   - flag: --caplin.max-inbound-traffic-per-peer
     configPath: 
+    description: |
+      Max inbound traffic per second per peer
   - flag: --caplin.max-outbound-traffic-per-peer
     configPath: 
+    description: |
+      Max outbound traffic per second per peer
   - flag: --caplin.max-peer-count
     configPath: 
+    description: |
+      Max number of peers to connect
   - flag: --caplin.mev-relay-url
     configPath: 
+    description: |
+      MEV relay endpoint. Caplin runs in builder mode if this is set
   - flag: --caplin.snapgen
     configPath: 
+    description: |
+      enables snapshot generation in caplin
   - flag: --caplin.states-archive
     configPath: 
+    description: |
+      enables archival node for historical states in caplin (it will enable block archival as well)
   - flag: --caplin.subscribe-all-topics
     configPath: 
+    description: |
+      Subscribe to all gossip topics
   - flag: --caplin.validator-monitor
     configPath: 
+    description: |
+      Enable caplin validator monitoring metrics
   - flag: --chain
     configPath: common.network.name
+    description: |
+      name of the network to join
   - flag: --chaos.monkey
     configPath: 
+    description: |
+      Enable 'chaos monkey' to generate spontaneous network/consensus/etc failures. 
+      Use ONLY for testing
   - flag: --clique.checkpoint
     configPath: 
+    description: |
+      Number of blocks after which to save the vote snapshot to the database
   - flag: --clique.datadir
     configPath: 
+    description: |
+      Path to clique db folder
   - flag: --clique.signatures
     configPath: 
+    description: |
+      Number of recent block signatures to keep in memory
   - flag: --clique.snapshots
     configPath: 
+    description: |
+      Number of recent vote snapshots to keep in memory
   - flag: --config
     configPath: 
+    description: |
+      Sets erigon flags from YAML/TOML file
   - flag: --database.verbosity
     configPath: 
+    description: |
+      Enabling internal db logs. Very high verbosity levels may require recompile db. 
+      Default: 2, means warning.
   - flag: --datadir
     configPath: execution.dataDir
     transform: interpolate
+    description: |
+      Data directory for the databases
   - flag: --db.pagesize
     configPath: 
+    description: |
+      DB is splitted to 'pages' of fixed size. Can't change DB creation. 
+      Must be power of 2 and '256b <= pagesize <= 64kb'. 
+      Default: equal to OperationSystem's pageSize. 
+      Bigger pageSize causing: 1. More writes to disk during commit 2. Smaller b-tree high 
+      3. Less fragmentation 4. Less overhead on 'free-pages list' maintainance 
+      (a bit faster Put/Commit) 5. If expecting DB-size > 8Tb then set pageSize >= 8Kb
   - flag: --db.read.concurrency
     configPath: 
+    description: |
+      Does limit amount of parallel db reads. Default: equal to GOMAXPROCS (or number of CPU)
   - flag: --db.size.limit
     configPath: 
+    description: |
+      Runtime limit of chaindata db size (can change at any time)
   - flag: --db.writemap
     configPath: 
+    description: |
+      Enable WRITE_MAP feature for fast database writes and fast commit times
   - flag: --dev.period
     configPath: 
+    description: |
+      Block period to use in developer mode (0 = mine only if transaction pending)
   - flag: --diagnostics.disabled
     configPath: 
+    description: |
+      Disable diagnostics
   - flag: --diagnostics.endpoint.addr
     configPath: 
+    description: |
+      Diagnostics HTTP server listening interface
   - flag: --diagnostics.endpoint.port
     configPath: 
+    description: |
+      Diagnostics HTTP server listening port
   - flag: --diagnostics.speedtest
     configPath: 
+    description: |
+      Enable speed test
   - flag: --discovery.dns
     configPath: 
+    description: |
+      Sets DNS discovery entry points (use "" to disable DNS)
   - flag: --downloader.api.addr
     configPath: 
+    description: |
+      downloader address '<host>:<port>'
   - flag: --downloader.disable.ipv4
     configPath: 
+    description: |
+      Turns off ipv4 for the downloader
   - flag: --downloader.disable.ipv6
     configPath: 
+    description: |
+      Turns off ipv6 for the downloader
   - flag: --downloader.verify
     configPath: 
+    description: |
+      Verify snapshots on startup. It will not report problems found, but re-download broken pieces.
   - flag: --etl.bufferSize
     configPath: 
+    description: |
+      Buffer size for ETL operations.
   - flag: --ethash.dagdir
     configPath: 
+    description: |
+      Directory to store the ethash mining DAGs
   - flag: --ethstats
     configPath: 
+    description: |
+      Reporting URL of a ethstats service (nodename:secret@host:port)
   - flag: --experiment.persist.receipts
     configPath: 
+    description: |
+      Set > 0 to store receipts in chaindata db (only on chain-tip) - RPC for recent receit/logs will be faster. 
+      Values: 1_000 good starting point. 10_000 receitps it's ~1Gb (not much IO increase). 
+      Please test before go over 100_000
   - flag: --experimental.commitment-history
     configPath: 
+    description: |
+      Enables blazing fast eth_getProof for executed block
   - flag: --externalcl
     configPath: execution.isExternal
     transform: flagEnabled
+    description: |
+      Enables the external consensus layer
   - flag: --fakepow
     configPath: 
+    description: |
+      Disables proof-of-work verification
   - flag: --gpo.blocks
     configPath: 
+    description: |
+      Number of recent blocks to check for gas prices
   - flag: --gpo.percentile
     configPath: 
+    description: |
+      Suggested gas price is the given percentile of a set of recent transaction gas prices
   - flag: --graphql
     configPath: 
+    description: |
+      Enable the graphql endpoint
   - flag: --healthcheck
     configPath: 
+    description: |
+      Enable grpc health check
   - flag: --help
     configPath: 
+    description: |
+      show help
   - flag: --http
     configPath: execution.http.enabled
     transform: flagEnabled
+    description: |
+      JSON-RPC server (enabled by default). Use --http=false to disable it
   - flag: --http.addr
     configPath: execution.http.address
     enabled:
       configPath: execution.http.enabled
       transform: flagEnabled
+    description: |
+      HTTP-RPC server listening interface
   - flag: --http.api
     configPath: execution.http.modules
     transform: allowlist
     enabled:
       configPath: execution.http.enabled
       transform: flagEnabled
+    description: |
+      API's offered over the HTTP-RPC interface
   - flag: --http.compression
     configPath: 
+    description: |
+      Enable compression over HTTP-RPC
   - flag: --http.corsdomain
     configPath: execution.http.allowlist
     transform: allowlist
     enabled:
       configPath: execution.http.enabled
       transform: flagEnabled
+    description: |
+      Comma separated list of domains from which to accept cross origin requests (browser enforced)
   - flag: --http.dbg.single
     configPath: 
+    description: |
+      Allow pass HTTP header 'dbg: true' to printt more detailed logs - how this request was executed
   - flag: --http.enabled
     configPath: execution.http.enabled
     transform: flagEnabled
+    description: |
+      JSON-RPC HTTP server (enabled by default). Use --http.enabled=false to disable it
   - flag: --http.port
     configPath: execution.http.port
     enabled:
       configPath: execution.http.enabled
       transform: flagEnabled
+    description: |
+      HTTP-RPC server listening port
   - flag: --http.timeouts.idle
     configPath: 
+    description: |
+      Maximum amount of time to wait for the next request when keep-alives are enabled. 
+      If http.timeouts.idle is zero, the value of http.timeouts.read is used.
   - flag: --http.timeouts.read
     configPath: 
+    description: |
+      Maximum duration for reading the entire request, including the body.
   - flag: --http.timeouts.write
     configPath: 
+    description: |
+      Maximum duration before timing out writes of the response. 
+      It is reset whenever a new request's header is read.
   - flag: --http.trace
     configPath: 
+    description: |
+      Print all HTTP requests to logs with INFO level
   - flag: --http.vhosts
     configPath: execution.http.allowlist
     transform: allowlist
     enabled:
       configPath: execution.http.enabled
       transform: flagEnabled
+    description: |
+      Comma separated list of virtual hostnames from which to accept requests (server enforced). 
+      Accepts 'any' or '*' as wildcard.
   - flag: --identity
     configPath: execution.p2p.identity
+    description: |
+      Custom node name
   - flag: --log.console.json
     configPath: execution.logging.stdout.enabled
     transform: flagEnabled
+    description: |
+      Format console logs with JSON
   - flag: --log.console.verbosity
     configPath: execution.logging.stdout.level
+    description: |
+      Set the log level for console logs
   - flag: --log.delays
     configPath: 
+    description: |
+      Enable block delay logging
   - flag: --log.dir.disable
     configPath: 
+    description: |
+      disable disk logging
   - flag: --log.dir.json
     configPath: 
+    description: |
+      Format file logs with JSON
   - flag: --log.dir.path
     configPath: 
+    description: |
+      Path to store user and error logs to disk
   - flag: --log.dir.prefix
     configPath: 
+    description: |
+      The file name prefix for logs stored to disk
   - flag: --log.dir.verbosity
     configPath: 
+    description: |
+      Set the log verbosity for logs stored to disk
   - flag: --log.json
     configPath: execution.logging.json.enabled
     transform: flagEnabled
+    description: |
+      Format console logs with JSON
   - flag: --maxpeers
     configPath: execution.p2p.maxPeers
     enabled:
       configPath: execution.p2p.enabled
       transform: flagEnabled
+    description: |
+      Maximum number of network peers (network disabled if set to 0)
   - flag: --metrics
     configPath: execution.metrics.enabled
     transform: flagEnabled
+    description: |
+      Enable metrics collection and reporting
   - flag: --metrics.addr
     configPath: execution.metrics.host
     enabled:
       configPath: execution.metrics.enabled
       transform: flagEnabled
+    description: |
+      Enable stand-alone metrics HTTP server listening interface
   - flag: --metrics.port
     configPath: execution.metrics.port
     enabled:
       configPath: execution.metrics.enabled
       transform: flagEnabled
+    description: |
+      Metrics HTTP server listening port
   - flag: --mine
     configPath: 
+    description: |
+      Enable mining
   - flag: --miner.etherbase
     configPath: 
+    description: |
+      Public address for block mining rewards
   - flag: --miner.extradata
     configPath: 
+    description: |
+      Block extra data set by the miner (default = client version)
   - flag: --miner.gaslimit
     configPath: 
+    description: |
+      Target gas limit for mined blocks
   - flag: --miner.noverify
     configPath: 
+    description: |
+      Disable remote sealing verification
   - flag: --miner.notify
     configPath: 
+    description: |
+      Comma separated HTTP URL list to notify of new work packages
   - flag: --miner.recommit
     configPath: 
+    description: |
+      Time interval to recreate the block being mined
   - flag: --miner.sigfile
     configPath: 
+    description: |
+      Private key to sign blocks with
   - flag: --nat
     configPath: execution.p2p.nat.method 
     enabled:
       configPath: execution.p2p.nat.enabled
       transform: flagEnabled
+    description: |
+      NAT port mapping mechanism (any|none|upnp|pmp|stun|extip:<IP>)
   - flag: --networkid
     configPath: common.network.id
+    description: |
+      Explicitly set network id (integer)(For testnets: use --chain <testnet_name> instead)
   - flag: --netrestrict
     configPath: 
+    description: |
+      Restricts network communication to the given IP networks (CIDR masks)
   - flag: --nodekey
     configPath: 
+    description: |
+      P2P node key file
   - flag: --nodekeyhex
     configPath: 
+    description: |
+      P2P node key as hex (for testing)
   - flag: --nodiscover
-    configPath: 
+    configPath: execution.p2p.enabled
+    transform: negate
+    description: |
+      Disables the peer discovery mechanism (manual peer addition)
   - flag: --no-downloader
     configPath: 
+    description: |
+      Disables downloader component
   - flag: --ots.search.max.pagesize
     configPath: 
+    description: |
+      Max allowed page size for search methods
   - flag: --override.prague
     configPath: 
+    description: |
+      Manually specify the Prague fork time, overriding the bundled setting
   - flag: --p2p.allowed-ports
     configPath: 
+    description: |
+      Allowed ports to pick for different eth p2p protocol versions as follows <porta>,<portb>,..,<porti>
   - flag: --p2p.protocol
     configPath: 
+    description: |
+      Version of eth p2p protocol
   - flag: --polygon.pos.ssf
     configPath: 
+    description: |
+      Enabling Polygon PoS Single Slot Finality
   - flag: --polygon.pos.ssf.block
     configPath: 
+    description: |
+      Enabling Polygon PoS Single Slot Finality since block
   - flag: --polygon.sync
     configPath: 
+    description: |
+      Enabling syncing using the new polygon sync component
   - flag: --polygon.sync.stage
     configPath: 
+    description: |
+      Enabling syncing with a stage that uses the polygon sync component
   - flag: --port
     configPath: execution.p2p.port
     enabled:
       configPath: execution.p2p.enabled
       transform: flagEnabled
+    description: |
+      Network listening port
   - flag: --pprof
     configPath: 
+    description: |
+      Enable the pprof HTTP server
   - flag: --pprof.addr
     configPath: 
+    description: |
+      pprof HTTP server listening interface
   - flag: --pprof.cpuprofile
     configPath: 
+    description: |
+      Write CPU profile to the given file
   - flag: --pprof.port
     configPath: 
+    description: |
+      pprof HTTP server listening port
   - flag: --private.api.addr
     configPath: 
+    description: |
+      Erigon's components (txpool, rpcdaemon, sentry, downloader, ...) can be deployed as independent 
+      Processes on same/another server. Then components will connect to erigon by this internal grpc API. 
+      example: 127.0.0.1:9090, empty string means not to start the listener. 
+      do not expose to public network. serves remote database interface
   - flag: --private.api.ratelimit
     configPath: 
+    description: |
+      Amount of requests server handle simultaneously - requests over this limit will wait. 
+      Increase it - if clients see 'request timeout' while server load is low - it means your 'hot data' 
+      is small or have much RAM.
   - flag: --prune.distance
     configPath: 
+    description: |
+      Keep state history for the latest N blocks (default: everything)
   - flag: --prune.distance.blocks
     configPath: 
+    description: |
+      Keep block history for the latest N blocks (default: everything)
   - flag: --prune.mode
     configPath: 
+    description: |
+      Choose a pruning preset to run onto. Available values: "full", "archive", "minimal".
+      Full: Keep only blocks and latest state,
+      Archive: Keep the entire indexed database, aka. no pruning,
+      Minimal: Keep only latest state
   - flag: --proposer.disable
     configPath: 
+    description: |
+      Disables PoS proposer
   - flag: --rpc.accessList
     configPath: 
+    description: |
+      Specify granular (method-by-method) API allowlist
   - flag: --rpc.allow-unprotected-txs
     configPath: 
+    description: |
+      Allow for unprotected (non-EIP155 signed) transactions to be submitted via RPC
   - flag: --rpc.batch.concurrency
     configPath: 
+    description: |
+      Does limit amount of goroutines to process 1 batch request. 
+      Means 1 bach request can't overload server. 1 batch still can have unlimited amount of request
   - flag: --rpc.batch.limit
     configPath: 
+    description: |
+      Maximum number of requests in a batch
   - flag: --rpc.evmtimeout
     configPath: 
+    description: |
+      Maximum amount of time to wait for the answer from EVM call.
   - flag: --rpc.gascap
     configPath: 
+    description: |
+      Sets a cap on gas that can be used in eth_call/estimateGas
   - flag: --rpc.overlay.getlogstimeout
     configPath: 
+    description: |
+      Maximum amount of time to wait for the answer from the overlay_getLogs call.
   - flag: --rpc.overlay.replayblocktimeout
     configPath: 
+    description: |
+      Maximum amount of time to wait for the answer to replay a single block when called from an overlay_getLogs call.
   - flag: --rpc.returndata.limit
     configPath: 
+    description: |
+      Maximum number of bytes returned from eth_call or similar invocations
   - flag: --rpc.slow
     configPath: 
+    description: |
+      Print in logs RPC requests slower than given threshold: 100ms, 1s, 1m. 
+      Exluded methods: eth_getBlock,eth_getBlockByNumber,eth_getBlockByHash,eth_blockNumber,
+      erigon_blockNumber,erigon_getHeaderByNumber,erigon_getHeaderByHash,erigon_getBlockByTimestamp,eth_call
   - flag: --rpc.streaming.disable
     configPath: 
+    description: |
+      Erigon has enabled json streaming for some heavy endpoints (like trace_*). 
+      It's a trade-off: greatly reduce amount of RAM (in some cases from 30GB to 30mb), 
+      but it produce invalid json format if error happened in the middle of streaming 
+      (because json is not streaming-friendly format)
   - flag: --rpc.subscription.filters.maxaddresses
     configPath: 
+    description: |
+      Maximum number of addresses per subscription to filter logs by.
   - flag: --rpc.subscription.filters.maxheaders
     configPath: 
+    description: |
+      Maximum number of block headers to store per subscription.
   - flag: --rpc.subscription.filters.maxlogs
     configPath: 
+    description: |
+      Maximum number of logs to store per subscription.
   - flag: --rpc.subscription.filters.maxtopics
     configPath: 
+    description: |
+      Maximum number of topics per subscription to filter logs by.
   - flag: --rpc.subscription.filters.maxtxs
     configPath: 
+    description: |
+      Maximum number of transactions to store per subscription.
   - flag: --rpc.txfeecap
     configPath: 
+    description: |
+      Sets a cap on transaction fee (in ether) that can be sent via the RPC APIs (0 = no cap)
   - flag: --sentinel.addr
     configPath: 
+    description: |
+      Address for sentinel
   - flag: --sentinel.bootnodes
     configPath: 
+    description: |
+      Comma separated enode URLs for P2P discovery bootstrap
   - flag: --sentinel.port
     configPath: 
+    description: |
+      Port for sentinel
   - flag: --sentinel.staticpeers
     configPath: 
+    description: |
+      connect to comma-separated Consensus static peers
   - flag: --sentry.api.addr
     configPath: 
+    description: |
+      Comma separated sentry addresses '<host>:<port>,<host>:<port>'
   - flag: --sentry.log-peer-info
     configPath: 
+    description: |
+      Log detailed peer info when a peer connects or disconnects. Enable to integrate with observer.
   - flag: --shutter
     configPath: 
+    description: |
+      Enable the Shutter encrypted transactions mempool (defaults to false)
   - flag: --shutter.p2p.bootstrap.nodes
     configPath: 
+    description: |
+      Use to override the default p2p bootstrap nodes (defaults to using the values in the embedded config)
   - flag: --shutter.p2p.listen.port
     configPath: 
+    description: |
+      Use to override the default p2p listen port (defaults to 23102)
   - flag: --silkworm.contexts
     configPath: 
+    description: |
+      Number of I/O contexts used in embedded Silkworm RPC and Sentry services 
+      (zero means use default in Silkworm)
   - flag: --silkworm.exec
     configPath: 
+    description: |
+      Enable Silkworm block execution
   - flag: --silkworm.rpc
     configPath: 
+    description: |
+      Enable embedded Silkworm RPC service
   - flag: --silkworm.rpc.compatibility
     configPath: 
+    description: |
+      Preserve JSON-RPC compatibility using embedded Silkworm RPC service
   - flag: --silkworm.rpc.log
     configPath: 
+    description: |
+      Enable interface log for embedded Silkworm RPC service
   - flag: --silkworm.rpc.log.maxfiles
     configPath: 
+    description: |
+      Max interface log files for embedded Silkworm RPC service
   - flag: --silkworm.rpc.log.maxsize
     configPath: 
+    description: |
+      Max interface log file size in MB for embedded Silkworm RPC service
   - flag: --silkworm.rpc.log.response
     configPath: 
+    description: |
+      Dump responses in interface logs for embedded Silkworm RPC service
   - flag: --silkworm.rpc.workers
     configPath: 
+    description: |
+      Number of worker threads used in embedded Silkworm RPC service 
+      (zero means use default in Silkworm)
   - flag: --silkworm.sentry
     configPath: 
+    description: |
+      Enable embedded Silkworm Sentry service
   - flag: --silkworm.verbosity
     configPath: 
+    description: |
+      Set the log level for Silkworm console logs
   - flag: --snap.keepblocks
     configPath: 
+    description: |
+      Keep ancient blocks in db (useful for debug)
   - flag: --snap.skip-state-snapshot-download
     configPath: 
+    description: |
+      Skip state download and start from genesis block
   - flag: --snap.state.stop
     configPath: 
+    description: |
+      Workaround to stop producing new state files, if you meet some state-related critical bug. 
+      It will stop aggregate DB history in a state files. DB will grow and may slightly slow-down - 
+      and removing this flag in future will not fix this effect (db size will not greatly reduce).
   - flag: --snap.stop
     configPath: 
+    description: |
+      Workaround to stop producing new snapshots, if you meet some snapshots-related critical bug. 
+      It will stop move historical data from DB to new immutable snapshots. DB will grow and may 
+      slightly slow-down - and removing this flag in future will not fix this effect 
+      (db size will not greatly reduce).
   - flag: --state.cache
     configPath: 
+    description: |
+      Amount of data to store in StateCache (enabled if no --datadir set). 
+      Set 0 to disable StateCache. Defaults to 0MB
   - flag: --state.stream.disable
     configPath: 
+    description: |
+      Disable streaming of state changes from core to RPC daemon
   - flag: --staticpeers
     configPath: 
+    description: |
+      Comma separated enode URLs to connect to
   - flag: --sync.loop.block.limit
     configPath: 
+    description: |
+      Sets the maximum number of blocks to process per loop iteration
   - flag: --sync.loop.break.after
     configPath: 
+    description: |
+      Sets the last stage of the sync loop to run
   - flag: --sync.loop.throttle
     configPath: 
+    description: |
+      Sets the minimum time between sync loop starts (e.g. 1h30m, default is none)
   - flag: --sync.parallel-state-flushing
     configPath: 
+    description: |
+      Enables parallel state flushing
   - flag: --tls
     configPath: 
+    description: |
+      Enable TLS handshake
   - flag: --tls.cacert
     configPath: 
+    description: |
+      Specify certificate authority
   - flag: --tls.cert
     configPath: 
+    description: |
+      Specify certificate
   - flag: --tls.key
     configPath: 
+    description: |
+      Specify key file
   - flag: --torrent.conns.perfile
     configPath: 
+    description: |
+      Number of connections per file
   - flag: --torrent.download.rate
     configPath: 
+    description: |
+      Bytes per second, example: 32mb
   - flag: --torrent.download.slots
     configPath: 
+    description: |
+      Amount of files to download in parallel.
   - flag: --torrent.maxpeers
     configPath: 
+    description: |
+      Unused parameter (reserved for future use)
   - flag: --torrent.port
     configPath: 
+    description: |
+      Port to listen and serve BitTorrent protocol
   - flag: --torrent.staticpeers
     configPath: 
+    description: |
+      Comma separated host:port to connect to
   - flag: --torrent.upload.rate
     configPath: 
+    description: |
+      Bytes per second, example: 32mb
   - flag: --torrent.verbosity
     configPath: 
+    description: |
+      0=silent, 1=error, 2=warn, 3=info, 4=debug, 5=detail 
+      (must set --verbosity to equal or higher level and has default: 2)
   - flag: --trace
     configPath: 
+    description: |
+      Write execution trace to the given file
   - flag: --trace.compat
     configPath: 
+    description: |
+      Bug for bug compatibility with OE for trace_ routines
   - flag: --trace.maxtraces
     configPath: 
+    description: |
+      Sets a limit on traces that can be returned in trace_filter
   - flag: --trusted-setup-file
     configPath: 
+    description: |
+      Absolute path to trusted_setup.json file
   - flag: --trustedpeers
     configPath: 
+    description: |
+      Comma separated enode URLs which are always allowed to connect, even above the peer limit
   - flag: --txpool.accountslots
     configPath: 
+    description: |
+      Minimum number of executable transaction slots guaranteed per account
   - flag: --txpool.api.addr
     configPath: 
+    description: |
+      TxPool api network address, for example: 127.0.0.1:9090
   - flag: --txpool.blobpricebump
     configPath: 
+    description: |
+      Price bump percentage to replace existing (type-3) blob transaction
   - flag: --txpool.blobslots
     configPath: 
+    description: |
+      Max allowed total number of blobs (within type-3 txs) per account
   - flag: --txpool.commit.every
     configPath: 
+    description: |
+      How often transactions should be committed to the storage
   - flag: --txpool.disable
     configPath: 
+    description: |
+      External pool and block producer, see ./cmd/txpool/readme.md for more info. 
+      Disabling internal txpool and block producer.
   - flag: --txpool.globalbasefeeslots
     configPath: 
+    description: |
+      Maximum number of non-executable transactions where only not enough baseFee
   - flag: --txpool.globalqueue
     configPath: 
+    description: |
+      Maximum number of non-executable transaction slots for all accounts
   - flag: --txpool.globalslots
     configPath: 
+    description: |
+      Maximum number of executable transaction slots for all accounts
   - flag: --txpool.gossip.disable
     configPath: 
+    description: |
+      Disabling p2p gossip of txs. Any txs received by p2p - will be dropped. 
+      Some networks like 'Optimism execution engine'/'Optimistic Rollup' - 
+      using it to protect against MEV attacks
   - flag: --txpool.pricelimit
     configPath: 
+    description: |
+      Minimum gas price (fee cap) limit to enforce for acceptance into the pool
   - flag: --txpool.pricebump
     configPath: 
+    description: |
+      Price bump percentage to replace an already existing transaction
   - flag: --txpool.trace.senders
     configPath: 
+    description: |
+      Comma separated list of addresses, whose transactions will traced in transaction pool with debug printing
   - flag: --txpool.totalblobpoollimit
     configPath: 
+    description: |
+      Total limit of number of all blobs in txs within the txpool
   - flag: --v5disc
-    configPath: 
+    configPath: execution.p2p.discovery.v5.enabled
+    transform: flagEnabled
+    enabled:
+      configPath: execution.p2p.discovery.enabled
+      transform: flagEnabled
+    description: |
+      Enables the experimental RLPx V5 (Topic Discovery) mechanism
   - flag: --verbosity
     configPath: 
+    description: |
+      Set the log level for console logs
   - flag: --version
     configPath: 
+    description: |
+      print the version
   - flag: --vmdebug
     configPath: 
+    description: |
+      Record information useful for VM and contract debugging
   - flag: --webseed
     configPath: 
+    description: |
+      Comma-separated URL's, holding metadata about network-support infrastructure 
+      (like S3 buckets with snapshots, bootnodes, etc...)
   - flag: --ws
     configPath: execution.ws.enabled
     transform: flagEnabled
+    description: |
+      Enable the WS-RPC server
   - flag: --ws.compression
     configPath: 
+    description: |
+      Enable compression over WebSocket
   - flag: --ws.port
     configPath: execution.ws.port
     enabled:
       configPath: execution.ws.enabled
       transform: flagEnabled
+    description: |
+      WS-RPC server listening port

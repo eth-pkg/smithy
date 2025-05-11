@@ -143,7 +143,7 @@ describe('Execution Client Configuration Tests', () => {
     });
   });
 
-  describe.skip('P2P Configuration', () => {
+  describe('P2P Configuration', () => {
     executionClients.forEach(client => {
       it(`should correctly configure P2P for ${client}`, () => {
         const config = schemaUtils.deepMerge(testConfig, {
@@ -161,17 +161,24 @@ describe('Execution Client Configuration Tests', () => {
               enrAddress: '127.0.0.1',
               allowlist: ['*'],
               denylist: [],
-              dnsDiscovery: true,
               address: '127.0.0.1',
-              disv4: {
+              discovery: {
                 enabled: true,
                 port: 30303,
-                address: '127.0.0.1'
-              },
-              disv5: {
-                enabled: true,
-                port: 30303,
-                address: '127.0.0.1'
+                v4: {
+                  enabled: true,
+                  port: 30303,
+                  address: '127.0.0.1'
+                },
+                v5: {
+                  enabled: true,
+                  port: 30303,
+                  address: '127.0.0.1'
+                },
+                dns: {
+                  enabled: true,
+                  url: 'enrtree://AKA3AM6LPBYEUDMV4Y75YK5TMM6WWZPDLD5ZBTLNGR3KHANX6DPW@all.node.ethdisco.net'
+                }
               },
               nat: {
                 enabled: true,
@@ -186,48 +193,68 @@ describe('Execution Client Configuration Tests', () => {
         const scriptString = scriptContent.toString();
         const allowlistString = config.execution.p2p.allowlist.join(',');
         const bootnodesString = config.execution.p2p.bootnodes.join(',');
-        const disv4String = config.execution.p2p.disv4.address;
-        const disv5String = config.execution.p2p.disv5.address;
+        const disv4String = config.execution.p2p.discovery.v4.address;
+        const disv5String = config.execution.p2p.discovery.v5.address;
         const portString = config.execution.p2p.port;
+        const dnsDiscoveryString = config.execution.p2p.discovery.dns.url;
         const port6String = config.execution.p2p.port6;
         const maxPeersString = config.execution.p2p.maxPeers;
         const natString = config.execution.p2p.nat.method;
         const addressString = config.execution.p2p.address;
         const apiString = config.execution.http.modules.join(',');
 
+
         switch (client) {
           case 'besu':
-            expect(scriptString).to.contain("--rpc-http-enabled");
-            expect(scriptString).to.contain(`--rpc-http-port=${portString}`);
-            expect(scriptString).to.contain(`--rpc-http-api="${apiString}"`);
-            expect(scriptString).to.contain(`--rpc-http-host=${addressString}`);
-            expect(scriptString).to.contain(`--rpc-http-cors-origins=${allowlistString}*`);
             expect(scriptString).to.contain(`--p2p-port=${portString}`);
             expect(scriptString).to.contain(`--max-peers=${maxPeersString}`);
             expect(scriptString).to.contain(`--bootnodes=${bootnodesString}`);
+            expect(scriptString).to.contain(`--nat-method=${natString}`);
+            // TODO: check if this is correct
+            // there is no p2p-interface flag in besu as well, need to check if this is correct
+            // might need to address host and interface sepate instead of address
+            expect(scriptString).to.contain(`--p2p-host=${addressString}`);
             break;
           case 'erigon':
-            expect(scriptString).to.contain(`--p2p.port ${portString}`);
-            expect(scriptString).to.contain(`--p2p.maxpeers ${maxPeersString}`);
-            expect(scriptString).to.contain(`--p2p.bootnodes ${bootnodesString}`);
+            expect(scriptString).to.contain(`--port ${portString}`);
+            expect(scriptString).to.contain(`--maxpeers ${maxPeersString}`);
+            expect(scriptString).to.contain(`--bootnodes ${bootnodesString}`);
+            expect(scriptString).to.contain(`--nat ${natString}`);
+            expect(scriptString).to.contain(`--caplin.discovery.addr ${addressString}`);
+            // TODO: check if this is correct
+            // there are two ports for disv5, one for tcp and one for not sure
+            expect(scriptString).to.contain(`--caplin.discovery.port ${portString}`);
+            expect(scriptString).to.contain(`--v5disc`);
+            expect(scriptString).to.not.contain(`--nodiscover`);
             break;
           case 'geth':
-            expect(scriptString).to.contain(`--p2p.port ${portString}`);
-            expect(scriptString).to.contain(`--p2p.maxpeers ${maxPeersString}`);
-            expect(scriptString).to.contain(`--p2p.bootnodes ${bootnodesString}`);
+            expect(scriptString).to.contain(`--port ${portString}`);
+            expect(scriptString).to.contain(`--maxpeers ${maxPeersString}`);
+            expect(scriptString).to.contain(`--nat ${natString}`);
+            expect(scriptString).to.contain(`--bootnodes ${bootnodesString}`);
+            expect(scriptString).to.contain(`--discovery.dns ${dnsDiscoveryString}`);
+            expect(scriptString).to.contain(`--discovery.port ${portString}`);
+            expect(scriptString).not.to.contain(`--nodiscover`);
+            expect(scriptString).to.contain(`--discovery.v4`);
+            expect(scriptString).to.contain(`--discovery.v5`);
             break;
           case 'nethermind':
-            expect(scriptString).to.contain(`--P2P.Port ${portString}`);
-            expect(scriptString).to.contain(`--P2P.MaxPeers ${maxPeersString}`);
-            expect(scriptString).to.contain(`--P2P.Bootnodes ${bootnodesString}`);
+            expect(scriptString).to.contain(`--Network.P2PPort ${portString}`);
+            expect(scriptString).to.contain(`--Network.MaxActivePeers ${maxPeersString}`);
+            expect(scriptString).to.contain(`--Init.DiscoveryEnabled`);
+            expect(scriptString).to.contain(`--Network.Bootnodes ${bootnodesString}`);
+            expect(scriptString).to.contain(`--Network.DiscoveryPort ${portString}`);
+            expect(scriptString).to.contain(`--Network.DiscoveryDns ${dnsDiscoveryString}`);
+            // nat is supported by have to split the nat flag into seperate flags, same way as for network 
+            // 
             break;
           case 'reth':
             expect(scriptString).to.contain(`--port ${portString}`);
             expect(scriptString).to.contain(`--addr ${addressString}`);
-            expect(scriptString).to.contain(`--discovery.port ${disv4String}`);
-            expect(scriptString).to.contain(`--discovery.addr ${disv4String}`);
-            expect(scriptString).to.contain(`--discovery.v5.port ${disv5String}`);
-            expect(scriptString).to.contain(`--discovery.v5.addr ${disv5String}`);
+            expect(scriptString).to.contain(`--discovery.port ${config.execution.p2p.discovery.v4.port}`);
+            expect(scriptString).to.contain(`--discovery.addr ${config.execution.p2p.discovery.v4.address}`);
+            expect(scriptString).to.contain(`--discovery.v5.port ${config.execution.p2p.discovery.v5.port}`);
+            expect(scriptString).to.contain(`--discovery.v5.addr ${config.execution.p2p.discovery.v5.address}`);
             expect(scriptString).to.contain(`--bootnodes ${bootnodesString}`);
             expect(scriptString).to.contain(`--nat ${natString}`);
             expect(scriptString).to.not.contain(`--disable-discovery`);

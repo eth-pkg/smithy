@@ -71,7 +71,25 @@ export const testConfig: NodeConfig = {
       bootnodes: [],
       enrAddress: '',
       allowlist: ['localhost'],
-      denylist: []
+      denylist: [],
+      discovery: {
+        enabled: false,
+        port: 30303,
+        v4: {
+          enabled: false,
+          port: 30303,
+          address: ''
+        },
+        v5: {
+          enabled: false,
+          port: 30303,
+          address: ''
+        },
+        dns: {
+          enabled: false,
+          url: ''
+        }
+      },
     },
     ws: {
       enabled: false,
@@ -175,7 +193,25 @@ export const testConfig: NodeConfig = {
       bootnodes: [],
       enrAddress: '',
       allowlist: ['localhost'],
-      denylist: []
+      denylist: [],
+      discovery: {
+        enabled: false,
+        port: 30303,
+        dns: {
+          enabled: false,
+          url: ''
+        },
+        v4: {
+          enabled: false,
+          port: 30303,
+          address: ''
+        },
+        v5: {
+          enabled: false,
+          port: 30303,
+          address: ''
+        }
+      },
     },
     ws: {
       enabled: false,

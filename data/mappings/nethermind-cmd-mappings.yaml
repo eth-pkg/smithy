@@ -4,533 +4,1168 @@ valueFormat: space
 rules:
   - flag: --Aura.AllowAuRaPrivateChains
     configPath:
+    description: >
+      Whether to allow private Aura-based chains only. Do not use with existing 
+      Aura-based chains.
   - flag: --Aura.ForceSealing
     configPath:
+    description: >
+      Whether to seal empty blocks if mining.
   - flag: --Aura.Minimum2MlnGasPerBlockWhenUsingBlockGasLimitContract
     configPath:
+    description: >
+      Whether to use 2M gas if the contract returns less than that when using 
+      `BlockGasLimitContractTransitions`.
   - flag: --Aura.TxPriorityConfigFilePath
     configPath:
+    description: >
+      The path to the transaction priority rules file to use when selecting 
+      transactions from the transaction pool.
   - flag: --Aura.TxPriorityContractAddress
     configPath:
+    description: >
+      The address of the transaction priority contract to use when selecting 
+      transactions from the transaction pool.
   - flag: --Blocks.BlockProductionTimeoutMs
     configPath:
+    description: >
+      The block production timeout, in milliseconds.
   - flag: --Blocks.ExtraData
     configPath:
+    description: >
+      The block header extra data up to 32 bytes in length.
   - flag: --Blocks.GenesisTimeoutMs
     configPath:
+    description: >
+      The genesis block load timeout, in milliseconds.
   - flag: --Blocks.MinGasPrice
     configPath:
+    description: >
+      The minimum gas premium (or the gas price before the London hard fork) for 
+      transactions accepted by the block producer.
   - flag: --Blocks.PreWarmStateOnBlockProcessing
     configPath:
+    description: >
+      Whether to pre-warm the state when processing blocks. This can lead to an 
+      up to 2x speed-up in the main loop block processing.
   - flag: --Blocks.RandomizedBlocks
     configPath:
+    description: >
+      Whether to change the difficulty of the block randomly within the 
+      constraints. Used in NethDev only.
   - flag: --Blocks.SecondsPerSlot
     configPath:
+    description: >
+      The block time slot, in seconds.
   - flag: --Blocks.TargetBlockGasLimit
     configPath:
+    description: >
+      The block gas limit that the block producer should try to reach in the 
+      fastest possible way based on the protocol rules. If not specified, then 
+      the block producer should follow others.
   - flag: --Bloom.Index
     configPath:
+    description: >
+      Whether to use the Bloom index. The Bloom index speeds up the RPC log 
+      searches.
   - flag: --Bloom.IndexLevelBucketSizes
     configPath:
+    description: >
+      An array of multipliers for index levels. Can be tweaked per chain to 
+      boost performance.
   - flag: --Bloom.Migration
     configPath:
+    description: >
+      Whether to migrate the previously downloaded blocks to the Bloom index.
   - flag: --Bloom.MigrationStatistics
     configPath:
+    description: >
+      Whether the migration statistics should be calculated and output.
   - flag: --CL.Enabled
     configPath:
+    description: >
+      Use enshrined op cl.
   - flag: --CL.L1BeaconApiEndpoint
     configPath:
+    description: >
+      URL to L1 beacon node.
   - flag: --CL.L1EthApiEndpoint
     configPath:
+    description: >
+      URL to L1 execution node.
   - flag: --CL.P2PHost
     configPath:
+    description: >
+      CL p2p communication host.
   - flag: --CL.P2PPort
     configPath:
+    description: >
+      CL p2p communication host.
   - flag: --CensorshipDetector.AddressesForCensorshipDetection
     configPath:
+    description: >
+      The addresses to detect censorship for.
   - flag: --CensorshipDetector.BlockCensorshipThreshold
     configPath:
+    description: >
+      The number of the consecutive blocks with detected potential censorship to 
+      report.
   - flag: --CensorshipDetector.Enabled
     configPath:
+    description: >
+      Whether to enable censorship detection.
   - flag: --Clique.BlockPeriod
     configPath:
+    description: >
+      The block period in seconds.
   - flag: --Clique.Epoch
     configPath:
+    description: >
+      The epoch length in blocks.
   - flag: --Clique.MinimumOutOfTurnDelay
     configPath:
+    description: >
+      The minimum delay in seconds for out of turn block production.
   - flag: --Era.ExportDirectory
     configPath:
+    description: >
+      Directory of archive export.
   - flag: --Era.From
     configPath:
+    description: >
+      Block number to import/export from.
   - flag: --Era.ImportDirectory
     configPath:
+    description: >
+      Directory of era1 archives to be imported.
   - flag: --Era.To
     configPath:
+    description: >
+      Block number to import/export to.
   - flag: --Era.TrustedAccumulatorFile
     configPath:
+    description: >
+      Accumulator file to be used for trusting era files.
   - flag: --EthStats.Contact
     configPath:
+    description: >
+      The node owner contact details displayed on Ethstats.
   - flag: --EthStats.Enabled
     configPath:
+    description: >
+      Whether to use Ethstats publishing.
   - flag: --EthStats.Name
     configPath:
+    description: >
+      The node name displayed on Ethstats.
   - flag: --EthStats.Secret
     configPath:
+    description: >
+      The Ethstats secret.
   - flag: --EthStats.SendInterval
     configPath:
+    description: >
+      The stats update interval, in seconds.
   - flag: --EthStats.Server
     configPath:
+    description: >
+      The Ethstats server URL.
   - flag: --HealthChecks.Enabled
     configPath:
+    description: >
+      Whether to enable the health check.
   - flag: --HealthChecks.LowStorageCheckAwaitOnStartup
     configPath:
+    description: >
+      Whether to check for low disk space on startup and suspend until enough 
+      space is available.
   - flag: --HealthChecks.LowStorageSpaceShutdownThreshold
     configPath:
+    description: >
+      The percentage of available disk space below which Nethermind shuts down. 
+      `0` to disable.
   - flag: --HealthChecks.LowStorageSpaceWarningThreshold
     configPath:
+    description: >
+      The percentage of available disk space below which a warning is displayed. 
+      `0` to disable.
   - flag: --HealthChecks.MaxIntervalClRequestTime
     configPath:
+    description: >
+      The max request interval, in seconds, in which the consensus client is 
+      assumed healthy.
   - flag: --HealthChecks.MaxIntervalWithoutProcessedBlock
     configPath:
+    description: >
+      The max interval, in seconds, in which the block processing is assumed 
+      healthy.
   - flag: --HealthChecks.MaxIntervalWithoutProducedBlock
     configPath:
+    description: >
+      The max interval, in seconds, in which the block production is assumed 
+      healthy.
   - flag: --HealthChecks.PollingInterval
     configPath:
+    description: >
+      The health check updates polling interval, in seconds.
   - flag: --HealthChecks.Slug
     configPath:
+    description: >
+      The URL slug the health checks service is exposed at.
   - flag: --HealthChecks.UIEnabled
     configPath:
+    description: >
+      Whether to enable the health checks UI.
   - flag: --HealthChecks.WebhooksEnabled
     configPath:
+    description: >
+      Whether to enable web hooks.
   - flag: --HealthChecks.WebhooksPayload
     configPath:
+    description: >
+      An escaped JSON paylod to be sent to the web hook on failure.
   - flag: --HealthChecks.WebhooksRestorePayload
     configPath:
+    description: >
+      An escaped JSON paylod to be sent to the web hook on recovery.
   - flag: --HealthChecks.WebhooksUri
     configPath:
+    description: >
+      The web hook URL.
   - flag: --Hive.BlocksDir
     configPath:
+    description: >
+      The path to the directory with additional blocks.
   - flag: --Hive.ChainFile
     configPath:
+    description: >
+      The path to the chain definition should be specified as an RLP-encoded 
+      block sequence.
   - flag: --Hive.Enabled
     configPath:
+    description: >
+      Whether to enable Hive for debugging.
   - flag: --Hive.GenesisFilePath
     configPath:
+    description: >
+      The path to the genesis block file.
   - flag: --Hive.KeysDir
     configPath:
+    description: >
+      The path to the keystore directory.
   - flag: --Init.AutoDump
     configPath:
+    description: >
+      Auto-dump on bad blocks for diagnostics.
   - flag: --Init.BadBlocksStored
     configPath:
+    description: >
+      The maximum number of bad blocks observed on the network that will be 
+      stored on disk.
   - flag: --Init.BaseDbPath
     configPath:
+    description: >
+      The base path for all Nethermind databases.
   - flag: --Init.ChainSpecPath
     configPath:
+    description: >
+      The path to the chain spec file.
   - flag: --Init.DiagnosticMode
     configPath:
+    description: >
+      The diagnostic mode.
   - flag: --Init.DiscoveryEnabled
-    configPath:
+    configPath: execution.p2p.discovery.enabled
+    transform: flagEnabled
+    description: >
+      Whether to enable the node discovery. If disabled, Nethermind doesn't look 
+      for other nodes beyond the bootnodes specified.
   - flag: --Init.EnableUnsecuredDevWallet
     configPath:
+    description: >
+      Whether to enable the in-app wallet/keystore.
   - flag: --Init.GenesisHash
     configPath:
+    description: >
+      The hash of the genesis block. If not specified, the genesis block 
+      validity is not checked which is useful in the case of ad hoc 
+      test/private networks.
   - flag: --Init.IsMining
     configPath:
+    description: >
+      Whether to seal/mine new blocks.
   - flag: --Init.KeepDevWalletInMemory
     configPath:
+    description: >
+      Whether to create session-only accounts and delete them on shutdown.
   - flag: --Init.KzgSetupPath
     configPath:
+    description: >
+      The path to KZG trusted setup file.
   - flag: --Init.LogDirectory
     configPath:
+    description: >
+      The path to the Nethermind logs directory.
   - flag: --Init.LogFileName
     configPath:
+    description: >
+      The name of the log file.
   - flag: --Init.LogRules
     configPath:
+    description: >
+      The logs format as `LogPath:LogLevel;*`.
   - flag: --Init.MemoryHint
     configPath:
+    description: >
+      The hint on the max memory limit, in bytes, to configure the database and 
+      networking memory allocations.
   - flag: --Init.PeerManagerEnabled
     configPath:
+    description: >
+      Whether to connect to newly discovered peers.
   - flag: --Init.ProcessingEnabled
     configPath:
+    description: >
+      Whether to download/process new blocks.
   - flag: --Init.RpcDbUrl
     configPath:
+    description: >
+      The URL of the remote node used as a database source when `DiagnosticMode` 
+      is set to `RpcDb`.
   - flag: --Init.StaticNodesPath
     configPath:
+    description: >
+      The path to the static nodes file.
   - flag: --Init.WebSocketsEnabled
     configPath: execution.ws.enabled
     transform: flagEnabled
+    description: >
+      Whether to enable WebSocket service for the default JSON-RPC port on 
+      startup.
   - flag: --JsonRpc.AdditionalRpcUrls
     configPath: 
+    description: >
+      An array of additional JSON-RPC URLs to listen at with protocol and 
+      JSON-RPC namespace list. For instance, 
+      `[http://localhost:8546|http;ws|eth;web3]`.
   - flag: --JsonRpc.BufferResponses
     configPath:
+    description: >
+      Whether to buffer responses before sending them. This allows using of 
+      `Content-Length` instead of `Transfer-Encoding: chunked`. Note that it may 
+      degrade performance on large responses. The max buffered response length is 
+      2GB. Chunked responses can be larger.
   - flag: --JsonRpc.CallsFilterFilePath
     configPath:
+    description: >
+      The path to a file with the list of new-line-separated JSON-RPC calls. If 
+      specified, only the calls from that file are allowed.
   - flag: --JsonRpc.CorsOrigins
     configPath: execution.http.allowlist
     transform: allowlist
     enabled:
       configPath: execution.http.enabled
       transform: flagEnabled
+    description: >
+      The JSON-RPC server CORS origins.
   - flag: --JsonRpc.Enabled
     configPath: execution.http.enabled
     transform: flagEnabled
+    description: >
+      Whether to enable the JSON-RPC service.
   - flag: --JsonRpc.EnabledModules
     configPath: execution.http.modules
     transform: allowlist
     enabled:
       configPath: execution.http.enabled
       transform: flagEnabled
+    description: >
+      An array of JSON-RPC namespaces to enable. For instance, `[debug,eth]`.
   - flag: --JsonRpc.EngineEnabledModules
     configPath: common.engine.api.allowlist
     transform: allowlist
     enabled:
       configPath: common.engine.communication.method
       transform: jwtEnabled
+    description: >
+      An array of additional JSON-RPC URLs to listen at with protocol and 
+      JSON-RPC namespace list for Engine API.
   - flag: --JsonRpc.EngineHost
     configPath: common.engine.api.host
     enabled:
       configPath: common.engine.communication.method
       transform: jwtEnabled
+    description: >
+      The Engine API host.
   - flag: --JsonRpc.EnginePort
     configPath: common.engine.api.port
     enabled:
       configPath: common.engine.communication.method
       transform: jwtEnabled
+    description: >
+      The Engine API port.
   - flag: --JsonRpc.EstimateErrorMargin
     configPath:
+    description: >
+      The error margin used in the `eth_estimateGas` JSON-RPC method, in basis 
+      points.
   - flag: --JsonRpc.EthModuleConcurrentInstances
     configPath:
+    description: >
+      The number of concurrent instances for non-sharable calls:
+      `eth_call`, `eth_estimateGas`, `eth_getLogs`, `eth_newBlockFilter`, 
+      `eth_newFilter`, `eth_newPendingTransactionFilter`, `eth_uninstallFilter`.
+      This limits the load on the CPU and I/O to reasonable levels. If the limit 
+      is exceeded, HTTP 503 is returned along with the JSON-RPC error. Defaults 
+      to the number of logical processors.
   - flag: --JsonRpc.GasCap
     configPath:
+    description: >
+      The gas limit for `eth_call` and `eth_estimateGas`.
   - flag: --JsonRpc.Host
     configPath: execution.http.address 
     enabled:
       configPath: execution.http.enabled
       transform: flagEnabled
+    description: >
+      The JSON-RPC service host.
   - flag: --JsonRpc.IpcUnixDomainSocketPath
     configPath: common.engine.communication.ipc.path
     transform: interpolate
     enabled:
       configPath: common.engine.communication.method
       transform: ipcEnabled
+    description: >
+      The path to connect a UNIX domain socket over.
   - flag: --JsonRpc.JwtSecretFile
     configPath: common.engine.communication.jwt.file
     transform: interpolate
     enabled:
       configPath: common.engine.communication.method
       transform: jwtEnabled
+    description: >
+      The path to the JWT secret file required for the Engine API authentication.
   - flag: --JsonRpc.MaxBatchResponseBodySize
     configPath:
+    description: >
+      The max batch size limit for batched JSON-RPC calls.
   - flag: --JsonRpc.MaxBatchSize
     configPath:
+    description: >
+      The max number of JSON-RPC requests in a batch.
   - flag: --JsonRpc.MaxLoggedRequestParametersCharacters
     configPath:
+    description: >
+      The max number of characters of a JSON-RPC request parameter printing to 
+      the log.
   - flag: --JsonRpc.MaxLogsPerResponse
     configPath:
+    description: >
+      The max number of logs per response for the `eth_getLogs` JSON-RPC method. 
+      `0` to lift the limit.
   - flag: --JsonRpc.MaxRequestBodySize
     configPath:
+    description: >
+      The max length of HTTP request body, in bytes.
   - flag: --JsonRpc.MaxSimulateBlocksCap
     configPath:
+    description: >
+      The max block count limit for the `eth_simulate` JSON-RPC method.
   - flag: --JsonRpc.MethodsLoggingFiltering
     configPath:
+    description: >
+      An array of the method names not to log.
   - flag: --JsonRpc.Port
     configPath: execution.http.port
     enabled:
       configPath: execution.http.enabled
       transform: flagEnabled
+    description: >
+      The JSON-RPC service HTTP port.
   - flag: --JsonRpc.ReportIntervalSeconds
     configPath:
+    description: >
+      The interval, in seconds, between the JSON-RPC stats report log.
   - flag: --JsonRpc.RequestQueueLimit
     configPath:
+    description: >
+      The max number of concurrent requests in the queue for:
+      `eth_call`, `eth_estimateGas`, `eth_getLogs`, `eth_newFilter`, 
+      `eth_newBlockFilter`, `eth_newPendingTransactionFilter`, 
+      `eth_uninstallFilter`. `0` to lift the limit.
   - flag: --JsonRpc.RpcRecorderBaseFilePath
     configPath:
+    description: >
+      The path to the base file for diagnostic recording.
   - flag: --JsonRpc.RpcRecorderState
     configPath:
+    description: >
+      The diagnostic recording mode.
   - flag: --JsonRpc.Timeout
     configPath:
+    description: >
+      The request timeout, in milliseconds.
   - flag: --JsonRpc.WebSocketsPort
     configPath: execution.ws.port
     enabled:
       configPath: execution.ws.enabled
       transform: flagEnabled
+    description: >
+      The JSON-RPC service WebSockets port.
   - flag: --KeyStore.BlockAuthorAccount
     configPath:
+    description: >
+      An account to use as the block author (coinbase).
   - flag: --KeyStore.Cipher
     configPath:
+    description: >
+      See [Web3 secret storage definition][web3-secret-storage].
   - flag: --KeyStore.EnodeAccount
     configPath:
+    description: >
+      An account to use for networking (enode). If neither this nor the 
+      `EnodeKeyFile` option is specified, the key is autogenerated in 
+      `node.key.plain` file.
   - flag: --KeyStore.EnodeKeyFile
     configPath:
+    description: >
+      The path to the key file to use by for networking (enode). If neither this 
+      nor the `EnodeAccount` is specified, the key is autogenerated in 
+      `node.key.plain` file.
   - flag: --KeyStore.IVSize
     configPath:
+    description: >
+      See [Web3 secret storage definition][web3-secret-storage].
   - flag: --KeyStore.Kdf
     configPath:
+    description: >
+      See [Web3 secret storage definition][web3-secret-storage].
   - flag: --KeyStore.KdfparamsDklen
     configPath:
+    description: >
+      See [Web3 secret storage definition][web3-secret-storage].
   - flag: --KeyStore.KdfparamsN
     configPath:
+    description: >
+      See [Web3 secret storage definition][web3-secret-storage].
   - flag: --KeyStore.KdfparamsP
     configPath:
+    description: >
+      See [Web3 secret storage definition][web3-secret-storage].
   - flag: --KeyStore.KdfparamsR
     configPath:
+    description: >
+      See [Web3 secret storage definition][web3-secret-storage].
   - flag: --KeyStore.KdfparamsSaltLen
     configPath:
+    description: >
+      See [Web3 secret storage definition][web3-secret-storage].
   - flag: --KeyStore.KeyStoreDirectory
     configPath:
+    description: >
+      The path to the keystore directory.
   - flag: --KeyStore.KeyStoreEncoding
     configPath:
+    description: >
+      See [Web3 secret storage definition][web3-secret-storage].
   - flag: --KeyStore.PasswordFiles
     configPath:
+    description: >
+      An array of password files paths used to unlock the accounts set with 
+      `UnlockAccounts`.
   - flag: --KeyStore.Passwords
     configPath:
+    description: >
+      An array of passwords used to unlock the accounts set with `UnlockAccounts`.
   - flag: --KeyStore.SymmetricEncrypterBlockSize
     configPath:
+    description: >
+      See [Web3 secret storage definition][web3-secret-storage].
   - flag: --KeyStore.SymmetricEncrypterKeySize
     configPath:
+    description: >
+      See [Web3 secret storage definition][web3-secret-storage].
   - flag: --KeyStore.TestNodeKey
     configPath:
+    description: >
+      A plaintext private key to use for testing purposes.
   - flag: --KeyStore.UnlockAccounts
     configPath:
+    description: >
+      An array of accounts to unlock on startup using passwords either in 
+      `PasswordFiles` and `Passwords`.
   - flag: --Merge.BuilderRelayUrl
     configPath:
+    description: >
+      The URL of a builder relay. If specified, blocks are sent to the relay.
   - flag: --Merge.CollectionsPerDecommit
     configPath:
+    description: >
+      The number of requests to the garbage collector (GC) to release the process 
+      memory. Allowed values: `-1` (No requests), `0` (Requests every time), A 
+      positive number (Requests after that many Engine API calls).
   - flag: --Merge.CompactMemory
     configPath:
+    description: >
+      The memory compaction mode. When set to `Full`, compacts the large object 
+      heap (LOH) if `SweepMemory` is set to `Gen2`.
   - flag: --Merge.Enabled
     configPath:
+    description: >
+      Whether to enable the Merge hard fork.
   - flag: --Merge.FinalTotalDifficulty
     configPath:
+    description: >
+      The total difficulty of the last PoW block. Must be greater than or equal 
+      to the terminal total difficulty (TTD).
   - flag: --Merge.PrioritizeBlockLatency
     configPath:
+    description: >
+      Whether to reduce block latency by disabling garbage collection during 
+      Engine API calls.
   - flag: --Merge.SweepMemory
     configPath:
+    description: >
+      The garbage collection (GC) mode between Engine API calls.
   - flag: --Merge.TerminalBlockHash
     configPath:
+    description: >
+      The terminal PoW block hash used for the transition.
   - flag: --Merge.TerminalBlockNumber
     configPath:
+    description: >
+      The terminal PoW block number used for the transition.
   - flag: --Merge.TerminalTotalDifficulty
     configPath:
+    description: >
+      The terminal total difficulty (TTD) used for the transition.
   - flag: --Metrics.CountersEnabled
     configPath:
+    description: >
+      Whether to publish metrics using .NET diagnostics that can be collected with 
+      dotnet-counters.
   - flag: --Metrics.EnableDbSizeMetrics
     configPath:
+    description: >
+      Whether to publish database size metrics.
   - flag: --Metrics.Enabled
     configPath: execution.metrics.enabled
     transform: flagEnabled
+    description: >
+      Whether to publish various metrics to Prometheus Pushgateway at a given 
+      interval.
   - flag: --Metrics.ExposeHost
     configPath: 
+    description: >
+      The IP address to expose Prometheus metrics at. The value of `+` means 
+      listening on all available hostnames. Setting this to `localhost` prevents 
+      remote access.
   - flag: --Metrics.ExposePort
     configPath: execution.metrics.port
     enabled:
       configPath: execution.metrics.enabled
       transform: flagEnabled
+    description: >
+      The port to expose Prometheus metrics at.
   - flag: --Metrics.IntervalSeconds
     configPath:
+    description: >
+      The frequency of pushing metrics to Prometheus, in seconds.
   - flag: --Metrics.MonitoringGroup
     configPath:
+    description: >
+      The Prometheus metrics group name.
   - flag: --Metrics.MonitoringJob
     configPath:
+    description: >
+      The Prometheus metrics job name.
   - flag: --Metrics.NodeName
     configPath:
+    description: >
+      The name to display on the Grafana dashboard.
   - flag: --Metrics.PushGatewayUrl
     configPath:
+    description: >
+      The Prometheus Pushgateway instance URL.
   - flag: --Mining.Enabled
     configPath:
+    description: >
+      Whether to produce blocks.
   - flag: --Mining.Signer
     configPath:
+    description: >
+      The URL of an external signer like [Clef](https://github.com/ethereum/go-
+      ethereum/blob/master/cmd/clef/tutorial.md).
   - flag: --Network.Bootnodes
-    configPath:
+    configPath: execution.p2p.bootnodes
+    enabled:
+      configPath: execution.p2p.enabled
+      transform: flagEnabled
+    description: >
+      A comma-separated enode list to be used as boot nodes.
   - flag: --Network.DiagTracerEnabled
     configPath:
+    description: >
+      Whether to enable a verbose diagnostic tracing.
   - flag: --Network.DiscoveryDns
-    configPath:
+    configPath: execution.p2p.discovery.dns.url
+    enabled:
+      configPath: execution.p2p.discovery.enabled
+      transform: flagEnabled
+    description: >
+      Use tree is available through a DNS name. For the default of 
+      `<chain name>.ethdisco.net`, leave unspecified.
   - flag: --Network.DiscoveryPort
-    configPath:
+    configPath: execution.p2p.discovery.port
+    enabled:
+      configPath: execution.p2p.discovery.enabled
+      transform: flagEnabled
+    description: >
+      The UDP port number for incoming discovery connections. It's recommended to 
+      keep it the same as the TCP port (`P2PPort`) because other values have not 
+      been tested yet.
   - flag: --Network.EnableUPnP
     configPath:
+    description: >
+      Whether to enable automatic port forwarding via UPnP.
   - flag: --Network.ExternalIp
     configPath:
+    description: >
+      The external IP. Use only when the external IP cannot be resolved 
+      automatically.
   - flag: --Network.LocalIp
     configPath:
+    description: >
+      The local IP. Use only when the local IP cannot be resolved automatically.
   - flag: --Network.MaxActivePeers
-    configPath:
+    configPath: execution.p2p.maxPeers
+    enabled:
+      configPath: execution.p2p.enabled
+      transform: flagEnabled
+    description: >
+      The max allowed number of connected peers.
   - flag: --Network.MaxNettyArenaCount
     configPath:
+    description: >
+      The maximum DotNetty arena count. Increasing this on a high-core CPU 
+      without increasing the memory budget may reduce chunk size so much that it 
+      causes a huge memory allocation.
   - flag: --Network.NettyArenaOrder
     configPath:
+    description: >
+      The size of the DotNetty arena order. `-1` to depend on the memory hint.
   - flag: --Network.OnlyStaticPeers
     configPath:
+    description: >
+      Whether to use static peers only.
   - flag: --Network.P2PPort
-    configPath:
+    configPath: execution.p2p.port
+    enabled:
+      configPath: execution.p2p.enabled
+      transform: flagEnabled
+    description: >
+      The TCP port for incoming P2P connections.
   - flag: --Network.PriorityPeersMaxCount
     configPath:
+    description: >
+      The max number of priority peers. Can be overridden by a plugin.
   - flag: --Network.StaticPeers
     configPath:
+    description: >
+      A list of peers to keep connection for. Static peers are affected by 
+      `MaxActivePeers`.
   - flag: --Optimism.SequencerUrl
     configPath:
+    description: >
+      The sequencer address.
   - flag: --Pruning.AvailableSpaceCheckEnabled
     configPath:
+    description: >
+      Whether to enables available disk space check.
   - flag: --Pruning.CacheMb
     configPath:
+    description: >
+      The in-memory cache size, in MB. The bigger the cache size, the bigger the 
+      disk space savings.
   - flag: --Pruning.FullPruningCompletionBehavior
     configPath:
+    description: >
+      The action to take on pruning completion.
   - flag: --Pruning.FullPruningDisableLowPriorityWrites
     configPath:
+    description: >
+      Whether to disable low-priority for pruning writes. Full pruning uses low-
+      priority write operations to prevent blocking block processing. If block 
+      processing is not high-priority, set this option to `true` for faster 
+      pruning.
   - flag: --Pruning.FullPruningMaxDegreeOfParallelism
     configPath:
+    description: >
+      The max number of parallel tasks that can be used by full pruning. Allowed 
+      values: `-1` (Uses the number of logical processors), `0` (Uses 25% of 
+      logical processors), `1` (Runs on a single thread).
   - flag: --Pruning.FullPruningMemoryBudgetMb
     configPath:
+    description: >
+      The memory budget, in MB, used for the trie visit. Increasing this value 
+      significantly reduces the IOPS requirement at the expense of memory usage. 
+      `0` to disable.
   - flag: --Pruning.FullPruningMinimumDelayHours
     configPath:
+    description: >
+      The minimum delay, in hours, between full pruning operations not to exhaust 
+      disk writes.
   - flag: --Pruning.FullPruningThresholdMb
     configPath:
+    description: >
+      The threshold, in MB, to trigger full pruning. Depends on `Mode` and 
+      `FullPruningTrigger`.
   - flag: --Pruning.FullPruningTrigger
     configPath:
+    description: >
+      The full pruning trigger.
   - flag: --Pruning.Mode
     configPath:
+    description: >
+      The pruning mode.
   - flag: --Pruning.PersistenceInterval
     configPath:
+    description: >
+      The block persistence frequency. If set to `N`, it caches after each `Nth` 
+      block even if not required by cache memory usage.
   - flag: --Pruning.PruningBoundary
     configPath:
+    description: >
+      The number of past states before the state gets pruned. Used to determine 
+      how old of a state to keep from the head.
   - flag: --Pruning.TrackedPastKeyCountMemoryRatio
     configPath:
+    description: >
+      The ratio of memory out of `Pruning.CacheMb` to allocate for the LRU cache, 
+      used to track past keys for live pruning.
   - flag: --Receipt.CompactReceiptStore
     configPath:
+    description: >
+      Whether to compact receipts database size at the expense of RPC 
+      performance.
   - flag: --Receipt.CompactTxIndex
     configPath:
+    description: >
+      Whether to compact receipts transaction index database size at the expense 
+      of RPC performance.
   - flag: --Receipt.ReceiptsMigration
     configPath:
+    description: >
+      Whether to migrate the receipts database to the new schema.
   - flag: --Receipt.StoreReceipts
     configPath:
+    description: >
+      Whether to store receipts after a new block is processed. This setting is 
+      independent from downloading receipts in fast sync mode.
   - flag: --Receipt.TxLookupLimit
     configPath:
+    description: >
+      The number of recent blocks to maintain transaction index for. `0` to never 
+      remove indices, `-1` to never index.
   - flag: --Seq.ApiKey
     configPath:
+    description: >
+      The Seq API key.
   - flag: --Seq.MinLevel
     configPath:
+    description: >
+      The min log level to sent to Seq.
   - flag: --Seq.ServerUrl
     configPath:
+    description: >
+      The Seq instance URL.
   - flag: --Shutter.BootnodeP2PAddresses
     configPath:
+    description: >
+      The p2p addresses of the Shutter Keyper network bootnodes.
   - flag: --Shutter.Enabled
     configPath:
+    description: >
+      Whether to enable Shutter.
   - flag: --Shutter.InstanceID
     configPath:
+    description: >
+      Instance ID of Shutter keyper set.
   - flag: --Shutter.KeyBroadcastContractAddress
     configPath:
+    description: >
+      The address of the Shutter key broadcast contract.
   - flag: --Shutter.KeyperSetManagerContractAddress
     configPath:
+    description: >
+      The address of the Shutter keyper set manager contract.
   - flag: --Shutter.P2PPort
     configPath:
+    description: >
+      The port to connect to Shutter P2P network with.
   - flag: --Shutter.SequencerContractAddress
     configPath:
+    description: >
+      The address of the Shutter sequencer contract.
   - flag: --Shutter.ShutterKeyFile
     configPath:
+    description: >
+      The filename to use for the Shutter P2P key. If this not specified, the key 
+      is autogenerated in `shutter.key.plain` file.
   - flag: --Shutter.ValidatorInfoFile
     configPath:
+    description: >
+      The filepath of the validator info json file.
   - flag: --Shutter.ValidatorRegistryContractAddress
     configPath:
+    description: >
+      The address of the Shutter validator registry contract.
   - flag: --Snapshot.Checksum
     configPath:
+    description: >
+      The SHA-256 checksum of the snapshot file.
   - flag: --Snapshot.DownloadUrl
     configPath:
+    description: >
+      The URL of the snapshot file.
   - flag: --Snapshot.Enabled
     configPath:
+    description: >
+      Whether to enable the Snapshot plugin.
   - flag: --Snapshot.SnapshotDirectory
     configPath:
+    description: >
+      The path to the directory to store the snapshot file.
   - flag: --Snapshot.SnapshotFileName
     configPath:
+    description: >
+      The name of the snapshot file.
   - flag: --Sync.AncientBodiesBarrier
     configPath:
+    description: >
+      The earliest body downloaded with fast sync when `DownloadBodiesInFastSync` 
+      is set to `true`. The actual value is determined as follows:
+      `max{ 1, min{ PivotNumber, AncientBodiesBarrier } }`.
   - flag: --Sync.AncientReceiptsBarrier
     configPath:
+    description: >
+      The earliest receipt downloaded with fast sync when 
+      `DownloadReceiptsInFastSync` is set to `true`. The actual value is 
+      determined as follows:
+      `max{ 1, min{ PivotNumber, max{ AncientBodiesBarrier, AncientReceiptsBarrier } } }`.
   - flag: --Sync.DownloadBodiesInFastSync
     configPath:
+    description: >
+      Whether to download the block bodies in the Fast sync mode.
   - flag: --Sync.DownloadHeadersInFastSync
     configPath:
+    description: >
+      Whether to download the old block headers in the Fast sync mode. If 
+      `false`, Nethermind downloads only recent blocks headers.
   - flag: --Sync.DownloadReceiptsInFastSync
     configPath:
+    description: >
+      Whether to download receipts in the Fast sync mode. This slows down the 
+      process by a few hours but allows to interact with dApps that perform 
+      extensive historical logs searches.
   - flag: --Sync.ExitOnSynced
     configPath:
+    description: >
+      Whether to shut down Nethermind once sync is finished.
   - flag: --Sync.ExitOnSyncedWaitTimeSec
     configPath:
+    description: >
+      The time, in seconds, to wait before shutting down Nethermind once sync is 
+      finished.
   - flag: --Sync.FastSync
     configPath:
+    description: >
+      Whether to use the Fast sync mode (the eth/63 synchronization algorithm).
   - flag: --Sync.FastSyncCatchUpHeightDelta
     configPath:
+    description: >
+      In Fast sync mode, the min height threshold limit up to which the Full 
+      sync, if already on, stays on when the chain is behind the network head. 
+      If the limit is exceeded, it switches back to Fast sync. For regular usage 
+      scenarios, setting this value lower than 32 is not recommended as this can 
+      cause issues with chain reorgs. Note that the last 2 blocks are always 
+      processed in Full sync, so setting it lower than 2 has no effect.
   - flag: --Sync.FixReceipts
     configPath:
+    description: >
+      Whether to enable receipts validation that checks for receipts that might 
+      be missing because of a bug. If needed, receipts are downloaded from the 
+      network. If `true`, the pivot number must be same one used originally as 
+      it's used as a cut-off point.
   - flag: --Sync.FixTotalDifficulty
     configPath:
+    description: >
+      Whether to recalculate the total difficulty from 
+      `FixTotalDifficultyStartingBlock` to `FixTotalDifficultyLastBlock`.
   - flag: --Sync.FixTotalDifficultyLastBlock
     configPath:
+    description: >
+      The last block to recalculate the total difficulty for. If not specified, 
+      the best known block is used.
   - flag: --Sync.FixTotalDifficultyStartingBlock
     configPath:
+    description: >
+      The first block to recalculate the total difficulty for.
   - flag: --Sync.MaxAttemptsToUpdatePivot
     configPath:
+    description: >
+      The max number of attempts to update the pivot block based on the FCU 
+      message from the consensus client.
   - flag: --Sync.MaxProcessingThreads
     configPath:
+    description: >
+      The max number of threads used for syncing. `0` to use the number of 
+      logical processors.
   - flag: --Sync.NetworkingEnabled
     configPath:
+    description: >
+      Whether to connect to peers and sync.
   - flag: --Sync.NonValidatorNode
     configPath:
+    description: >
+      Whether to operate as a non-validator. If `true`, the 
+      `DownloadReceiptsInFastSync` and `DownloadBodiesInFastSync` can be set to 
+      `false`.
   - flag: --Sync.PivotHash
     configPath:
+    description: >
+      The hash of the pivot block for the Fast sync mode.
   - flag: --Sync.PivotNumber
     configPath:
+    description: >
+      The number of the pivot block for the Fast sync mode.
   - flag: --Sync.PivotTotalDifficulty
     configPath:
+    description: >
+      The total difficulty of the pivot block for the Fast sync mode.
   - flag: --Sync.SnapSync
     configPath:
+    description: >
+      Whether to use the Snap sync mode.
   - flag: --Sync.SnapSyncAccountRangePartitionCount
     configPath:
+    description: >
+      The number of account range partitions to create. Increases the Snap sync 
+      request concurrency. Allowed values are between between 1 and 256.
   - flag: --Sync.StrictMode
     configPath:
+    description: >
+      Whether to disable some optimizations and do a more extensive sync. Useful 
+      when sync state is corrupted.
   - flag: --Sync.SynchronizationEnabled
     configPath:
+    description: >
+      Whether to download and process new blocks.
   - flag: --Sync.UseGethLimitsInFastBlocks
     configPath:
+    description: >
+      Whether to make smaller requests, in Fast Blocks mode, to avoid Geth from 
+      disconnecting. On the Geth-heavy networks (e.g., Mainnet), it's a desired 
+      behavior while on Nethermind- or OpenEthereum-heavy networks (Aura), it 
+      slows down the sync by a factor of ~4.
   - flag: --TraceStore.BlocksToKeep
     configPath:
+    description: >
+      The number of blocks to store, counting from the head. If `0`, all traces 
+      of the processed blocks are stored.
   - flag: --TraceStore.DeserializationParallelization
     configPath:
+    description: >
+      The max parallelization when deserialization requests the `trace_filter` 
+      method. `0` to use the number of logical processors. If you experience a 
+      resource shortage, set to a low number.
   - flag: --TraceStore.Enabled
     configPath:
+    description: >
+      Whether to enable the TraceStore plugin. If enabled, traces come from the 
+      database whenever possible.
   - flag: --TraceStore.TraceTypes
     configPath:
+    description: >
+      The type of traces to store.
   - flag: --TxPool.BlobCacheSize
     configPath:
+    description: >
+      The max number of full blob transactions cached in memory. The default 
+      value uses max 200MB for 6 blobs where one blob is 33MB (256 * 128KB).
   - flag: --TxPool.BlobsSupport
     configPath:
+    description: >
+      The blobs support mode.
   - flag: --TxPool.GasLimit
     configPath:
+    description: >
+      The max transaction gas allowed.
   - flag: --TxPool.HashCacheSize
     configPath:
+    description: >
+      The max number of cached hashes of already known transactions. Set 
+      automatically by the memory hint.
   - flag: --TxPool.InMemoryBlobPoolSize
     configPath:
+    description: >
+      The max number of full blob transactions stored in memory. Used only if 
+      persistent storage is disabled.
   - flag: --TxPool.MaxBlobTxSize
     configPath:
+    description: >
+      The max blob transaction size allowed, excluding blobs, in bytes.
   - flag: --TxPool.MaxPendingBlobTxsPerSender
     configPath:
+    description: >
+      The max number of pending blob transactions per single sender. `0` to lift 
+      the limit.
   - flag: --TxPool.MaxPendingTxsPerSender
     configPath:
+    description: >
+      The max number of pending transactions per single sender. `0` to lift the 
+      limit.
   - flag: --TxPool.MaxTxSize
     configPath:
+    description: >
+      The max transaction size allowed, in bytes.
   - flag: --TxPool.MinBaseFeeThreshold
     configPath:
+    description: >
+      The minimal percentage of the current base fee that must be surpassed by 
+      the max fee (`max_fee_per_gas`) for the transaction to be broadcasted.
   - flag: --TxPool.PeerNotificationThreshold
     configPath:
+    description: >
+      The average percentage of transaction hashes from persistent broadcast sent 
+      to a peer together with hashes of the last added transactions.
   - flag: --TxPool.PersistentBlobStorageSize
     configPath:
+    description: >
+      The max number of full blob transactions stored in the database 
+      (increasing the number of transactions in the blob pool also results in 
+      higher memory usage). The default value uses max 13GB for 6 blobs where one 
+      blob is 2GB (16386 * 128KB).
   - flag: --TxPool.ReportMinutes
     configPath:
+    description: >
+      The current transaction pool state reporting interval, in minutes.
   - flag: --TxPool.Size
     configPath:
+    description: >
+      The max number of transactions held in the mempool (the more transactions 
+      in the mempool, the more memory used).
   - flag: --Wallet.DevAccounts
     configPath:
+    description: >
+      The number of autogenerated developer accounts to work with. Developer 
+      accounts have private keys from `00...01` to `00...n`.
   - flag: --datadir
     configPath: execution.dataDir
     transform: interpolate
+    description: >
+      The path to the Nethermind data directory.
   - flag: --networkid
     configPath: common.network.id
+    description: >
+      The network ID of the chain to connect to.
