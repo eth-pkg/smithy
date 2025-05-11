@@ -3,15 +3,24 @@ version: 25.4.1
 valueFormat: equals
 rules:
   - flag: --api-gas-price-blocks
-    configPath:
+    configPath: execution.gasPriceOracle.blocks
+    enabled:
+      configPath: execution.gasPriceOracle.enabled
+      transform: booleanFlag
     description: >
       Number of blocks to consider for eth_gasPrice (default: 100)
   - flag: --api-gas-price-max
-    configPath:
+    configPath: execution.gasPriceOracle.maxPrice
+    enabled:
+      configPath: execution.gasPriceOracle.enabled
+      transform: booleanFlag
     description: >
       Maximum gas price for eth_gasPrice (default: 500000000000)
   - flag: --api-gas-price-percentile
-    configPath:
+    configPath: execution.gasPriceOracle.percentile
+    enabled:
+      configPath: execution.gasPriceOracle.enabled
+      transform: booleanFlag
     description: >
       Percentile value to measure for eth_gasPrice (default: 50.0)
   - flag: --auto-log-bloom-caching-enabled
@@ -147,44 +156,82 @@ rules:
     configPath:
     description: >
       Use genesis state hash from data on startup if specified (default: false)
-  - flag: --graphql-http-cors-origins
-    configPath:
-    description: >
-      Comma separated origin domain URLs for CORS validation (default: none)
   - flag: --graphql-http-enabled
-    configPath:
+    configPath: execution.graphql.enabled
+    transform: flagEnabled
+    enabled:
+      configPath: execution.graphql.enabled
+      transform: flagEnabled
     description: >
       Set to start the GraphQL HTTP service (default: false)
   - flag: --graphql-http-host
-    configPath:
+    configPath: execution.graphql.host
+    enabled:
+      configPath: execution.graphql.enabled
+      transform: flagEnabled
     description: >
       Host for GraphQL HTTP to listen on (default: null)
   - flag: --graphql-http-port
-    configPath:
+    configPath: execution.graphql.port
+    enabled:
+      configPath: execution.graphql.enabled
+      transform: flagEnabled
     description: >
       Port for GraphQL HTTP to listen on (default: 8547)
+  - flag: --graphql-http-cors-origins
+    configPath: execution.graphql.corsOrigins
+    transform: allowlist
+    enabled:
+      configPath: execution.graphql.enabled
+      transform: flagEnabled
+    description: >
+      Comma separated origin domain URLs for CORS validation (default: none)
   - flag: --graphql-mtls-enabled
     configPath:
     description: >
       Enable mTLS for GraphQL HTTP service
   - flag: --graphql-tls-enabled
-    configPath:
+    configPath: execution.graphql.tls.enabled
+    transform: flagEnabled
+    enabled:
+      configPath: execution.graphql.enabled
+      transform: flagEnabled
     description: >
       Enable TLS for GraphQL HTTP service
   - flag: --graphql-tls-keystore-file
-    configPath:
+    configPath: execution.graphql.tls.keystore.path
+    enabled:
+      - configPath: execution.graphql.enabled
+        transform: flagEnabled
+      - configPath: execution.graphql.tls.enabled
+        transform: flagEnabled
     description: >
       Path to the TLS keystore file for GraphQL HTTP service
   - flag: --graphql-tls-keystore-password-file
-    configPath:
+    configPath: execution.graphql.tls.keystore.password
+    enabled:
+      - configPath: execution.graphql.enabled
+        transform: flagEnabled
+      - configPath: execution.graphql.tls.enabled
+        transform: flagEnabled
     description: >
       Path to the file containing the password for the TLS keystore
   - flag: --graphql-tls-truststore-file
-    configPath:
+    configPath: execution.graphql.tls.truststore.path
+    enabled:
+      - configPath: execution.graphql.enabled
+        transform: flagEnabled
+      - configPath: execution.graphql.tls.enabled
+        transform: flagEnabled
     description: >
       Path to the TLS truststore file for GraphQL HTTP service
   - flag: --graphql-tls-truststore-password-file
-    configPath:
+    configPath: execution.graphql.tls.truststore.password
+    enabled:
+      - configPath: execution.graphql.enabled
+        transform: flagEnabled
+      - configPath: execution.graphql.tls.enabled
+        transform: flagEnabled
     description: >
       Path to the file containing the password for the TLS truststore
   - flag: --host-allowlist
@@ -836,82 +883,108 @@ rules:
       Sets target gas limit per block. If set, each block's gas limit will
       approach this setting over time.
   - flag: --tx-pool
-    configPath:
+    configPath: execution.txpool.enabled
+    transform: flagEnabled
     description: >
       The Transaction Pool implementation to use (default: LAYERED)
   - flag: --tx-pool-blob-price-bump
-    configPath:
+    configPath: execution.txpool.blobPriceBump
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
-      Blob price bump percentage to replace an already existing transaction
-      blob tx (default: 100)
+      Blob price bump percentage to replace an already existing transaction blob tx (default: 100)
   - flag: --tx-pool-disable-locals
-    configPath:
+    configPath: execution.txpool.disableLocals
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
-      Set to true if senders of transactions sent via RPC should not have
-      priority (default: false)
+      Set to true if senders of transactions sent via RPC should not have priority (default: false)
   - flag: --tx-pool-enable-save-restore
-    configPath:
+    configPath: execution.txpool.enableSaveRestore
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
-      Set to true to enable saving the txpool content to file on shutdown and
-      reloading it on startup (default: false)
+      Set to true to enable saving the txpool content to file on shutdown and reloading it on startup (default: false)
   - flag: --tx-pool-layer-max-capacity
-    configPath:
+    configPath: execution.txpool.layerMaxCapacity
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
-      Max amount of memory space, in bytes, that any layer within the
-      transaction pool could occupy (default: 25000000)
+      Max amount of memory space, in bytes, that any layer within the transaction pool could occupy (default: 25000000)
   - flag: --tx-pool-limit-by-account-percentage
-    configPath:
+    configPath: execution.txpool.limitByAccountPercentage
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
-      Maximum portion of the transaction pool which a single account may occupy
-      with future transactions (default: 0.001)
+      Maximum portion of the transaction pool which a single account may occupy with future transactions (default: 0.001)
   - flag: --tx-pool-max-future-by-sender
-    configPath:
+    configPath: execution.txpool.maxFutureBySender
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
-      Max number of future pending transactions allowed for a single sender
-      (default: 200)
+      Max number of future pending transactions allowed for a single sender (default: 200)
   - flag: --tx-pool-max-prioritized
-    configPath:
+    configPath: execution.txpool.maxPrioritized
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
-      Max number of pending transactions that are prioritized and thus kept
-      sorted (default: 4000)
+      Max number of pending transactions that are prioritized and thus kept sorted (default: 4000)
   - flag: --tx-pool-max-prioritized-by-type
-    configPath:
+    configPath: execution.txpool.maxPrioritizedByType.BLOB
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
-      Max number of pending transactions, of a specific type, that are
-      prioritized and thus kept sorted (default: {BLOB=9})
+      Max number of pending transactions, of a specific type, that are prioritized and thus kept sorted (default: {BLOB=9})
   - flag: --tx-pool-min-gas-price
-    configPath:
+    configPath: execution.txpool.minGasPrice
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
-      Transactions with gas price (in Wei) lower than this minimum will not be
-      accepted into the txpool (not to be confused with min-gas-price, that is
-      applied on block creation) (default: 0x000000000000000000000000000000000
-      000000000000000000000000003e8)
+      Transactions with gas price (in Wei) lower than this minimum will not be accepted into the txpool (default: 0x3e8)
   - flag: --tx-pool-min-score
-    configPath:
+    configPath: execution.txpool.minScore
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
-      Remove a pending transaction from the txpool if its score is lower than
-      this value.Accepts values between -128 and 127 (default: -128)
+      Remove a pending transaction from the txpool if its score is lower than this value (default: -128)
   - flag: --tx-pool-price-bump
-    configPath:
+    configPath: execution.txpool.priceBump
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
-      Price bump percentage to replace an already existing transaction
-      (default: 10)
+      Price bump percentage to replace an already existing transaction (default: 10)
   - flag: --tx-pool-priority-senders
-    configPath:
+    configPath: execution.txpool.prioritySenders
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
-      Pending transactions sent exclusively by these addresses, from any
-      source, are prioritized and only evicted after all others. If not
-      specified, then only the senders submitting transactions via RPC have
-      priority (default: [])
+      Pending transactions sent exclusively by these addresses are prioritized and only evicted after all others (default: [])
   - flag: --tx-pool-retention-hours
-    configPath:
+    configPath: execution.txpool.retentionHours
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       Maximum retention period of pending transactions in hours (default: 13)
   - flag: --tx-pool-save-file
-    configPath:
+    configPath: execution.txpool.saveFile
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
-      If saving the txpool content is enabled, define a custom path for the
-      save file (default: txpool.dump in the data-dir)
+      If saving the txpool content is enabled, define a custom path for the save file (default: txpool.dump)
   - flag: --version-compatibility-protection
     configPath:
     description: >

@@ -308,7 +308,10 @@ rules:
     description: |
       Enable speed test
   - flag: --discovery.dns
-    configPath: 
+    configPath: execution.p2p.dnsDiscovery.url
+    enabled:
+      configPath: execution.p2p.dnsDiscovery.enabled
+      transform: flagEnabled
     description: |
       Sets DNS discovery entry points (use "" to disable DNS)
   - flag: --downloader.api.addr
@@ -359,17 +362,46 @@ rules:
     description: |
       Disables proof-of-work verification
   - flag: --gpo.blocks
-    configPath: 
+    configPath: execution.gasPriceOracle.blocks
+    enabled:
+      configPath: execution.gasPriceOracle.enabled
+      transform: flagEnabled
     description: |
       Number of recent blocks to check for gas prices
   - flag: --gpo.percentile
-    configPath: 
+    configPath: execution.gasPriceOracle.percentile
+    enabled:
+      configPath: execution.gasPriceOracle.enabled
+      transform: flagEnabled
     description: |
       Suggested gas price is the given percentile of a set of recent transaction gas prices
   - flag: --graphql
-    configPath: 
+    configPath: execution.graphql.enabled
+    transform: flagEnabled
     description: |
       Enable the graphql endpoint
+  - flag: --graphql.corsdomain
+    configPath: execution.graphql.corsOrigins
+    transform: allowlist
+    enabled:
+      configPath: execution.graphql.enabled
+      transform: flagEnabled
+    description: |
+      Comma separated list of domains from which to accept cross origin requests (browser enforced)
+  - flag: --graphql.addr
+    configPath: execution.graphql.host
+    enabled:
+      configPath: execution.graphql.enabled
+      transform: flagEnabled
+    description: |
+      GraphQL server listening interface
+  - flag: --graphql.port
+    configPath: execution.graphql.port
+    enabled:
+      configPath: execution.graphql.enabled
+      transform: flagEnabled
+    description: |
+      GraphQL server listening port
   - flag: --healthcheck
     configPath: 
     description: |
@@ -464,6 +496,9 @@ rules:
       Format console logs with JSON
   - flag: --log.console.verbosity
     configPath: execution.logging.stdout.level
+    enabled:
+      configPath: execution.logging.stdout.enabled
+      transform: flagEnabled
     description: |
       Set the log level for console logs
   - flag: --log.delays
@@ -479,7 +514,10 @@ rules:
     description: |
       Format file logs with JSON
   - flag: --log.dir.path
-    configPath: 
+    configPath: execution.logging.file.directory
+    enabled:
+      configPath: execution.logging.file.enabled
+      transform: flagEnabled
     description: |
       Path to store user and error logs to disk
   - flag: --log.dir.prefix
@@ -487,7 +525,10 @@ rules:
     description: |
       The file name prefix for logs stored to disk
   - flag: --log.dir.verbosity
-    configPath: 
+    configPath: execution.logging.file.level
+    enabled:
+      configPath: execution.logging.file.enabled
+      transform: flagEnabled
     description: |
       Set the log verbosity for logs stored to disk
   - flag: --log.json
@@ -522,7 +563,8 @@ rules:
     description: |
       Metrics HTTP server listening port
   - flag: --mine
-    configPath: 
+    configPath: execution.miner.enabled
+    transform: flagEnabled
     description: |
       Enable mining
   - flag: --miner.etherbase
@@ -950,63 +992,73 @@ rules:
     configPath: 
     description: |
       Comma separated enode URLs which are always allowed to connect, even above the peer limit
-  - flag: --txpool.accountslots
-    configPath: 
-    description: |
-      Minimum number of executable transaction slots guaranteed per account
-  - flag: --txpool.api.addr
-    configPath: 
-    description: |
-      TxPool api network address, for example: 127.0.0.1:9090
-  - flag: --txpool.blobpricebump
-    configPath: 
-    description: |
-      Price bump percentage to replace existing (type-3) blob transaction
-  - flag: --txpool.blobslots
-    configPath: 
-    description: |
-      Max allowed total number of blobs (within type-3 txs) per account
-  - flag: --txpool.commit.every
-    configPath: 
-    description: |
-      How often transactions should be committed to the storage
   - flag: --txpool.disable
-    configPath: 
+    configPath: execution.txpool.enabled
+    transform: negate
     description: |
       External pool and block producer, see ./cmd/txpool/readme.md for more info. 
       Disabling internal txpool and block producer.
-  - flag: --txpool.globalbasefeeslots
-    configPath: 
+  - flag: --txpool.blobpricebump
+    configPath: execution.txpool.blobPriceBump
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: |
-      Maximum number of non-executable transactions where only not enough baseFee
-  - flag: --txpool.globalqueue
-    configPath: 
-    description: |
-      Maximum number of non-executable transaction slots for all accounts
-  - flag: --txpool.globalslots
-    configPath: 
-    description: |
-      Maximum number of executable transaction slots for all accounts
-  - flag: --txpool.gossip.disable
-    configPath: 
-    description: |
-      Disabling p2p gossip of txs. Any txs received by p2p - will be dropped. 
-      Some networks like 'Optimism execution engine'/'Optimistic Rollup' - 
-      using it to protect against MEV attacks
-  - flag: --txpool.pricelimit
-    configPath: 
-    description: |
-      Minimum gas price (fee cap) limit to enforce for acceptance into the pool
+      Price bump percentage to replace existing (type-3) blob transaction
   - flag: --txpool.pricebump
-    configPath: 
+    configPath: execution.txpool.priceBump
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: |
       Price bump percentage to replace an already existing transaction
-  - flag: --txpool.trace.senders
-    configPath: 
+  - flag: --txpool.pricelimit
+    configPath: execution.txpool.minGasPrice
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: |
-      Comma separated list of addresses, whose transactions will traced in transaction pool with debug printing
+      Minimum gas price (fee cap) limit to enforce for acceptance into the pool
+  - flag: --txpool.globalslots
+    configPath: execution.txpool.maxPrioritized
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
+    description: |
+      Maximum number of executable transaction slots for all accounts
+  - flag: --txpool.globalqueue
+    configPath: execution.txpool.maxFutureBySender
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
+    description: |
+      Maximum number of non-executable transaction slots for all accounts
+  - flag: --txpool.accountslots
+    configPath: execution.txpool.limitByAccountPercentage
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
+    description: |
+      Minimum number of executable transaction slots guaranteed per account
+  - flag: --txpool.globalbasefeeslots
+    configPath: execution.txpool.maxPrioritizedByType.BLOB
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
+    description: |
+      Maximum number of non-executable transactions where only not enough baseFee
+  - flag: --txpool.blobslots
+    configPath: execution.txpool.maxPrioritizedByType.BLOB
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
+    description: |
+      Max allowed total number of blobs (within type-3 txs) per account
   - flag: --txpool.totalblobpoollimit
-    configPath: 
+    configPath: execution.txpool.maxPrioritizedByType.BLOB
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: |
       Total limit of number of all blobs in txs within the txpool
   - flag: --v5disc

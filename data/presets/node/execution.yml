@@ -370,7 +370,135 @@ properties:
       enabled:
         type: boolean
         default: false
-        description: "Enable GraphQL API"
+        description: "Enable GraphQL HTTP service"
+      host:
+        type: string
+        default: "localhost"
+        description: "Host for GraphQL HTTP to listen on"
+      port:
+        type: number
+        minimum: 1024
+        maximum: 65535
+        default: 8547
+        description: "Port for GraphQL HTTP to listen on"
+        errorMessage:
+          minimum: "GraphQL port must be >= 1024"
+          maximum: "GraphQL port must be <= 65535"
+      corsOrigins:
+        type: array
+        items:
+          type: string
+        default: []
+        description: "Comma separated origin domain URLs for CORS validation"
+      tls:
+        type: object
+        properties:
+          enabled:
+            type: boolean
+            default: false
+            description: "Enable TLS for GraphQL HTTP service"
+          keystore:
+            type: object
+            properties:
+              path:
+                type: string
+                default: ""
+                description: "Path to the TLS keystore file"
+              password:
+                type: string
+                default: ""
+                description: "Path to the file containing the password for the TLS keystore"
+          truststore:
+            type: object
+            properties:
+              path:
+                type: string
+                default: ""
+                description: "Path to the TLS truststore file"
+              password:
+                type: string
+                default: ""
+                description: "Path to the file containing the password for the TLS truststore"
+  txpool:
+    type: object
+    properties:
+      enabled:
+        type: boolean
+        default: true
+        description: "Enable transaction pool"
+      blobPriceBump:
+        type: number
+        minimum: 0
+        default: 100
+        description: "Blob price bump percentage to replace an already existing transaction blob tx"
+      disableLocals:
+        type: boolean
+        default: false
+        description: "Set to true if senders of transactions sent via RPC should not have priority"
+      enableSaveRestore:
+        type: boolean
+        default: false
+        description: "Set to true to enable saving the txpool content to file on shutdown and reloading it on startup"
+      layerMaxCapacity:
+        type: number
+        minimum: 0
+        default: 25000000
+        description: "Max amount of memory space, in bytes, that any layer within the transaction pool could occupy"
+      limitByAccountPercentage:
+        type: number
+        minimum: 0
+        maximum: 1
+        default: 0.001
+        description: "Maximum portion of the transaction pool which a single account may occupy with future transactions"
+      maxFutureBySender:
+        type: number
+        minimum: 0
+        default: 200
+        description: "Max number of future pending transactions allowed for a single sender"
+      maxPrioritized:
+        type: number
+        minimum: 0
+        default: 4000
+        description: "Max number of pending transactions that are prioritized and thus kept sorted"
+      maxPrioritizedByType:
+        type: object
+        properties:
+          BLOB:
+            type: number
+            minimum: 0
+            default: 9
+            description: "Max number of pending BLOB transactions that are prioritized"
+      minGasPrice:
+        type: string
+        pattern: "^0x[0-9a-fA-F]+$"
+        default: "0x3e8"
+        description: "Transactions with gas price (in Wei) lower than this minimum will not be accepted into the txpool"
+      minScore:
+        type: number
+        minimum: -128
+        maximum: 127
+        default: -128
+        description: "Remove a pending transaction from the txpool if its score is lower than this value"
+      priceBump:
+        type: number
+        minimum: 0
+        default: 10
+        description: "Price bump percentage to replace an already existing transaction"
+      prioritySenders:
+        type: array
+        items:
+          type: string
+        default: []
+        description: "Pending transactions sent exclusively by these addresses are prioritized and only evicted after all others"
+      retentionHours:
+        type: number
+        minimum: 0
+        default: 13
+        description: "Maximum retention period of pending transactions in hours"
+      saveFile:
+        type: string
+        default: "txpool.dump"
+        description: "If saving the txpool content is enabled, define a custom path for the save file"
   beacon:
     type: object
     properties:
@@ -385,20 +513,6 @@ properties:
         type: boolean
         default: false
         description: "Enable miner"
-  gas_price_oracle:
-    type: object
-    properties:
-      enabled:
-        type: boolean
-        default: false
-        description: "Enable gas price oracle"
-  txpool:
-    type: object
-    properties:
-      enabled:
-        type: boolean
-        default: false
-        description: "Enable transaction pool"
   builder:
     type: object
     properties:
@@ -417,4 +531,27 @@ properties:
   dataDir:
     type: string
     default: "{common.dataDir}/{execution.client.name}"
-    description: "Base directory for execution client data. Interpolated from common.dataDir and execution.client.name." 
+    description: "Base directory for execution client data. Interpolated from common.dataDir and execution.client.name."
+  gasPriceOracle:
+    type: object
+    properties:
+      enabled:
+        type: boolean
+        default: false
+        description: "Enable gas price oracle"
+      blocks:
+        type: number
+        minimum: 1
+        default: 100
+        description: "Number of blocks to consider for eth_gasPrice"
+      maxPrice:
+        type: number
+        minimum: 0
+        default: 500000000000
+        description: "Maximum gas price for eth_gasPrice"
+      percentile:
+        type: number
+        minimum: 0
+        maximum: 100
+        default: 50.0
+        description: "Percentile value to measure for eth_gasPrice" 

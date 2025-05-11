@@ -188,11 +188,11 @@ rules:
       Sets DNS discovery entry points (use "" to disable DNS)
   - flag: --discovery.port
     configPath: execution.p2p.discovery.port
+    description: |
+      Use a custom UDP port for P2P discovery
     enabled:
       configPath: execution.p2p.discovery.enabled
       transform: flagEnabled
-    description: |
-      Use a custom UDP port for P2P discovery
   - flag: --discovery.v4
     configPath: execution.p2p.discovery.v4.enabled
     transform: flagEnabled
@@ -203,6 +203,13 @@ rules:
     transform: flagEnabled
     description: |
       Enables the V5 discovery mechanism
+  - flag: --discovery.dns
+    configPath: execution.p2p.dnsDiscovery.url
+    description: |
+      Sets DNS discovery entry points
+    enabled:
+      configPath: execution.p2p.dnsDiscovery.enabled
+      transform: flagEnabled
   - flag: --eth.requiredblocks
     configPath: 
     description: |
@@ -239,7 +246,7 @@ rules:
     description: |
       Write Go execution trace to the given file
   - flag: --gpo.blocks
-    configPath: 
+    configPath: execution.gasPriceOracle.blocks
     description: |
       Number of recent blocks to check for gas prices
   - flag: --gpo.ignoreprice
@@ -247,22 +254,22 @@ rules:
     description: |
       Gas price below which gpo will ignore transactions
   - flag: --gpo.maxprice
-    configPath: 
+    configPath: execution.gasPriceOracle.maxPrice
     description: |
       Maximum transaction priority fee (or gasprice before London fork) to be
       recommended by gpo
   - flag: --gpo.percentile
-    configPath: 
+    configPath: execution.gasPriceOracle.percentile
     description: |
       Suggested gas price is the given percentile of a set of recent transaction gas
       prices
   - flag: --graphql
-    configPath: 
+    configPath: execution.graphql.enabled
     description: |
       Enable GraphQL on the HTTP-RPC server. Note that GraphQL can only be started if
       an HTTP server is started as well.
   - flag: --graphql.corsdomain
-    configPath: 
+    configPath: execution.graphql.corsOrigins
     description: |
       Comma separated list of domains from which to accept cross origin requests
       (browser enforced)
@@ -744,11 +751,11 @@ rules:
     description: |
       Comma separated accounts to treat as locals (no flush, priority inclusion)
   - flag: --txpool.nolocals
-    configPath: 
+    configPath: execution.txpool.disableLocals
     description: |
       Disables price exemptions for locally submitted transactions
   - flag: --txpool.pricebump
-    configPath: 
+    configPath: execution.txpool.priceBump
     description: |
       Price bump percentage to replace an already existing transaction
   - flag: --txpool.pricelimit
