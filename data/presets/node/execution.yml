@@ -206,13 +206,67 @@ properties:
             type: boolean
             default: false
             description: "Enable TLS for HTTP JSON-RPC API"
-          cert:
+          certificate:
+            type: object
+            properties:
+              cert:
+                type: string
+                default: ""
+                description: "Path to the TLS certificate file"
+              key:
+                type: string
+                default: ""
+                description: "Path to the TLS key file"
+          keystore:
+            type: object
+            properties:
+              path:
+                type: string
+                default: ""
+                description: "Path to the TLS key file"
+              password:
+                type: string
+                default: ""
+                description: "Password for the TLS key file"
+          truststore:
+            type: object
+            properties:
+              path:
+                type: string
+                default: ""
+                description: "Path to the TLS truststore file"
+              password:
+                type: string
+                default: ""
+                description: "Password for the TLS truststore file"
+          clientAuth:
+            type: object
+            properties:
+              enabled:
+                type: boolean
+                default: false
+                description: "Enable client authentication"
+              caClientsEnabled:
+                type: boolean
+                default: false
+                description: "Enable CA client authentication"
+              path:
+                type: string
+                default: ""
+                description: "Path to the TLS client authentication file"
+          cipherSuites:
+            type: array
+            default: []
+            description: "List of TLS cipher suites to enable"
+            items:
+              type: string
+          protocol:
             type: string
-            default: ""
-            description: "Path to the TLS certificate file"
-          key:
-            type: string
-            default: ""
+            default: "TLS"
+            description: "TLS protocol to use"
+            enum:
+              - TLS
+              - TLSv1.3
   metrics:
     type: object
     properties:

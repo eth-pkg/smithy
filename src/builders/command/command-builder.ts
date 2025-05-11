@@ -10,7 +10,10 @@ type Rule = {
   enabled?: {
     configPath: string
     transform?: string
-  }
+  } | {
+    configPath: string
+    transform?: string
+  }[]
 }
 
 type Mappings = {
@@ -83,14 +86,19 @@ export class CommandBuilder {
    
     
       if (rule.enabled) {
-        let enabledValue = getValueFromPath(config, rule.enabled.configPath)
-        if (rule.enabled.transform) {
-          if (!transformers[rule.enabled.transform]) {
-            throw new Error(`Unknown transform function: ${rule.enabled.transform} for flag: ${rule.flag}`);
+        const enabledConditions = Array.isArray(rule.enabled) ? rule.enabled : [rule.enabled]
+        const allEnabled = enabledConditions.every(condition => {
+          let enabledValue = getValueFromPath(config, condition.configPath)
+          if (condition.transform) {
+            if (!transformers[condition.transform]) {
+              throw new Error(`Unknown transform function: ${condition.transform} for flag: ${rule.flag}`);
+            }
+            enabledValue = (transformers[condition.transform] as FlagEnabledFunction)(enabledValue)
           }
-          enabledValue = (transformers[rule.enabled.transform] as FlagEnabledFunction)(enabledValue)
-        }     
-        if (!enabledValue) {
+          return enabledValue
+        })
+        
+        if (!allEnabled) {
           continue
         }
       }

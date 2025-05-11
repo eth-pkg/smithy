@@ -7,8 +7,8 @@
   "scripts": {
     "build": "tsc",
     "dev": "ts-node-dev --transpile-only src/cli.ts",
-    "test": "mocha -r tsconfig-paths/register -r ts-node/register -r ./test/setup.ts test/**/*.test.ts test/**/**/*.test.ts",
-    "test:watch": "mocha -r tsconfig-paths/register -r ts-node/register -r ./test/setup.ts --watch test/**/*.test.ts test/**/**/*.test.ts",
+    "test": "mocha -r tsconfig-paths/register -r ts-node/register -r ./test/setup.ts \"test/**/*.test.ts\"",
+    "test:watch": "mocha -r tsconfig-paths/register -r ts-node/register -r ./test/setup.ts --watch \"test/**/*.test.ts\"",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "prepare": "npm run build"

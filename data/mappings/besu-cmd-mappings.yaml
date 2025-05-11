@@ -568,52 +568,110 @@ rules:
     description: >
       Port for JSON-RPC HTTP to listen on (default: 8545)
   - flag: --rpc-http-tls-ca-clients-enabled
-    configPath:
+    configPath: execution.http.tls.clientAuth.caClientsEnabled
+    transform: flagEnabled
+    enabled:
+      - configPath: execution.http.tls.enabled
+        transform: flagEnabled
+      - configPath: execution.http.tls.clientAuth.enabled
+        transform: flagEnabled
     description: >
       Enable to accept clients certificate signed by a valid CA for client
       authentication (default: false)
   - flag: --rpc-http-tls-cipher-suite
-    configPath:
+    configPath: execution.http.tls.cipherSuites
+    enabled:
+      - configPath: execution.http.enabled
+        transform: flagEnabled
+      - configPath: execution.http.tls.enabled
+        transform: flagEnabled
     description: >
       Comma separated list of TLS cipher suites to support
   - flag: --rpc-http-tls-client-auth-enabled
-    configPath:
+    configPath: execution.http.tls.clientAuth.enabled
+    transform: flagEnabled
+    enabled:
+      - configPath: execution.http.enabled
+        transform: flagEnabled
+      - configPath: execution.http.tls.enabled
+        transform: flagEnabled
     description: >
       Enable TLS client authentication for the JSON-RPC HTTP service (default:
       false)
   - flag: --rpc-http-tls-enabled
     configPath: execution.http.tls.enabled
+    transform: flagEnabled
     enabled:
-      configPath: execution.http.enabled
-      transform: flagEnabled
+      - configPath: execution.http.enabled
+        transform: flagEnabled
     description: >
       Enable TLS for the JSON-RPC HTTP service (default: false)
   - flag: --rpc-http-tls-keystore-file
-    configPath: execution.http.tls.keystore.file
+    configPath: execution.http.tls.keystore.path
+    enabled:
+      - configPath: execution.http.enabled
+        transform: flagEnabled
+      - configPath: execution.http.tls.enabled
+        transform: flagEnabled
+      - configPath: execution.http.tls.keystore.enabled
+        transform: flagEnabled
     description: >
       Keystore (PKCS#12) containing key/certificate for the JSON-RPC HTTP
       service. Required if TLS is enabled.
   - flag: --rpc-http-tls-keystore-password-file
-    configPath:
+    configPath: execution.http.tls.keystore.password
+    enabled:
+      - configPath: execution.http.enabled
+        transform: flagEnabled
+      - configPath: execution.http.tls.enabled
+        transform: flagEnabled
+      - configPath: execution.http.tls.keystore.enabled
+        transform: flagEnabled
     description: >
       File containing password to unlock keystore for the JSON-RPC HTTP
       service. Required if TLS is enabled.
   - flag: --rpc-http-tls-known-clients-file
-    configPath:
+    configPath: execution.http.tls.clientAuth.path
+    enabled:
+      - configPath: execution.http.enabled
+        transform: flagEnabled
+      - configPath: execution.http.tls.enabled
+        transform: flagEnabled
+      - configPath: execution.http.tls.clientAuth.enabled
+        transform: flagEnabled
     description: >
       Path to file containing clients certificate common name and fingerprint
       for client authentication
   - flag: --rpc-http-tls-protocol
-    configPath:
+    configPath: execution.http.tls.protocol
+    enabled:
+      - configPath: execution.http.enabled
+        transform: flagEnabled
+      - configPath: execution.http.tls.enabled
+        transform: flagEnabled
     description: >
       Comma separated list of TLS protocols to support (default: [TLSv1.3,
       TLSv1.2])
   - flag: --rpc-http-tls-truststore-file
-    configPath:
+    configPath: execution.http.tls.truststore.path
+    enabled:
+      - configPath: execution.http.enabled
+        transform: flagEnabled
+      - configPath: execution.http.tls.enabled
+        transform: flagEnabled
+      - configPath: execution.http.tls.truststore.enabled
+        transform: flagEnabled
     description: >
       Path to the truststore file for the JSON-RPC HTTP service.
   - flag: --rpc-http-tls-truststore-password-file
-    configPath:
+    configPath: execution.http.tls.truststore.password
+    enabled:
+      - configPath: execution.http.enabled
+        transform: flagEnabled
+      - configPath: execution.http.tls.enabled
+        transform: flagEnabled
+      - configPath: execution.http.tls.clientAuth.enabled
+        transform: flagEnabled
     description: >
       Path to the file containing the password for the truststore.
   - flag: --rpc-max-logs-range
