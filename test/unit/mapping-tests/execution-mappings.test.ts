@@ -269,7 +269,7 @@ describe('Execution Client Configuration Tests', () => {
 
   describe('WebSocket Configuration', () => {
     executionClients.forEach(client => {
-      it(`should correctly configure WebSocket for ${client}`, () => {
+      it(`should add WebSocket flags when enabled`, () => {
         const config = schemaUtils.deepMerge(testConfig, {
           execution: {
             client: {
@@ -289,23 +289,95 @@ describe('Execution Client Configuration Tests', () => {
         switch (client) {
           case 'besu':
             expect(scriptString).to.contain('--rpc-ws-enabled');
-            expect(scriptString).to.contain(`--rpc-ws-port=${config.execution.ws.port}`);
             break;
           case 'erigon':
             expect(scriptString).to.contain('--ws');
-            expect(scriptString).to.contain(`--ws.port ${config.execution.ws.port}`);
             break;
           case 'geth':
             expect(scriptString).to.contain('--ws');
-            expect(scriptString).to.contain(`--ws.port ${config.execution.ws.port}`);
             break;
           case 'nethermind':
             expect(scriptString).to.contain('--Init.WebSocketsEnabled');
-            expect(scriptString).to.contain(`--JsonRpc.WebSocketsPort ${config.execution.ws.port}`);
             break;
           case 'reth':
             expect(scriptString).to.contain('--ws');
-            expect(scriptString).to.contain(`--ws.port ${config.execution.ws.port}`);
+            break;
+        }
+      });
+
+      it(`should not add WebSocket flags when disabled`, () => {
+        const config = schemaUtils.deepMerge(testConfig, {
+          execution: {
+            client: {
+              name: client,
+              version: ''
+            },
+            ws: {
+              enabled: false,
+              port: 8546
+            }
+          }
+        });
+
+        const scriptContent = registry.getScriptContent(client, config);
+        const scriptString = scriptContent.toString();
+
+        switch (client) {
+          case 'besu':
+            expect(scriptString).to.not.contain('--rpc-ws-enabled');
+            break;
+          case 'erigon':
+            expect(scriptString).to.not.contain('--ws');
+            break;
+          case 'geth':
+            expect(scriptString).to.not.contain('--ws');
+            break;
+          case 'nethermind':
+            expect(scriptString).to.not.contain('--Init.WebSocketsEnabled');
+            break;
+          case 'reth':
+            expect(scriptString).to.not.contain('--ws');
+            break;
+        }
+      });
+
+      it(`should not add port flag when WebSocket is disabled even if port is defined`, () => {
+        const config = schemaUtils.deepMerge(testConfig, {
+          execution: {
+            client: {
+              name: client,
+              version: ''
+            },
+            ws: {
+              enabled: false,
+              port: 8546
+            }
+          }
+        });
+
+        const scriptContent = registry.getScriptContent(client, config);
+        const scriptString = scriptContent.toString();
+
+        switch (client) {
+          case 'besu':
+            expect(scriptString).to.not.contain('--rpc-ws-enabled');
+            expect(scriptString).to.not.contain('--rpc-ws-port=');
+            break;
+          case 'erigon':
+            expect(scriptString).to.not.contain('--ws');
+            expect(scriptString).to.not.contain('--ws.port');
+            break;
+          case 'geth':
+            expect(scriptString).to.not.contain('--ws');
+            expect(scriptString).to.not.contain('--ws.port');
+            break;
+          case 'nethermind':
+            expect(scriptString).to.not.contain('--Init.WebSocketsEnabled');
+            expect(scriptString).to.not.contain('--JsonRpc.WebSocketsPort');
+            break;
+          case 'reth':
+            expect(scriptString).to.not.contain('--ws');
+            expect(scriptString).to.not.contain('--ws.port');
             break;
         }
       });
