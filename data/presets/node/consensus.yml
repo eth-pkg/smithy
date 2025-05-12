@@ -157,21 +157,6 @@ properties:
         type: string
         default: ""
         description: "URL of a trusted beacon node for genesis sync"
-  graffiti:
-    type: object
-    properties:
-      enabled:
-        type: boolean
-        default: false
-        description: "Enable graffiti on proposed blocks"
-      message:
-        type: string
-        default: ""
-        description: "Custom graffiti message to include in proposed blocks"
-      file:
-        type: string
-        default: ""
-        description: "Path to file containing graffiti messages"
   loggging: 
     type: object
     properties:

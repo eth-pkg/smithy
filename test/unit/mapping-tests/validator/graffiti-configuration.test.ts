@@ -1,13 +1,13 @@
 import { expect } from 'chai';
 import { CommandClientRegistry } from '@/builders/command/command-client-registry';
-import { ConsensusClientName } from '@/lib/types';
+import { ConsensusClientName, ValidatorClientName } from '@/lib/types';
 import { testConfig } from '../../preset-tests/network-preset.test-helper';
 import SchemaUtils from '@/utils/schema';
 
-describe.skip('Consensus Client Graffiti Configuration Tests', () => {
+describe.skip('Validator Client Graffiti Configuration Tests', () => {
   let registry: CommandClientRegistry;
   const schemaUtils = new SchemaUtils('');
-  const consensusClients: ConsensusClientName[] = [
+  const validatorClients: ValidatorClientName[] = [
     'lighthouse',
     "lodestar",
     'nimbus-eth2',
@@ -19,7 +19,7 @@ describe.skip('Consensus Client Graffiti Configuration Tests', () => {
     registry = new CommandClientRegistry();
   });
 
-  consensusClients.forEach(client => {
+  validatorClients.forEach(client => {
     describe(`${client} graffiti configuration`, () => {
       it('should not include any graffiti flags when graffiti is disabled', () => {
         const config = schemaUtils.deepMerge(testConfig, {
@@ -28,30 +28,33 @@ describe.skip('Consensus Client Graffiti Configuration Tests', () => {
               enabled: false
             }
           },
-          consensus: {
-            http: {
-              enabled: false
-            },
+          validator: {
             client: {
               name: client,
               version: ''
             },
             graffiti: {
-              enabled: true
+              enabled: true,
+              message: 'test'
             }
           }
         });
 
         const scriptContent = registry.getScriptContent(client, config);
         const scriptString = scriptContent.toString();
+        const graffitiMessage = config.consensus.graffiti.message;
 
         switch (client) {
           case 'lighthouse':
+            expect(scriptString).to.include(`--graffiti ${graffitiMessage}`);
           case 'lodestar':
+            expect(scriptString).to.not.include(`--graffiti ${graffitiMessage}`);
           case 'nimbus-eth2':
+            expect(scriptString).to.include(`--graffiti ${graffitiMessage}`);
           case 'prysm':
+            expect(scriptString).to.not.include(`--graffiti ${graffitiMessage}`);
           case 'teku':
-            expect(false).to.be.true;
+            expect(scriptString).to.include(`--validators-graffiti ${graffitiMessage}`);
             break;
         }
       });

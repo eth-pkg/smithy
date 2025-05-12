@@ -413,10 +413,6 @@ rules:
       The timeout in seconds for the request to --genesis-state-url.
       [default: 180]
   - flag: --graffiti
-    configPath: consensus.graffiti.message
-    enabled:
-      configPath: consensus.graffiti.enabled
-      transform: flagEnabled
     description: >-
       Specify your custom graffiti to be included in blocks. Defaults to the
       current version and commit, truncated to fit in 32 bytes.

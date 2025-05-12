@@ -167,7 +167,6 @@ export interface Consensus {
   p2p: P2PConfig
   ws: WebSocketConfig
   checkpointSync: CheckpointSyncConfig
-  graffiti: GraffitiConfig
   logging: LogConfig
   builder: BuilderConfig
   genesisSync: GenesisSyncConfig

@@ -86,10 +86,6 @@ rules:
       URL for obtaining the genesis state of the network (for networks without a built-in
       genesis state).
   - flag: --graffiti
-    configPath: consensus.graffiti.message
-    enabled: 
-      configPath: consensus.graffiti.enabled
-      transform: flagEnabled
     description: >
       The graffiti value that will appear in proposed blocks. You can use a 0x-prefixed hex
       encoded string to specify raw bytes.

@@ -145,7 +145,7 @@ execution:
   
   # Transaction Pool Settings
   txpool:
-    enabled: true
+    enabled: false
     blobPriceBump: 100
     disableLocals: false
     enableSaveRestore: false
