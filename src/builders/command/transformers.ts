@@ -83,7 +83,9 @@ export const flagFunctions: Record<string, FlagEnabledFunction | FlagTransformFu
 
   jwtEnabled: (value: any): boolean => value === "jwt",
 
-  ipcEnabled: (value: string): boolean => value === "ipc"
+  ipcEnabled: (value: string): boolean => value === "ipc",
+
+  isJson: (value: string): boolean => value === "json",
 }
 
 export const transformers = {

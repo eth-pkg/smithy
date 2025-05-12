@@ -458,11 +458,22 @@ rules:
     description: |
       Prepends log messages with call-site location (deprecated)
   - flag: --log.file
-    configPath: 
+    configPath: execution.logging.file.fullPath
+    transform: interpolate
+    enabled:
+      - configPath: execution.logging.file.enabled
+        transform: flagEnabled
+      - configPath: execution.logging.enabled
+        transform: flagEnabled
     description: |
       Write logs to a file
   - flag: --log.format
-    configPath: 
+    configPath: execution.logging.file.format
+    enabled:
+      - configPath: execution.logging.file.enabled
+        transform: flagEnabled
+      - configPath: execution.logging.enabled
+        transform: flagEnabled
     description: |
       Log format to use (json|logfmt|terminal)
   - flag: --log.maxage

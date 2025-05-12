@@ -106,12 +106,23 @@ export const testConfig: NodeConfig = {
       enabled: false,
       message: 'test'
     },
-    log: {
+    logging: {
       enabled: false,
-      file: '',
-      level: 'info',
-      format: 'json'
-    },
+      stdout: {
+        enabled: false,
+        level: 'info',
+        format: 'json',
+        color: false
+      },
+      file: {
+        enabled: false,
+        level: 'info',
+        format: 'json',
+        directory: '',
+        name: '',
+        fullPath: '{consensus.logging.file.directory}/{consensus.logging.file.name}'
+      }
+    }
   },
   validator: {
     isExternal: true,
@@ -133,11 +144,22 @@ export const testConfig: NodeConfig = {
       enabled: false,
       message: 'test'
     },
-    log: {
+    logging: {
       enabled: false,
-      file: '',
-      level: 'info',
-      format: 'json'
+      stdout: {
+        enabled: false,
+        level: 'info',
+        format: 'json',
+        color: false
+      },
+      file: {
+        enabled: false,
+        level: 'info',
+        format: 'json',
+        directory: '',
+        name: '',
+        fullPath: '{validator.logging.file.directory}/{validator.logging.file.name}'
+      }
     },
     proposerConfig: {
       enabled: false,
@@ -181,6 +203,23 @@ export const testConfig: NodeConfig = {
         enabled: false,
         cert: '',
         key: ''
+      }
+    },
+    logging: {
+      enabled: false,
+      stdout: {
+        enabled: false,
+        level: 'info',
+        format: 'json',
+        color: false
+      },
+      file: {
+        enabled: false,
+        level: 'info',
+        format: 'json',
+        directory: '',
+        name: '',
+        fullPath: '{execution.logging.file.directory}/{execution.logging.file.name}'
       }
     },
     metrics: {

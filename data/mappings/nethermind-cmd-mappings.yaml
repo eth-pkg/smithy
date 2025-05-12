@@ -306,11 +306,23 @@ rules:
     description: >
       The path to KZG trusted setup file.
   - flag: --Init.LogDirectory
-    configPath:
+    configPath: execution.logging.file.directory
+    transform: interpolate
+    enabled:
+      - configPath: execution.logging.file.enabled
+        transform: flagEnabled
+      - configPath: execution.logging.enabled
+        transform: flagEnabled
     description: >
       The path to the Nethermind logs directory.
   - flag: --Init.LogFileName
-    configPath:
+    configPath: execution.logging.file.name
+    transform: interpolate
+    enabled:
+      - configPath: execution.logging.file.enabled
+        transform: flagEnabled
+      - configPath: execution.logging.enabled
+        transform: flagEnabled
     description: >
       The name of the log file.
   - flag: --Init.LogRules

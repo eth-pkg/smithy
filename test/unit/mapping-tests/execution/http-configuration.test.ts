@@ -83,7 +83,6 @@ describe('HTTP Configuration Tests', () => {
 
         switch (client) {
           case 'besu':
-            console.log(scriptString);
             expect(scriptString).to.not.contain('--rpc-http-enabled');
             expect(scriptString).to.not.contain('--rpc-http-port');
             expect(scriptString).to.not.contain('--rpc-http-api');

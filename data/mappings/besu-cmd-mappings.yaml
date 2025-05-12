@@ -71,6 +71,11 @@ rules:
   - flag: --color-enabled
     configPath: execution.logging.stdout.color
     transform: flagEnabled
+    enabled:
+      - configPath: execution.logging.stdout.enabled
+        transform: flagEnabled
+      - configPath: execution.logging.enabled
+        transform: flagEnabled
     description: >
       Force color output to be enabled/disabled (default: colorized only if
       printing to console)
@@ -241,7 +246,14 @@ rules:
     description: >
       Identification for this node in the Client ID
   - flag: --json-pretty-print-enabled
-    configPath:
+    configPath: execution.logging.stdout.format
+    transform: isJson
+    enabled:
+      - configPath: execution.logging.stdout.enabled
+        transform: flagEnabled
+      - configPath: execution.logging.enabled
+        transform: flagEnabled
+
     description: >
       Enable JSON pretty print format (default: false)
   - flag: --key-value-storage
@@ -257,8 +269,10 @@ rules:
   - flag: --logging
     configPath: execution.logging.stdout.level
     enabled:
-      configPath: execution.logging.stdout.enabled
-      transform: flagEnabled
+      - configPath: execution.logging.stdout.enabled
+        transform: flagEnabled
+      - configPath: execution.logging.enabled
+        transform: flagEnabled
     description: >
       Logging verbosity levels: OFF, ERROR, WARN, INFO, DEBUG, TRACE, ALL
   - flag: --max-peers

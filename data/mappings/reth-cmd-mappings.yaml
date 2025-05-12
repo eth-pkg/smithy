@@ -527,19 +527,36 @@ rules:
       
       [default: /tmp/reth.ipc]
   - flag: --log.file.directory
-    configPath:
+    configPath: execution.logging.file.directory
+    transform: interpolate
+    enabled:
+      - configPath: execution.logging.file.enabled
+        transform: flagEnabled
+      - configPath: execution.logging.enabled
+        transform: flagEnabled
+
     description: >
       The path to put log files in
       
       [default: /home/eniko/.cache/reth/logs]
   - flag: --log.file.filter
-    configPath:
+    configPath: execution.logging.file.level
+    enabled:
+      - configPath: execution.logging.file.enabled
+        transform: flagEnabled
+      - configPath: execution.logging.enabled
+        transform: flagEnabled
     description: >
       The filter to use for logs written to the log file
       
       [default: debug]
   - flag: --log.file.format
-    configPath:
+    configPath: execution.logging.file.format
+    enabled:
+      - configPath: execution.logging.file.enabled
+        transform: flagEnabled
+      - configPath: execution.logging.enabled
+        transform: flagEnabled
     description: >
       The format to use for logs written to the log file
       
@@ -575,13 +592,23 @@ rules:
       
       [default: error]
   - flag: --log.stdout.filter
-    configPath:
+    configPath: execution.logging.stdout.level
+    enabled:
+      - configPath: execution.logging.stdout.enabled
+        transform: flagEnabled
+      - configPath: execution.logging.enabled
+        transform: flagEnabled
     description: >
       The filter to use for logs written to stdout
       
       [default: ]
   - flag: --log.stdout.format
-    configPath:
+    configPath: execution.logging.stdout.format
+    enabled:
+      - configPath: execution.logging.stdout.enabled
+        transform: flagEnabled
+      - configPath: execution.logging.enabled
+        transform: flagEnabled
     description: >
       The format to use for logs written to stdout
       

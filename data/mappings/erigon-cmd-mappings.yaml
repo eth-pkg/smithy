@@ -490,15 +490,22 @@ rules:
     description: |
       Custom node name
   - flag: --log.console.json
-    configPath: execution.logging.stdout.enabled
-    transform: flagEnabled
+    configPath: execution.logging.stdout.format 
+    transform: isJson
+    enabled:
+      - configPath: execution.logging.stdout.enabled
+        transform: flagEnabled
+      - configPath: execution.logging.enabled
+        transform: flagEnabled
     description: |
       Format console logs with JSON
   - flag: --log.console.verbosity
     configPath: execution.logging.stdout.level
     enabled:
-      configPath: execution.logging.stdout.enabled
-      transform: flagEnabled
+      - configPath: execution.logging.stdout.enabled
+        transform: flagEnabled
+      - configPath: execution.logging.enabled
+        transform: flagEnabled
     description: |
       Set the log level for console logs
   - flag: --log.delays
@@ -510,14 +517,22 @@ rules:
     description: |
       disable disk logging
   - flag: --log.dir.json
-    configPath: 
+    configPath: execution.logging.file.format
+    transform: isJson
+    enabled:
+      - configPath: execution.logging.file.enabled
+        transform: flagEnabled
+      - configPath: execution.logging.enabled
+        transform: flagEnabled
     description: |
       Format file logs with JSON
   - flag: --log.dir.path
     configPath: execution.logging.file.directory
     enabled:
-      configPath: execution.logging.file.enabled
-      transform: flagEnabled
+      - configPath: execution.logging.file.enabled
+        transform: flagEnabled
+      - configPath: execution.logging.enabled
+        transform: flagEnabled
     description: |
       Path to store user and error logs to disk
   - flag: --log.dir.prefix
@@ -527,13 +542,20 @@ rules:
   - flag: --log.dir.verbosity
     configPath: execution.logging.file.level
     enabled:
-      configPath: execution.logging.file.enabled
-      transform: flagEnabled
+      - configPath: execution.logging.file.enabled
+        transform: flagEnabled
+      - configPath: execution.logging.enabled
+        transform: flagEnabled
     description: |
       Set the log verbosity for logs stored to disk
   - flag: --log.json
-    configPath: execution.logging.json.enabled
-    transform: flagEnabled
+    configPath: execution.logging.stdout.format
+    transform: isJson
+    enabled:
+      - configPath: execution.logging.stdout.enabled
+        transform: flagEnabled
+      - configPath: execution.logging.enabled
+        transform: flagEnabled
     description: |
       Format console logs with JSON
   - flag: --maxpeers
@@ -1070,7 +1092,12 @@ rules:
     description: |
       Enables the experimental RLPx V5 (Topic Discovery) mechanism
   - flag: --verbosity
-    configPath: 
+    configPath: execution.logging.stdout.level
+    enabled:
+      - configPath: execution.logging.stdout.enabled
+        transform: flagEnabled
+      - configPath: execution.logging.enabled
+        transform: flagEnabled
     description: |
       Set the log level for console logs
   - flag: --version

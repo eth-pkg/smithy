@@ -60,23 +60,24 @@ export interface P2PConfig {
   enrAddress: string
   allowlist: string[]
   denylist: string[]
-  discovery: {
+  discovery: DiscoveryConfig
+}
+export interface DiscoveryConfig {
+  enabled: boolean
+  port: number,
+  dns: {
     enabled: boolean
-    port: number,
-    dns: {
-      enabled: boolean
-      url: string
-    },
-    v4: {
-      enabled: boolean
-      port: number
-      address: string
-    }
-    v5: {
-      enabled: boolean
-      port: number
-      address: string
-    }
+    url: string
+  },
+  v4: {
+    enabled: boolean
+    port: number
+    address: string
+  }
+  v5: {
+    enabled: boolean
+    port: number
+    address: string
   }
 }
 
@@ -87,9 +88,20 @@ export interface WebSocketConfig {
 
 export interface LogConfig {
   enabled: boolean
-  file: string
-  level: string
-  format: string
+  stdout: {
+    enabled: boolean
+    level: string
+    format: string,
+    color: boolean
+  }
+  file: {
+    enabled: boolean
+    level: string
+    format: string,
+    directory: string,
+    name: string,
+    fullPath: string
+  }
 }
 
 // Consensus Specific Configurations
@@ -153,7 +165,7 @@ export interface Consensus {
   ws: WebSocketConfig
   checkpoint: CheckpointConfig
   graffiti: GraffitiConfig
-  log: LogConfig
+  logging: LogConfig
 }
 
 export interface Validator {
@@ -174,7 +186,7 @@ export interface Validator {
   doppelgangerProtection?: boolean
   builderEnabled?: boolean
   metrics: MetricsConfig
-  log: LogConfig
+  logging: LogConfig
   validatorsDir?: string
   secretsDir?: string
   distributed?: boolean
@@ -193,6 +205,7 @@ export interface Execution {
   ws: WebSocketConfig
   graphql: GraphQLConfig
   gpo: GpoConfig
+  logging: LogConfig
 }
 
 export type GpoConfig = {

@@ -358,7 +358,7 @@ properties:
             description: "Enable file logging"
           directory:
             type: string
-            default: ""
+            default: "{common.dataDir}/logs"
             description: "Directory to write logs to"
           level:
             type: string
@@ -368,6 +368,14 @@ properties:
             type: string
             default: "text"
             description: "Logging format"
+          name:
+            type: string
+            default: "{execution.client.name}.log"
+            description: "Name of the log file"
+          fullPath:
+            type: string
+            default: "{execution.logging.file.directory}/{execution.logging.file.name}"
+            description: "Full path to the log file"
   graphql:
     type: object
     properties:
