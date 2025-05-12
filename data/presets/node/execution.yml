@@ -283,6 +283,10 @@ properties:
         errorMessage:
           minimum: "Metrics port must be >= 1024"
           maximum: "Metrics port must be <= 65535"
+      address:
+        type: string
+        default: "localhost"
+        description: "Address to listen on for metrics server"  
   ws:
     type: object
     properties:
@@ -327,12 +331,24 @@ properties:
             description: "Enable stdout logging"
           level:
             type: string
+            enum:
+              - off 
+              - error
+              - warn
+              - info
+              - debug
+              - trace
+              - all
             default: "info"
             description: "Logging level"
           format:
             type: string
             default: "text"
             description: "Logging format"
+          color:
+            type: boolean
+            default: true
+            description: "Enable colorized logging"
       file:
         type: object
         properties:
@@ -352,18 +368,6 @@ properties:
             type: string
             default: "text"
             description: "Logging format"
-
-      journald:
-        type: object
-        properties:
-          enabled:
-            type: boolean
-            default: false
-            description: "Enable journald logging"
-          level:
-            type: string
-            default: ""
-            description: "Logging filter"
   graphql:
     type: object
     properties:
@@ -477,20 +481,6 @@ properties:
         type: boolean
         default: false
         description: "Enable beacon"
-  miner:
-    type: object
-    properties:
-      enabled:
-        type: boolean
-        default: false
-        description: "Enable miner"
-  builder:
-    type: object
-    properties:
-      enabled:
-        type: boolean
-        default: false
-        description: "Enable builder"
   pruning:
     type: object
     properties:

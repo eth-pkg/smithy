@@ -69,7 +69,8 @@ rules:
     description: >
       Specifies whether to cache precompile results (default: false)
   - flag: --color-enabled
-    configPath:
+    configPath: execution.logging.stdout.color
+    transform: flagEnabled
     description: >
       Force color output to be enabled/disabled (default: colorized only if
       printing to console)
@@ -254,7 +255,10 @@ rules:
       networks that support data blobs, optional for overriding named networks
       default.
   - flag: --logging
-    configPath:
+    configPath: execution.logging.stdout.level
+    enabled:
+      configPath: execution.logging.stdout.enabled
+      transform: flagEnabled
     description: >
       Logging verbosity levels: OFF, ERROR, WARN, INFO, DEBUG, TRACE, ALL
   - flag: --max-peers
@@ -276,7 +280,7 @@ rules:
     description: >
       Set to start the metrics exporter (default: false)
   - flag: --metrics-host
-    configPath: execution.metrics.host
+    configPath: execution.metrics.address
     enabled:
       configPath: execution.metrics.enabled
       transform: flagEnabled

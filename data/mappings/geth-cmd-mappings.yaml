@@ -9,35 +9,35 @@ rules:
       (deprecated)
   - flag: --authrpc.addr
     configPath: common.engine.api.host
-    description: |
-      Listening address for authenticated APIs
     enabled:
       configPath: common.engine.communication.method
       transform: jwtEnabled
+    description: |
+      Listening address for authenticated APIs
   - flag: --authrpc.jwtsecret
     configPath: common.engine.communication.jwt.file
-    description: |
-      Path to a JWT secret to use for authenticated RPC endpoints
     transform: interpolate
     enabled:
       configPath: common.engine.communication.method
       transform: jwtEnabled
+    description: |
+      Path to a JWT secret to use for authenticated RPC endpoints
   - flag: --authrpc.port
     configPath: common.engine.api.port
-    description: |
-      Listening port for authenticated APIs
     enabled:
       configPath: common.engine.communication.method
       transform: jwtEnabled
+    description: |
+      Listening port for authenticated APIs
   - flag: --authrpc.vhosts
     configPath: common.engine.api.allowlist
-    description: |
-      Comma separated list of virtual hostnames from which to accept requests (server
-      enforced). Accepts '*' wildcard.
     transform: allowlist
     enabled:
       configPath: common.engine.communication.method
       transform: jwtEnabled
+    description: |
+      Comma separated list of virtual hostnames from which to accept requests (server
+      enforced). Accepts '*' wildcard.
   - flag: --beacon.api
     configPath: 
     description: |
@@ -90,11 +90,11 @@ rules:
   - flag: --bootnodes
     configPath: execution.p2p.bootnodes
     transform: joinComma
-    description: |
-      Comma separated enode URLs for P2P discovery bootstrap
     enabled:
       configPath: execution.p2p.enabled
       transform: flagEnabled
+    description: |
+      Comma separated enode URLs for P2P discovery bootstrap
   - flag: --cache
     configPath: 
     description: |
@@ -150,9 +150,9 @@ rules:
       KZG library implementation to use; gokzg (recommended) or ckzg
   - flag: --datadir
     configPath: execution.dataDir
+    transform: interpolate
     description: |
       Data directory for the databases and keystore
-    transform: interpolate
   - flag: --datadir.ancient
     configPath: 
     description: |
@@ -188,11 +188,11 @@ rules:
       Sets DNS discovery entry points (use "" to disable DNS)
   - flag: --discovery.port
     configPath: execution.p2p.discovery.port
-    description: |
-      Use a custom UDP port for P2P discovery
     enabled:
       configPath: execution.p2p.discovery.enabled
       transform: flagEnabled
+    description: |
+      Use a custom UDP port for P2P discovery
   - flag: --discovery.v4
     configPath: execution.p2p.discovery.v4.enabled
     transform: flagEnabled
@@ -205,11 +205,11 @@ rules:
       Enables the V5 discovery mechanism
   - flag: --discovery.dns
     configPath: execution.p2p.dnsDiscovery.url
-    description: |
-      Sets DNS discovery entry points
     enabled:
       configPath: execution.p2p.dnsDiscovery.enabled
       transform: flagEnabled
+    description: |
+      Sets DNS discovery entry points
   - flag: --eth.requiredblocks
     configPath: 
     description: |
@@ -221,9 +221,9 @@ rules:
       Reporting URL of a ethstats service (nodename:secret@host:port)
   - flag: --ephemery
     configPath: common.network.name
+    transform: network
     description: |
       Ephemery network: pre-configured proof-of-stake test network
-    transform: network
   - flag: --exec
     configPath: 
     description: |
@@ -331,83 +331,83 @@ rules:
       year, 0 = entire chain)
   - flag: --holesky
     configPath: common.network.name
+    transform: network
     description: |
       Holesky network: pre-configured proof-of-stake test network
-    transform: network
   - flag: --hoodi
     configPath: common.network.name
+    transform: network
     description: |
       Hoodi network: pre-configured proof-of-stake test network
-    transform: network
   - flag: --http
     configPath: execution.http.enabled
-    description: |
-      Enable the HTTP-RPC server
     transform: flagEnabled
     enabled:
       configPath: execution.http.enabled
       transform: flagEnabled
+    description: |
+      Enable the HTTP-RPC server
   - flag: --http.addr
     configPath: execution.http.address
-    description: |
-      HTTP-RPC server listening interface
     enabled:
       configPath: execution.http.enabled
       transform: flagEnabled
+    description: |
+      HTTP-RPC server listening interface
   - flag: --http.api
     configPath: execution.http.modules
-    description: |
-      API's offered over the HTTP-RPC interface
     transform: allowlist
     enabled:
       configPath: execution.http.enabled
       transform: flagEnabled
+    description: |
+      API's offered over the HTTP-RPC interface
   - flag: --http.corsdomain
     configPath: execution.http.allowlist
+    transform: allowlist
+    enabled:
+      configPath: execution.http.enabled
+      transform: flagEnabled
     description: |
       Comma separated list of domains from which to accept cross origin requests
       (browser enforced)
-    transform: allowlist
-    enabled:
-      configPath: execution.http.enabled
-      transform: flagEnabled
   - flag: --http.port
     configPath: execution.http.port
-    description: |
-      HTTP-RPC server listening port
     enabled:
       configPath: execution.http.enabled
       transform: flagEnabled
+    description: |
+      HTTP-RPC server listening port
   - flag: --http.rpcprefix
     configPath: 
     description: |
       HTTP path prefix on which JSON-RPC is served. Use '/' to serve on all paths.
   - flag: --http.vhosts
     configPath: execution.http.allowlist
-    description: |
-      Comma separated list of virtual hostnames from which to accept requests (server
-      enforced). Accepts '*' wildcard.
     transform: allowlist
     enabled:
       configPath: execution.http.enabled
       transform: flagEnabled
+    description: |
+      Comma separated list of virtual hostnames from which to accept requests (server
+      enforced). Accepts '*' wildcard.
   - flag: --identity
     configPath: execution.p2p.identity
     description: |
       Custom node name
   - flag: --ipcdisable
     configPath: common.engine.communication.method
+    transform: jwtEnabled
     description: |
       Disable the IPC-RPC server
-    transform: jwtEnabled
   - flag: --ipcpath
     configPath: common.engine.communication.ipc.path
-    description: |
-      Filename for IPC socket/pipe within the datadir (explicit paths escape it)
     transform: interpolate
     enabled:
       configPath: common.engine.communication.method
       transform: ipcEnabled
+    description: |
+      Filename for IPC socket/pipe within the datadir (explicit paths escape it)
   - flag: --jspath
     configPath: 
     description: |
@@ -488,9 +488,9 @@ rules:
       eth/*=5,p2p=4)
   - flag: --mainnet
     configPath: common.network.name
+    transform: network
     description: |
       Ethereum mainnet
-    transform: network
   - flag: --maxpeers
     configPath: execution.p2p.maxPeers
     description: |
@@ -504,16 +504,16 @@ rules:
       Maximum number of pending connection attempts (defaults used if set to 0)
   - flag: --metrics
     configPath: execution.metrics.enabled
+    transform: flagEnabled
     description: |
       Enable metrics collection and reporting
-    transform: flagEnabled
   - flag: --metrics.addr
-    configPath: execution.metrics.host
-    description: |
-      Enable stand-alone metrics HTTP server listening interface.
+    configPath: execution.metrics.address
     enabled:
       configPath: execution.metrics.enabled
       transform: flagEnabled
+    description: |
+      Enable stand-alone metrics HTTP server listening interface.
   - flag: --metrics.expensive
     configPath: 
     description: |
@@ -560,13 +560,13 @@ rules:
       Enable metrics export/push to an external InfluxDB v2 database
   - flag: --metrics.port
     configPath: execution.metrics.port
+    enabled:
+      configPath: execution.metrics.enabled
+      transform: flagEnabled
     description: |
       Metrics HTTP server listening port.
       Please note that --metrics.addr must be set
       to start the server.
-    enabled:
-      configPath: execution.metrics.enabled
-      transform: flagEnabled
   - flag: --mine
     configPath: 
     description: |

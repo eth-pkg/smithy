@@ -48,6 +48,7 @@ export interface HttpConfig {
 export interface MetricsConfig {
   enabled: boolean
   port: number
+  address: string
 }
 
 export interface P2PConfig {

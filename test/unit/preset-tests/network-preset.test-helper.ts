@@ -61,7 +61,8 @@ export const testConfig: NodeConfig = {
     },
     metrics: {
       enabled: false,
-      port: 8008
+      port: 8008,
+      address: 'localhost'
     },
     p2p: {
       enabled: false,
@@ -125,7 +126,8 @@ export const testConfig: NodeConfig = {
     feeRecipientAddress: '0x0000000000000000000000000000000000000000',
     metrics: {
       enabled: false,
-      port: 8080
+      port: 8080,
+      address: 'localhost'
     },
     graffiti: {
       enabled: false,
@@ -183,7 +185,8 @@ export const testConfig: NodeConfig = {
     },
     metrics: {
       enabled: false,
-      port: 6060
+      port: 6060,
+      address: 'localhost'
     },
     gpo: {
       enabled: false,

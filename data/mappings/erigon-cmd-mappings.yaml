@@ -549,7 +549,7 @@ rules:
     description: |
       Enable metrics collection and reporting
   - flag: --metrics.addr
-    configPath: execution.metrics.host
+    configPath: execution.metrics.address
     enabled:
       configPath: execution.metrics.enabled
       transform: flagEnabled

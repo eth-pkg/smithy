@@ -658,7 +658,10 @@ rules:
       Whether to publish various metrics to Prometheus Pushgateway at a given 
       interval.
   - flag: --Metrics.ExposeHost
-    configPath: 
+    configPath: execution.metrics.address
+    enabled:
+      configPath: execution.metrics.enabled
+      transform: flagEnabled
     description: >
       The IP address to expose Prometheus metrics at. The value of `+` means 
       listening on all available hostnames. Setting this to `localhost` prevents 
