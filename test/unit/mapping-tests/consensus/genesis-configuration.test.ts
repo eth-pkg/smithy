@@ -48,8 +48,6 @@ describe('Consensus Client Genesis Configuration Tests', () => {
         const scriptString = scriptContent.toString();
         const genesisSyncUrl = config.consensus?.genesisSync?.url;
         const genesisSyncState = config.consensus?.genesisSync?.state;
-        console.log(config.consensus?.genesisSync);
-        console.log(scriptString);
         switch (client) {
           case 'lighthouse':
             expect(scriptString).to.include(`--genesis-state-url ${genesisSyncUrl}`);
@@ -72,6 +70,58 @@ describe('Consensus Client Genesis Configuration Tests', () => {
             // TODO: there is both url and state as one flag, I think we should only allow one of them
             expect(scriptString).to.include(`--genesis-state=${genesisSyncState}`);
             expect(scriptString).to.include(`--genesis-state=${genesisSyncUrl}`);
+            break;
+        }
+      });
+      it('should not include any genesis flags when genesis is disabled', () => {
+        const config = schemaUtils.deepMerge(testConfig, {
+          common: {
+            engine: {
+              enabled: false
+            }
+          },
+          consensus: {
+            http: {
+              enabled: false
+            },
+            client: {
+              name: client,
+              version: ''
+            },
+            genesisSync: {
+              enabled: false,
+              url: "https://beacon-api.mainnet.dappnode.io",
+              state: "genesis.ssz"
+            }
+          }
+        } as DeepPartial<NodeConfig>);
+
+        const scriptContent = registry.getScriptContent(client, config);
+        const scriptString = scriptContent.toString();
+        const genesisSyncUrl = config.consensus?.genesisSync?.url;
+        const genesisSyncState = config.consensus?.genesisSync?.state;
+        switch (client) {
+          case 'lighthouse':
+            expect(scriptString).to.not.include(`--genesis-state-url ${genesisSyncUrl}`);
+            break;
+          case 'lodestar':
+            // TODO: there is both url and state as one flag, I think we should only allow one of them
+            expect(scriptString).to.not.include(`--genesisStateFile ${genesisSyncUrl}`);
+            expect(scriptString).to.not.include(`--genesisStateFile ${genesisSyncState}`);
+            break;
+          case 'nimbus-eth2':
+            // TODO: there is both url and state as one flag, I think we should only allow one of them
+            expect(scriptString).to.not.include(`--genesis-state ${genesisSyncState}`);
+            expect(scriptString).to.not.include(`--genesis-state-url ${genesisSyncUrl}`);
+            break;
+          case 'prysm':
+            expect(scriptString).to.not.include(`--genesis-state ${genesisSyncState}`);
+            expect(scriptString).to.not.include(`--genesis-beacon-api-url ${genesisSyncUrl}`);
+            break;
+          case 'teku':
+            // TODO: there is both url and state as one flag, I think we should only allow one of them
+            expect(scriptString).to.not.include(`--genesis-state=${genesisSyncState}`);
+            expect(scriptString).to.not.include(`--genesis-state=${genesisSyncUrl}`);
             break;
         }
       });

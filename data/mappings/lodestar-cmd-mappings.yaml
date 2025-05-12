@@ -562,8 +562,8 @@ rules:
       Identity for the node.
 
   - flag: --ignoreWeakSubjectivityCheck
-    configPath: consensus.checkpointSync.force
-    transform: negate
+    configPath: consensus.checkpointSync.ignoreWeakSubjectivityPeriod
+    transform: isFlag
     enabled:
       configPath: consensus.checkpointSync.enabled
       transform: flagEnabled

@@ -52,11 +52,17 @@ rules:
       other nodes it communicates with. This option allows to enable/disable this
       functionality [=false].
   - flag: --external-beacon-api-url
-    configPath: consensus.checkpoint.url
+    configPath: consensus.checkpointSync.url
+    enabled:
+      configPath: consensus.checkpointSync.enabled
+      transform: flagEnabled
     description: >
       External beacon API to use for syncing (on empty database).
   - flag: --finalized-checkpoint-state
-    configPath: 
+    configPath: consensus.checkpointSync.state
+    enabled:
+      configPath: consensus.checkpointSync.enabled
+      transform: flagEnabled
     description: >
       SSZ file specifying a recent finalized state.
   - flag: --finalized-deposit-tree-snapshot
@@ -345,13 +351,19 @@ rules:
     description: >
       Listening TCP port for Ethereum LibP2P traffic [=9000].
   - flag: --trusted-block-root
-    configPath: consensus.checkpoint.block
+    configPath: consensus.checkpointSync.block
+    enabled:
+      configPath: consensus.checkpointSync.enabled
+      transform: flagEnabled
     description: >
       Recent trusted finalized block root to sync from external beacon API (with
       `--external-beacon-api-url`). Uses the light client sync protocol to obtain the latest
       finalized checkpoint (LC is initialized from trusted block root).
   - flag: --trusted-state-root
-    configPath: consensus.checkpoint.state
+    configPath: consensus.checkpointSync.state
+    enabled:
+      configPath: consensus.checkpointSync.enabled
+      transform: flagEnabled
     description: >
       Recent trusted finalized state root to sync from external beacon API (with
       `--external-beacon-api-url`).

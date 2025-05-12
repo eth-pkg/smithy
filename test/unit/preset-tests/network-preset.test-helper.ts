@@ -107,10 +107,9 @@ export const testConfig: NodeConfig = {
       url: '',
       block: '',
       state: '',
-      weakSubjectivity: '',
       ignoreWeakSubjectivityPeriod: false,
       force: false,
-      wss: false
+      wss: "block_root:epoch"
     },
     genesisSync: {
       enabled: false,

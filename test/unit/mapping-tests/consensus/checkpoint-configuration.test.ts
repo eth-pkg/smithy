@@ -4,12 +4,12 @@ import { ConsensusClientName, DeepPartial, NodeConfig } from '@/lib/types';
 import { testConfig } from '../../preset-tests/network-preset.test-helper';
 import SchemaUtils from '@/utils/schema';
 
-describe.skip('Consensus Client Checkpoint Configuration Tests', () => {
+describe('Consensus Client Checkpoint Configuration Tests', () => {
   let registry: CommandClientRegistry;
   const schemaUtils = new SchemaUtils('');
   const consensusClients: ConsensusClientName[] = [
     'lighthouse',
-    "lodestar",
+    'lodestar',
     'nimbus-eth2',
     'prysm',
     'teku',
@@ -21,7 +21,7 @@ describe.skip('Consensus Client Checkpoint Configuration Tests', () => {
 
   consensusClients.forEach(client => {
     describe(`${client} checkpoint configuration`, () => {
-      it('should not include any checkpoint flags when checkpoint is disabled', () => {
+      it('should include any checkpoint flags when checkpoint is enabled', () => {
         const config = schemaUtils.deepMerge(testConfig, {
           common: {
             engine: {
@@ -40,10 +40,10 @@ describe.skip('Consensus Client Checkpoint Configuration Tests', () => {
               enabled: true,
               url: 'http://localhost:5052',
               block: '0x1234567890abcdef',
-              state: '0xabcdef1234567890',
-              weakSubjectivity: '0x90abcdef12345678',
+              state: 'genesis.ssz',
+              ignoreWeakSubjectivityPeriod: true,
               force: true,
-              wss: true
+              wss: "block_root:epoch"
             }
           }
         } as DeepPartial<NodeConfig>);
@@ -54,7 +54,6 @@ describe.skip('Consensus Client Checkpoint Configuration Tests', () => {
         const checkpointSyncState = config.consensus?.checkpointSync?.state;
         const checkpointSyncWss = config.consensus?.checkpointSync?.wss;
         const checkpointSyncBlock = config.consensus?.checkpointSync?.block;
-        const weakSubjectivityCheckpoint = config.consensus?.checkpointSync?.weakSubjectivity;
         switch (client) {
           case 'lighthouse':
             // expect(scriptString).to.not.include('--checkpoint-blobs');
@@ -71,23 +70,99 @@ describe.skip('Consensus Client Checkpoint Configuration Tests', () => {
             expect(scriptString).to.include(`--checkpointState ${checkpointSyncState}`);
             expect(scriptString).to.include(`--checkpointSyncUrl ${checkpointSyncUrl}`);
             expect(scriptString).to.include(`--forceCheckpointSync`);
-            expect(scriptString).to.not.include(`--ignoreWeakSubjectivity`);
+            expect(scriptString).to.include(`--ignoreWeakSubjectivity`);
             expect(scriptString).to.include(`--wssCheckpoint ${checkpointSyncWss}`);
             break;
           case 'nimbus-eth2':
             //TODO: not sure about this one
-            expect(scriptString).to.include('--weak-subjectivity-checkpoint');
+            expect(scriptString).to.include(`--weak-subjectivity-checkpoint ${checkpointSyncWss}`);
+            expect(scriptString).to.include(`--external-beacon-api-url ${checkpointSyncUrl}`);
+            expect(scriptString).to.include(`--finalized-checkpoint-state ${checkpointSyncState}`);
+            expect(scriptString).to.include(`--trusted-block-root ${checkpointSyncBlock}`);
             break;
           case 'prysm':
             expect(scriptString).to.include(`--checkpoint-block ${checkpointSyncBlock}`);
             expect(scriptString).to.include(`--checkpoint-state ${checkpointSyncState}`);
             expect(scriptString).to.include(`--checkpoint-sync-url ${checkpointSyncUrl}`);
-            expect(scriptString).to.include(`--weak-subjectivity-checkpoint ${weakSubjectivityCheckpoint}`);
+            expect(scriptString).to.include(`--weak-subjectivity-checkpoint ${checkpointSyncWss}`);
             break;
           case 'teku':
             expect(scriptString).to.include(`--checkpoint-sync-url=${checkpointSyncUrl}`);
+            expect(scriptString).to.include(`--ignore-weak-subjectivity-period-enabled`);
+            expect(scriptString).to.include(`--ws-checkpoint=${checkpointSyncWss}`);
+            break;
+        }
+      });
+
+      it('should not include any checkpoint flags when checkpoint is disabled', () => {
+        const config = schemaUtils.deepMerge(testConfig, {
+          common: {
+            engine: {
+              enabled: false
+            }
+          },
+          consensus: {
+            http: {
+              enabled: false
+            },
+            client: {
+              name: client,
+              version: ''
+            },
+            checkpointSync: {
+              enabled: false,
+              url: 'http://localhost:5052',
+              block: '0x1234567890abcdef',
+              state: 'genesis.ssz',
+              ignoreWeakSubjectivityPeriod: true,
+              force: true,
+              wss: "block_root:epoch"
+            }
+          }
+        } as DeepPartial<NodeConfig>);
+
+        const scriptContent = registry.getScriptContent(client, config);
+        const scriptString = scriptContent.toString();
+        const checkpointSyncUrl = config.consensus?.checkpointSync?.url;
+        const checkpointSyncState = config.consensus?.checkpointSync?.state;
+        const checkpointSyncWss = config.consensus?.checkpointSync?.wss;
+        const checkpointSyncBlock = config.consensus?.checkpointSync?.block;
+        switch (client) {
+          case 'lighthouse':
+            // expect(scriptString).to.not.include('--checkpoint-blobs');
+            expect(scriptString).to.not.include(`--checkpoint-block ${checkpointSyncBlock}`);
+            expect(scriptString).to.not.include(`--checkpoint-state ${checkpointSyncState}`);
+            expect(scriptString).to.not.include(`--checkpoint-sync-url ${checkpointSyncUrl}`);
+            // expect(scriptString).to.not.include('--genesis-backfill');
+            // expect(scriptString).to.not.include('--genesis-state-url');
+            // expect(scriptString).to.not.include('--genesis-state-url-timeout');
+            // expect(scriptString).to.not.include('--reconstruct-historic-states');
+            expect(scriptString).to.not.include(`--wss-checkpoint ${checkpointSyncWss}`);
+            break;
+          case 'lodestar':
+            expect(scriptString).to.not.include(`--checkpointState ${checkpointSyncState}`);
+            expect(scriptString).to.not.include(`--checkpointSyncUrl ${checkpointSyncUrl}`);
+            expect(scriptString).to.not.include(`--forceCheckpointSync`);
+            expect(scriptString).to.not.include(`--ignoreWeakSubjectivity`);
+            expect(scriptString).to.not.include(`--wssCheckpoint ${checkpointSyncWss}`);
+            break;
+          case 'nimbus-eth2':
+            //TODO: not sure about this one
+            expect(scriptString).to.not.include(`--weak-subjectivity-checkpoint ${checkpointSyncWss}`);
+            expect(scriptString).to.not.include(`--external-beacon-api-url ${checkpointSyncUrl}`);
+            expect(scriptString).to.not.include(`--finalized-checkpoint-state ${checkpointSyncState}`);
+            expect(scriptString).to.not.include(`--trusted-block-root ${checkpointSyncBlock}`);
+            break;
+          case 'prysm':
+            expect(scriptString).to.not.include(`--checkpoint-block ${checkpointSyncBlock}`);
+            expect(scriptString).to.not.include(`--checkpoint-state ${checkpointSyncState}`);
+            expect(scriptString).to.not.include(`--checkpoint-sync-url ${checkpointSyncUrl}`);
+            expect(scriptString).to.not.include(`--weak-subjectivity-checkpoint ${checkpointSyncWss}`);
+            break;
+          case 'teku':
+            expect(scriptString).to.not.include(`--checkpoint-sync-url=${checkpointSyncUrl}`);
             expect(scriptString).to.not.include(`--ignore-weak-subjectivity-period-enabled`);
-            expect(scriptString).to.include(`--ws-checkpoint ${checkpointSyncWss}`);
+            expect(scriptString).to.not.include(`--ws-checkpoint=${checkpointSyncWss}`);
             break;
         }
       });

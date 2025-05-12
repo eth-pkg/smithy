@@ -110,10 +110,9 @@ export interface CheckpointSyncConfig {
   url: string
   block: string
   state: string
-  weakSubjectivity: string
   force: boolean
   ignoreWeakSubjectivityPeriod: boolean
-  wss: boolean
+  wss: string
 }
 
 export interface GraffitiConfig {

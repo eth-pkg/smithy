@@ -130,18 +130,18 @@ properties:
         type: string
         default: ""
         description: "State root hash to use for checkpoint sync"
-      weakSubjectivity:
-        type: string
-        default: ""
-        description: "Weak subjectivity checkpoint to use for checkpoint sync"
+      ignoreWeakSubjectivityPeriod:
+        type: boolean
+        default: false
+        description: "Ignore weak subjectivity period"
       force:
         type: boolean
         default: false
         description: "Force checkpoint sync from weak subjectivity"
       wss:
-        type: boolean
-        default: false
-        description: "Enable WSS checkpoint sync"
+        type: string
+        default: ""
+        description: "Weak subjectivity checkpoint in <blockRoot>:<epoch> format for sync starting point. "
   genesisSync:
     type: object
     properties:

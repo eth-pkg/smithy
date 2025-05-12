@@ -415,7 +415,7 @@ rules:
       transform: flagEnabled
     description: Key for secure gRPC
   - flag: --weak-subjectivity-checkpoint
-    configPath: consensus.checkpointSync.weakSubjectivity 
+    configPath: consensus.checkpointSync.wss
     enabled: 
       configPath: consensus.checkpointSync.enabled
       transform: flagEnabled
