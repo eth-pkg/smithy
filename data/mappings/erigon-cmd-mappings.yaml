@@ -381,7 +381,7 @@ rules:
     description: |
       Enable the graphql endpoint
   - flag: --graphql.corsdomain
-    configPath: execution.graphql.corsOrigins
+    configPath: execution.graphql.allowlist
     transform: allowlist
     enabled:
       configPath: execution.graphql.enabled
@@ -389,7 +389,7 @@ rules:
     description: |
       Comma separated list of domains from which to accept cross origin requests (browser enforced)
   - flag: --graphql.addr
-    configPath: execution.graphql.host
+    configPath: execution.graphql.address
     enabled:
       configPath: execution.graphql.enabled
       transform: flagEnabled

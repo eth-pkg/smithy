@@ -190,6 +190,7 @@ export interface Execution {
   metrics: MetricsConfig
   p2p: P2PConfig
   ws: WebSocketConfig
+  graphql: GraphQLConfig
   gpo: GpoConfig
 }
 
@@ -199,6 +200,13 @@ export type GpoConfig = {
   maxPrice: number
   ignorePrice: number
   percentile: number
+}
+
+export type GraphQLConfig = {
+  enabled: boolean
+  address: string
+  port: number
+  allowlist: string[]
 }
 
 export type DeepPartial<T> = {

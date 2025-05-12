@@ -165,7 +165,7 @@ rules:
     description: >
       Set to start the GraphQL HTTP service (default: false)
   - flag: --graphql-http-host
-    configPath: execution.graphql.host
+    configPath: execution.graphql.address
     enabled:
       configPath: execution.graphql.enabled
       transform: flagEnabled
@@ -179,7 +179,7 @@ rules:
     description: >
       Port for GraphQL HTTP to listen on (default: 8547)
   - flag: --graphql-http-cors-origins
-    configPath: execution.graphql.corsOrigins
+    configPath: execution.graphql.allowlist
     transform: allowlist
     enabled:
       configPath: execution.graphql.enabled
@@ -191,7 +191,7 @@ rules:
     description: >
       Enable mTLS for GraphQL HTTP service
   - flag: --graphql-tls-enabled
-    configPath: execution.graphql.tls.enabled
+    configPath: 
     transform: flagEnabled
     enabled:
       configPath: execution.graphql.enabled
@@ -199,38 +199,30 @@ rules:
     description: >
       Enable TLS for GraphQL HTTP service
   - flag: --graphql-tls-keystore-file
-    configPath: execution.graphql.tls.keystore.path
+    configPath:
     enabled:
       - configPath: execution.graphql.enabled
-        transform: flagEnabled
-      - configPath: execution.graphql.tls.enabled
         transform: flagEnabled
     description: >
       Path to the TLS keystore file for GraphQL HTTP service
   - flag: --graphql-tls-keystore-password-file
-    configPath: execution.graphql.tls.keystore.password
+    configPath: 
     enabled:
       - configPath: execution.graphql.enabled
-        transform: flagEnabled
-      - configPath: execution.graphql.tls.enabled
         transform: flagEnabled
     description: >
       Path to the file containing the password for the TLS keystore
   - flag: --graphql-tls-truststore-file
-    configPath: execution.graphql.tls.truststore.path
+    configPath: 
     enabled:
       - configPath: execution.graphql.enabled
-        transform: flagEnabled
-      - configPath: execution.graphql.tls.enabled
         transform: flagEnabled
     description: >
       Path to the TLS truststore file for GraphQL HTTP service
   - flag: --graphql-tls-truststore-password-file
-    configPath: execution.graphql.tls.truststore.password
+    configPath: 
     enabled:
       - configPath: execution.graphql.enabled
-        transform: flagEnabled
-      - configPath: execution.graphql.tls.enabled
         transform: flagEnabled
     description: >
       Path to the file containing the password for the TLS truststore

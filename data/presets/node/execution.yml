@@ -371,7 +371,7 @@ properties:
         type: boolean
         default: false
         description: "Enable GraphQL HTTP service"
-      host:
+      address:
         type: string
         default: "localhost"
         description: "Host for GraphQL HTTP to listen on"
@@ -384,41 +384,12 @@ properties:
         errorMessage:
           minimum: "GraphQL port must be >= 1024"
           maximum: "GraphQL port must be <= 65535"
-      corsOrigins:
+      allowlist:
         type: array
         items:
           type: string
         default: []
         description: "Comma separated origin domain URLs for CORS validation"
-      tls:
-        type: object
-        properties:
-          enabled:
-            type: boolean
-            default: false
-            description: "Enable TLS for GraphQL HTTP service"
-          keystore:
-            type: object
-            properties:
-              path:
-                type: string
-                default: ""
-                description: "Path to the TLS keystore file"
-              password:
-                type: string
-                default: ""
-                description: "Path to the file containing the password for the TLS keystore"
-          truststore:
-            type: object
-            properties:
-              path:
-                type: string
-                default: ""
-                description: "Path to the TLS truststore file"
-              password:
-                type: string
-                default: ""
-                description: "Path to the file containing the password for the TLS truststore"
   txpool:
     type: object
     properties:

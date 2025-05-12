@@ -187,10 +187,16 @@ export const testConfig: NodeConfig = {
     },
     gpo: {
       enabled: false,
-      blocks: 0,
-      maxPrice: 0,
-      ignorePrice: 0,
-      percentile: 0
+      blocks: 100,
+      maxPrice: 500000000000,
+      ignorePrice: 50,
+      percentile: 60
+    },
+    graphql: {
+      enabled: false,
+      port: 8547,
+      address: '0.0.0.0',
+      allowlist: []
     },
     p2p: {
       enabled: false,
