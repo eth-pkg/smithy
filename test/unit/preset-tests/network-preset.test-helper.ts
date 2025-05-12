@@ -116,10 +116,6 @@ export const testConfig: NodeConfig = {
       url: '',
       state: ''
     },
-    graffiti: {
-      enabled: false,
-      message: 'test'
-    },
     logging: {
       enabled: false,
       stdout: {

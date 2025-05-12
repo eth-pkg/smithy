@@ -85,7 +85,7 @@ execution:
 
 validator:
   client:
-    name: lighthouse
+    name: nimbus-eth2
     version: ''
   enabled: true
   graffiti:
