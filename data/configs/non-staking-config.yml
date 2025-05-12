@@ -11,6 +11,7 @@ common:
       host: localhost
       ip: 127.0.0.1
       scheme: http
+      allowlist: ["localhost"]
   network:
     name: mainnet
     id: 1
@@ -21,32 +22,67 @@ consensus:
   client:
     name: lighthouse
     version: ''
-  httpPort: 5052
-  metricsPort: 8008
-  p2pPort: 9000
+  http:
+    enabled: false
+    port: 5052
+    address: localhost
+    allowlist: ["*"]
+  metrics:
+    enabled: true
+    port: 8008
+    host: 127.0.0.1
+  p2p:
+    enabled: true
+    port: 9000
+    port6: 9000
+    udpPort: 9000
+    bootnodes: []
+  dataDir: "{common.dataDir}/{consensus.client.name}"
 
 execution:
   client:
     name: geth
     version: ''
   http:
+    enabled: true
     modules:
       - eth
       - net
       - web3
-    cors:
-      - '*'
-    enabled: true
+    address: localhost
     port: 8545
+    allowlist: ["*"]
   metrics:
     enabled: true
     port: 6060
+    address: localhost
   p2p:
-    maxPeers: 50
+    enabled: true
     port: 30303
+    maxPeers: 50
+    address: localhost
+    bootnodes: []
   ws:
     enabled: false
     port: 8546
+    address: localhost
+    modules:
+      - eth
+      - net
+      - web3
+    allowlist: ["*"]
+  dataDir: "{common.dataDir}/{execution.client.name}"
+  txpool:
+    enabled: true
+    priceBump: 10
+    blobPriceBump: 100
+    maxPrioritized: 4000
+    maxPrioritizedByType:
+      BLOB: 9
+    minGasPrice: "0x3e8"
+    minScore: -128
+    retentionHours: 13
+    saveFile: "txpool.dump"
 
 validator:
   client:

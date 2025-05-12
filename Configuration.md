@@ -103,14 +103,17 @@ execution:
       clientAuth:
         enabled: false
         caClientsEnabled: false
+        path: ""
       cipherSuites: []
-      protocol: "TLS"
+      protocol: "TLS"  # One of: TLS, TLSv1.3
   
-  # Additional Settings
+  # Metrics Settings
   metrics:
     enabled: false
     port: 6060
+    address: "localhost"
   
+  # WebSocket Settings
   ws:
     enabled: false
     port: 8546
@@ -118,34 +121,29 @@ execution:
     modules: ["eth", "net", "web3"]
     allowlist: ["*"]
   
+  # Logging Settings
   logging:
     stdout:
       enabled: false
-      level: "info"
+      level: "info"  # One of: off, error, warn, info, debug, trace, all
       format: "text"
+      color: true
     file:
       enabled: false
-      directory: ""
+      directory: "{common.dataDir}/logs"
       level: "info"
       format: "text"
-    journald:
-      enabled: false
-      level: ""
+      name: "{execution.client.name}.log"
+      fullPath: "{execution.logging.file.directory}/{execution.logging.file.name}"
   
+  # GraphQL Settings
   graphql:
     enabled: false
-    host: "localhost"
+    address: "localhost"
     port: 8547
-    corsOrigins: []
-    tls:
-      enabled: false
-      keystore:
-        path: ""
-        password: ""
-      truststore:
-        path: ""
-        password: ""
+    allowlist: []
   
+  # Transaction Pool Settings
   txpool:
     enabled: true
     blobPriceBump: 100
@@ -162,6 +160,26 @@ execution:
     priceBump: 10
     prioritySenders: []
     retentionHours: 13
+    saveFile: "txpool.dump"
+  
+  # Beacon Settings
+  beacon:
+    enabled: false
+  
+  # Pruning Settings
+  pruning:
+    enabled: false
+  
+  # Data Directory
+  dataDir: "{common.dataDir}/{execution.client.name}"
+  
+  # Gas Price Oracle Settings
+  gpo:
+    enabled: false
+    blocks: 100
+    maxPrice: 500000000000
+    ignorePrice: 2
+    percentile: 50.0
 ```
 
 ### 3. Consensus Client Configuration
@@ -175,60 +193,64 @@ consensus:
   # HTTP API Settings
   http:
     enabled: false
-    api: ["eth", "net", "web3"]
+    api: ["eth", "net", "web3"]  # List of JSON-RPC API namespaces to enable
     address: "localhost"
-    allowlist: ["*"]
-    port: 8545
+    allowlist: ["*"]  # List of allowed CORS origins
+    port: 8545  # Port number for HTTP JSON-RPC API (1024-65535)
   
   # Metrics Settings
   metrics:
     enabled: false
     host: "127.0.0.1"
-    port: 8008
+    port: 8008  # Port number for metrics server (1024-65535)
   
   # P2P Settings
   p2p:
     enabled: true
-    port: 9000
-    port6: 9000
-    udpPort: 9000
-    bootnodes: []
-    enrAddress: ""
-  
-  # WebSocket Settings
-  ws:
-    enabled: false
-    port: 8546
+    port: 9000  # Port number for P2P networking (1024-65535)
+    port6: 9000  # IPv6 P2P port number (0 to disable IPv6)
+    udpPort: 9000  # Port number for P2P networking (1024-65535)
+    bootnodes: []  # List of bootnode enode URLs for initial peer discovery
+    enrAddress: ""  # ENR (Ethereum Node Record) address to advertise
   
   # Checkpoint Sync Settings
-  checkpoint:
+  checkpointSync:
     enabled: false
-    url: ""
-    block: ""
-    state: ""
-    weakSubjectivity: ""
+    url: ""  # URL of a trusted beacon node for checkpoint sync
+    state: ""  # State root hash to use for checkpoint sync
+    ignoreWeakSubjectivityPeriod: false
+    force: false  # Force checkpoint sync from weak subjectivity
+    wss: ""  # Weak subjectivity checkpoint in <blockRoot>:<epoch> format
+  
+  # Genesis Sync Settings
+  genesisSync:
+    enabled: false
+    state: ""  # Path to genesis state file
+    url: ""  # URL of a trusted beacon node for genesis sync
   
   # Graffiti Settings
   graffiti:
     enabled: false
-    message: ""
-    file: ""
+    message: ""  # Custom graffiti message to include in proposed blocks
+    file: ""  # Path to file containing graffiti messages
   
   # Logging Settings
-  log:
+  logging:
     enabled: false
-    file: ""
-    format: "auto"
+    file: ""  # Path to store consensus client logs
+    format: "auto"  # One of: auto, json, plain
   
   # Additional Settings
-  testnetDir: ""
-  validatorMonitorFile: ""
+  testnetDir: ""  # Path to testnet configuration directory
+  validatorMonitorFile: ""  # Path to file for validator monitoring data
+  
+  # Builder Settings
   builder:
-    enabled: false
-    url: ""
+    enabled: false  # Enable block builder API for MEV
+    url: ""  # URL for the block builder API
   
   # Data Directory
-  dataDir: "{common.dataDir}/{consensus.client.name}"
+  dataDir: "{common.dataDir}/{consensus.client.name}"  # Base directory for consensus client data
 ```
 
 ### 4. Validator Configuration
