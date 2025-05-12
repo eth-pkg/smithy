@@ -224,11 +224,15 @@ rules:
       Number of worker threads ("0" = use as many threads as there are CPU cores available)
       [=0].
   - flag: --payload-builder
-    configPath: consensus.builder
+    configPath: consensus.builder.enabled
+    transform: flagEnabled
     description: >
       Enable external payload builder [=false].
   - flag: --payload-builder-url
-    configPath: 
+    configPath: consensus.builder.url
+    enabled:
+      configPath: consensus.builder.enabled
+      transform: flagEnabled
     description: >
       Payload builder URL.
   - flag: --proven-block-property

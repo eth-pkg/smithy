@@ -42,6 +42,12 @@ export const testConfig: NodeConfig = {
     dataDir: '/test/data',
   },
   consensus: {
+    builder: {
+      enabled: false,
+      url: '',
+      userAgent: '',
+      enableSSZ: false
+    },
     client: {
       name: 'lighthouse',
       version: ''

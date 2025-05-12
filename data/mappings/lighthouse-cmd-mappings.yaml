@@ -45,21 +45,33 @@ rules:
       One or more comma-delimited base64-encoded ENR's to bootstrap the p2p
       network. Multiaddr is also supported.
   - flag: --builder
-    configPath: consensus.builder
+    configPath: consensus.builder.url
+    enabled:
+      configPath: consensus.builder.enabled
+      transform: flagEnabled
     description: The URL of a service compatible with the MEV-boost API.
   - flag: --builder-disable-ssz
-    configPath: 
-    transform: isFlag
+    configPath: consensus.builder.enableSSZ
+    transform: negate
+    enabled:
+      configPath: consensus.builder.enabled
+      transform: flagEnabled
     description: Disables sending requests using SSZ over the builder API.
   - flag: --builder-fallback-disable-checks
     configPath: 
     transform: isFlag
+    enabled:
+      configPath: consensus.builder.enabled
+      transform: flagEnabled
     description: >-
       This flag disables all checks related to chain health. This means the
       builder API will always be used for payload construction, regardless of
       recent chain conditions.
   - flag: --builder-fallback-epochs-since-finalization
     configPath: 
+    enabled:
+      configPath: consensus.builder.enabled
+      transform: flagEnabled
     description: >-
       If this node is proposing a block and the chain has not finalized within
       this number of epochs, it will NOT query any connected builders, and will
@@ -70,12 +82,18 @@ rules:
       propose. [default: 3]
   - flag: --builder-fallback-skips
     configPath: 
+    enabled:
+      configPath: consensus.builder.enabled
+      transform: flagEnabled
     description: >-
       If this node is proposing a block and has seen this number of skip slots on
       the canonical chain in a row, it will NOT query any connected builders, and
       will use the local execution engine for payload construction. [default: 3]
   - flag: --builder-fallback-skips-per-epoch
     configPath: 
+    enabled:
+      configPath: consensus.builder.enabled
+      transform: flagEnabled
     description: >-
       If this node is proposing a block and has seen this number of skip slots on
       the canonical chain in the past `SLOTS_PER_EPOCH`, it will NOT query any
@@ -83,11 +101,17 @@ rules:
       construction. [default: 8]
   - flag: --builder-header-timeout
     configPath: 
+    enabled:
+      configPath: consensus.builder.enabled
+      transform: flagEnabled
     description: >-
       Defines a timeout value (in milliseconds) to use when fetching a block
       header from the builder API. [default: 1000]
   - flag: --builder-user-agent
-    configPath: 
+    configPath: consensus.builder.userAgent
+    enabled:
+      configPath: consensus.builder.enabled
+      transform: flagEnabled
     description: >-
       The HTTP user agent to send alongside requests to the builder URL. The
       default is Lighthouse's version string.

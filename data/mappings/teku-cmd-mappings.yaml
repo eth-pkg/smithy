@@ -8,15 +8,24 @@ rules:
       Track validator liveness and enable requests to the liveness rest api
   - flag: --builder-bid-compare-factor
     configPath: 
+    enabled:
+      configPath: consensus.builder.enabled
+      transform: flagEnabled
     description: |
       Set the compare factor applied to the builder bid value when comparing it with locally produced
       payload. Factor is expressed in percentage
   - flag: --builder-endpoint
     configPath: consensus.builder.url
+    enabled:
+      configPath: consensus.builder.enabled
+      transform: flagEnabled
     description: |
       URL for an external Builder node (optional)
   - flag: --builder-set-user-agent-header
-    configPath: 
+    configPath: consensus.builder.userAgent
+    enabled:
+      configPath: consensus.builder.enabled
+      transform: flagEnabled
     description: |
       Set User-Agent header to teku/v<version> when making a builder bid request to help builders
       identify clients and versions

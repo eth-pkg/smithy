@@ -44,28 +44,40 @@ rules:
       Bootnodes for discv5 discovery. List of bootstrap nodes to connect to for initial peer discovery.
 
   - flag: --builder
-    configPath:
-    transform: isFlag
+    configPath: consensus.builder.enabled
+    transform: flagEnabled
     description: >-
       Enable builder interface for external block building services.
 
   - flag: --builder.allowedFaults
     configPath:
+    enabled:
+      configPath: consensus.builder.enabled
+      transform: flagEnabled
     description: >-
       Number of missed slots allowed in the fault inspection window for builder circuit breaker.
 
   - flag: --builder.faultInspectionWindow
     configPath:
+    enabled:
+      configPath: consensus.builder.enabled
+      transform: flagEnabled
     description: >-
       Window to inspect missed slots for enabling/disabling builder circuit breaker.
 
   - flag: --builder.timeout
     configPath:
+    enabled:
+      configPath: consensus.builder.enabled
+      transform: flagEnabled
     description: >-
       Timeout in milliseconds for builder API HTTP client requests.
 
   - flag: --builder.url
-    configPath:
+    configPath: consensus.builder.url
+    enabled:
+      configPath: consensus.builder.enabled
+      transform: flagEnabled
     description: >-
       URL hosting the builder API endpoint for external block building services.
 

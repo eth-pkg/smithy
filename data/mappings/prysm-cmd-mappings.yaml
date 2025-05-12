@@ -90,7 +90,8 @@ rules:
     configPath:
     description: Enables the E2E testing config for end-to-end testing
   - flag: --enable-builder-ssz
-    configPath: consensus.builder
+    configPath: consensus.builder.enabled
+    transform: flagEnabled
     description: Enables Builder APIs to send and receive in SSZ format
   - flag: --enable-experimental-backfill
     configPath:

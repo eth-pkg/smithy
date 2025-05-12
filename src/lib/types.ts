@@ -166,6 +166,14 @@ export interface Consensus {
   checkpoint: CheckpointConfig
   graffiti: GraffitiConfig
   logging: LogConfig
+  builder: BuilderConfig
+}
+
+export interface BuilderConfig {
+  enabled: boolean
+  url: string,
+  userAgent: string
+  enableSSZ: boolean
 }
 
 export interface Validator {
