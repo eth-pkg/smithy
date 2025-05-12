@@ -246,20 +246,32 @@ rules:
     description: |
       Write Go execution trace to the given file
   - flag: --gpo.blocks
-    configPath: execution.gasPriceOracle.blocks
+    configPath: execution.gpo.blocks
+    enabled:
+      configPath: execution.gpo.enabled
+      transform: flagEnabled
     description: |
       Number of recent blocks to check for gas prices
   - flag: --gpo.ignoreprice
-    configPath: 
+    configPath: execution.gpo.ignorePrice
+    enabled:
+      configPath: execution.gpo.enabled
+      transform: flagEnabled
     description: |
       Gas price below which gpo will ignore transactions
   - flag: --gpo.maxprice
-    configPath: execution.gasPriceOracle.maxPrice
+    configPath: execution.gpo.maxPrice
+    enabled:
+      configPath: execution.gpo.enabled
+      transform: flagEnabled
     description: |
       Maximum transaction priority fee (or gasprice before London fork) to be
       recommended by gpo
   - flag: --gpo.percentile
-    configPath: execution.gasPriceOracle.percentile
+    configPath: execution.gpo.percentile
+    enabled:
+      configPath: execution.gpo.enabled
+      transform: flagEnabled
     description: |
       Suggested gas price is the given percentile of a set of recent transaction gas
       prices

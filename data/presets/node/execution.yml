@@ -532,7 +532,7 @@ properties:
     type: string
     default: "{common.dataDir}/{execution.client.name}"
     description: "Base directory for execution client data. Interpolated from common.dataDir and execution.client.name."
-  gasPriceOracle:
+  gpo:
     type: object
     properties:
       enabled:
@@ -549,6 +549,11 @@ properties:
         minimum: 0
         default: 500000000000
         description: "Maximum gas price for eth_gasPrice"
+      ignorePrice:
+        type: number
+        minimum: 0
+        default: 2
+        description: "Gas Price below which gpo will ignore transactions"
       percentile:
         type: number
         minimum: 0

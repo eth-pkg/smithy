@@ -190,6 +190,15 @@ export interface Execution {
   metrics: MetricsConfig
   p2p: P2PConfig
   ws: WebSocketConfig
+  gpo: GpoConfig
+}
+
+export type GpoConfig = {
+  enabled: boolean
+  blocks: number
+  maxPrice: number
+  ignorePrice: number
+  percentile: number
 }
 
 export type DeepPartial<T> = {

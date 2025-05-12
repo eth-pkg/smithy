@@ -416,25 +416,37 @@ rules:
     description: >
       Run full node. Only the most recent [`MINIMUM_PRUNING_DISTANCE`] block states are stored
   - flag: --gpo.blocks
-    configPath:
+    configPath: execution.gpo.blocks
+    enabled:
+      configPath: execution.gpo.enabled
+      transform: flagEnabled
     description: >
       Number of recent blocks to check for gas price
       
       [default: 20]
   - flag: --gpo.ignoreprice
-    configPath:
+    configPath: execution.gpo.ignorePrice
+    enabled:
+      configPath: execution.gpo.enabled
+      transform: flagEnabled
     description: >
       Gas Price below which gpo will ignore transactions
       
       [default: 2]
   - flag: --gpo.maxprice
-    configPath:
+    configPath: execution.gpo.maxPrice
+    enabled:
+      configPath: execution.gpo.enabled
+      transform: flagEnabled
     description: >
       Maximum transaction priority fee(or gasprice before London Fork) to be recommended by gpo
       
       [default: 500000000000]
   - flag: --gpo.percentile
-    configPath:
+    configPath: execution.gpo.percentile
+    enabled:
+      configPath: execution.gpo.enabled
+      transform: flagEnabled
     description: >
       The percentile of gas prices to use for the estimate
       

@@ -3,24 +3,24 @@ version: 25.4.1
 valueFormat: equals
 rules:
   - flag: --api-gas-price-blocks
-    configPath: execution.gasPriceOracle.blocks
+    configPath: execution.gpo.blocks
     enabled:
-      configPath: execution.gasPriceOracle.enabled
-      transform: booleanFlag
+      configPath: execution.gpo.enabled
+      transform: flagEnabled
     description: >
       Number of blocks to consider for eth_gasPrice (default: 100)
   - flag: --api-gas-price-max
-    configPath: execution.gasPriceOracle.maxPrice
+    configPath: execution.gpo.maxPrice
     enabled:
-      configPath: execution.gasPriceOracle.enabled
-      transform: booleanFlag
+      configPath: execution.gpo.enabled
+      transform: flagEnabled
     description: >
       Maximum gas price for eth_gasPrice (default: 500000000000)
   - flag: --api-gas-price-percentile
-    configPath: execution.gasPriceOracle.percentile
+    configPath: execution.gpo.percentile
     enabled:
-      configPath: execution.gasPriceOracle.enabled
-      transform: booleanFlag
+      configPath: execution.gpo.enabled
+      transform: flagEnabled
     description: >
       Percentile value to measure for eth_gasPrice (default: 50.0)
   - flag: --auto-log-bloom-caching-enabled

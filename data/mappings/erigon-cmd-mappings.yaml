@@ -362,16 +362,16 @@ rules:
     description: |
       Disables proof-of-work verification
   - flag: --gpo.blocks
-    configPath: execution.gasPriceOracle.blocks
+    configPath: execution.gpo.blocks
     enabled:
-      configPath: execution.gasPriceOracle.enabled
+      configPath: execution.gpo.enabled
       transform: flagEnabled
     description: |
       Number of recent blocks to check for gas prices
   - flag: --gpo.percentile
-    configPath: execution.gasPriceOracle.percentile
+    configPath: execution.gpo.percentile
     enabled:
-      configPath: execution.gasPriceOracle.enabled
+      configPath: execution.gpo.enabled
       transform: flagEnabled
     description: |
       Suggested gas price is the given percentile of a set of recent transaction gas prices

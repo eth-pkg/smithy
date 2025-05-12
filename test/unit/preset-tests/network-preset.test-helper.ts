@@ -185,6 +185,13 @@ export const testConfig: NodeConfig = {
       enabled: false,
       port: 6060
     },
+    gpo: {
+      enabled: false,
+      blocks: 0,
+      maxPrice: 0,
+      ignorePrice: 0,
+      percentile: 0
+    },
     p2p: {
       enabled: false,
       maxPeers: 50,
