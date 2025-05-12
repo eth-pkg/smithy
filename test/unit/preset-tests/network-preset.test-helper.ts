@@ -102,10 +102,19 @@ export const testConfig: NodeConfig = {
       enabled: false,
       port: 8546
     },
-    checkpoint: {
+    checkpointSync: {
       enabled: false,
       url: '',
       block: '',
+      state: '',
+      weakSubjectivity: '',
+      ignoreWeakSubjectivityPeriod: false,
+      force: false,
+      wss: false
+    },
+    genesisSync: {
+      enabled: false,
+      url: '',
       state: ''
     },
     graffiti: {

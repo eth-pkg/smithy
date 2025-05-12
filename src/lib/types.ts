@@ -105,11 +105,15 @@ export interface LogConfig {
 }
 
 // Consensus Specific Configurations
-export interface CheckpointConfig {
+export interface CheckpointSyncConfig {
   enabled: boolean
   url: string
   block: string
   state: string
+  weakSubjectivity: string
+  force: boolean
+  ignoreWeakSubjectivityPeriod: boolean
+  wss: boolean
 }
 
 export interface GraffitiConfig {
@@ -163,10 +167,17 @@ export interface Consensus {
   metrics: MetricsConfig
   p2p: P2PConfig
   ws: WebSocketConfig
-  checkpoint: CheckpointConfig
+  checkpointSync: CheckpointSyncConfig
   graffiti: GraffitiConfig
   logging: LogConfig
   builder: BuilderConfig
+  genesisSync: GenesisSyncConfig
+}
+
+export interface GenesisSyncConfig {
+  enabled: boolean
+  url: string
+  state: string
 }
 
 export interface BuilderConfig {

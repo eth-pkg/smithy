@@ -55,13 +55,22 @@ rules:
     configPath: common.network.id
     description: Sets the chain id of the beacon chain
   - flag: --checkpoint-block
-    configPath: consensus.checkpoint.block
+    configPath: consensus.checkpointSync.block
+    enabled:
+      configPath: consensus.checkpointSync.enabled
+      transform: flagEnabled
     description: Local file containing the checkpoint Block to load for sync
   - flag: --checkpoint-state
-    configPath: consensus.checkpoint.state
+    configPath: consensus.checkpointSync.state
+    enabled:
+      configPath: consensus.checkpointSync.enabled
+      transform: flagEnabled
     description: Local file containing the checkpoint BeaconState to load for sync
   - flag: --checkpoint-sync-url
-    configPath: consensus.checkpoint.url
+    configPath: consensus.checkpointSync.url
+    enabled:
+      configPath: consensus.checkpointSync.enabled
+      transform: flagEnabled
     description: URL of a synced beacon node to trust for checkpoint sync data
   - flag: --clear-db
     configPath:
@@ -133,10 +142,16 @@ rules:
     configPath:
     description: Clears any previously stored data at the data directory
   - flag: --genesis-beacon-api-url
-    configPath: consensus.checkpoint.url
+    configPath: consensus.genesisSync.url
+    enabled:
+      configPath: consensus.genesisSync.enabled
+      transform: flagEnabled
     description: URL of a synced beacon node to trust for genesis state
   - flag: --genesis-state
-    configPath:
+    configPath: consensus.genesisSync.state
+    enabled:
+      configPath: consensus.genesisSync.enabled
+      transform: flagEnabled
     description: Load a genesis state from ssz file
   - flag: --grpc-max-msg-size
     configPath:
@@ -400,8 +415,8 @@ rules:
       transform: flagEnabled
     description: Key for secure gRPC
   - flag: --weak-subjectivity-checkpoint
-    configPath: consensus.checkpoint.weakSubjectivity 
+    configPath: consensus.checkpointSync.weakSubjectivity 
     enabled: 
-      configPath: consensus.checkpoint.enabled
+      configPath: consensus.checkpointSync.enabled
       transform: flagEnabled
     description: Input in block_root:epoch_number format for sync verification 

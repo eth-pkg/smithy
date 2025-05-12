@@ -114,7 +114,7 @@ properties:
         type: string
         default: ""
         description: "ENR (Ethereum Node Record) address to advertise"    
-  checkpoint:
+  checkpointSync:
     type: object
     properties:
       enabled:
@@ -125,10 +125,7 @@ properties:
         type: string
         default: ""
         description: "URL of a trusted beacon node for checkpoint sync"
-      block:
-        type: string
-        default: ""
-        description: "Block root hash to use for checkpoint sync"
+
       state:
         type: string
         default: ""
@@ -137,6 +134,29 @@ properties:
         type: string
         default: ""
         description: "Weak subjectivity checkpoint to use for checkpoint sync"
+      force:
+        type: boolean
+        default: false
+        description: "Force checkpoint sync from weak subjectivity"
+      wss:
+        type: boolean
+        default: false
+        description: "Enable WSS checkpoint sync"
+  genesisSync:
+    type: object
+    properties:
+      enabled:
+        type: boolean
+        default: false
+        description: "Enable genesis sync"
+      state:
+        type: string
+        default: ""
+        description: "Path to genesis state file"
+      url:
+        type: string
+        default: ""
+        description: "URL of a trusted beacon node for genesis sync"
   graffiti:
     type: object
     properties:

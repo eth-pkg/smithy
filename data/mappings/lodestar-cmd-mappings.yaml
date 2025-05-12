@@ -198,12 +198,18 @@ rules:
       Minimum number of epochs between archived states for state management.
 
   - flag: --checkpointState
-    configPath:
+    configPath: consensus.checkpointSync.state
+    enabled:
+      configPath: consensus.checkpointSync.enabled
+      transform: flagEnabled
     description: >-
       Set a checkpoint state to start syncing from for faster initial sync.
 
   - flag: --checkpointSyncUrl
-    configPath:
+    configPath: consensus.checkpointSync.url
+    enabled:
+      configPath: consensus.checkpointSync.enabled
+      transform: flagEnabled
     description: >-
       Server URL hosting Beacon Node APIs to fetch weak subjectivity state.
 
@@ -433,13 +439,27 @@ rules:
       Enable fake PoW.
 
   - flag: --forceCheckpointSync
-    configPath:
+    configPath: consensus.checkpointSync.force
     transform: isFlag
+    enabled:
+      configPath: consensus.checkpointSync.enabled
+      transform: flagEnabled
     description: >-
       Force syncing from checkpoint state even if db state is within weak subjectivity period.
 
   - flag: --genesisStateFile
-    configPath:
+    configPath: consensus.genesisSync.state
+    enabled:
+      configPath: consensus.genesisSync.enabled
+      transform: flagEnabled
+    description: >-
+      Path or URL to download a genesis state file in SSZ-encoded format.
+
+  - flag: --genesisStateFile
+    configPath: consensus.genesisSync.url
+    enabled:
+      configPath: consensus.genesisSync.enabled
+      transform: flagEnabled
     description: >-
       Path or URL to download a genesis state file in SSZ-encoded format.
 
@@ -542,8 +562,11 @@ rules:
       Identity for the node.
 
   - flag: --ignoreWeakSubjectivityCheck
-    configPath:
-    transform: isFlag
+    configPath: consensus.checkpointSync.force
+    transform: negate
+    enabled:
+      configPath: consensus.checkpointSync.enabled
+      transform: flagEnabled
     description: >-
       Ignore checkpoint sync state failing weak subjectivity check (not recommended for mainnet).
 
@@ -1322,6 +1345,9 @@ rules:
       Port for WebSocket JSON-RPC API server.
 
   - flag: --wssCheckpoint
-    configPath:
+    configPath: consensus.checkpointSync.wss
+    enabled:
+      configPath: consensus.checkpointSync.enabled
+      transform: flagEnabled
     description: >-
       Weak subjectivity checkpoint in <blockRoot>:<epoch> format for sync starting point. 

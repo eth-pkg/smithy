@@ -30,7 +30,10 @@ rules:
       Set User-Agent header to teku/v<version> when making a builder bid request to help builders
       identify clients and versions
   - flag: --checkpoint-sync-url
-    configPath: consensus.checkpoint.url
+    configPath: consensus.checkpointSync.url
+    enabled:
+      configPath: consensus.checkpointSync.enabled
+      transform: flagEnabled
     description: |
       The Checkpointz server that will be used to bootstrap this node
   - flag: --config-file
@@ -109,16 +112,31 @@ rules:
     description: |
       Enable terminating the process if no validator keys are found during startup
   - flag: --genesis-state
-    configPath: 
+    configPath: consensus.genesisSync.state
+    enabled:
+      configPath: consensus.genesisSync.enabled
+      transform: flagEnabled
     description: |
       The genesis state. This value should be a file or URL pointing to an SSZ-encoded finalized
       checkpoint state
+  - flag: --genesis-state
+    configPath: consensus.genesisSync.url
+    enabled:
+      configPath: consensus.genesisSync.enabled
+      transform: flagEnabled
+    description: |
+      The genesis state. This value should be a file or URL pointing to an SSZ-encoded finalized
+      checkpoint state    
   - flag: --ignore-weak-subjectivity-period-enabled
-    configPath: 
+    configPath: consensus.checkpointSync.ignoreWeakSubjectivityPeriod
+    transform: isFlag
+    enabled:
+      configPath: consensus.checkpointSync.enabled
+      transform: flagEnabled
     description: |
       Allows syncing outside of the weak subjectivity period
   - flag: --initial-state
-    configPath: consensus.checkpoint.url
+    configPath: 
     description: |
       The initial state. This value should be a file or URL pointing to an SSZ-encoded finalized
       checkpoint state
@@ -645,10 +663,10 @@ rules:
       Default fee recipient sent to the execution engine, which could use it as fee
       recipient when producing a new execution block
   - flag: --ws-checkpoint
-    configPath: consensus.checkpoint.url
+    configPath: consensus.checkpointSync.wss
     transform: interpolate
     enabled: 
-      configPath: consensus.checkpoint.enabled
+      configPath: consensus.checkpointSync.enabled
       transform: flagEnabled
     description: |
       A recent checkpoint within the weak subjectivity period. Should be a string

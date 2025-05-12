@@ -64,12 +64,18 @@ rules:
     description: >
       SSZ file specifying a recent finalized EIP-4881 deposit tree snapshot.
   - flag: --genesis-state
-    configPath: 
+    configPath: consensus.genesisSync.state
+    enabled:
+      configPath: consensus.genesisSync.enabled
+      transform: flagEnabled
     description: >
       SSZ file specifying the genesis state of the network (for networks without a built-in
       genesis state).
   - flag: --genesis-state-url
-    configPath: 
+    configPath: consensus.genesisSync.url
+    enabled:
+      configPath: consensus.genesisSync.enabled
+      transform: flagEnabled
     description: >
       URL for obtaining the genesis state of the network (for networks without a built-in
       genesis state).
@@ -379,7 +385,10 @@ rules:
     description: >
       Remote Web3Signer URL that will be used as a source of validators.
   - flag: --weak-subjectivity-checkpoint
-    configPath: consensus.checkpoint.enabled
+    configPath: consensus.checkpointSync.wss
+    enabled:
+      configPath: consensus.checkpointSync.enabled
+      transform: flagEnabled
     description: >
       Weak subjectivity checkpoint in the format block_root:epoch_number.
   - flag: --web3-signer-update-interval

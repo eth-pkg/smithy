@@ -117,25 +117,40 @@ rules:
       default is Lighthouse's version string.
   - flag: --checkpoint-blobs
     configPath: 
+    enabled:
+      configPath: consensus.checkpointSync.enabled
+      transform: flagEnabled
     description: >-
       Set the checkpoint blobs to start syncing from. Must be aligned and match
       --checkpoint-block. Using --checkpoint-sync-url instead is recommended.
   - flag: --checkpoint-block
-    configPath: consensus.checkpointBlock
+    configPath: consensus.checkpointSync.block
+    enabled:
+      configPath: consensus.checkpointSync.enabled
+      transform: flagEnabled
     description: >-
       Set a checkpoint block to start syncing from. Must be aligned and match
       --checkpoint-state. Using --checkpoint-sync-url instead is recommended.
   - flag: --checkpoint-state
-    configPath: 
+    configPath: consensus.checkpointSync.state
+    enabled:
+      configPath: consensus.checkpointSync.enabled
+      transform: flagEnabled
     description: >-
       Set a checkpoint state to start syncing from. Must be aligned and match
       --checkpoint-block. Using --checkpoint-sync-url instead is recommended.
   - flag: --checkpoint-sync-url
-    configPath: consensus.checkpointSyncUrl
+    configPath: consensus.checkpointSync.url
+    enabled:
+      configPath: consensus.checkpointSync.enabled
+      transform: flagEnabled
     description: >-
       Set the remote beacon node HTTP endpoint to use for checkpoint sync.
   - flag: --checkpoint-sync-url-timeout
-    configPath: 
+    configPath:
+    enabled:
+      configPath: consensus.checkpointSync.enabled
+      transform: flagEnabled
     description: >-
       Set the timeout for checkpoint sync calls to remote beacon node HTTP
       endpoint. [default: 180]
@@ -382,7 +397,10 @@ rules:
       Attempts to download blocks all the way back to genesis when checkpoint
       syncing.
   - flag: --genesis-state-url
-    configPath: 
+    configPath: consensus.genesisSync.url
+    enabled:
+      configPath: consensus.genesisSync.enabled
+      transform: flagEnabled
     description: >-
       A URL of a beacon-API compatible server from which to download the genesis
       state. Checkpoint sync server URLs can generally be used with this flag. If
@@ -902,7 +920,10 @@ rules:
       A comma-separated list of 0x-prefixed validator public keys. These
       validators will receive special monitoring and additional logging.
   - flag: --wss-checkpoint
-    configPath: 
+    configPath: consensus.checkpointSync.wss
+    enabled:
+      configPath: consensus.checkpointSync.enabled
+      transform: flagEnabled
     description: >-
       Specify a weak subjectivity checkpoint in `block_root:epoch` format to
       verify the node's sync against. The block root should be 0x-prefixed. Note
