@@ -13,7 +13,7 @@ The configuration schema is organized into four main sections, each handling dif
 common:
   # Basic Settings
   acceptTermsOfUse: false
-  dataDir: "{HOME}/{common.network}"
+  dataDir: "/home/user/{common.network.name}"
   
   # Network Settings
   network:
@@ -228,12 +228,6 @@ consensus:
     state: ""  # Path to genesis state file
     url: ""  # URL of a trusted beacon node for genesis sync
   
-  # Graffiti Settings
-  graffiti:
-    enabled: false
-    message: ""  # Custom graffiti message to include in proposed blocks
-    file: ""  # Path to file containing graffiti messages
-  
   # Logging Settings
   logging:
     enabled: false
@@ -336,7 +330,7 @@ Smithy uses a preset-based configuration system that allows for easy customizati
          id: 11155111
          name: "sepolia"
          required: true  # Cannot be changed
-       dataDir: "{HOME}/{common.network.name}"  # Interpolated path
+       dataDir: "/home/user/{common.network.name}"  # Interpolated path
      
      # Enforce testnet-specific client requirements
      execution:
@@ -531,14 +525,14 @@ The interpolation syntax `{path.to.value}` can be used in any string value, but 
    common:
      network:
        name: "mainnet"
-     dataDir: "{HOME}/ethereum/{common.network.name}"  # Dynamic value
+     dataDir: "/home/user/ethereum/{common.network.name}"  # Dynamic value
    ```
 
 2. **Value Reuse**:
    ```yaml
    # Reusing the same value in multiple places
    common:
-     dataDir: "{HOME}/ethereum/{common.network.name}"
+     dataDir: "/home/user/ethereum/{common.network.name}"
    execution:
      dataDir: "{common.dataDir}/{execution.client.name}"
    consensus:
@@ -564,7 +558,7 @@ The interpolation syntax `{path.to.value}` can be used in any string value, but 
    ```yaml
    # Using environment variables
    common:
-     dataDir: "{HOME}/ethereum/{common.network.name}"
+     dataDir: "/home/user/ethereum/{common.network.name}"
      configDir: "{XDG_CONFIG_HOME}/smithy"
    ```
 

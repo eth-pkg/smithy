@@ -7,7 +7,7 @@ properties:
     description: "Accept the terms of use"
   dataDir:
     type: string
-    default: "{HOME}/{common.network}"
+    default: "/home/user/{common.network.name}"
     description: "Base directory for storing Ethereum client data"
   engine:
     type: object

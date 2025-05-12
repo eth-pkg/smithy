@@ -1108,57 +1108,93 @@ rules:
       The type of traces to store.
   - flag: --TxPool.BlobCacheSize
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       The max number of full blob transactions cached in memory. The default 
       value uses max 200MB for 6 blobs where one blob is 33MB (256 * 128KB).
   - flag: --TxPool.BlobsSupport
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       The blobs support mode.
   - flag: --TxPool.GasLimit
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       The max transaction gas allowed.
   - flag: --TxPool.HashCacheSize
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       The max number of cached hashes of already known transactions. Set 
       automatically by the memory hint.
   - flag: --TxPool.InMemoryBlobPoolSize
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       The max number of full blob transactions stored in memory. Used only if 
       persistent storage is disabled.
   - flag: --TxPool.MaxBlobTxSize
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       The max blob transaction size allowed, excluding blobs, in bytes.
   - flag: --TxPool.MaxPendingBlobTxsPerSender
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       The max number of pending blob transactions per single sender. `0` to lift 
       the limit.
   - flag: --TxPool.MaxPendingTxsPerSender
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       The max number of pending transactions per single sender. `0` to lift the 
       limit.
   - flag: --TxPool.MaxTxSize
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       The max transaction size allowed, in bytes.
   - flag: --TxPool.MinBaseFeeThreshold
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       The minimal percentage of the current base fee that must be surpassed by 
       the max fee (`max_fee_per_gas`) for the transaction to be broadcasted.
   - flag: --TxPool.PeerNotificationThreshold
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       The average percentage of transaction hashes from persistent broadcast sent 
       to a peer together with hashes of the last added transactions.
   - flag: --TxPool.PersistentBlobStorageSize
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       The max number of full blob transactions stored in the database 
       (increasing the number of transactions in the blob pool also results in 
@@ -1166,10 +1202,16 @@ rules:
       blob is 2GB (16386 * 128KB).
   - flag: --TxPool.ReportMinutes
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       The current transaction pool state reporting interval, in minutes.
   - flag: --TxPool.Size
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       The max number of transactions held in the mempool (the more transactions 
       in the mempool, the more memory used).

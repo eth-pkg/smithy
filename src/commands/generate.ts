@@ -36,7 +36,6 @@ export async function generate(
       }
     }
   }
-
   userConfig = configManager.mergeOptionsWithConfig(userConfig, options);
   logger.debug(`Merged config: ${JSON.stringify(userConfig, null, 2)}`);
 
@@ -161,7 +160,7 @@ async function promptForMissingOptions(
       type: "input",
       name: "output",
       message: "Output directory for commands:",
-      default: "./ethereum-commands",
+      default: "./node-commands",
     });
   }
 
@@ -172,7 +171,7 @@ async function promptForMissingOptions(
     execution: options.execution || configExecution || answers.execution || "",
     consensus: options.consensus || configConsensus || answers.consensus || "",
     validator: options.validator || configValidator || answers.validator,
-    output: options.output || answers.output || "./ethereum-commands",
+    output: options.output || answers.output || "./node-commands",
     configFile: options.configFile,
   };
 
@@ -190,7 +189,7 @@ async function generateClientCommands(
   options: GenerateOptions,
   logger: Logger,
 ): Promise<void> {
-  const outputDir = options.output || "./ethereum-commands";
+  const outputDir = options.output || "./node-commands";
   const registry = new CommandClientRegistry();
 
   await fs.ensureDir(outputDir);

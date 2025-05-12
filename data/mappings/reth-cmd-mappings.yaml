@@ -913,6 +913,9 @@ rules:
       [default: 1.0]
   - flag: --tx-propagation-policy
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       Transaction Propagation Policy
       
@@ -921,72 +924,111 @@ rules:
       [default: All]
   - flag: --txpool.additional-validation-tasks
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       Number of additional transaction validation tasks to spawn
       
       [default: 1]
   - flag: --txpool.basefee-max-count
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       Max number of transaction in the basefee sub-pool
       
       [default: 10000]
   - flag: --txpool.basefee-max-size
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       Max size of the basefee sub-pool in megabytes
       
       [default: 20]
   - flag: --txpool.blob-cache-size
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       Max number of entries for the in memory cache of the blob store
   - flag: --txpool.blobpool-max-count
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       Max number of transaction in the blobpool
       
       [default: 10000]
   - flag: --txpool.blobpool-max-size
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       Max size of the blobpool in megabytes
       
       [default: 20]
   - flag: --txpool.disable-transactions-backup
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       Disables transaction backup to disk on node shutdown
   - flag: --txpool.gas-limit
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       The default enforced gas limit for transactions entering the pool
       
       [default: 30000000]
   - flag: --txpool.lifetime
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       Maximum amount of time non-executable transaction are queued
       
       [default: 10800]
   - flag: --txpool.locals
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       Flag to allow certain addresses as local
   - flag: --txpool.max-account-slots
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       Max number of executable transaction slots guaranteed per account
       
       [default: 16]
   - flag: --txpool.max-cached-entries
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       The maximum number of blobs to keep in the in memory blob cache
       
       [default: 100]
   - flag: --txpool.max-new-pending-txs-notifications
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       How many new pending transactions to buffer and send to in progress pending transaction 
       iterators
@@ -994,68 +1036,104 @@ rules:
       [default: 200]
   - flag: --txpool.max-new-txns
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       Maximum number of new transactions to buffer
       
       [default: 1024]
   - flag: --txpool.max-pending-txns
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       Maximum number of pending transactions from the network to buffer
       
       [default: 2048]
   - flag: --txpool.max-tx-input-bytes
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       Max size in bytes of a single transaction allowed to enter the pool
       
       [default: 131072]
   - flag: --txpool.minimal-protocol-fee
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       Minimum base fee required by the protocol
       
       [default: 7]
   - flag: --txpool.no-local-transactions-propagation
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       Flag to toggle local transaction propagation
   - flag: --txpool.nolocals
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       Flag to disable local transaction exemptions
   - flag: --txpool.pending-max-count
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       Max number of transaction in the pending sub-pool
       
       [default: 10000]
   - flag: --txpool.pending-max-size
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       Max size of the pending sub-pool in megabytes
       
       [default: 20]
   - flag: --txpool.pricebump
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       Price bump (in %) for the transaction pool underpriced check
       
       [default: 10]
   - flag: --txpool.queued-max-count
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       Max number of transaction in the queued sub-pool
       
       [default: 10000]
   - flag: --txpool.queued-max-size
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       Max size of the queued sub-pool in megabytes
       
       [default: 20]
   - flag: --txpool.transactions-backup
     configPath:
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: >
       Path to store the local transaction backup at, to survive node restarts
   - flag: --trusted-only

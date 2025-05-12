@@ -121,16 +121,20 @@ export class CommandClientRegistry {
   ): Buffer {
     let mappings: any
     let command: string
+    let version: string
 
     if (clientName in executionClientMappings) {
       mappings = executionClientMappings[clientName as ExecutionClientName]
       command = this.executionClientCommands[clientName as ExecutionClientName]
+      version = config.execution.client.version
     } else if (clientName in consensusClientMappings && !isValidator) {
       mappings = consensusClientMappings[clientName as ConsensusClientName]
       command = this.consensusClientCommands[clientName as ConsensusClientName]
+      version = config.consensus.client.version
     } else if (clientName in validatorClientMappings && isValidator) {
       mappings = validatorClientMappings[clientName as ValidatorClientName]
       command = this.validatorClientCommands[clientName as ValidatorClientName]
+      version = config.validator.client.version
     } else {
       throw new Error(`Client "${clientName}" not found in registry`)
     }
@@ -143,6 +147,7 @@ export class CommandClientRegistry {
       config,
       command,
       mappings,
+      { version, name: clientName }
     )
   }
 

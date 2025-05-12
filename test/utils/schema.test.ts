@@ -58,7 +58,7 @@ describe('SchemaUtils', () => {
 
       // Verify common default values
       expect(defaults.common.acceptTermsOfUse).to.equal(false, 'common.acceptTermsOfUse should default to false');
-      expect(defaults.common.dataDir).to.equal('{HOME}/{common.network}', 'common.dataDir should have correct default value');
+      expect(defaults.common.dataDir).to.equal('/home/user/{common.network.name}', 'common.dataDir should have correct default value');
       expect(defaults.common.engine.enabled).to.equal(true, 'common.engine.enabled should default to true');
       expect(defaults.common.engine.communication.method).to.equal('jwt', 'common.engine.communication.method should default to jwt');
       expect(defaults.common.network.id).to.equal(1, 'common.network.id should default to 1');
@@ -143,7 +143,7 @@ describe('SchemaUtils', () => {
 
       // Verify common default values
       expect(defaults.common.acceptTermsOfUse).to.equal(false, 'common.acceptTermsOfUse should default to false');
-      expect(defaults.common.dataDir).to.equal('{HOME}/{common.network}', 'common.dataDir should have correct default value');
+      expect(defaults.common.dataDir).to.equal('/home/user/{common.network.name}', 'common.dataDir should have correct default value');
       expect(defaults.common.engine.enabled).to.equal(true, 'common.engine.enabled should default to true');
       expect(defaults.common.engine.communication.method).to.equal('jwt', 'common.engine.communication.method should default to jwt');
       expect(defaults.common.network.id).to.equal(1, 'common.network.id should default to 1');

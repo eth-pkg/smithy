@@ -82,16 +82,34 @@ export class ConfigManager {
       mergedConfig.common = {} as any;
     }
 
+    if (!mergedConfig.execution) {
+      mergedConfig.execution = {} as any;
+    }
+
+    if (!mergedConfig.consensus) {
+      mergedConfig.consensus = {} as any;
+    }
+
+    if (!mergedConfig.validator) {
+      mergedConfig.validator = {} as any;
+    }
+
     if (options.execution) {
-      mergedConfig.execution.client.name = options.execution;
+      mergedConfig.execution.client = {
+        name: options.execution
+      } as any;
     }
 
     if (options.consensus) {
-      mergedConfig.consensus.client.name = options.consensus;
+      mergedConfig.consensus.client = {
+        name: options.consensus
+      } as any;
     }
 
     if (options.validator) {
-      mergedConfig.validator.client.name = options.validator;
+      mergedConfig.validator.client = {
+        name: options.validator
+      } as any;
       mergedConfig.validator.enabled = true;
     }
 
@@ -100,7 +118,9 @@ export class ConfigManager {
     }
 
     if (options.network) {
-      mergedConfig.common.network = options.network;
+      mergedConfig.common.network = {
+        name: options.network
+      } as any;
     }
 
 

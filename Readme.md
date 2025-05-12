@@ -51,7 +51,7 @@ cd smithy
 npm install
 
 # Run in development mode
-npm run dev -- --execution geth --consensus lighthouse
+npm run dev -- generate --execution geth --consensus lighthouse
 ```
 
 The development mode uses `ts-node-dev` which provides hot-reloading, so any changes to the source code will automatically restart the application.
@@ -647,7 +647,7 @@ And as an overridable config file
 ```yaml 
 common:
   acceptTermsOfUse: false
-  dataDir: "{HOME}/{common.network}"
+  dataDir: "/home/user/{common.network.name}"
   engine:
     enabled: true
     port: 8551
@@ -858,9 +858,9 @@ The following table indicates the current mapping status of schema fields to cli
 Smithy uses JSON schema-based presets with:
 1. **Schema**: Defines standardized settings across clients (e.g., data directories, ports), requiring only JSON schema knowledge.
 2. **Validation**: Enforces rules for network consistency, valid ports, and client compatibility (e.g., blocks Lighthouse with Prysm validator).
-3. **Defaults**: Applies JSON schema defaults (e.g., numbers, enums, or interpolated strings like `{HOME}/ethereum/{common.network.name}`, where `{common.network.name}` is replaced by values like `mainnet`).
+3. **Defaults**: Applies JSON schema defaults (e.g., numbers, enums, or interpolated strings like `/home/user/ethereum/{common.network.name}`, where `{common.network.name}` is replaced by values like `mainnet`).
 4. **Mappings**: Maps standard schema settings to client-specific flags (e.g., `reth-cmd-mappings.yaml`), often with minimal or no transformation, extensible for new versions or flags.
-5. **Transformers**: Formats values for client compatibility when needed (e.g., `joinComma` for arrays, `interpolate` for strings like `{HOME}/ethereum/{common.network.name}`).
+5. **Transformers**: Formats values for client compatibility when needed (e.g., `joinComma` for arrays, `interpolate` for strings like `/home/user/ethereum/{common.network.name}`).
 
 Example mapping:
 ```yaml
@@ -873,11 +873,11 @@ Example mapping:
 Example preset:
 ```yaml
 common:
-  dataDir: "{HOME}/ethereum/{common.network.name}"
+  dataDir: "/home/user/ethereum/{common.network.name}"
   network: mainnet
   engine:
     port: 8551
-    jwtFile: "{HOME}/ethereum/jwt.hex"
+    jwtFile: "/home/user/ethereum/jwt.hex"
 ```
 
 ## To-Do

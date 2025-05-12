@@ -754,46 +754,79 @@ rules:
       year, 0 = entire chain) (deprecated, use history.transactions instead)
   - flag: --txpool.accountqueue
     configPath: 
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: |
       Maximum number of non-executable transaction slots permitted per account
   - flag: --txpool.accountslots
     configPath: 
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: |
       Minimum number of executable transaction slots guaranteed per account
   - flag: --txpool.globalqueue
     configPath: 
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: |
       Maximum number of non-executable transaction slots for all accounts
   - flag: --txpool.globalslots
     configPath: 
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: |
       Maximum number of executable transaction slots for all accounts
   - flag: --txpool.journal
     configPath: 
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: |
       Disk journal for local transaction to survive node restarts
   - flag: --txpool.lifetime
     configPath: 
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: |
       Maximum amount of time non-executable transaction are queued
   - flag: --txpool.locals
     configPath: 
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: |
       Comma separated accounts to treat as locals (no flush, priority inclusion)
   - flag: --txpool.nolocals
     configPath: execution.txpool.disableLocals
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: |
       Disables price exemptions for locally submitted transactions
   - flag: --txpool.pricebump
     configPath: execution.txpool.priceBump
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: |
       Price bump percentage to replace an already existing transaction
   - flag: --txpool.pricelimit
-    configPath: 
+    configPath: execution.txpool.priceLimit
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: |
       Minimum gas price tip to enforce for acceptance into the pool
   - flag: --txpool.rejournal
-    configPath: 
+    configPath: execution.txpool.rejournal
+    enabled:
+      configPath: execution.txpool.enabled
+      transform: flagEnabled
     description: |
       Time interval to regenerate the local transaction journal
   - flag: --unlock

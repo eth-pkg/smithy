@@ -21,7 +21,6 @@ type Mappings = {
   valueFormat: 'equals' | 'space'
 }
 
-// Base builder class for all client commands
 export class CommandBuilder {
   protected command: string
   protected args: Buffer[] = []
@@ -47,24 +46,24 @@ export class CommandBuilder {
     return this
   }
 
-  build(os: OperatingSystem): Buffer {
+  build(os: OperatingSystem, client: { version: string , name: string }): Buffer {
     const commandBuffer = Buffer.from(this.command)
     const spaceBuffer = Buffer.from(" ")
     const newlineBuffer = Buffer.from(" \\\n  ")
 
     const parts: Buffer[] = []
 
-    // Add shell script header based on OS
     if (os === "windows") {
       parts.push(Buffer.from("@echo off\n\n"))
     } else {
       parts.push(Buffer.from("#!/bin/bash\n\n"))
+      parts.push(Buffer.from(`set -e\n\n`))
+      parts.push(Buffer.from(`# ${client.name} version: ${client.version}\n\n`))
     }
 
-    // Add the command
     parts.push(commandBuffer)
+    parts.push(Buffer.from(" \\\n "))
 
-    // Add arguments
     for (let i = 0; i < this.args.length; i++) {
       if (i === 0) {
         parts.push(spaceBuffer)
@@ -77,7 +76,7 @@ export class CommandBuilder {
     return Buffer.concat(parts)
   }
 
-  static buildFromConfig(config: NodeConfig, baseCommand: string, mappings: Mappings): Buffer {
+  static buildFromConfig(config: NodeConfig, baseCommand: string, mappings: Mappings, client: { version: string , name: string }): Buffer {
     const { common } = config
     const os = common.operatingSystem
     const builder = new CommandBuilder(baseCommand, mappings)
@@ -127,6 +126,6 @@ export class CommandBuilder {
       }
     }
 
-    return builder.build(os)
+    return builder.build(os, client)
   }
 }
