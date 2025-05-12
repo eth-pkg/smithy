@@ -1,262 +1,338 @@
 $id: versions
+required: ["execution", "consensus", "validator"]
 allOf:
   # Execution client version rules
   - if:
       properties:
-        common:
+        execution:
           properties:
-            clients:
+            client:
               properties:
-                execution:
+                name:
                   const: geth
     then:
       properties:
-        common:
+        execution:
           properties:
-            clients:
+            client:
               properties:
-                executionVersion:
+                version:
                   enum:
                     - "1.13.12"
+      message:
+        properties:
+          execution:
+            client:
+              version: "Geth version must be from the allowed list"
   - if:
       properties:
-        common:
+        execution:
           properties:
-            clients:
+            client:
               properties:
-                execution:
+                name:
                   const: erigon
     then:
       properties:
-        common:
+        execution:
           properties:
-            clients:
+            client:
               properties:
-                executionVersion:
+                version:
                   enum:
                     - "2.56.1"
+      message:
+        properties:
+          execution:
+            client:
+              version: "Erigon version must be from the allowed list"
   - if:
       properties:
-        common:
+        execution:
           properties:
-            clients:
+            client:
               properties:
-                execution:
+                name:
                   const: besu
     then:
       properties:
-        common:
+        execution:
           properties:
-            clients:
+            client:
               properties:
-                executionVersion:
+                version:
                   enum:
                     - "24.1.0"
+      message:
+        properties:
+          execution:
+            client:
+              version: "Besu version must be from the allowed list"
   - if:
       properties:
-        common:
+        execution:
           properties:
-            clients:
+            client:
               properties:
-                execution:
+                name:
                   const: nethermind
     then:
       properties:
-        common:
+        execution:
           properties:
-            clients:
+            client:
               properties:
-                executionVersion:
+                version:
                   enum:
                     - "1.25.0"
+      message:
+        properties:
+          execution:
+            client:
+              version: "Nethermind version must be from the allowed list"
   - if:
       properties:
-        common:
+        execution:
           properties:
-            clients:
+            client:
               properties:
-                execution:
+                name:
                   const: reth
     then:
       properties:
-        common:
+        execution:
           properties:
-            clients:
+            client:
               properties:
-                executionVersion:
+                version:
                   enum:
                     - "0.2.0"
+      message:
+        properties:
+          execution:
+            client:
+              version: "Reth version must be from the allowed list"
 
   # Consensus client version rules
   - if:
       properties:
-        common:
+        consensus:
           properties:
-            clients:
+            client:
               properties:
-                consensus:
+                name:
                   const: lighthouse
     then:
       properties:
-        common:
+        consensus:
           properties:
-            clients:
+            client:
               properties:
-                consensusVersion:
+                version:
                   enum:
                     - "4.7.0"
+      message:
+        properties:
+          consensus:
+            client:
+              version: "Lighthouse consensus version must be from the allowed list"
   - if:
       properties:
-        common:
+        consensus:
           properties:
-            clients:
+            client:
               properties:
-                consensus:
+                name:
                   const: lodestar
     then:
       properties:
-        common:
+        consensus:
           properties:
-            clients:
+            client:
               properties:
-                consensusVersion:
+                version:
                   enum:
                     - "1.10.0"
+      message:
+        properties:
+          consensus:
+            client:
+              version: "Lodestar consensus version must be from the allowed list"
   - if:
       properties:
-        common:
+        consensus:
           properties:
-            clients:
+            client:
               properties:
-                consensus:
+                name:
                   const: nimbus-eth2
     then:
       properties:
-        common:
+        consensus:
           properties:
-            clients:
+            client:
               properties:
-                consensusVersion:
+                version:
                   enum:
                     - "24.1.0"
+      message:
+        properties:
+          consensus:
+            client:
+              version: "Nimbus-eth2 consensus version must be from the allowed list"
   - if:
       properties:
-        common:
+        consensus:
           properties:
-            clients:
+            client:
               properties:
-                consensus:
+                name:
                   const: prysm
     then:
       properties:
-        common:
+        consensus:
           properties:
-            clients:
+            client:
               properties:
-                consensusVersion:
+                version:
                   enum:
                     - "4.1.0"
+      message:
+        properties:
+          consensus:
+            client:
+              version: "Prysm consensus version must be from the allowed list"
   - if:
       properties:
-        common:
+        consensus:
           properties:
-            clients:
+            client:
               properties:
-                consensus:
+                name:
                   const: teku
     then:
       properties:
-        common:
+        consensus:
           properties:
-            clients:
+            client:
               properties:
-                consensusVersion:
+                version:
                   enum:
                     - "24.1.0"
+      message:
+        properties:
+          consensus:
+            client:
+              version: "Teku consensus version must be from the allowed list"
 
   # Validator client version rules
   - if:
       properties:
-        common:
+        validator:
           properties:
-            clients:
+            client:
               properties:
-                validator:
+                name:
                   const: lighthouse
     then:
       properties:
-        common:
+        validator:
           properties:
-            clients:
+            client:
               properties:
-                validatorVersion:
+                version:
                   enum:
                     - "4.7.0"
+      message:
+        properties:
+          validator:
+            client:
+              version: "Lighthouse validator version must be from the allowed list"
   - if:
       properties:
-        common:
+        validator:
           properties:
-            clients:
+            client:
               properties:
-                validator:
+                name:
                   const: lodestar
     then:
       properties:
-        common:
+        validator:
           properties:
-            clients:
+            client:
               properties:
-                validatorVersion:
+                version:
                   enum:
                     - "1.10.0"
+      message:
+        properties:
+          validator:
+            client:
+              version: "Lodestar validator version must be from the allowed list"
   - if:
       properties:
-        common:
+        validator:
           properties:
-            clients:
+            client:
               properties:
-                validator:
+                name:
                   const: nimbus-eth2
     then:
       properties:
-        common:
+        validator:
           properties:
-            clients:
+            client:
               properties:
-                validatorVersion:
+                version:
                   enum:
                     - "24.1.0"
+      message:
+        properties:
+          validator:
+            client:
+              version: "Nimbus-eth2 validator version must be from the allowed list"
   - if:
       properties:
-        common:
+        validator:
           properties:
-            clients:
+            client:
               properties:
-                validator:
+                name:
                   const: prysm
     then:
       properties:
-        common:
+        validator:
           properties:
-            clients:
+            client:
               properties:
-                validatorVersion:
+                version:
                   enum:
                     - "4.1.0"
+      message:
+        properties:
+          validator:
+            client:
+              version: "Prysm validator version must be from the allowed list"
   - if:
       properties:
-        common:
+        validator:
           properties:
-            clients:
+            client:
               properties:
-                validator:
+                name:
                   const: teku
     then:
       properties:
-        common:
+        validator:
           properties:
-            clients:
+            client:
               properties:
-                validatorVersion:
+                version:
                   enum:
                     - "24.1.0"
+      message:
+        properties:
+          validator:
+            client:
+              version: "Teku validator version must be from the allowed list"

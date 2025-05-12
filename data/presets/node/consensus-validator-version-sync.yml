@@ -1,0 +1,38 @@
+$id: consensus-validator-version-sync
+allOf:
+  - if:
+    properties:
+      consensus:
+        properties:
+          client:
+            properties:
+              name:
+                type: string
+      validator:
+        properties:
+          client:
+            properties:
+              name:
+                type: string
+    allOf:
+      - if:
+          properties:
+            validator:
+              properties:
+                client:
+                  properties:
+                    name:
+                      $ref: "#/properties/consensus/properties/client/properties/name"
+        then:
+          properties:
+            validator:
+              properties:
+                client:
+                  properties:
+                    version:
+                      $ref: "#/properties/consensus/properties/client/properties/version"
+          message:
+            properties:
+              validator:
+                client:
+                  version: "Validator version must match consensus version when client names are the same"            

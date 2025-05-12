@@ -114,21 +114,6 @@ properties:
         type: string
         default: ""
         description: "ENR (Ethereum Node Record) address to advertise"    
-  ws: 
-    type: object
-    properties:
-      enabled:
-        type: boolean
-        default: false
-        description: "Enable WebSocket JSON-RPC API"
-      port:
-        type: number
-        minimum: 1024
-        maximum: 65535
-        default: 8546
-        description: "Port number for WebSocket JSON-RPC API"
-        errorMessage:
-          minimum: "WebSocket port must be >= 1024"
   checkpoint:
     type: object
     properties:
@@ -167,7 +152,7 @@ properties:
         type: string
         default: ""
         description: "Path to file containing graffiti messages"
-  log: 
+  loggging: 
     type: object
     properties:
       enabled:
