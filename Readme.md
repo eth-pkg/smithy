@@ -163,6 +163,7 @@ common:
 ## Requirements
 
 - npm or yarn
+- node >=22 (latest LTS recommended)
 
 ## License
 
