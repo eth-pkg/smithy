@@ -262,6 +262,7 @@ rules:
       Listening address of the REST server [=127.0.0.1].
   - flag: --rest-allow-origin
     configPath: consensus.http.allowlist
+    transform: allowlist
     enabled:
       configPath: consensus.http.enabled
       transform: flagEnabled

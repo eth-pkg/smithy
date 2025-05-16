@@ -394,6 +394,7 @@ rules:
       Enable reconstruction of historic states
   - flag: --rest-api-cors-origins
     configPath: consensus.http.allowlist
+    transform: allowlist
     enabled: 
       configPath: consensus.http.enabled
       transform: flagEnabled
@@ -413,6 +414,7 @@ rules:
       Enables Beacon Rest API
   - flag: --rest-api-host-allowlist
     configPath: consensus.http.allowlist
+    transform: allowlist
     enabled: 
       configPath: consensus.http.enabled
       transform: flagEnabled

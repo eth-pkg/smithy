@@ -453,14 +453,15 @@ rules:
   - flag: --http-address
     configPath: consensus.http.address
     enabled:
-      configPath: consensus.http
+      configPath: consensus.http.enabled
       transform: flagEnabled
     description: >-
       Set the listen address for the RESTful HTTP API server.
   - flag: --http-allow-origin
-    configPath: consensus.http.cors
+    configPath: consensus.http.allowlist
+    transform: allowlist
     enabled:
-      configPath: consensus.http
+      configPath: consensus.http.enabled
       transform: flagEnabled
     description: >-
       Set the value of the Access-Control-Allow-Origin response HTTP header. Use *

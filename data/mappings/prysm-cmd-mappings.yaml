@@ -166,6 +166,7 @@ rules:
     description: Runs Prysm configured for the Hoodi test network
   - flag: --http-cors-domain
     configPath: consensus.http.allowlist
+    transform: allowlist
     enabled: 
       configPath: consensus.http.enabled
       transform: flagEnabled

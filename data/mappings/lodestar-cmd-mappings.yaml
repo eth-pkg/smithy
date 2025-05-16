@@ -486,7 +486,6 @@ rules:
 
   - flag: --http.addr
     configPath: consensus.http.address
-    parent: --http
     enabled:
       configPath: consensus.http.enabled
       transform: flagEnabled
@@ -495,9 +494,9 @@ rules:
 
   - flag: --http.api
     configPath: consensus.http.api
-    transform: joinComma
+    transform: allowlist
     enabled:
-      configPath: consensus.http
+      configPath: consensus.http.enabled
       transform: flagEnabled
     description: >-
       Comma separated list of API namespaces to enable on HTTP server.
@@ -508,7 +507,11 @@ rules:
       Enable HTTP compression.
 
   - flag: --http.corsdomain
-    configPath:
+    configPath: consensus.http.allowlist
+    transform: allowlist
+    enabled:
+      configPath: consensus.http.enabled
+      transform: flagEnabled
     description: >-
       Access-Control-Allow-Origin CORS header for HTTP API.
 
@@ -552,7 +555,11 @@ rules:
       Enable HTTP trace.
 
   - flag: --http.vhosts
-    configPath:
+    configPath: consensus.http.vhosts
+    transform: allowlist
+    enabled:
+      configPath: consensus.http.enabled
+      transform: flagEnabled
     description: >-
       Comma separated list of allowed HTTP API hosts.
 
