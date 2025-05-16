@@ -12,7 +12,7 @@ describe('Consensus Client Logging Configuration Tests', () => {
     'lodestar',
     'nimbus-eth2',
     'prysm',
-     'teku',
+    'teku',
   ];
 
   beforeEach(() => {
@@ -61,7 +61,7 @@ describe('Consensus Client Logging Configuration Tests', () => {
         const logFileDirectory = config.consensus.logging.file.directory;
         const logFileName = config.consensus.logging.file.name;
         const logFileFullPath = `${logFileDirectory}/${logFileName}`;
-        const logFileFormat = config.consensus.logging.file.format; 
+        const logFileFormat = config.consensus.logging.file.format;
         const logLevel = config.consensus.logging.stdout.level;
         const fileLogLevel = config.consensus.logging.file.level;
 
@@ -74,14 +74,12 @@ describe('Consensus Client Logging Configuration Tests', () => {
             expect(scriptString).to.include(`--log-color`);
             expect(scriptString).to.include(`--logfile-debug-level ${fileLogLevel}`);
             break;
-            
+
           case 'lodestar':
             // TODO: directory logging, not sure how should be approached 
             expect(scriptString).to.include(`--logFileLevel ${fileLogLevel}`);
             expect(scriptString).to.include(`--logLevel ${logLevel}`);
-            expect(scriptString).to.include(`--log.json`);
-            expect(scriptString).to.include(`--log.console.json`);
-            expect(scriptString).to.include(`--log.console.verbosity ${logLevel}`);
+            expect(scriptString).to.include(`--logFile ${logFileFullPath}`);
             break;
           case 'nimbus-eth2':
             expect(scriptString).to.include(`--log-file ${logFileFullPath}`);
@@ -143,7 +141,7 @@ describe('Consensus Client Logging Configuration Tests', () => {
         const logFileDirectory = config.consensus.logging.file.directory;
         const logFileName = config.consensus.logging.file.name;
         const logFileFullPath = `${logFileDirectory}/${logFileName}`;
-        const logFileFormat = config.consensus.logging.file.format; 
+        const logFileFormat = config.consensus.logging.file.format;
         const logLevel = config.consensus.logging.stdout.level;
         const fileLogLevel = config.consensus.logging.file.level;
 
@@ -156,14 +154,11 @@ describe('Consensus Client Logging Configuration Tests', () => {
             expect(scriptString).not.to.include(`--log-color`);
             expect(scriptString).not.to.include(`--logfile-debug-level ${fileLogLevel}`);
             break;
-            
+
           case 'lodestar':
             // TODO: directory logging, not sure how should be approached 
             expect(scriptString).not.to.include(`--logFileLevel ${fileLogLevel}`);
             expect(scriptString).not.to.include(`--logLevel ${logLevel}`);
-            expect(scriptString).not.to.include(`--log.json`);
-            expect(scriptString).not.to.include(`--log.console.json`);
-            expect(scriptString).not.to.include(`--log.console.verbosity ${logLevel}`);
             break;
           case 'nimbus-eth2':
             expect(scriptString).not.to.include(`--log-file ${logFileFullPath}`);

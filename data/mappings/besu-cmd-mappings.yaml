@@ -32,7 +32,7 @@ rules:
     description: >
       A list of node IDs to ban from the P2P network.
   - flag: --block-txs-selection-max-time
-    configPath:
+    configPath: deprecated
     description: >
       Deprecated. PoW consensus is deprecated. See CHANGELOG for alternative options.
       Specifies the maximum time, in milliseconds, that could be spent selecting
@@ -354,7 +354,7 @@ rules:
       Account to which mining rewards are paid. You must specify a valid
       coinbase if mining is enabled using --miner-enabled option
   - flag: --miner-enabled
-    configPath:
+    configPath: deprecated
     description: >
       Deprecated. PoW consensus is deprecated. See CHANGELOG for alternative
       options. Set if node will perform mining (default: false)
@@ -364,19 +364,19 @@ rules:
       A hex string representing the (32) bytes to be included in the extra data
       field of a mined block (default: 0x626573752032352e342e31)
   - flag: --miner-stratum-enabled
-    configPath:
+    configPath: deprecated
     description: >
       Deprecated. PoW consensus is deprecated. See CHANGELOG for alternative
       options. Set if node will perform Stratum mining (default: false).
       Compatible with Proof of Work (PoW) only. Requires the network option
       (--network) to be set to CLASSIC.
   - flag: --miner-stratum-host
-    configPath:
+    configPath: deprecated
     description: >
       Deprecated. PoW consensus is deprecated. See CHANGELOG for alternative
       options. Host for Stratum network mining service (default: 0.0.0.0)
   - flag: --miner-stratum-port
-    configPath:
+    configPath: deprecated
     description: >
       Deprecated. PoW consensus is deprecated. See CHANGELOG for alternative
       options. Stratum port binding (default: 8008)
@@ -443,12 +443,12 @@ rules:
     description: >
       Enable account level permissions (default: false)
   - flag: --permissions-accounts-contract-address
-    configPath:
+    configPath: deprecated
     description: >
       Deprecated. Onchain permissioning is deprecated. See CHANGELOG for
       alternative options. Address of the account permissioning smart contract
   - flag: --permissions-accounts-contract-enabled
-    configPath:
+    configPath: deprecated
     description: >
       Deprecated. Onchain permissioning is deprecated. See CHANGELOG for
       alternative options. Enable account level permissions via smart contract
@@ -463,18 +463,18 @@ rules:
     description: >
       Enable node level permissions (default: false)
   - flag: --permissions-nodes-contract-address
-    configPath:
+    configPath: deprecated
     description: >
       Deprecated. Onchain permissioning is deprecated. See CHANGELOG for
       alternative options. Address of the node permissioning smart contract
   - flag: --permissions-nodes-contract-enabled
-    configPath:
+    configPath: deprecated
     description: >
       Deprecated. Onchain permissioning is deprecated. See CHANGELOG for
       alternative options. Enable node level permissions via smart contract
       (default: false)
   - flag: --permissions-nodes-contract-version
-    configPath:
+    configPath: deprecated
     description: >
       Deprecated. Onchain permissioning is deprecated. See CHANGELOG for
       alternative options. Version of the EEA Node Permissioning interface

@@ -340,11 +340,12 @@ describe('Consensus Client P2P Configuration Tests', () => {
             expect(scriptString).to.contain(`--trusted-setup-file-override ${trustedSetupFile}`);
             break;
           case 'lodestar':
-            expect(scriptString).to.contain(`--staticpeers "${staticPeers}"`);
-            expect(scriptString).to.contain(`--maxpeers ${maxPeers}`);
-            expect(scriptString).to.contain(`--trustedpeers "${trustedPeers}"`);
-            expect(scriptString).to.contain(`--trusted-setup-file ${trustedSetupFile}`);
-            expect(scriptString).to.not.contain(`--no-discover`);
+            expect(scriptString).to.contain(`--targetPeers ${targetPeers}`);
+            // expect(scriptString).to.contain(`--staticpeers "${staticPeers}"`);
+            // expect(scriptString).to.contain(`--maxpeers ${maxPeers}`);
+            // expect(scriptString).to.contain(`--trustedpeers "${trustedPeers}"`);
+            // expect(scriptString).to.contain(`--trusted-setup-file ${trustedSetupFile}`);
+            // expect(scriptString).to.not.contain(`--no-discover`);
             break;
           case 'nimbus-eth2':
             expect(scriptString).to.contain(`--direct-peers ${trustedPeers}`);
@@ -643,7 +644,7 @@ describe('Consensus Client P2P Configuration Tests', () => {
             expect(scriptString).to.not.contain(`--disable-upnp`);
             break;
           case 'lodestar':
-            expect(scriptString).to.contain(`--caplin.enable-upnp`);
+            expect(scriptString).to.contain(`--nat upnp`);
             break;
           case 'nimbus-eth2':
             expect(scriptString).to.contain(`--nat upnp`);
@@ -680,7 +681,7 @@ describe('Consensus Client P2P Configuration Tests', () => {
             expect(scriptString).to.not.contain(`--disable-upnp`);
             break;
           case 'lodestar':
-            expect(scriptString).to.not.contain(`--caplin.enable-upnp`);
+            expect(scriptString).to.not.contain(`--nat upnp`);
             break;
           case 'nimbus-eth2':
             expect(scriptString).to.not.contain(`--nat upnp`);

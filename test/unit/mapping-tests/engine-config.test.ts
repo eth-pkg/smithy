@@ -27,7 +27,7 @@ describe('Engine Configuration Tests', () => {
           common: {
             ...testConfig.common,
             engine: {
-              enabled: true,  
+              enabled: true,
               api: {
                 scheme: 'http' as const,
                 host: 'localhost',
@@ -116,7 +116,7 @@ describe('Engine Configuration Tests', () => {
               ...testConfig.common,
               engine: {
                 enabled: true,
-                api: {  
+                api: {
                   scheme: 'http' as const,
                   host: 'localhost',
                   allowlist: host,
@@ -302,7 +302,7 @@ describe('Engine Configuration Tests', () => {
       'lodestar',
       'nimbus-eth2',
       'prysm',
-       'teku'
+      'teku'
     ];
 
     consensusClients.forEach(client => {

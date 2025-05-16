@@ -1,602 +1,238 @@
 name: lodestar
-version: 1.9.0
+version: 1.29.0
 valueFormat: space
 rules:
-  - flag: --authrpc.timeouts.idle
-    configPath:
-    description: >-
-      Timeout for idle connections in milliseconds for the execution engine API.
-
-  - flag: --authrpc.timeouts.read
-    configPath:
-    description: >-
-      Timeout for read operations in milliseconds for the execution engine API.
-
-  - flag: --authrpc.timeouts.write
-    configPath:
-    description: >-
-      Timeout for write operations in milliseconds for the execution engine API.
-
-  - flag: --authrpc.vhosts
-    configPath:
-    description: >-
-      Comma separated list of allowed execution engine API hosts.
-
-  - flag: --bad.block
-    configPath:
-    transform: isFlag
-    description: >-
-      Enable bad block detection and reporting.
-
-  - flag: --batchSize
-    configPath:
-    description: >-
-      Maximum batch size for execution engine API calls.
-
-  - flag: --bodies.cache
-    configPath:
-    description: >-
-      Maximum number of bodies to cache in memory.
-
   - flag: --bootnodes
     configPath: consensus.p2p.bootnodes
     enabled:
       configPath: consensus.p2p.enabled
       transform: flagEnabled
-    description: >-
-      Bootnodes for discv5 discovery. List of bootstrap nodes to connect to for initial peer discovery.
+    description: >
+        Bootnodes for discv5 discovery
 
   - flag: --builder
     configPath: consensus.builder.enabled
     transform: flagEnabled
-    description: >-
-      Enable builder interface for external block building services.
+    description: >
+        Enable builder interface
 
   - flag: --builder.allowedFaults
-    configPath:
+    configPath: 
     enabled:
       configPath: consensus.builder.enabled
       transform: flagEnabled
-    description: >-
-      Number of missed slots allowed in the fault inspection window for builder circuit breaker.
+    description: >
+        Number of missed slots allowed in the `faultInspectionWindow` for builder 
+        circuit breaker
 
   - flag: --builder.faultInspectionWindow
-    configPath:
+    configPath: 
     enabled:
       configPath: consensus.builder.enabled
       transform: flagEnabled
-    description: >-
-      Window to inspect missed slots for enabling/disabling builder circuit breaker.
+    description: >
+        Window to inspect missed slots for enabling/disabling builder circuit breaker
 
   - flag: --builder.timeout
-    configPath:
+    configPath: 
     enabled:
       configPath: consensus.builder.enabled
       transform: flagEnabled
-    description: >-
-      Timeout in milliseconds for builder API HTTP client requests.
+    description: >
+        Timeout in milliseconds for builder API HTTP client
 
   - flag: --builder.url
     configPath: consensus.builder.url
     enabled:
       configPath: consensus.builder.enabled
       transform: flagEnabled
-    description: >-
-      URL hosting the builder API endpoint for external block building services.
-
-  - flag: --caplin.adaptable-maximum-traffic-requirements
-    configPath:
-    description: >-
-      Maximum traffic requirements for adaptable traffic management.
-
-  - flag: --caplin.blocks-archive
-    configPath:
-    description: >-
-      Maximum number of blocks to archive in the caplin system.
-
-  - flag: --caplin.blobs-archive
-    configPath:
-    description: >-
-      Maximum number of blobs to archive in the caplin system.
-
-  - flag: --caplin.blobs-immediate-backfill
-    configPath:
-    description: >-
-      Maximum number of immediate backfill blobs to process in the caplin system.
-
-  - flag: --caplin.blobs-no-pruning
-    configPath:
-    description: >-
-      Disable pruning of blobs in the caplin system.
-
-  - flag: --caplin.checkpoint-sync.disable
-    configPath:
-    description: >-
-      Disable checkpoint sync in the caplin system.
-
-  - flag: --caplin.checkpoint-sync-url
-    configPath:
-    description: >-
-      URL for checkpoint sync in the caplin system.
-
-  - flag: --caplin.custom-config
-    configPath:
-    description: >-
-      Path to custom configuration file for the caplin system.
-
-  - flag: --caplin.custom-genesis
-    configPath:
-    description: >-
-      Path to custom genesis file for the caplin system.
-
-  - flag: --caplin.discovery.addr
-    configPath:
-    description: >-
-      Address for discovery in the caplin system.
-
-  - flag: --caplin.discovery.port
-    configPath:
-    description: >-
-      Port for discovery in the caplin system.
-
-  - flag: --caplin.discovery.tcpport
-    configPath:
-    description: >-
-      TCP port for discovery in the caplin system.
-
-  - flag: --caplin.enable-upnp
-    configPath: consensus.p2p.upnp
-    transform: isFlag
-    enabled:
-      configPath: consensus.p2p.enabled
-      transform: flagEnabled
-    description: >-
-      Enable UPnP for the caplin system.
-
-  - flag: --caplin.max-inbound-traffic-per-peer
-    configPath:
-    description: >-
-      Maximum inbound traffic per peer in the caplin system.
-
-  - flag: --caplin.max-outbound-traffic-per-peer
-    configPath:
-    description: >-
-      Maximum outbound traffic per peer in the caplin system.
-
-  - flag: --caplin.max-peer-count
-    configPath:
-    description: >-
-      Maximum number of peers in the caplin system.
-
-  - flag: --caplin.mev-relay-url
-    configPath:
-    description: >-
-      URL for the MEV relay in the caplin system.
-
-  - flag: --caplin.snapgen
-    configPath:
-    description: >-
-      Path to snapgen file for the caplin system.
-
-  - flag: --caplin.states-archive
-    configPath:
-    description: >-
-      Maximum number of states to archive in the caplin system.
-
-  - flag: --caplin.subscribe-all-topics
-    configPath:
-    description: >-
-      Subscribe to all topics in the caplin system.
-
-  - flag: --caplin.validator-monitor
-    configPath:
-    transform: isFlag
-    description: >-
-      Enable validator monitor in the caplin system.
+    description: >
+        Url hosting the builder API
 
   - flag: --chain.archiveBlobEpochs
-    configPath:
-    description: >-
-      Number of epochs to retain finalized blobs (minimum of MIN_EPOCHS_FOR_BLOB_SIDECARS_REQUESTS).
+    configPath: 
+    description: >
+        Number of epochs to retain finalized blobs (minimum of 
+        MIN_EPOCHS_FOR_BLOB_SIDECARS_REQUESTS)
 
   - flag: --chain.archiveStateEpochFrequency
-    configPath:
-    description: >-
-      Minimum number of epochs between archived states for state management.
+    configPath: 
+    description: >
+        Minimum number of epochs between archived states
 
   - flag: --checkpointState
     configPath: consensus.checkpointSync.state
     enabled:
       configPath: consensus.checkpointSync.enabled
       transform: flagEnabled
-    description: >-
-      Set a checkpoint state to start syncing from for faster initial sync.
+    description: >
+        Set a checkpoint state to start syncing from
 
   - flag: --checkpointSyncUrl
     configPath: consensus.checkpointSync.url
     enabled:
       configPath: consensus.checkpointSync.enabled
       transform: flagEnabled
-    description: >-
-      Server URL hosting Beacon Node APIs to fetch weak subjectivity state.
-
-  - flag: --clique.checkpoint
-    configPath:
-    description: >-
-      Path to clique checkpoint file.
-
-  - flag: --clique.datadir
-    configPath:
-    description: >-
-      Directory for clique data.
-
-  - flag: --clique.signatures
-    configPath:
-    description: >-
-      Enable clique signatures.
-
-  - flag: --clique.snapshots
-    configPath:
-    description: >-
-      Enable clique snapshots.
-
-  - flag: --config
-    configPath:
-    description: >-
-      Path to network configuration file for custom chain parameters.
-
-  - flag: --database.verbosity
-    configPath:
-    description: >-
-      Database verbosity level (error, warn, info, verbose, debug, trace).
+    description: >
+        Server url hosting Beacon Node APIs to fetch weak subjectivity state. 
+        Fetch latest finalized by default, else set --wssCheckpoint
 
   - flag: --dataDir
     configPath: consensus.dataDir
     transform: interpolate
-    description: >-
-      Base directory for storing Lodestar node data and configuration files.
-
-  - flag: --db.pagesize
-    configPath:
-    description: >-
-      Database page size.
-
-  - flag: --db.read.concurrency
-    configPath:
-    description: >-
-      Database read concurrency.
-
-  - flag: --db.size.limit
-    configPath:
-    description: >-
-      Database size limit.
-
-  - flag: --db.writemap
-    configPath:
-    description: >-
-      Enable database write map.
-
-  - flag: --dev.period
-    configPath:
-    description: >-
-      Development period in milliseconds.
+    description: >
+        Lodestar root data directory
 
   - flag: --disableLightClientServer
-    configPath:
-    transform: isFlag
-    description: >-
-      Disable light client server.
+    configPath: 
+    description: >
+        Disable light client server
 
   - flag: --disablePeerScoring
-    configPath:
-    transform: isFlag
-    description: >-
-      Disable peer scoring mechanism, typically used for testing on devnets.
+    configPath: 
+    description: >
+        Disable peer scoring, used for testing on devnets
 
-  - flag: --discovery.dns
-    configPath:
-    description: >-
-      DNS for peer discovery.
+  - flag: --discv5
+    configPath: 
+    description: >
+        Enable discv5
 
   - flag: --discoveryPort
     configPath: consensus.p2p.discoveryPort
     enabled:
       configPath: consensus.p2p.enabled
       transform: flagEnabled
-    description: >-
-      UDP port for peer discovery. Defaults to the same as the --port value.
+    description: >
+        The UDP port that discovery will listen on. Defaults to `port`
 
   - flag: --discoveryPort6
     configPath: consensus.p2p.discoveryPort6
     enabled:
       configPath: consensus.p2p.enabled
       transform: flagEnabled
-    description: >-
-      UDP port for IPv6 peer discovery. Defaults to the same as --port6.
-
-  - flag: --discv5
-    configPath:
-    transform: isFlag
-    description: >-
-      Enable discv5 peer discovery protocol for finding network peers.
-
-  - flag: --downloader.api.addr
-    configPath:
-    description: >-
-      Address for the downloader API.
-
-  - flag: --downloader.disable.ipv4
-    configPath:
-    description: >-
-      Disable IPv4 downloader.
-
-  - flag: --downloader.disable.ipv6
-    configPath:
-    description: >-
-      Disable IPv6 downloader.
-
-  - flag: --downloader.disable
-    configPath:
-    description: >-
-      Disable downloader.
-
-  - flag: --downloader.verify
-    configPath:
-    description: >-
-      Enable downloader verification.
+    description: >
+        The UDP port that discovery will listen on. Defaults to `port6`
 
   - flag: --emitPayloadAttributes
-    configPath:
-    transform: isFlag
-    description: >-
-      Flag to SSE emit execution payloadAttributes before every slot.
+    configPath: 
+    description: >
+        Flag to SSE emit execution `payloadAttributes` before every slot
 
   - flag: --enr.ip
-    configPath:
-    description: >-
-      Override ENR (Ethereum Node Record) IPv4 entry for network discovery.
+    configPath: 
+    description: >
+        Override ENR IP entry
 
   - flag: --enr.ip6
-    configPath:
-    description: >-
-      Override ENR (Ethereum Node Record) IPv6 entry for network discovery.
+    configPath: 
+    description: >
+        Override ENR IPv6 entry
 
   - flag: --enr.tcp
-    configPath:
-    description: >-
-      Override ENR TCP port entry for network discovery.
+    configPath: 
+    description: >
+        Override ENR TCP entry
 
   - flag: --enr.tcp6
-    configPath:
-    description: >-
-      Override ENR TCP port entry for IPv6 network discovery.
+    configPath: 
+    description: >
+        Override ENR (IPv6-specific) TCP entry
 
   - flag: --enr.udp
-    configPath:
-    description: >-
-      Override ENR UDP port entry for network discovery.
+    configPath: 
+    description: >
+        Override ENR UDP entry
 
   - flag: --enr.udp6
-    configPath:
-    description: >-
-      Override ENR UDP port entry for IPv6 network discovery.
-
-  - flag: --etl.bufferSize
-    configPath:
-    description: >-
-      ETL buffer size.
+    configPath: 
+    description: >
+        Override ENR (IPv6-specific) UDP entry
 
   - flag: --eth1
-    configPath:
-    transform: isFlag
-    description: >-
-      Enable following of the eth1 chain for deposit processing.
+    configPath: 
+    description: >
+        Whether to follow the eth1 chain
 
   - flag: --eth1.providerUrls
-    configPath:
-    description: >-
-      URLs to Eth1 nodes with enabled RPC for deposit contract monitoring.
-
-  - flag: --ethstats
-    configPath:
-    description: >-
-      Enable ethstats monitoring.
-
-  - flag: --experimental.commitment-history
-    configPath:
-    transform: isFlag
-    description: >-
-      Enable experimental commitment history.
+    configPath: 
+    description: >
+        Urls to Eth1 node with enabled rpc. If not provided and execution endpoint 
+        provided, will use execution.urls
 
   - flag: --execution.engineMock
-    configPath:
-    transform: isFlag
-    description: >-
-      Set the execution engine to mock mode (development only).
+    configPath: 
+    description: >
+        Set the execution engine to mock mode (development only)
 
   - flag: --execution.retries
-    configPath:
-    description: >-
-      Number of retry attempts when calling execution engine API.
+    configPath: 
+    description: >
+        Number of retries when calling execution engine API
 
   - flag: --execution.retryDelay
-    configPath:
-    description: >-
-      Delay time in milliseconds between retries for execution engine API calls.
+    configPath: 
+    description: >
+        Delay time in milliseconds between retries when retrying calls to the 
+        execution engine API
 
   - flag: --execution.timeout
-    configPath:
-    description: >-
-      Timeout in milliseconds for execution engine API HTTP client requests.
+    configPath: 
+    description: >
+        Timeout in milliseconds for execution engine API HTTP client
 
   - flag: --execution.urls
     configPath: common.engine.api.url
     transform: interpolate
-    description: >-
-      URLs to execution client engine API endpoints.
-
-  - flag: --experiment.persist.receipts
-    configPath:
-    description: >-
-      Enable experimental persist receipts.
-
-  - flag: --externalcl
-    configPath:
-    description: >-
-      Enable external CL.
-
-  - flag: --fakepow
-    configPath:
-    transform: isFlag
-    description: >-
-      Enable fake PoW.
+    description: >
+        Urls to execution client engine API
 
   - flag: --forceCheckpointSync
     configPath: consensus.checkpointSync.force
-    transform: isFlag
+    transform: flagEnabled
     enabled:
       configPath: consensus.checkpointSync.enabled
       transform: flagEnabled
-    description: >-
-      Force syncing from checkpoint state even if db state is within weak subjectivity period.
+    description: >
+        Force syncing from checkpoint state even if db state is within weak 
+        subjectivity period
 
-  - flag: --genesisStateFile
-    configPath: consensus.genesisSync.state
-    enabled:
-      configPath: consensus.genesisSync.enabled
-      transform: flagEnabled
-    description: >-
-      Path or URL to download a genesis state file in SSZ-encoded format.
-
+  ## Note, this is duplicate of --genesisStateFile, as it is both an url and a file path
   - flag: --genesisStateFile
     configPath: consensus.genesisSync.url
     enabled:
       configPath: consensus.genesisSync.enabled
       transform: flagEnabled
-    description: >-
-      Path or URL to download a genesis state file in SSZ-encoded format.
+    description: >
+        Path or URL to download a genesis state file in ssz-encoded format
 
-  - flag: --gpo.blocks
-    configPath:
-    description: >-
-      GPO blocks.
-
-  - flag: --gpo.percentile
-    configPath:
-    description: >-
-      GPO percentile.
-
-  - flag: --healthcheck
-    configPath:
-    description: >-
-      Enable health check.
-
-  - flag: --http
-    configPath: consensus.http.enabled
-    transform: flagEnabled
-    description: >-
-      Enable HTTP JSON-RPC API server.
-
-  - flag: --http.addr
-    configPath: consensus.http.address
+  ## Note, this is duplicate of --genesisStateFile, as it is both an url and a file path
+  - flag: --genesisStateFile
+    configPath: consensus.genesisSync.state
     enabled:
-      configPath: consensus.http.enabled
+      configPath: consensus.genesisSync.enabled
       transform: flagEnabled
-    description: >-
-      Network interface to bind HTTP API server to.
-
-  - flag: --http.api
-    configPath: consensus.http.api
-    transform: allowlist
-    enabled:
-      configPath: consensus.http.enabled
-      transform: flagEnabled
-    description: >-
-      Comma separated list of API namespaces to enable on HTTP server.
-
-  - flag: --http.compression
-    configPath:
-    description: >-
-      Enable HTTP compression.
-
-  - flag: --http.corsdomain
-    configPath: consensus.http.allowlist
-    transform: allowlist
-    enabled:
-      configPath: consensus.http.enabled
-      transform: flagEnabled
-    description: >-
-      Access-Control-Allow-Origin CORS header for HTTP API.
-
-  - flag: --http.dbg.single
-    configPath:
-    description: >-
-      Enable single HTTP API debug mode.
-
-  - flag: --http.port
-    configPath: consensus.http.port
-    enabled:
-      configPath: consensus.http.enabled
-      transform: flagEnabled
-    description: >-
-      Port for HTTP JSON-RPC API server.
-
-  - flag: --http.swaggerUI
-    configPath:
-    transform: isFlag
-    description: >-
-      Enable Swagger UI for API exploration at /documentation endpoint.
-
-  - flag: --http.timeouts.idle
-    configPath:
-    description: >-
-      Timeout for idle connections in milliseconds for the HTTP API.
-
-  - flag: --http.timeouts.read
-    configPath:
-    description: >-
-      Timeout for read operations in milliseconds for the HTTP API.
-
-  - flag: --http.timeouts.write
-    configPath:
-    description: >-
-      Timeout for write operations in milliseconds for the HTTP API.
-
-  - flag: --http.trace
-    configPath:
-    description: >-
-      Enable HTTP trace.
-
-  - flag: --http.vhosts
-    configPath: consensus.http.vhosts
-    transform: allowlist
-    enabled:
-      configPath: consensus.http.enabled
-      transform: flagEnabled
-    description: >-
-      Comma separated list of allowed HTTP API hosts.
-
-  - flag: --identity
-    configPath:
-    description: >-
-      Identity for the node.
+    description: >
+        Path or URL to download a genesis state file in ssz-encoded format
 
   - flag: --ignoreWeakSubjectivityCheck
     configPath: consensus.checkpointSync.ignoreWeakSubjectivityPeriod
-    transform: isFlag
+    transform: flagEnabled
     enabled:
       configPath: consensus.checkpointSync.enabled
       transform: flagEnabled
-    description: >-
-      Ignore checkpoint sync state failing weak subjectivity check (not recommended for mainnet).
+    description: >
+        Ignore the checkpoint sync state failing the weak subjectivity check. 
+        Not recommended for mainnet use
 
   - flag: --jwtId
     configPath: common.engine.communication.jwt.id
     enabled:
       configPath: common.engine.communication.method
       transform: jwtEnabled
-    description: >-
-      Optional identifier for JWT tokens used in execution client authentication.
+    description: >
+        Optional identifier to be set in the id field of the claims included in 
+        jwt tokens
 
   - flag: --jwtSecret
     configPath: common.engine.communication.jwt.file
@@ -604,120 +240,43 @@ rules:
     enabled:
       configPath: common.engine.communication.method
       transform: jwtEnabled
-    description: >-
-      Path to JWT secret file for authenticating with execution client.
+    description: >
+        File path to a shared hex-encoded jwt secret for authentication with the 
+        EL client's rpc server
 
   - flag: --listenAddress
     configPath: consensus.p2p.listenAddress
     enabled:
       configPath: consensus.p2p.enabled
       transform: flagEnabled
-    description: >-
-      IPv4 address to listen for P2P UDP and TCP connections.
+    description: >
+        The IPv4 address to listen for p2p UDP and TCP connections
 
   - flag: --listenAddress6
-    configPath:
-    description: >-
-      IPv6 address to listen for P2P UDP and TCP connections.
-
-  - flag: --log.delays
-    configPath:
+    configPath: consensus.p2p.listenAddress6
     enabled:
-      configPath: consensus.logging.enabled
+      configPath: consensus.p2p.enabled
       transform: flagEnabled
-    description: >-
-      Log delays in milliseconds.
-
-  - flag: --log.dir.disable
-    configPath:
-    enabled:
-      configPath: consensus.logging.enabled
-      transform: flagEnabled
-    description: >-
-      Disable log directory.
-
-  - flag: --log.dir.json
-    configPath:
-    enabled:
-      configPath: consensus.logging.enabled
-      transform: flagEnabled
-    description: >-
-      Enable log directory JSON.
-
-  - flag: --log.dir.path
-    configPath:
-    enabled:
-      configPath: consensus.logging.enabled
-      transform: flagEnabled
-    description: >-
-      Log directory path.
-
-  - flag: --log.dir.prefix
-    configPath:
-    enabled:
-      configPath: consensus.logging.enabled
-      transform: flagEnabled
-    description: >-
-      Log directory prefix.
-
-  - flag: --log.dir.verbosity
-    configPath:
-    enabled:
-      configPath: consensus.logging.enabled
-      transform: flagEnabled
-    description: >-
-      Log directory verbosity level.
-
-  - flag: --log.json
-    configPath: consensus.logging.stdout.format
-    transform: isJson
-    enabled:
-      - configPath: consensus.logging.stdout.enabled
-        transform: flagEnabled
-      - configPath: consensus.logging.enabled
-        transform: flagEnabled
-    description: >-
-      Enable log JSON.
-
-  - flag: --log.console.json
-    configPath: consensus.logging.stdout.format
-    transform: isJson
-    enabled:
-      - configPath: consensus.logging.stdout.enabled
-        transform: flagEnabled
-      - configPath: consensus.logging.enabled
-        transform: flagEnabled
-    description: >-
-      Enable console log JSON.
-
-  - flag: --log.console.verbosity
-    configPath: consensus.logging.stdout.level
-    enabled:
-      - configPath: consensus.logging.stdout.enabled
-        transform: flagEnabled
-      - configPath: consensus.logging.enabled
-        transform: flagEnabled
-    description: >-
-      Console log verbosity level.
+    description: >
+        The IPv6 address to listen for p2p UDP and TCP connections
 
   - flag: --logFile
     configPath: consensus.logging.file.fullPath
     transform: interpolate
     enabled:
-      - configPath: consensus.logging.file.enabled
-        transform: flagEnabled
-      - configPath: consensus.logging.enabled
-        transform: flagEnabled
-    description: >-
-      Path to output all logs to a persistent log file.
+      configPath: consensus.logging.file.enabled
+      transform: flagEnabled
+    description: >
+        Path to output all logs to a persistent log file, use 'none' to disable
 
   - flag: --logFileDailyRotate
-    configPath:
+    configPath: 
     enabled:
-      configPath: consensus.logging.enabled
+      configPath: consensus.logging.file.enabled
       transform: flagEnabled
-    description: >-
-      Number of daily log files to retain, 0 to disable rotation.
+    description: >
+        Daily rotate log files, set to an integer to limit the file count, set to 
+        0 (zero) to disable rotation
 
   - flag: --logFileLevel
     configPath: consensus.logging.file.level
@@ -726,8 +285,8 @@ rules:
         transform: flagEnabled
       - configPath: consensus.logging.enabled
         transform: flagEnabled
-    description: >-
-      Logging verbosity level for file output (error, warn, info, verbose, debug, trace).
+    description: >
+        Logging verbosity level for emitting logs to file
 
   - flag: --logLevel
     configPath: consensus.logging.stdout.level
@@ -736,722 +295,211 @@ rules:
         transform: flagEnabled
       - configPath: consensus.logging.enabled
         transform: flagEnabled
-    description: >-
-      Logging verbosity level for terminal output (error, warn, info, verbose, debug, trace).
-
-  - flag: --maxpeers
-    configPath: consensus.p2p.maxPeers
-    enabled:
-      configPath: consensus.p2p.enabled
-      transform: flagEnabled
-    description: >-
-      Maximum number of P2P peers to maintain connections with.
+    description: >
+        Logging verbosity level for emitting logs to terminal
 
   - flag: --mdns
     configPath: consensus.p2p.localPeerDiscovery
+    transform: flagEnabled
     enabled:
       configPath: consensus.p2p.enabled
       transform: flagEnabled
-    description: >-
-      Enable mDNS local peer discovery for finding nearby nodes.
+    description: >
+        Enable mdns local peer discovery
 
   - flag: --metrics
     configPath: consensus.metrics.enabled
     transform: flagEnabled
-    description: >-
-      Enable the Prometheus metrics HTTP server for monitoring.
+    enabled:
+      configPath: consensus.metrics.enabled
+      transform: flagEnabled
+    description: >
+        Enable the Prometheus metrics HTTP server
 
   - flag: --metrics.address
     configPath: consensus.metrics.address
     enabled:
       configPath: consensus.metrics.enabled
       transform: flagEnabled
-    description: >-
-      Network interface to bind metrics HTTP server to.
+    description: >
+        Listen address for the Prometheus metrics HTTP server
 
   - flag: --metrics.port
     configPath: consensus.metrics.port
     enabled:
       configPath: consensus.metrics.enabled
       transform: flagEnabled
-    description: >-
-      Port for Prometheus metrics HTTP server.
-
-  - flag: --mine
-    configPath:
-    description: >-
-      Enable mining.
-
-  - flag: --miner.etherbase
-    configPath:
-    description: >-
-      Etherbase address for mining.
-
-  - flag: --miner.extradata
-    configPath:
-    description: >-
-      Extra data for mining.
-
-  - flag: --miner.gaslimit
-    configPath:
-    description: >-
-      Gas limit for mining.
-
-  - flag: --miner.noverify
-    configPath:
-    description: >-
-      Disable verification for mining.
-
-  - flag: --miner.notify
-    configPath:
-    description: >-
-      Enable miner notification.
-
-  - flag: --miner.recommit
-    configPath:
-    description: >-
-      Recommit interval for mining.
-
-  - flag: --miner.sigfile
-    configPath:
-    description: >-
-      Path to miner signature file.
+    description: >
+        Listen TCP port for the Prometheus metrics HTTP server
 
   - flag: --monitoring.endpoint
-    configPath:
-    description: >-
-      Endpoint URL for sending client stats to remote monitoring service.
+    configPath: 
+    enabled:
+      configPath: consensus.monitoring.enabled
+      transform: flagEnabled
+    description: >
+        Enables monitoring service for sending clients stats to the specified 
+        endpoint of a remote service
 
   - flag: --monitoring.interval
-    configPath:
-    description: >-
-      Interval in milliseconds between sending client stats to monitoring service.
+    configPath: 
+    enabled:
+      configPath: consensus.monitoring.enabled
+      transform: flagEnabled
+    description: >
+        Interval in milliseconds between sending client stats to the remote service
 
   - flag: --nat
-    configPath:
-    transform: isFlag
-    description: >-
-      Enable NAT port mapping for better connectivity behind routers.
+    configPath: consensus.p2p.upnp 
+    transform: toUpnp
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
+    description: >
+        Allow configuration of non-local addresses
 
   - flag: --network
     configPath: common.network.name
-    description: >-
-      Ethereum network to connect to (mainnet, sepolia, holesky, etc).
-
-  - flag: --networkid
-    configPath: common.network.id
-    description: >-
-      Ethereum network ID.
-
-  - flag: --nodiscover
-    configPath:
-    transform: isFlag
-    description: >-
-      Disable peer discovery.
-
-  - flag: --no-downloader
-    configPath:
-    description: >-
-      Disable downloader.
-
-  - flag: --override.prague
-    configPath:
-    description: >-
-      Enable Prague override.
+    description: >
+        Name of the Ethereum Consensus chain network to join
 
   - flag: --paramsFile
-    configPath:
-    description: >-
-      Path to network configuration file for custom chain parameters.
+    configPath: 
+    description: >
+        Network configuration file
 
   - flag: --persistNetworkIdentity
     configPath: consensus.p2p.staticId
     enabled:
       configPath: consensus.p2p.enabled
       transform: flagEnabled
-    description: >-
-      Reuse the same peer-id across node restarts for stable network identity.
-
-  - flag: --polygon.pos.ssf
-    configPath:
-    description: >-
-      Polygon POS SSF.
-
-  - flag: --polygon.pos.ssf.block
-    configPath:
-    description: >-
-      Polygon POS SSF block.
-
-  - flag: --polygon.sync
-    configPath:
-    description: >-
-      Enable polygon sync.
-
-  - flag: --polygon.sync.stage
-    configPath:
-    description: >-
-      Polygon sync stage.
+    description: >
+        Whether to reuse the same peer-id across restarts
 
   - flag: --port
     configPath: consensus.p2p.port
-    enabled: 
+    enabled:
       configPath: consensus.p2p.enabled
       transform: flagEnabled
-    description: >-
-      TCP/UDP port to listen for P2P connections.
+    description: >
+        The TCP/UDP port to listen on. The UDP port can be modified by the 
+        --discoveryPort flag
 
   - flag: --port6
     configPath: consensus.p2p.port6
     enabled:
       configPath: consensus.p2p.enabled
       transform: flagEnabled
-    description: >-
-      TCP/UDP port to listen for IPv6 P2P connections.
-
-  - flag: --pprof
-    configPath:
-    description: >-
-      Enable pprof profiling.
-
-  - flag: --pprof.addr
-    configPath:
-    description: >-
-      Address for pprof profiling.
-
-  - flag: --pprof.cpuprofile
-    configPath:
-    description: >-
-      Path to CPU profile for pprof.
-
-  - flag: --pprof.port
-    configPath:
-    description: >-
-      Port for pprof profiling.
-
-  - flag: --prune.distance
-    configPath:
-    description: >-
-      Prune distance.
-
-  - flag: --prune.distance.blocks
-    configPath:
-    description: >-
-      Prune distance blocks.
-
-  - flag: --prune.mode
-    configPath:
-    description: >-
-      Prune mode.
+    description: >
+        The TCP/UDP port to listen on. The UDP port can be modified by the 
+        --discoveryPort6 flag
 
   - flag: --private
-    configPath: consensus.p2p.private
-    transform: isFlag
-    enabled:
-      configPath: consensus.p2p.enabled
-      transform: flagEnabled
-    description: >-
-      Do not send implementation details in P2P identify protocol and API requests.
-
-  - flag: --private.api.addr
-    configPath:
-    description: >-
-      Address for private API.
-
-  - flag: --private.api.ratelimit
-    configPath:
-    description: >-
-      Rate limit for private API.
-
-  - flag: --proposer.disable
-    configPath:
-    description: >-
-      Disable proposer.
+    configPath: 
+    description: >
+        Do not send implementation details over p2p identify protocol and in builder, 
+        execution engine and eth1 requests
 
   - flag: --rcConfig
-    configPath:
-    description: >-
-      RC config file path to supplement command line args (.yml, .yaml, .json).
+    configPath: 
+    description: >
+        RC file to supplement command line args, accepted formats: .yml, .yaml, .json
 
   - flag: --rest
-    configPath:
-    transform: isFlag
-    description: >-
-      Enable/disable HTTP REST API server.
+    configPath: consensus.http.enabled
+    transform: flagEnabled
+    enabled:
+      configPath: consensus.http.enabled
+      transform: flagEnabled
+    description: >
+        Enable/disable HTTP API
 
   - flag: --rest.address
-    configPath:
-    description: >-
-      Network interface to bind REST API server to.
+    configPath: consensus.http.address
+    enabled:
+      configPath: consensus.http.enabled
+      transform: flagEnabled
+    description: >
+        Set host for HTTP API
 
   - flag: --rest.cors
-    configPath:
-    description: >-
-      Configures the Access-Control-Allow-Origin CORS header for REST API.
-
-  - flag: --rest.namespace
-    configPath:
-    description: >-
-      API namespaces to expose for REST API (beacon, config, debug, etc).
-
-  - flag: --rest.port
-    configPath:
-    description: >-
-      Port for REST API server.
-
-  - flag: --rest.swaggerUI
-    configPath:
-    transform: isFlag
-    description: >-
-      Enable Swagger UI for API exploration at /documentation endpoint.
-
-  - flag: --rpc.accessList
-    configPath:
-    description: >-
-      Enable RPC access list.
-
-  - flag: --rpc.allow-unprotected-txs
-    configPath:
-    description: >-
-      Allow unprotected transactions in RPC.
-
-  - flag: --rpc.batch.concurrency
-    configPath:
-    description: >-
-      RPC batch concurrency.
-
-  - flag: --rpc.batch.limit
-    configPath:
-    description: >-
-      RPC batch limit.
-
-  - flag: --rpc.evmtimeout
-    configPath:
-    description: >-
-      RPC EVM timeout.
-
-  - flag: --rpc.gascap
-    configPath:
-    description: >-
-      RPC gas cap.
-
-  - flag: --rpc.overlay.getlogstimeout
-    configPath:
-    description: >-
-      RPC overlay getlogs timeout.
-
-  - flag: --rpc.overlay.replayblocktimeout
-    configPath:
-    description: >-
-      RPC overlay replayblock timeout.
-
-  - flag: --rpc.returndata.limit
-    configPath:
-    description: >-
-      RPC returndata limit.
-
-  - flag: --rpc.slow
-    configPath:
-    description: >-
-      Enable RPC slow mode.
-
-  - flag: --rpc.streaming.disable
-    configPath:
-    description: >-
-      Disable RPC streaming.
-
-  - flag: --rpc.subscription.filters.maxaddresses
-    configPath:
-    description: >-
-      Maximum number of addresses in RPC subscription filters.
-
-  - flag: --rpc.subscription.filters.maxheaders
-    configPath:
-    description: >-
-      Maximum number of headers in RPC subscription filters.
-
-  - flag: --rpc.subscription.filters.maxlogs
-    configPath:
-    description: >-
-      Maximum number of logs in RPC subscription filters.
-
-  - flag: --rpc.subscription.filters.maxtopics
-    configPath:
-    description: >-
-      Maximum number of topics in RPC subscription filters.
-
-  - flag: --rpc.subscription.filters.maxtxs
-    configPath:
-    description: >-
-      Maximum number of transactions in RPC subscription filters.
-
-  - flag: --rpc.txfeecap
-    configPath:
-    description: >-
-      RPC txfeecap.
-
-  - flag: --sentinel.addr
-    configPath:
-    description: >-
-      Address for the sentinel.
-
-  - flag: --sentinel.bootnodes
-    configPath:
-    description: >-
-      Bootnodes for the sentinel.
-
-  - flag: --sentinel.port
-    configPath:
-    description: >-
-      Port for the sentinel.
-
-  - flag: --sentinel.staticpeers
-    configPath:
-    description: >-
-      Static peers for the sentinel.
-
-  - flag: --shutter
-    configPath:
-    description: >-
-      Enable shutter.
-
-  - flag: --shutter.p2p.bootstrap.nodes
-    configPath:
-    description: >-
-      Bootstrap nodes for the shutter.
-
-  - flag: --shutter.p2p.listen.port
-    configPath:
-    description: >-
-      Listen port for the shutter.
-
-  - flag: --silkworm.contexts
-    configPath:
-    description: >-
-      Enable silkworm contexts.
-
-  - flag: --silkworm.exec
-    configPath:
-    description: >-
-      Enable silkworm exec.
-
-  - flag: --silkworm.rpc
-    configPath:
-    description: >-
-      Enable silkworm RPC.
-
-  - flag: --silkworm.rpc.compatibility
-    configPath:
-    description: >-
-      Enable silkworm RPC compatibility.
-
-  - flag: --silkworm.rpc.log
-    configPath:
-    description: >-
-      Enable silkworm RPC log.
-
-  - flag: --silkworm.rpc.log.maxfiles
-    configPath:
-    description: >-
-      Maximum number of files in silkworm RPC log.
-
-  - flag: --silkworm.rpc.log.maxsize
-    configPath:
-    description: >-
-      Maximum size of silkworm RPC log files.
-
-  - flag: --silkworm.rpc.log.response
-    configPath:
-    description: >-
-      Enable silkworm RPC log response.
-
-  - flag: --silkworm.rpc.workers
-    configPath:
-    description: >-
-      Number of workers for silkworm RPC.
-
-  - flag: --silkworm.sentry
-    configPath:
-    description: >-
-      Enable silkworm sentry.
-
-  - flag: --silkworm.verbosity
-    configPath:
-    description: >-
-      Silkworm verbosity level.
-
-  - flag: --snap.keepblocks
-    configPath:
-    description: >-
-      Maximum number of blocks to keep in the snapshot.
-
-  - flag: --snap.skip-state-snapshot-download
-    configPath:
-    description: >-
-      Skip state snapshot download.
-
-  - flag: --snap.state.stop
-    configPath:
-    description: >-
-      State snapshot stop.
-
-  - flag: --snap.stop
-    configPath:
-    description: >-
-      Enable snapshot stop.
-
-  - flag: --state.cache
-    configPath:
-    description: >-
-      Enable state cache.
-
-  - flag: --state.stream.disable
-    configPath:
-    description: >-
-      Disable state stream.
-
-  - flag: --staticpeers
-    configPath: consensus.p2p.staticPeers
+    configPath: consensus.http.allowlist
     transform: allowlist
     enabled:
-      configPath: consensus.p2p.enabled
+      configPath: consensus.http.enabled
       transform: flagEnabled
-    description: >-
-      Static peers for the node.
+    description: >
+        Configures the Access-Control-Allow-Origin CORS header for HTTP API
+
+  - flag: --rest.namespace
+    configPath: consensus.http.api
+    transform: allowlist
+    enabled:
+      configPath: consensus.http.enabled
+      transform: flagEnabled
+    description: >
+        Pick namespaces to expose for HTTP API. Set to '*' to enable all namespaces
+
+  - flag: --rest.port
+    configPath: consensus.http.port
+    enabled:
+      configPath: consensus.http.enabled
+      transform: flagEnabled
+    description: >
+        Set port for HTTP API
+
+  - flag: --rest.swaggerUI
+    configPath: 
+    description: >
+        Enable Swagger UI for API exploration at http://{address}:{port}/documentation
+
+  - flag: --suggestedFeeRecipient
+    configPath: 
+    description: >
+        Specify fee recipient default for collecting the EL block fees and rewards 
+        (hex string representing 20 bytes address)
 
   - flag: --subscribeAllSubnets
     configPath: consensus.p2p.subscribeAllSubnets
-    transform: isFlag
     enabled:
       configPath: consensus.p2p.enabled
       transform: flagEnabled
-    description: >-
-      Subscribe to all subnets regardless of validator count.
-
-  - flag: --suggestedFeeRecipient
-    configPath:
-    description: >-
-      Default address for collecting execution layer block fees and rewards.
-
-  - flag: --sync.loop.block.limit
-    configPath:
-    description: >-
-      Sync loop block limit.
-
-  - flag: --sync.loop.break.after
-    configPath:
-    description: >-
-      Sync loop break after.
-
-  - flag: --sync.loop.throttle
-    configPath:
-    description: >-
-      Sync loop throttle.
-
-  - flag: --sync.parallel-state-flushing
-    configPath:
-    description: >-
-      Enable parallel state flushing.
-
-  - flag: --syncmode
-    configPath: consensus.syncMode
-    transform: syncMode
-    description: >-
-      Blockchain sync mode (snap for fast sync, full for complete sync).
+    description: >
+        Subscribe to all subnets regardless of validator count
 
   - flag: --targetPeers
     configPath: consensus.p2p.targetPeers
     enabled:
       configPath: consensus.p2p.enabled
       transform: flagEnabled
-    description: >-
-      Target number of connected peers, will disconnect when exceeded.
+    description: >
+        The target connected peers. Above this number peers will be disconnected
 
   - flag: --terminal-block-hash-epoch-override
-    configPath:
-    description: >-
-      Terminal PoW block hash override activation epoch.
+    configPath: 
+    description: >
+        Terminal PoW block hash override activation epoch
 
   - flag: --terminal-block-hash-override
-    configPath:
-    description: >-
-      Override for the terminal PoW block hash.
+    configPath: 
+    description: >
+        Terminal PoW block hash override
 
   - flag: --terminal-total-difficulty-override
-    configPath:
-    description: >-
-      Override for the terminal total difficulty value.
-
-  - flag: --torrent.conns.perfile
-    configPath:
-    description: >-
-      Torrent connections per file.
-
-  - flag: --torrent.download.rate
-    configPath:
-    description: >-
-      Torrent download rate.
-
-  - flag: --torrent.download.slots
-    configPath:
-    description: >-
-      Torrent download slots.
-
-  - flag: --torrent.maxpeers
     configPath: 
-    description: >-
-      Maximum number of peers for the torrent.
-
-  - flag: --torrent.port
-    configPath:
-    description: >-
-      Port for the torrent.
-
-  - flag: --torrent.staticpeers
-    configPath:
-    description: >-
-      Static peers for the torrent.
-
-  - flag: --torrent.upload.rate
-    configPath:
-    description: >-
-      Torrent upload rate.
-
-  - flag: --torrent.verbosity
-    configPath:
-    description: >-
-      Torrent verbosity level.
-
-  - flag: --trace
-    configPath:
-    description: >-
-      Enable trace.
-
-  - flag: --trace.compat
-    configPath:
-    description: >-
-      Enable trace compatibility.
-
-  - flag: --trace.maxtraces
-    configPath:
-    description: >-
-      Maximum number of traces.
-
-  - flag: --trusted-setup-file
-    configPath: consensus.p2p.trustedSetupFile
-    enabled:
-      configPath: consensus.p2p.enabled
-      transform: flagEnabled
-    description: >-
-      Path to trusted setup file.
-
-  - flag: --trustedpeers
-    configPath: consensus.p2p.trustedPeers
-    transform: allowlist
-    enabled:
-      configPath: consensus.p2p.enabled
-      transform: flagEnabled
-    description: >-
-      Trusted peers for the node.
-
-  - flag: --txpool.api.addr
-    configPath:
-    description: >-
-      Address for the transaction pool API.
-
-  - flag: --txpool.blobpricebump
-    configPath:
-    description: >-
-      Transaction pool blob price bump.
-
-  - flag: --txpool.blobslots
-    configPath:
-    description: >-
-      Transaction pool blob slots.
-
-  - flag: --txpool.commit.every
-    configPath:
-    description: >-
-      Transaction pool commit every.
-
-  - flag: --txpool.disable
-    configPath:
-    description: >-
-      Disable transaction pool.
-
-  - flag: --txpool.globalbasefeeslots
-    configPath:
-    description: >-
-      Transaction pool global base feeslots.
-
-  - flag: --txpool.globalqueue
-    configPath:
-    description: >-
-      Transaction pool global queue.
-
-  - flag: --txpool.globalslots
-    configPath:
-    description: >-
-      Transaction pool global slots.
-
-  - flag: --txpool.pricelimit
-    configPath:
-    description: >-
-      Transaction pool pricelimit.
-
-  - flag: --txpool.pricebump
-    configPath:
-    description: >-
-      Transaction pool price bump.
-
-  - flag: --txpool.trace.senders
-    configPath:
-    description: >-
-      Enable transaction pool trace senders.
-
-  - flag: --txpool.totalblobpoollimit
-    configPath:
-    description: >-
-      Transaction pool total blob pool limit.
+    description: >
+        Terminal PoW block TTD override
 
   - flag: --validatorMonitorLogs
-    configPath:
-    transform: isFlag
-    description: >-
-      Enable logging of validator monitor events as info level messages.
-
-  - flag: --v5disc
-    configPath:
-    description: >-
-      Enable v5disc.
-
-  - flag: --vmdebug
-    configPath:
-    description: >-
-      Enable VM debug.
-
-  - flag: --webseed
-    configPath:
-    description: >-
-      Enable webseed.
-
-  - flag: --ws
-    configPath: consensus.ws.enabled
-    transform: flagEnabled
-    description: >-
-      Enable WebSocket JSON-RPC API server.
-
-  - flag: --ws.port
-    configPath: consensus.ws.port
-    enabled:
-      configPath: consensus.ws.enabled
-      transform: flagEnabled
-    description: >-
-      Port for WebSocket JSON-RPC API server.
+    configPath: 
+    description: >
+        Log validator monitor events as info
 
   - flag: --wssCheckpoint
     configPath: consensus.checkpointSync.wss
     enabled:
       configPath: consensus.checkpointSync.enabled
       transform: flagEnabled
-    description: >-
-      Weak subjectivity checkpoint in <blockRoot>:<epoch> format for sync starting point. 
+    description: >
+        Start beacon node off a state at the provided weak subjectivity checkpoint, 
+        in <blockRoot>:<epoch> format (e.g. 0x1234:100) 

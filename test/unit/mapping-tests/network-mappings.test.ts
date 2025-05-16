@@ -101,7 +101,6 @@ describe('Network Mappings Tests', () => {
                 break;
               case 'lodestar':
                 expect(scriptString).to.contain(`--network ${network}`);
-                expect(scriptString).to.contain(`--networkid ${getNetworkId(network)}`);
                 break;
               case 'nimbus-eth2':
                 expect(scriptString).to.contain(`--network ${network}`);
@@ -158,7 +157,6 @@ describe('Network Mappings Tests', () => {
                 break;
               case 'lodestar':
                 expect(scriptString).to.contain(`--network ${network}`);
-                expect(scriptString).to.not.contain(`--networkid ${getNetworkId(network)}`);
                 break;
               case 'nimbus-eth2':
                 expect(scriptString).to.not.contain(`--network ${network}`);

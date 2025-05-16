@@ -553,7 +553,7 @@ rules:
       One or more comma-delimited multiaddrs to manually connect to a libp2p peer
       without an ENR.
   - flag: --light-client-server
-    configPath: 
+    configPath: deprecated
     transform: isFlag
     description: DEPRECATED
   - flag: --listen-address

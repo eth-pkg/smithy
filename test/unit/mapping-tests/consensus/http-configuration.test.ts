@@ -61,12 +61,11 @@ describe('Consensus Client HTTP Configuration Tests', () => {
             // TODO: vhosts are not present in flags
             break;
           case 'lodestar':
-            expect(scriptString).to.include('--http');
-            expect(scriptString).to.include(`--http.port ${httpPort}`);
-            expect(scriptString).to.include(`--http.corsdomain "${httpAllowlist}"`);
-            expect(scriptString).to.include(`--http.api "${httpApi}"`);
-            expect(scriptString).to.include(`--http.addr ${httpAddress}`);
-            expect(scriptString).to.include(`--http.vhosts "${httpVhosts}"`);
+            expect(scriptString).to.include('--rest');
+            expect(scriptString).to.include(`--rest.port ${httpPort}`);
+            expect(scriptString).to.include(`--rest.cors "${httpAllowlist}"`);
+            expect(scriptString).to.include(`--rest.namespace "${httpApi}"`);
+            expect(scriptString).to.include(`--rest.address ${httpAddress}`);
             // TODO: why does lodestar has two such flags? vhosts and corsdomain
             break;
           case 'nimbus-eth2':
@@ -123,7 +122,6 @@ describe('Consensus Client HTTP Configuration Tests', () => {
         const httpApi = config.consensus.http.api.join(',');
         const httpAddress = config.consensus.http.address;
         const httpAllowlist = config.consensus.http.allowlist.join(',');
-        const httpVhosts = config.consensus.http.vhosts.join(',');
         switch (client) {
           case 'lighthouse':
             expect(scriptString).to.not.include('--http');
@@ -132,12 +130,11 @@ describe('Consensus Client HTTP Configuration Tests', () => {
             expect(scriptString).to.not.include(`--http-allow-origin "${httpAllowlist}"`);
             break;
           case 'lodestar':
-            expect(scriptString).to.not.include('--http');
-            expect(scriptString).to.not.include(`--http.port ${httpPort}`);
-            expect(scriptString).to.not.include(`--http.corsdomain "${httpAllowlist}"`);
-            expect(scriptString).to.not.include(`--http.api "${httpApi}"`);
-            expect(scriptString).to.not.include(`--http.addr ${httpAddress}`);
-            expect(scriptString).to.not.include(`--http.vhosts "${httpVhosts}"`);
+            expect(scriptString).to.not.include('--rest');
+            expect(scriptString).to.not.include(`--rest.port ${httpPort}`);
+            expect(scriptString).to.not.include(`--rest.cors "${httpAllowlist}"`);
+            expect(scriptString).to.not.include(`--rest.namespace "${httpApi}"`);
+            expect(scriptString).to.not.include(`--rest.address ${httpAddress}`);
             break;
           case 'nimbus-eth2':
             expect(scriptString).to.not.include('--rest');

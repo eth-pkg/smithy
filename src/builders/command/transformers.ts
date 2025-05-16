@@ -50,7 +50,15 @@ export const transformFunctions: Record<string, TransformFunction | TransformFun
     }
     return value
   },
-  toUpnp: () => 'upnp',
+  toUpnp: (value: string | boolean) => {
+    if (value == true || value == 'true') {
+      return 'upnp'
+    }
+    if (value == false || value == 'false') {
+      return 'none'
+    }
+    return value
+  },
 
 }
 
