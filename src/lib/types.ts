@@ -218,13 +218,33 @@ export interface Execution {
   dataDir: string
   http: HttpConfig
   metrics: MetricsConfig
-  p2p: P2PConfig
+  p2p: ConsensusP2PConfig
   ws: WebSocketConfig
   graphql: GraphQLConfig
   gpo: GpoConfig
   logging: LogConfig
 }
-
+export type ConsensusP2PConfig = {
+  enabled: boolean
+  listenAddress: string
+  port: number // both udp and tcp
+  port6: number // both udp and tcp
+  quicPort: number // quic
+  quicPort6: number // quic
+  discoveryPort: number // discovery udp
+  discoveryPort6: number // discovery udp
+  bootnodes: string[]
+  staticPeers: string[]
+  trustedPeers: string[]
+  targetPeers: number
+  maxPeers: number
+  trustedSetupFile: string
+  nodiscover: boolean
+  localPeerDiscovery: boolean
+  subscribeAllSubnets: boolean
+  upnp: boolean
+  staticId: string
+}
 export type GpoConfig = {
   enabled: boolean
   blocks: number

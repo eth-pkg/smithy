@@ -49,7 +49,9 @@ export const transformFunctions: Record<string, TransformFunction | TransformFun
       return `"${value.join(',')}"`
     }
     return value
-  }
+  },
+  toUpnp: () => 'upnp',
+
 }
 
 export const flagFunctions: Record<string, FlagEnabledFunction | FlagTransformFunction> = {
@@ -86,6 +88,7 @@ export const flagFunctions: Record<string, FlagEnabledFunction | FlagTransformFu
   ipcEnabled: (value: string): boolean => value === "ipc",
 
   isJson: (value: string): boolean => value === "json",
+
 }
 
 export const transformers = {

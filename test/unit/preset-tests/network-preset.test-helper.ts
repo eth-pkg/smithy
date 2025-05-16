@@ -252,31 +252,24 @@ export const testConfig: NodeConfig = {
     },
     p2p: {
       enabled: false,
-      maxPeers: 50,
+      listenAddress: '0.0.0.0',
       port: 30303,
       port6: 30304,
+      quicPort: 9002,
+      quicPort6: 9003,
+      discoveryPort: 9002,
+      discoveryPort6: 9003,
       bootnodes: [],
-      enrAddress: '',
-      allowlist: ['localhost'],
-      denylist: [],
-      discovery: {
-        enabled: false,
-        port: 30303,
-        dns: {
-          enabled: false,
-          url: ''
-        },
-        v4: {
-          enabled: false,
-          port: 30303,
-          address: ''
-        },
-        v5: {
-          enabled: false,
-          port: 30303,
-          address: ''
-        }
-      },
+      staticPeers: [],
+      trustedPeers: [],
+      targetPeers: 25,
+      maxPeers: 25,
+      trustedSetupFile: '',
+      nodiscover: false,
+      localPeerDiscovery: false,
+      subscribeAllSubnets: false,
+      upnp: false,
+      staticId: ''
     },
     ws: {
       enabled: false,

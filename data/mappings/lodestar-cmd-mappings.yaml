@@ -39,7 +39,10 @@ rules:
       Maximum number of bodies to cache in memory.
 
   - flag: --bootnodes
-    configPath:
+    configPath: consensus.p2p.bootnodes
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >-
       Bootnodes for discv5 discovery. List of bootstrap nodes to connect to for initial peer discovery.
 
@@ -142,7 +145,11 @@ rules:
       TCP port for discovery in the caplin system.
 
   - flag: --caplin.enable-upnp
-    configPath:
+    configPath: consensus.p2p.upnp
+    transform: isFlag
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >-
       Enable UPnP for the caplin system.
 
@@ -292,12 +299,18 @@ rules:
       DNS for peer discovery.
 
   - flag: --discoveryPort
-    configPath:
+    configPath: consensus.p2p.discoveryPort
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >-
       UDP port for peer discovery. Defaults to the same as the --port value.
 
   - flag: --discoveryPort6
-    configPath:
+    configPath: consensus.p2p.discoveryPort6
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >-
       UDP port for IPv6 peer discovery. Defaults to the same as --port6.
 
@@ -595,7 +608,10 @@ rules:
       Path to JWT secret file for authenticating with execution client.
 
   - flag: --listenAddress
-    configPath:
+    configPath: consensus.p2p.listenAddress
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >-
       IPv4 address to listen for P2P UDP and TCP connections.
 
@@ -732,8 +748,10 @@ rules:
       Maximum number of P2P peers to maintain connections with.
 
   - flag: --mdns
-    configPath:
-    transform: isFlag
+    configPath: consensus.p2p.localPeerDiscovery
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >-
       Enable mDNS local peer discovery for finding nearby nodes.
 
@@ -847,8 +865,10 @@ rules:
       Path to network configuration file for custom chain parameters.
 
   - flag: --persistNetworkIdentity
-    configPath:
-    transform: isFlag
+    configPath: consensus.p2p.staticId
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >-
       Reuse the same peer-id across node restarts for stable network identity.
 
@@ -874,14 +894,17 @@ rules:
 
   - flag: --port
     configPath: consensus.p2p.port
-    enabled:
+    enabled: 
       configPath: consensus.p2p.enabled
       transform: flagEnabled
     description: >-
       TCP/UDP port to listen for P2P connections.
 
   - flag: --port6
-    configPath:
+    configPath: consensus.p2p.port6
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >-
       TCP/UDP port to listen for IPv6 P2P connections.
 
@@ -921,8 +944,11 @@ rules:
       Prune mode.
 
   - flag: --private
-    configPath:
+    configPath: consensus.p2p.private
     transform: isFlag
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >-
       Do not send implementation details in P2P identify protocol and API requests.
 
@@ -1184,13 +1210,20 @@ rules:
       Disable state stream.
 
   - flag: --staticpeers
-    configPath:
+    configPath: consensus.p2p.staticPeers
+    transform: allowlist
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >-
       Static peers for the node.
 
   - flag: --subscribeAllSubnets
-    configPath:
+    configPath: consensus.p2p.subscribeAllSubnets
     transform: isFlag
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >-
       Subscribe to all subnets regardless of validator count.
 
@@ -1226,7 +1259,10 @@ rules:
       Blockchain sync mode (snap for fast sync, full for complete sync).
 
   - flag: --targetPeers
-    configPath:
+    configPath: consensus.p2p.targetPeers
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >-
       Target number of connected peers, will disconnect when exceeded.
 
@@ -1261,7 +1297,7 @@ rules:
       Torrent download slots.
 
   - flag: --torrent.maxpeers
-    configPath:
+    configPath: 
     description: >-
       Maximum number of peers for the torrent.
 
@@ -1301,12 +1337,19 @@ rules:
       Maximum number of traces.
 
   - flag: --trusted-setup-file
-    configPath:
+    configPath: consensus.p2p.trustedSetupFile
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >-
       Path to trusted setup file.
 
   - flag: --trustedpeers
-    configPath:
+    configPath: consensus.p2p.trustedPeers
+    transform: allowlist
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >-
       Trusted peers for the node.
 

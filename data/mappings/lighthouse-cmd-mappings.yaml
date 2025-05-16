@@ -40,7 +40,10 @@ rules:
       Specifies how many blocks the database should cache in memory
       [default: 5]
   - flag: --boot-nodes
-    configPath: consensus.bootnodes
+    configPath: consensus.p2p.bootnodes
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >-
       One or more comma-delimited base64-encoded ENR's to bootstrap the p2p
       network. Multiaddr is also supported.
@@ -250,17 +253,26 @@ rules:
     description: >-
       Disables the outbound rate limiter (requests sent by this node).
   - flag: --disable-upnp
-    configPath: 
-    transform: isFlag
+    configPath: consensus.p2p.upnp
+    transform: negate
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >-
       Disables UPnP support. Setting this will prevent Lighthouse from attempting
       to automatically establish external port mappings.
   - flag: --discovery-port
-    configPath: consensus.discoveryPort
+    configPath: consensus.p2p.discoveryPort
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >-
       The UDP port that discovery will listen on. Defaults to `port`
   - flag: --discovery-port6
-    configPath: 
+    configPath: consensus.p2p.discoveryPort6
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >-
       The UDP port that discovery will listen on over IPv6 if listening over both
       IPv4 and IPv6. Defaults to `port6`
@@ -313,8 +325,11 @@ rules:
       The UDP6 port of the local ENR. Set this only if you are sure other nodes
       can connect to your local node on this port over IPv6.
   - flag: --enable-private-discovery
-    configPath: 
+    configPath: consensus.p2p.localPeerDiscovery
     transform: isFlag
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >-
       Lighthouse by default does not discover private IP addresses. Set this flag
       to enable connection attempts to local addresses.
@@ -529,7 +544,11 @@ rules:
       developers. This directory is not pruned, users should be careful to avoid
       filling up their disks.
   - flag: --libp2p-addresses
-    configPath: 
+    configPath: consensus.p2p.staticPeers
+    transform: allowlist
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >-
       One or more comma-delimited multiaddrs to manually connect to a libp2p peer
       without an ENR.
@@ -538,7 +557,10 @@ rules:
     transform: isFlag
     description: DEPRECATED
   - flag: --listen-address
-    configPath: 
+    configPath: consensus.p2p.listenAddress
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >-
       The address lighthouse will listen for UDP and TCP connections. To listen
       over IPv4 and IPv6 set this flag twice with the different values.
@@ -715,7 +737,10 @@ rules:
       Data directory for network keys. Defaults to network/ inside the beacon
       node dir.
   - flag: --port
-    configPath: consensus.p2pPort
+    configPath: consensus.p2p.port
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >-
       The TCP/UDP ports to listen on. There are two UDP ports. The discovery UDP
       port will be set to this value and the Quic UDP port will be set to this
@@ -724,7 +749,10 @@ rules:
       both IPv4 and IPv6 the --port flag will apply to the IPv4 address and --port6
       to the IPv6 address. [default: 9000]
   - flag: --port6
-    configPath: consensus.port6
+    configPath: consensus.p2p.port6
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >-
       The TCP/UDP ports to listen on over IPv6 when listening over both IPv4 and
       IPv6. Defaults to --port. The Quic UDP port will be set to this value + 1.
@@ -803,11 +831,17 @@ rules:
       If present, the chain database will be deleted without confirmation. Use
       with caution.
   - flag: --quic-port
-    configPath: 
+    configPath: consensus.p2p.quicPort
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >-
       The UDP port that quic will listen on. Defaults to `port` + 1
   - flag: --quic-port6
-    configPath: 
+    configPath: consensus.p2p.quicPort6
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >-
       The UDP port that quic will listen on over IPv6 if listening over both IPv4
       and IPv6. Defaults to `port6` + 1
@@ -919,8 +953,11 @@ rules:
     description: >-
       If present, read all user inputs from stdin instead of tty.
   - flag: --subscribe-all-subnets
-    configPath: 
+    configPath: consensus.p2p.subscribeAllSubnets
     transform: isFlag
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >-
       Subscribe to all subnets regardless of validator count. This will also
       advertise the beacon node as being long-lived subscribed to all subnets.
@@ -931,7 +968,10 @@ rules:
       not have one configured. You should set this flag on the validator client
       instead of (or in addition to) setting it here.
   - flag: --target-peers
-    configPath: consensus.maxPeers
+    configPath: consensus.p2p.targetPeers
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >-
       The target number of peers.
   - flag: --testnet-dir
@@ -940,12 +980,19 @@ rules:
       Path to directory containing eth2_testnet specs. Defaults to a hard-coded
       Lighthouse testnet. Only effective if there is no existing database.
   - flag: --trusted-peers
-    configPath: 
+    configPath: consensus.p2p.trustedPeers
+    transform: allowlist
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >-
       One or more comma-delimited trusted peer ids which always have the highest
       score according to the peer scoring system.
   - flag: --trusted-setup-file-override
-    configPath: 
+    configPath: consensus.p2p.trustedSetupFile
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >-
       Path to a json file containing the trusted setup params. NOTE: This will
       override the trusted setup that is generated from the mainnet kzg ceremony.

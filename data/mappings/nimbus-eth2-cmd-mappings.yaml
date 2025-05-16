@@ -3,11 +3,17 @@ version: 24.1.0
 valueFormat: space
 rules:
   - flag: --agent-string
-    configPath: 
+    configPath: consensus.p2p.staticId
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >
       Node agent string which is used as identifier in network [=nimbus].
-  - flag: --bootstrap-node
-    configPath: 
+  - flag: --boot-nodes
+    configPath: consensus.p2p.bootnodes
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >
       Specifies one or more bootstrap nodes to use when connecting to the network.
   - flag: --bootstrap-file
@@ -19,8 +25,11 @@ rules:
     transform: interpolate
     description: >
       The directory where nimbus will store all blockchain data.
-  - flag: --direct-peer
-    configPath: 
+  - flag: --direct-peers
+    configPath: consensus.p2p.staticPeers
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >
       The list of privileged, secure and known peers to connect and maintain the connection to.
       This requires a not random netkey-file. In the multiaddress format like:
@@ -151,7 +160,10 @@ rules:
     description: >
       Serve data for enabling light clients to stay in sync with the network [=true].
   - flag: --listen-address
-    configPath: consensus.p2p.enrAddress
+    configPath: consensus.p2p.listenAddress
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >
       Listening address for the Ethereum LibP2P and Discovery v5 traffic [=*].
   - flag: --local-block-value-boost
@@ -205,7 +217,11 @@ rules:
     description: >
       Listening HTTP port of the metrics server [=8008].
   - flag: --nat
-    configPath: consensus.p2p.nat
+    configPath: consensus.p2p.upnp
+    transform: toUpnp
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >
       Specify method to use for determining public address. Must be one of: any, none, upnp,
       pmp, extip:<IP> [=any].
@@ -330,7 +346,10 @@ rules:
     description: >
       Textual template for the contents of the status bar.
   - flag: --subscribe-all-subnets
-    configPath: 
+    configPath: consensus.p2p.subscribeAllSubnets
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: >
       Subscribe to all subnet topics when gossiping [=false].
   - flag: --suggested-fee-recipient
@@ -370,7 +389,7 @@ rules:
       Recent trusted finalized state root to sync from external beacon API (with
       `--external-beacon-api-url`).
   - flag: --udp-port
-    configPath: consensus.p2p.udpPort
+    configPath: consensus.p2p.discoveryPort
     enabled:
       configPath: consensus.p2p.enabled
       transform: flagEnabled

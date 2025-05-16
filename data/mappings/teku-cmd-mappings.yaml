@@ -320,7 +320,7 @@ rules:
     description: |
       Enables discv5 discovery
   - flag: --p2p-discovery-site-local-addresses-enabled
-    configPath: consensus.p2p.enabled
+    configPath: consensus.p2p.localPeerDiscovery
     enabled: 
       configPath: consensus.p2p.enabled
       transform: flagEnabled
@@ -332,15 +332,22 @@ rules:
     description: |
       Enables P2P
   - flag: --p2p-interface
-    configPath: 
+    configPath: consensus.p2p.listenAddress
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: |
       The network interface(s) on which the node listens for P2P communication
   - flag: --p2p-nat-method
-    configPath: 
+    configPath: consensus.p2p.upnp
+    transform: toUpnp
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: |
       Specify the NAT circumvention method to be used, possible values are UPNP, NONE
   - flag: --p2p-peer-lower-bound
-    configPath: consensus.p2p.minPeers
+    configPath: 
     enabled: 
       configPath: consensus.p2p.enabled
       transform: flagEnabled
@@ -368,7 +375,7 @@ rules:
     description: |
       P2P IPv6 port. This port is only used when listening over both IPv4 and IPv6
   - flag: --p2p-private-key-file
-    configPath: 
+    configPath: consensus.p2p.privKeyFile
     enabled: 
       configPath: consensus.p2p.enabled
       transform: flagEnabled
@@ -376,27 +383,28 @@ rules:
       This node's private key file in LibP2P format
   - flag: --p2p-static-peers
     configPath: consensus.p2p.staticPeers
+    transform: allowlist
     enabled: 
       configPath: consensus.p2p.enabled
       transform: flagEnabled
     description: |
       Specifies a list of 'static' peers with which to establish and maintain connections
   - flag: --p2p-subscribe-all-subnets-enabled
-    configPath: 
+    configPath: consensus.p2p.subscribeAllSubnets
     enabled: 
       configPath: consensus.p2p.enabled
       transform: flagEnabled
     description: |
       Enable subscribing to all subnets
   - flag: --p2p-udp-port
-    configPath: consensus.p2p.udpPort
+    configPath: consensus.p2p.discoveryPort
     enabled: 
       configPath: consensus.p2p.enabled
       transform: flagEnabled
     description: |
       UDP port used for discovery. The default is the port specified in --p2p-port
   - flag: --p2p-udp-port-ipv6
-    configPath: consensus.p2p.udpPort
+    configPath: consensus.p2p.discoveryPort6
     enabled: 
       configPath: consensus.p2p.enabled
       transform: flagEnabled

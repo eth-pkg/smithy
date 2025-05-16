@@ -109,7 +109,10 @@ rules:
     configPath:
     description: Enables request tracing
   - flag: --enable-upnp
-    configPath:
+    configPath: consensus.p2p.upnp
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: Enable UPnP when possible
   - flag: --engine-endpoint-timeout-seconds
     configPath:
@@ -298,7 +301,7 @@ rules:
       transform: flagEnabled
     description: The IP address advertised by libp2p
   - flag: --p2p-local-ip
-    configPath:
+    configPath: consensus.p2p.listenAddress
     enabled: 
       configPath: consensus.p2p.enabled
       transform: flagEnabled
@@ -316,19 +319,19 @@ rules:
       transform: flagEnabled
     description: The file containing the metadata for peer communication
   - flag: --p2p-priv-key
-    configPath:
+    configPath: consensus.p2p.privKey
     enabled: 
       configPath: consensus.p2p.enabled
       transform: flagEnabled
     description: The file containing the private key for peer communication
   - flag: --p2p-quic-port
-    configPath: consensus.p2p.port
+    configPath: consensus.p2p.quicPort
     enabled: 
       configPath: consensus.p2p.enabled
       transform: flagEnabled
     description: The QUIC port used by libp2p
   - flag: --p2p-static-id
-    configPath:
+    configPath: consensus.p2p.staticId
     enabled: 
       configPath: consensus.p2p.enabled
       transform: flagEnabled
@@ -340,13 +343,14 @@ rules:
       transform: flagEnabled
     description: The TCP port used by libp2p
   - flag: --p2p-udp-port
-    configPath: consensus.p2p.udpPort
+    configPath: consensus.p2p.discoveryPort
     enabled: 
       configPath: consensus.p2p.enabled
       transform: flagEnabled
     description: The UDP port used by the discovery service discv5
   - flag: --peer
-    configPath: consensus.p2p.bootnodes
+    configPath: consensus.p2p.trustedPeers
+    transform: allowlist
     enabled: 
       configPath: consensus.p2p.enabled
       transform: flagEnabled
@@ -394,8 +398,11 @@ rules:
   - flag: --slots-per-archive-point
     configPath:
     description: The slot durations of when an archived state gets saved
-  - flag: --subscribe-all-subnets
-    configPath:
+  - flag: --subscribe-all-subnets 
+    configPath: consensus.p2p.subscribeAllSubnets
+    enabled:
+      configPath: consensus.p2p.enabled
+      transform: flagEnabled
     description: Subscribe to all possible attestation and sync subnets
   - flag: --suggested-fee-recipient
     configPath: validator.feeRecipientAddress

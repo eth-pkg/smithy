@@ -87,7 +87,7 @@ properties:
         minimum: 1024
         maximum: 65535
         default: 9000
-        description: "Port number for P2P networking of the consensus client"
+        description: "Port number for P2P UDP and TCP"
         errorMessage:
           minimum: "P2P port must be >= 1024"
       port6:
@@ -95,25 +95,84 @@ properties:
         minimum: 1024
         maximum: 65535
         default: 9000
-        description: "IPv6 P2P port number (0 to disable IPv6)"    
-      udpPort:
+        description: "IPv6 P2P port number"    
+      quicPort:
         type: number
         minimum: 1024
         maximum: 65535
-        default: 9000
-        description: "Port number for P2P networking of the consensus client"
-        errorMessage:
-          minimum: "P2P port must be >= 1024"
+        default: 9001
+        description: "Quic P2P port number"
+      quicPort6:
+        type: number
+        minimum: 1024
+        maximum: 65535
+        default: 9001
+        description: "Quic P2P port number"
+      discoveryPort:
+        type: number
+        minimum: 1024
+        maximum: 65535
+        default: 9002
+        description: "Discovery P2P port number"
+      discoveryPort6:
+        type: number
+        minimum: 1024
+        maximum: 65535
+        default: 9002
+        description: "Discovery P2P port number"
       bootnodes:
         type: array
         items:
           type: string
         default: []
         description: "List of bootnode enode URLs for initial peer discovery"
-      enrAddress:
+      staticPeers:
+        type: array
+        items:
+          type: string
+        default: []
+        description: "List of static peers to connect to"
+      trustedPeers:
+        type: array
+        items:
+          type: string
+        default: []
+        description: "List of trusted peers to connect to"
+      targetPeers:
+        type: number
+        default: 25
+        description: "Target number of peers to connect to"
+      maxPeers:
+        type: number
+        default: 25
+        description: "Maximum number of peers to connect to"
+      trustedSetupFile:
         type: string
         default: ""
-        description: "ENR (Ethereum Node Record) address to advertise"    
+        description: "Path to the trusted setup file"
+      nodiscover:
+        type: boolean
+        default: false
+        description: "Disable peer discovery"
+      listenAddress:
+        type: string
+        default: ""
+        description: "Listen address for P2P networking"
+      localPeerDiscovery:
+        type: boolean
+        default: false
+        description: "Enable local peer discovery"
+      subscribeAllSubnets:
+        type: boolean
+        default: false
+      upnp:
+        type: boolean
+        default: false
+        description: "Enable UPnP"
+      staticId:
+        type: string
+        default: ""
+        description: "Static ID for the node"
   checkpointSync:
     type: object
     properties:
