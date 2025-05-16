@@ -141,50 +141,64 @@ rules:
       The initial state. This value should be a file or URL pointing to an SSZ-encoded finalized
       checkpoint state
   - flag: --log-color-enabled
-    configPath: 
+    configPath: consensus.logging.stdout.color
+    transform: flagEnabled
     enabled: 
-      configPath: consensus.log.enabled
-      transform: flagEnabled
+      - configPath: consensus.logging.stdout.enabled
+        transform: flagEnabled
+      - configPath: consensus.logging.enabled
+        transform: flagEnabled
     description: |
       Whether Status and Event log messages include a console color display code
   - flag: --log-destination
-    configPath:
+    configPath: 
     enabled: 
-        configPath: consensus.log.enabled
+      - configPath: consensus.logging.stdout.enabled
+        transform: flagEnabled
+      - configPath: consensus.logging.enabled
         transform: flagEnabled
     description: |
       Whether a logger is added for the console, the log file, or both
   - flag: --log-file
-    configPath: consensus.log.file
+    configPath: consensus.logging.file.fullPath
+    transform: interpolate
     enabled: 
-      configPath: consensus.log.enabled
-      transform: flagEnabled
+      - configPath: consensus.logging.file.enabled
+        transform: flagEnabled
+      - configPath: consensus.logging.enabled
+        transform: flagEnabled
     description: |
       Path containing the location (relative or absolute) and the log filename
   - flag: --log-file-name-pattern
-    configPath: consensus.log.file
+    configPath: 
     enabled: 
-      configPath: consensus.log.enabled
-      transform: flagEnabled
+      - configPath: consensus.logging.file.enabled
+        transform: flagEnabled
+      - configPath: consensus.logging.enabled
+        transform: flagEnabled
     description: |
       Pattern for the filename to apply to rolled over log files
   - flag: --log-include-events-enabled
-    configPath: consensus.log.enabled
+    configPath: 
     enabled: 
-      configPath: consensus.log.enabled
+      configPath: consensus.logging.enabled
       transform: flagEnabled
     description: |
       Whether frequent update events are logged (e.g. every slot and epoch event)
   - flag: --log-include-validator-duties-enabled
-    configPath: consensus.log.enabled
+    configPath: 
     enabled: 
-      configPath: consensus.log.enabled
-      transform: flagEnabled
+      - configPath: consensus.logging.enabled
+        transform: flagEnabled
     description: |
       Whether events are logged when validators perform duties
   - flag: --logging
-    configPath: consensus.log.enabled
-    transform: flagEnabled
+    configPath: consensus.logging.stdout.level
+    enabled:
+      - configPath: consensus.logging.stdout.enabled
+        transform: flagEnabled
+      - configPath: consensus.logging.enabled
+        transform: flagEnabled
     description: |
       Logging verbosity levels: OFF, FATAL, ERROR, WARN, INFO, DEBUG, TRACE, ALL
   - flag: --metrics-block-production-performance-tracking-enabled

@@ -159,17 +159,22 @@ rules:
     description: >
       Increase execution layer block values for builder bid comparison by a percentage [=10].
   - flag: --log-file
-    configPath: consensus.log.file
+    configPath: consensus.logging.file.fullPath
+    transform: interpolate
     enabled:
-      configPath: consensus.log.enabled
-      transform: flagEnabled
+      - configPath: consensus.logging.file.enabled
+        transform: flagEnabled
+      - configPath: consensus.logging.enabled
+        transform: flagEnabled
     description: >
       Specifies a path for the written JSON log file (deprecated).
   - flag: --log-level
-    configPath: consensus.log.level 
+    configPath: consensus.logging.file.level
     enabled:
-      configPath: consensus.log.enabled
-      transform: flagEnabled
+      - configPath: consensus.logging.file.enabled
+        transform: flagEnabled
+      - configPath: consensus.logging.enabled
+        transform: flagEnabled
     description: >
       Sets the log level for process and topics (e.g. "DEBUG; TRACE:discv5,libp2p;
       REQUIRED:none; DISABLED:none") [=INFO].

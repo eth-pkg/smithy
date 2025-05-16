@@ -606,66 +606,120 @@ rules:
 
   - flag: --log.delays
     configPath:
+    enabled:
+      configPath: consensus.logging.enabled
+      transform: flagEnabled
     description: >-
       Log delays in milliseconds.
 
   - flag: --log.dir.disable
     configPath:
+    enabled:
+      configPath: consensus.logging.enabled
+      transform: flagEnabled
     description: >-
       Disable log directory.
 
   - flag: --log.dir.json
     configPath:
+    enabled:
+      configPath: consensus.logging.enabled
+      transform: flagEnabled
     description: >-
       Enable log directory JSON.
 
   - flag: --log.dir.path
     configPath:
+    enabled:
+      configPath: consensus.logging.enabled
+      transform: flagEnabled
     description: >-
       Log directory path.
 
   - flag: --log.dir.prefix
     configPath:
+    enabled:
+      configPath: consensus.logging.enabled
+      transform: flagEnabled
     description: >-
       Log directory prefix.
 
   - flag: --log.dir.verbosity
     configPath:
+    enabled:
+      configPath: consensus.logging.enabled
+      transform: flagEnabled
     description: >-
       Log directory verbosity level.
 
   - flag: --log.json
-    configPath:
+    configPath: consensus.logging.stdout.format
+    transform: isJson
+    enabled:
+      - configPath: consensus.logging.stdout.enabled
+        transform: flagEnabled
+      - configPath: consensus.logging.enabled
+        transform: flagEnabled
     description: >-
       Enable log JSON.
 
   - flag: --log.console.json
-    configPath:
+    configPath: consensus.logging.stdout.format
+    transform: isJson
+    enabled:
+      - configPath: consensus.logging.stdout.enabled
+        transform: flagEnabled
+      - configPath: consensus.logging.enabled
+        transform: flagEnabled
     description: >-
       Enable console log JSON.
 
   - flag: --log.console.verbosity
-    configPath:
+    configPath: consensus.logging.stdout.level
+    enabled:
+      - configPath: consensus.logging.stdout.enabled
+        transform: flagEnabled
+      - configPath: consensus.logging.enabled
+        transform: flagEnabled
     description: >-
       Console log verbosity level.
 
   - flag: --logFile
-    configPath:
+    configPath: consensus.logging.file.fullPath
+    transform: interpolate
+    enabled:
+      - configPath: consensus.logging.file.enabled
+        transform: flagEnabled
+      - configPath: consensus.logging.enabled
+        transform: flagEnabled
     description: >-
       Path to output all logs to a persistent log file.
 
   - flag: --logFileDailyRotate
     configPath:
+    enabled:
+      configPath: consensus.logging.enabled
+      transform: flagEnabled
     description: >-
       Number of daily log files to retain, 0 to disable rotation.
 
   - flag: --logFileLevel
-    configPath:
+    configPath: consensus.logging.file.level
+    enabled:
+      - configPath: consensus.logging.file.enabled
+        transform: flagEnabled
+      - configPath: consensus.logging.enabled
+        transform: flagEnabled
     description: >-
       Logging verbosity level for file output (error, warn, info, verbose, debug, trace).
 
   - flag: --logLevel
-    configPath:
+    configPath: consensus.logging.stdout.level
+    enabled:
+      - configPath: consensus.logging.stdout.enabled
+        transform: flagEnabled
+      - configPath: consensus.logging.enabled
+        transform: flagEnabled
     description: >-
       Logging verbosity level for terminal output (error, warn, info, verbose, debug, trace).
 

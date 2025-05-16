@@ -169,7 +169,12 @@ rules:
       value of the `network` flag Note: Users should specify separate custom
       datadirs for different networks.
   - flag: --debug-level
-    configPath: 
+    configPath: consensus.logging.stdout.level
+    enabled:
+      - configPath: consensus.logging.stdout.enabled
+        transform: flagEnabled
+      - configPath: consensus.logging.enabled
+        transform: flagEnabled
     description: >-
       Specifies the verbosity level used when emitting logs to the terminal.
       [default: info] [possible values: info, debug, trace, warn, error, crit]
@@ -545,17 +550,33 @@ rules:
       multiple IPv4, or multiple IPv6 addresses will not be accepted. If omitted,
       Lighthouse will listen on all interfaces, for both IPv4 and IPv6.
   - flag: --log-color
-    configPath: 
+    configPath: consensus.logging.stdout.color
     transform: isFlag
+    enabled:
+      - configPath: consensus.logging.stdout.enabled
+        transform: flagEnabled
+      - configPath: consensus.logging.enabled
+        transform: flagEnabled
     description: >-
       Force outputting colors when emitting logs to the terminal.
   - flag: --log-format
-    configPath: consensus.logFormat
+    configPath: consensus.logging.stdout.format
+    enabled:
+      - configPath: consensus.logging.stdout.enabled
+        transform: flagEnabled
+      - configPath: consensus.logging.enabled
+        transform: flagEnabled
     description: >-
       Specifies the log format used when emitting logs to the terminal.
       [possible values: JSON]
   - flag: --logfile
-    configPath: consensus.logFile
+    configPath: consensus.logging.file.fullPath
+    transform: interpolate
+    enabled:
+      - configPath: consensus.logging.file.enabled
+        transform: flagEnabled
+      - configPath: consensus.logging.enabled
+        transform: flagEnabled
     description: >-
       File path where the log file will be stored. Once it grows to the value
       specified in `--logfile-max-size` a new log file is generated where future
@@ -564,31 +585,61 @@ rules:
   - flag: --logfile-compress
     configPath: 
     transform: isFlag
+    enabled:
+      - configPath: consensus.logging.file.enabled
+        transform: flagEnabled
+      - configPath: consensus.logging.enabled
+        transform: flagEnabled
     description: >-
       If present, compress old log files. This can help reduce the space needed
       to store old logs.
   - flag: --logfile-debug-level
-    configPath: 
+    configPath: consensus.logging.file.level
+    enabled:
+      - configPath: consensus.logging.file.enabled
+        transform: flagEnabled
+      - configPath: consensus.logging.enabled
+        transform: flagEnabled
     description: >-
       The verbosity level used when emitting logs to the log file. [default:
       debug] [possible values: info, debug, trace, warn, error, crit]
   - flag: --logfile-format
-    configPath: 
+    configPath: consensus.logging.file.format
+    enabled:
+      - configPath: consensus.logging.file.enabled
+        transform: flagEnabled
+      - configPath: consensus.logging.enabled
+        transform: flagEnabled
     description: >-
       Specifies the log format used when emitting logs to the logfile.
       [possible values: DEFAULT, JSON]
   - flag: --logfile-max-number
     configPath: 
+    enabled:
+      - configPath: consensus.logging.file.enabled
+        transform: flagEnabled
+      - configPath: consensus.logging.enabled
+        transform: flagEnabled
     description: >-
       The maximum number of log files that will be stored. If set to 0,
       background file logging is disabled. [default: 10]
   - flag: --logfile-max-size
     configPath: 
+    enabled:
+      - configPath: consensus.logging.file.enabled
+        transform: flagEnabled
+      - configPath: consensus.logging.enabled
+        transform: flagEnabled
     description: >-
       The maximum size (in MB) each log file can grow to before rotating. If set
       to 0, background file logging is disabled. [default: 200]
   - flag: --logfile-no-restricted-perms
     configPath: 
+    enabled:
+      - configPath: consensus.logging.file.enabled
+        transform: flagEnabled
+      - configPath: consensus.logging.enabled
+        transform: flagEnabled
     transform: isFlag
     description: >-
       If present, log files will be generated as world-readable meaning they can
