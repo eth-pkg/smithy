@@ -744,7 +744,7 @@ rules:
       Enable the Prometheus metrics HTTP server for monitoring.
 
   - flag: --metrics.address
-    configPath: consensu.metrics.host
+    configPath: consensus.metrics.address
     enabled:
       configPath: consensus.metrics.enabled
       transform: flagEnabled

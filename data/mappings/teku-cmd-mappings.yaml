@@ -229,13 +229,14 @@ rules:
       Enables metrics collection via Prometheus
   - flag: --metrics-host-allowlist
     configPath: consensus.metrics.allowlist
+    transform: allowlist
     enabled: 
       configPath: consensus.metrics.enabled
       transform: flagEnabled
     description: |
       Comma-separated list of hostnames to allow, or * to allow any host
   - flag: --metrics-interface
-    configPath: consensus.metrics.host
+    configPath: consensus.metrics.address
     enabled: 
       configPath: consensus.metrics.enabled
       transform: flagEnabled

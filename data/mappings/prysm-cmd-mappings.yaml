@@ -261,7 +261,7 @@ rules:
       transform: flagEnabled
     description: List of validator indices to track performance
   - flag: --monitoring-host
-    configPath: consensus.metrics.host
+    configPath: consensus.metrics.address
     enabled: 
       configPath: consensus.metrics.enabled
       transform: flagEnabled

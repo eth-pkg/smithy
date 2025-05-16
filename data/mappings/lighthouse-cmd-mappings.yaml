@@ -655,33 +655,39 @@ rules:
       but could also cause unnecessary consensus failures, so is disabled by
       default.
   - flag: --metrics
-    configPath: consensus.metricsEnabled
-    transform: isFlag
+    configPath: consensus.metrics.enabled
+    transform: flagEnabled
     description: >-
       Enable the Prometheus metrics HTTP server. Disabled by default.
   - flag: --metrics-address
-    configPath: consensus.metricsAddress
+    configPath: consensus.metrics.address
     enabled:
-      configPath: consensus.metricsEnabled
+      configPath: consensus.metrics.enabled
       transform: flagEnabled
     description: >-
       Set the listen address for the Prometheus metrics HTTP server.
   - flag: --metrics-allow-origin
     configPath: 
+    enabled:
+      configPath: consensus.metrics.enabled
+      transform: flagEnabled
     description: >-
       Set the value of the Access-Control-Allow-Origin response HTTP header. Use *
       to allow any origin (not recommended in production). If no value is
       supplied, the CORS allowed origin is set to the listen address of this
       server (e.g., http://localhost:5054).
   - flag: --metrics-port
-    configPath: consensus.metricsPort
+    configPath: consensus.metrics.port
     enabled:
-      configPath: consensus.metricsEnabled
+      configPath: consensus.metrics.enabled
       transform: flagEnabled
     description: >-
       Set the listen TCP port for the Prometheus metrics HTTP server.
   - flag: --monitoring-endpoint
-    configPath: consensus.monitoringEndpoint
+    configPath: 
+    enabled:
+      configPath: consensus.metrics.enabled
+      transform: flagEnabled
     description: >-
       Enables the monitoring service for sending system metrics to a remote
       endpoint. This can be used to monitor your setup on certain services (e.g.
@@ -692,6 +698,9 @@ rules:
       URL.
   - flag: --monitoring-endpoint-period
     configPath: 
+    enabled:
+      configPath: consensus.metrics.enabled
+      transform: flagEnabled
     description: >-
       Defines how many seconds to wait between each message sent to the
       monitoring-endpoint. Default: 60s
