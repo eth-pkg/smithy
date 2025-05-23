@@ -399,24 +399,15 @@ rules:
   - flag: --JsonRpc.EngineEnabledModules
     configPath: common.engine.api.allowlist
     transform: allowlist
-    enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
     description: >
       An array of additional JSON-RPC URLs to listen at with protocol and 
       JSON-RPC namespace list for Engine API.
   - flag: --JsonRpc.EngineHost
     configPath: common.engine.api.host
-    enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
     description: >
       The Engine API host.
   - flag: --JsonRpc.EnginePort
     configPath: common.engine.api.port
-    enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
     description: >
       The Engine API port.
   - flag: --JsonRpc.EstimateErrorMargin
@@ -445,19 +436,13 @@ rules:
     description: >
       The JSON-RPC service host.
   - flag: --JsonRpc.IpcUnixDomainSocketPath
-    configPath: common.engine.communication.ipc.path
+    configPath: common.engine.ipc.path
     transform: interpolate
-    enabled:
-      configPath: common.engine.communication.method
-      transform: ipcEnabled
     description: >
       The path to connect a UNIX domain socket over.
   - flag: --JsonRpc.JwtSecretFile
-    configPath: common.engine.communication.jwt.file
+    configPath: common.engine.jwt.file
     transform: interpolate
-    enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
     description: >
       The path to the JWT secret file required for the Engine API authentication.
   - flag: --JsonRpc.MaxBatchResponseBodySize
@@ -1225,7 +1210,4 @@ rules:
     transform: interpolate
     description: >
       The path to the Nethermind data directory.
-  - flag: --networkid
-    configPath: common.network.id
-    description: >
-      The network ID of the chain to connect to.
+

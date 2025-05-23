@@ -8,24 +8,15 @@ rules:
       Allow insecure account unlocking when account-related RPCs are exposed by http
   - flag: --authrpc.addr
     configPath: common.engine.api.host
-    enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
     description: |
       HTTP-RPC server listening interface for the Engine API
   - flag: --authrpc.jwtsecret
-    configPath: common.engine.communication.jwt.file
+    configPath: common.engine.jwt.file
     transform: interpolate
-    enabled: 
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
     description: |
       Path to the token that ensures safe connection between CL and EL
   - flag: --authrpc.port
     configPath: common.engine.api.port
-    enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
     description: |
       HTTP-RPC server listening port for the Engine API
   - flag: --authrpc.timeouts.idle
@@ -45,9 +36,6 @@ rules:
   - flag: --authrpc.vhosts
     configPath: common.engine.api.allowlist
     transform: allowlist
-    enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
     description: |
       Comma separated list of virtual hostnames from which to accept Engine API requests 
       (server enforced). Accepts 'any' or '*' as wildcard.

@@ -117,33 +117,6 @@ describe('Preset Validation Tests', () => {
     }
   });
 
-  it('should reject invalid engine communication value', async () => {
-    const config = { ...testConfig };
-    config.common!.engine.communication.method = 'invalid' as any;
-
-    try {
-      await presetManager.validateAndApplyRules(config, 'default');
-      expect.fail('Should have thrown an error');
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        expect(error.message).to.include('Engine communication method must be \'jwt\' or \'ipc\'');
-      }
-    }
-  });
-
-  it('should reject invalid engine IP address', async () => {
-    const config = { ...testConfig };
-    config.common!.engine.api.ip = 'invalid.ip.address';
-
-    try {
-      await presetManager.validateAndApplyRules(config, 'default');
-      expect.fail('Should have thrown an error');
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        expect(error.message).to.include('Must be a valid IPv4 address');
-      }
-    }
-  });
 
   it('should reject invalid engine scheme', async () => {
     const config = { ...testConfig };

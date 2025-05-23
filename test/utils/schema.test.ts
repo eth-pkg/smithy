@@ -10,7 +10,7 @@ describe('SchemaUtils', () => {
     it('should extract defaults from schema and its references', () => {
 
       const defaults = schemaUtils.extractDefaults("default.yml");
-      
+
       // Verify common defaults
       expect(defaults, 'Defaults object should exist').to.exist;
       expect(defaults, 'Defaults should be an object').to.be.an('object');
@@ -59,8 +59,6 @@ describe('SchemaUtils', () => {
       // Verify common default values
       expect(defaults.common.acceptTermsOfUse).to.equal(false, 'common.acceptTermsOfUse should default to false');
       expect(defaults.common.dataDir).to.equal('/home/user/{common.network.name}', 'common.dataDir should have correct default value');
-      expect(defaults.common.engine.enabled).to.equal(true, 'common.engine.enabled should default to true');
-      expect(defaults.common.engine.communication.method).to.equal('jwt', 'common.engine.communication.method should default to jwt');
       expect(defaults.common.network.id).to.equal(1, 'common.network.id should default to 1');
       expect(defaults.common.network.name).to.equal('mainnet', 'common.network.name should default to mainnet');
       expect(defaults.common.operatingSystem).to.equal('linux', 'common.operatingSystem should default to linux');
@@ -94,8 +92,8 @@ describe('SchemaUtils', () => {
   describe('Defaults Extraction for combined schema', () => {
     it('should extract defaults from schema and its references', () => {
       const defaults = schemaUtils.extractDefaults("combined/mainnet-non-staker.yml");
-      
-      
+
+
       // Verify common defaults
       expect(defaults, 'Defaults object should exist').to.exist;
       expect(defaults, 'Defaults should be an object').to.be.an('object');
@@ -144,8 +142,6 @@ describe('SchemaUtils', () => {
       // Verify common default values
       expect(defaults.common.acceptTermsOfUse).to.equal(false, 'common.acceptTermsOfUse should default to false');
       expect(defaults.common.dataDir).to.equal('/home/user/{common.network.name}', 'common.dataDir should have correct default value');
-      expect(defaults.common.engine.enabled).to.equal(true, 'common.engine.enabled should default to true');
-      expect(defaults.common.engine.communication.method).to.equal('jwt', 'common.engine.communication.method should default to jwt');
       expect(defaults.common.network.id).to.equal(1, 'common.network.id should default to 1');
       expect(defaults.common.network.name).to.equal('mainnet', 'common.network.name should default to mainnet');
       expect(defaults.common.operatingSystem).to.equal('linux', 'common.operatingSystem should default to linux');

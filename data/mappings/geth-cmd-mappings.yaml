@@ -9,32 +9,20 @@ rules:
       (deprecated)
   - flag: --authrpc.addr
     configPath: common.engine.api.host
-    enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
     description: |
       Listening address for authenticated APIs
   - flag: --authrpc.jwtsecret
-    configPath: common.engine.communication.jwt.file
+    configPath: common.engine.jwt.file
     transform: interpolate
-    enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
     description: |
       Path to a JWT secret to use for authenticated RPC endpoints
   - flag: --authrpc.port
     configPath: common.engine.api.port
-    enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
     description: |
       Listening port for authenticated APIs
   - flag: --authrpc.vhosts
     configPath: common.engine.api.allowlist
     transform: allowlist
-    enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
     description: |
       Comma separated list of virtual hostnames from which to accept requests (server
       enforced). Accepts '*' wildcard.
@@ -396,16 +384,11 @@ rules:
     description: |
       Custom node name
   - flag: --ipcdisable
-    configPath: common.engine.communication.method
-    transform: jwtEnabled
+    configPath: 
     description: |
       Disable the IPC-RPC server
   - flag: --ipcpath
-    configPath: common.engine.communication.ipc.path
-    transform: interpolate
-    enabled:
-      configPath: common.engine.communication.method
-      transform: ipcEnabled
+    configPath: 
     description: |
       Filename for IPC socket/pipe within the datadir (explicit paths escape it)
   - flag: --jspath

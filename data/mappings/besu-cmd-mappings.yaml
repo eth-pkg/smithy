@@ -104,40 +104,26 @@ rules:
   - flag: --engine-host-allowlist
     configPath: common.engine.api.allowlist
     transform: allowlist
-    enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
     description: >
       Comma separated list of hostnames to allow for ENGINE API access (applies
       to both HTTP and websockets), or * to accept any host (default:
       localhost,127.0.0.1)
   - flag: --engine-jwt-disabled
-    configPath: common.engine.api.host
-    transform: isFlag
-    enabled:
-      configPath: common.engine.communication.method
-      transform: ipcEnabled
     description: >
       Disable authentication for Engine APIs (default: false)
   - flag: --engine-jwt-secret
-    configPath: common.engine.communication.jwt.file
+    configPath: common.engine.jwt.file
     transform: interpolate
-    enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
     description: >
       Path to file containing shared secret key for JWT signature verification
   - flag: --engine-rpc-enabled
-    configPath: common.engine.enabled
-    transform: isFlag
+    configPath: 
+    transform: 
     description: >
       enable the engine api, even in the absence of merge-specific
       configurations.
   - flag: --engine-rpc-port
     configPath: common.engine.api.port
-    enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
     description: >
       Port to provide consensus client APIS on (default: 8551)
   - flag: --ethstats
@@ -1002,9 +988,6 @@ rules:
       and the version of Besu that last started with this data directory.
       (default: null)
   - flag: --Xrpc-ipc-enabled
-    configPath: common.engine.communication.ipc.path
-    enabled:
-      configPath: common.engine.communication.method
-      transform: ipcEnabled
+    configPath: 
     description: >
       Enable IPC communication for the Engine API

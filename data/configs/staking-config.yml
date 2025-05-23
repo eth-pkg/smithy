@@ -2,9 +2,7 @@ common:
   dataDir: $HOME/ethereum/mainnet
   engine:
     enabled: true
-    communication:
-      method: jwt
-      jwt:
+    jwt:
         file: $HOME/ethereum/jwt.hex
     api:
       url: http://localhost:8551

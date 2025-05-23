@@ -364,23 +364,17 @@ rules:
   - flag: --execution-endpoint
     configPath: common.engine.api.url
     transform: interpolate
-    enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
     description: >-
       Server endpoint for an execution layer JWT-authenticated HTTP JSON-RPC
       connection. Uses the same endpoint to populate the deposit cache.
   - flag: --execution-jwt
-    configPath: common.engine.communication.jwt.file
+    configPath: common.engine.jwt.file
     transform: interpolate
-    enabled: 
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
     description: >-
       File path which contains the hex-encoded JWT secret for the execution
       endpoint provided in the --execution-endpoint flag.
   - flag: --execution-jwt-id
-    configPath: common.engine.communication.jwt.id
+    configPath: common.engine.jwt.id
     description: >-
       Used by the beacon node to communicate a unique identifier to execution
       nodes during JWT authentication. It corresponds to the 'id' field in the

@@ -127,17 +127,7 @@ rules:
   - flag: --execution-endpoint
     configPath: common.engine.api.url
     transform: interpolate
-    enabled: 
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
     description: An execution client http endpoint
-  - flag: --execution-endpoint
-    configPath: common.engine.communication.ipc.path
-    transform: interpolate
-    enabled: 
-      configPath: common.engine.communication.method
-      transform: ipcEnabled
-    description: An execution client http endpoint  
   - flag: --execution-headers
     configPath:
     description: HTTP headers for all execution client calls
@@ -202,17 +192,11 @@ rules:
     configPath:
     description: Enable mocking of eth1 data votes for proposers
   - flag: --jwt-id
-    configPath: common.engine.communication.jwt.id
-    enabled: 
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
+    configPath: common.engine.jwt.id
     description: JWT claims id for client identification
   - flag: --jwt-secret
-    configPath: common.engine.communication.jwt.file
+    configPath: common.engine.jwt.file
     transform: interpolate
-    enabled: 
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
     description: Path to file containing hex-encoded 32 byte secret for execution node auth
   - flag: --local-block-value-boost
     configPath:

@@ -11,43 +11,21 @@ properties:
     description: "Base directory for storing Ethereum client data"
   engine:
     type: object
-    required: [enabled, communication]
+    required: [jwt]
     properties:
-      enabled:
-        type: boolean
-        default: true
-        description: "Enable the Engine API"
-      communication:
-        type: object 
-        required: [method]
+      jwt:
+        type: object
+        required: [file]
         properties:
-          method:
+          file:
             type: string
-            enum:
-              - jwt
-              - ipc
-            default: "jwt"
-            description: "Authentication method for Engine API communication"
-            errorMessage:
-              enum: "Engine communication method must be 'jwt' or 'ipc'"
-          jwt:
-            type: object
-            properties:
-              file:
-                type: string
-                default: "{common.dataDir}/{common.network.name}/engine.jwt"
-                description: "Path to the JWT secret file for Engine API"
-              id:
-                type: string
-                default: ""
-                description: "JWT claims id for client identification"
-          ipc:
-            type: object
-            properties:
-              path:
-                type: string
-                default: "{common.dataDir}/{common.network.name}/engine.ipc"
-                description: "Path to the IPC file for Engine API"
+            default: "{common.dataDir}/{common.network.name}/engine.jwt"
+            description: "Path to the JWT secret file for Engine API"
+          id:
+            type: string
+            default: ""
+            description: "JWT claims id for client identification"
+
       api:
         type: object
         properties:
@@ -74,13 +52,6 @@ properties:
               type: string
             default: ["localhost"]
             description: "Allowed hostnames for the Engine API"
-          ip:
-            type: string
-            pattern: "^\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}$"
-            default: "127.0.0.1"
-            description: "IP address for the Engine API"
-            errorMessage:
-              pattern: "Must be a valid IPv4 address"
           scheme:
             type: string
             enum:
@@ -114,7 +85,7 @@ properties:
         description: "Ethereum network to connect to"
         errorMessage:
           enum: "Network must be one of: mainnet, sepolia, holesky, hoodi, ephemery, custom"
-            
+
   operatingSystem:
     type: string
     enum:

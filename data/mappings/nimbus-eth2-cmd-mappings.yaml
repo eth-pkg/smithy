@@ -117,11 +117,8 @@ rules:
     description: >
       Use pre-generated INSECURE password for network private key file [=false].
   - flag: --jwt-secret
-    configPath: common.engine.communication.jwt.file
+    configPath: common.engine.jwt.file
     transform: interpolate
-    enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
     description: >
       A file containing the hex-encoded 256 bit secret key to be used for verifying/generating
       JWT tokens.
@@ -435,9 +432,6 @@ rules:
   - flag: --web3-url
     configPath: common.engine.api.url
     transform: interpolate
-    enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
     description: >
       One or more execution layer Engine API URLs.
   - flag: --wallets-dir

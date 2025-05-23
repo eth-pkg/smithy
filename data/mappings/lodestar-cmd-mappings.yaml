@@ -226,20 +226,14 @@ rules:
         Not recommended for mainnet use
 
   - flag: --jwtId
-    configPath: common.engine.communication.jwt.id
-    enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
+    configPath: common.engine.jwt.id
     description: >
         Optional identifier to be set in the id field of the claims included in 
         jwt tokens
 
   - flag: --jwtSecret
-    configPath: common.engine.communication.jwt.file
+    configPath: common.engine.jwt.file
     transform: interpolate
-    enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
     description: >
         File path to a shared hex-encoded jwt secret for authentication with the 
         EL client's rpc server

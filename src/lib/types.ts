@@ -273,16 +273,9 @@ export interface NodeConfig {
 
 
 export type EngineConfig = {
-  enabled: boolean
-  communication: {
-    method: Communication
-    jwt: {
-      file: string
-      id: string
-    }
-    ipc: {
-      path: string
-    }
+  jwt: {
+    file: string
+    id: string
   }
   api: {
     scheme: EngineScheme,

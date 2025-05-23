@@ -76,25 +76,16 @@ rules:
   - flag: --ee-endpoint
     configPath: common.engine.api.url
     transform: interpolate
-    enabled: 
-      configPath: common.engine.enabled
-      transform: flagEnabled
     description: |
       URL for Execution Engine node
   - flag: --ee-jwt-claim-id
-    configPath: common.engine.communication.jwt.id
-    enabled: 
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
+    configPath: common.engine.jwt.id
     description: |
       A unique identifier for the consensus layer client. This identifier will be added to the JWT
       claims as an 'id' claim
   - flag: --ee-jwt-secret-file
-    configPath: common.engine.communication.jwt.file
+    configPath: common.engine.jwt.file
     transform: interpolate
-    enabled: 
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
     description: |
       Location of the file specifying the hex-encoded 256 bit secret key to be used for
       verifying/generating jwt tokens

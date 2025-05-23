@@ -10,14 +10,9 @@ interface NetworkConfig {
 
 export const baseConfig: Common = {
   engine: {
-    enabled: true,
-    communication: {
-      method: 'jwt',
-      jwt: {
-        file: '{common.dataDir}/{common.network.name}/engine.jwt',
-        id: ''
-      },
-      ipc: { path: '' }
+    jwt: {
+      file: '{common.dataDir}/{common.network.name}/engine.jwt',
+      id: ''
     },
     api: {
       url: 'http://localhost:8551',

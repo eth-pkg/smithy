@@ -9,35 +9,26 @@ rules:
       
       [default: 0.0.0.0]
   - flag: --auth-ipc
-    configPath: common.engine.communication.method
-    transform: ipcEnabled
+    configPath:
+    transform: 
     description: >
       Enable auth engine API over IPC
   - flag: --auth-ipc.path
-    configPath: common.engine.communication.ipc.path
+    configPath: 
     transform: interpolate
-    enabled:
-      configPath: common.engine.communication.method
-      transform: ipcEnabled
     description: >
       Filename for auth IPC socket/pipe within the datadir
       
       [default: /tmp/reth_engine_api.ipc]
   - flag: --authrpc.addr
     configPath: common.engine.api.host
-    enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
     description: >
       Auth server address to listen on
       
       [default: 127.0.0.1]
   - flag: --authrpc.jwtsecret
-    configPath: common.engine.communication.jwt.file
+    configPath: common.engine.jwt.file
     transform: interpolate
-    enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
     description: >
       Path to a JWT secret to use for the authenticated engine-API RPC server.
       
@@ -47,9 +38,6 @@ rules:
       `<DIR>/<CHAIN_ID>/jwt.hex`. For mainnet this would be `~/.reth/mainnet/jwt.hex` by default.
   - flag: --authrpc.port
     configPath: common.engine.api.port
-    enabled:
-      configPath: common.engine.communication.method
-      transform: jwtEnabled
     description: >
       Auth server port to listen on
       
