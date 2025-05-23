@@ -4,7 +4,6 @@ valueFormat: space
 rules:
   - configPath: validator.dataDir
     flag: --dataDir
-    transform: interpolate
   - configPath: common.network.name
     flag: --network
   - configPath: validator.metricsPort

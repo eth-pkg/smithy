@@ -165,7 +165,6 @@ rules:
       It is generally not recommended unless auto-compaction is disabled.
   - flag: --datadir
     configPath: consensus.dataDir
-    transform: interpolate
     description: >-
       Used to specify a custom root data directory for lighthouse keys and
       databases. Defaults to $HOME/.lighthouse/{network} where network is the
@@ -362,14 +361,13 @@ rules:
     transform: isFlag
     description: Purges the eth1 block and deposit caches
   - flag: --execution-endpoint
-    configPath: common.engine.api.url
-    transform: interpolate
+    configPath: common.engine.api.urls
+    transform: repeatFlag
     description: >-
       Server endpoint for an execution layer JWT-authenticated HTTP JSON-RPC
       connection. Uses the same endpoint to populate the deposit cache.
   - flag: --execution-jwt
     configPath: common.engine.jwt.file
-    transform: interpolate
     description: >-
       File path which contains the hex-encoded JWT secret for the execution
       endpoint provided in the --execution-endpoint flag.
@@ -587,7 +585,6 @@ rules:
       [possible values: JSON]
   - flag: --logfile
     configPath: consensus.logging.file.fullPath
-    transform: interpolate
     enabled:
       - configPath: consensus.logging.file.enabled
         transform: flagEnabled

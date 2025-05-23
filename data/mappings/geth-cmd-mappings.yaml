@@ -13,7 +13,6 @@ rules:
       Listening address for authenticated APIs
   - flag: --authrpc.jwtsecret
     configPath: common.engine.jwt.file
-    transform: interpolate
     description: |
       Path to a JWT secret to use for authenticated RPC endpoints
   - flag: --authrpc.port
@@ -138,7 +137,6 @@ rules:
       KZG library implementation to use; gokzg (recommended) or ckzg
   - flag: --datadir
     configPath: execution.dataDir
-    transform: interpolate
     description: |
       Data directory for the databases and keystore
   - flag: --datadir.ancient
@@ -442,7 +440,6 @@ rules:
       Prepends log messages with call-site location (deprecated)
   - flag: --log.file
     configPath: execution.logging.file.fullPath
-    transform: interpolate
     enabled:
       - configPath: execution.logging.file.enabled
         transform: flagEnabled

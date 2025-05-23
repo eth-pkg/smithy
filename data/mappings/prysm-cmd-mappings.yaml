@@ -83,7 +83,6 @@ rules:
     description: The eth1 block in which the deposit contract was deployed
   - flag: --datadir
     configPath: consensus.dataDir
-    transform: interpolate
     description: Data directory for the databases
   - flag: --deposit-contract
     configPath:
@@ -125,8 +124,8 @@ rules:
     configPath:
     description: Sets the maximum number of headers that a deposit log query can fetch
   - flag: --execution-endpoint
-    configPath: common.engine.api.url
-    transform: interpolate
+    configPath: common.engine.api.urls
+    transform: repeatFlag
     description: An execution client http endpoint
   - flag: --execution-headers
     configPath:
@@ -196,7 +195,6 @@ rules:
     description: JWT claims id for client identification
   - flag: --jwt-secret
     configPath: common.engine.jwt.file
-    transform: interpolate
     description: Path to file containing hex-encoded 32 byte secret for execution node auth
   - flag: --local-block-value-boost
     configPath:

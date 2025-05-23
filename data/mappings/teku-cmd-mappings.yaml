@@ -38,7 +38,6 @@ rules:
       The Checkpointz server that will be used to bootstrap this node
   - flag: --config-file
     configPath: 
-    transform: interpolate
     description: |
       Path/filename of the yaml config file
   - flag: --data-beacon-path
@@ -47,7 +46,6 @@ rules:
       Path to beacon node data
   - flag: --data-path
     configPath: consensus.dataDir
-    transform: interpolate
     description: |
       Path to the base directory for storage
   - flag: --data-storage-mode
@@ -56,7 +54,6 @@ rules:
       Sets the strategy for handling historical chain data
   - flag: --data-validator-path
     configPath: validator.dataDir
-    transform: interpolate
     enabled: 
       configPath: validator.enabled
       transform: flagEnabled
@@ -74,8 +71,8 @@ rules:
     description: |
       Enable validators doppelganger detection
   - flag: --ee-endpoint
-    configPath: common.engine.api.url
-    transform: interpolate
+    configPath: common.engine.api.urls
+    transform: repeatFlag
     description: |
       URL for Execution Engine node
   - flag: --ee-jwt-claim-id
@@ -85,7 +82,6 @@ rules:
       claims as an 'id' claim
   - flag: --ee-jwt-secret-file
     configPath: common.engine.jwt.file
-    transform: interpolate
     description: |
       Location of the file specifying the hex-encoded 256 bit secret key to be used for
       verifying/generating jwt tokens
@@ -152,7 +148,6 @@ rules:
       Whether a logger is added for the console, the log file, or both
   - flag: --log-file
     configPath: consensus.logging.file.fullPath
-    transform: interpolate
     enabled: 
       - configPath: consensus.logging.file.enabled
         transform: flagEnabled
@@ -668,7 +663,6 @@ rules:
       recipient when producing a new execution block
   - flag: --ws-checkpoint
     configPath: consensus.checkpointSync.wss
-    transform: interpolate
     enabled: 
       configPath: consensus.checkpointSync.enabled
       transform: flagEnabled

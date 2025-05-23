@@ -15,7 +15,6 @@ rules:
       Enable auth engine API over IPC
   - flag: --auth-ipc.path
     configPath: 
-    transform: interpolate
     description: >
       Filename for auth IPC socket/pipe within the datadir
       
@@ -28,7 +27,6 @@ rules:
       [default: 127.0.0.1]
   - flag: --authrpc.jwtsecret
     configPath: common.engine.jwt.file
-    transform: interpolate
     description: >
       Path to a JWT secret to use for the authenticated engine-API RPC server.
       
@@ -131,7 +129,6 @@ rules:
       The path to the configuration file to use.
   - flag: --datadir
     configPath: execution.dataDir
-    transform: interpolate
     description: >
       The path to the data dir for all reth files and subdirectories.
       
@@ -516,7 +513,6 @@ rules:
       [default: /tmp/reth.ipc]
   - flag: --log.file.directory
     configPath: execution.logging.file.directory
-    transform: interpolate
     enabled:
       - configPath: execution.logging.file.enabled
         transform: flagEnabled

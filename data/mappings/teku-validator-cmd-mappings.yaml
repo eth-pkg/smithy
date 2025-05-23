@@ -4,6 +4,5 @@ valueFormat: equals
 rules:
   - configPath: validator.dataDir
     flag: --data-path
-    transform: interpolate
   - configPath: common.network.name
     flag: --network 

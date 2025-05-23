@@ -281,7 +281,7 @@ export type EngineConfig = {
     scheme: EngineScheme,
     host: string
     port: number
-    url: string
+    urls: string[]
     ip: string
     allowlist: string[]
   }

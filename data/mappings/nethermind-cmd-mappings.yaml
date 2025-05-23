@@ -307,7 +307,6 @@ rules:
       The path to KZG trusted setup file.
   - flag: --Init.LogDirectory
     configPath: execution.logging.file.directory
-    transform: interpolate
     enabled:
       - configPath: execution.logging.file.enabled
         transform: flagEnabled
@@ -317,7 +316,6 @@ rules:
       The path to the Nethermind logs directory.
   - flag: --Init.LogFileName
     configPath: execution.logging.file.name
-    transform: interpolate
     enabled:
       - configPath: execution.logging.file.enabled
         transform: flagEnabled
@@ -437,12 +435,10 @@ rules:
       The JSON-RPC service host.
   - flag: --JsonRpc.IpcUnixDomainSocketPath
     configPath: common.engine.ipc.path
-    transform: interpolate
     description: >
       The path to connect a UNIX domain socket over.
   - flag: --JsonRpc.JwtSecretFile
     configPath: common.engine.jwt.file
-    transform: interpolate
     description: >
       The path to the JWT secret file required for the Engine API authentication.
   - flag: --JsonRpc.MaxBatchResponseBodySize
@@ -1207,7 +1203,11 @@ rules:
       accounts have private keys from `00...01` to `00...n`.
   - flag: --datadir
     configPath: execution.dataDir
-    transform: interpolate
     description: >
       The path to the Nethermind data directory.
+  - flag: --config
+    configPath: common.network.name
+    description: >
+      Network or file name
+
 

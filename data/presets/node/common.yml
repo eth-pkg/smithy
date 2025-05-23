@@ -38,10 +38,13 @@ properties:
             errorMessage:
               minimum: "Engine API port must be >= 1024"
               maximum: "Engine API port must be <= 65535"
-          url:
-            type: string
-            default: "{common.engine.api.scheme}://{common.engine.api.host}:{common.engine.api.port}"
-            description: "URL for the Engine API endpoint"
+          urls:
+            type: array
+            minItems: 1
+            items:
+              type: string
+            default: ["{common.engine.api.scheme}://{common.engine.api.host}:{common.engine.api.port}"]
+            description: "List of Engine API endpoints consumed by the consensus client"
           host:
             type: string
             default: "localhost"

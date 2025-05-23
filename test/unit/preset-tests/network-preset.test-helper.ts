@@ -15,7 +15,7 @@ export const baseConfig: Common = {
       id: ''
     },
     api: {
-      url: 'http://localhost:8551',
+      urls: ['http://localhost:8551'],
       host: 'localhost',
       allowlist: ['localhost'],
       ip: '127.0.0.1',

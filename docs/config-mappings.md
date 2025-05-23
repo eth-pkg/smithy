@@ -1,7 +1,5 @@
 # Client Configuration Mappings
 
-This document provides a mapping between common configuration values and their corresponding settings in different Ethereum clients.
-
 ## Common Configuration Names
 
 ### Network Configuration
@@ -19,15 +17,14 @@ This document provides a mapping between common configuration values and their c
 
 ### Engine API Configuration
 
-| Common Config Name          | Description                                     |
-| --------------------------- | ----------------------------------------------- |
-| common.engine.api.port      | Engine API port                                 |
-| common.engine.api.host      | Engine API host                                 |
-| common.engine.api.allowlist | Allowed hostnames for the Engine API            |
-| common.engine.api.url       | Url constructed from engine port+host           |
-| common.engine.api.urls      | TODO additional urls on top of one required one |
-| common.engine.jwt.file      | JWT secret file path                            |
-| common.engine.jwt.id        | JWT claims id for client identification         |
+| Common Config Name          | Description                                                                        |
+| --------------------------- | ---------------------------------------------------------------------------------- |
+| common.engine.api.port      | Engine API port (execution only except if interpolation used)                      |
+| common.engine.api.host      | Engine API host (execution only except if interpolation used)                      |
+| common.engine.api.allowlist | Allowed hostnames for the Engine API (execution only except if interpolation used) |
+| common.engine.api.urls      | Consensus engineapi urls                                                           |
+| common.engine.jwt.file      | JWT secret file path                                                               |
+| common.engine.jwt.id        | JWT claims id for client identification                                            |
 
 ## Execution Clients
 
@@ -76,7 +73,7 @@ This document provides a mapping between common configuration values and their c
 | Common Config               | Nethermind Setting                     |
 | --------------------------- | -------------------------------------- |
 | common.network.id           | None                                   |
-| common.network.name         | ??                                     |
+| common.network.name         | `--config value`                       |
 | common.dataDir              | `--datadir value`                      |
 | common.engine.api.port      | `--JsonRpc.EnginePort value`           |
 | common.engine.api.host      | `--JsonRpc.EngineHost value`           |
@@ -99,62 +96,65 @@ This document provides a mapping between common configuration values and their c
 
 ### Lighthouse
 
-| Common Config          | Lighthouse Setting                    |
-| ---------------------- | ------------------------------------- |
-| common.network.id      | None                                  |
-| common.network.name    | `--network value`                     |
-| common.dataDir         | `--datadir value`                     |
-| common.engine.api.url  | `--execution-endpoint value1`         |
-| common.engine.api.url  | `--execution-endpoint additionalUrls` |
-| common.engine.jwt.file | `--execution-jwt value`               |
-| common.engine.jwt.file | `--execution-jwt-id value`            |
+| Common Config                           | Lighthouse Setting                    |
+| --------------------------------------- | ------------------------------------- |
+| common.network.id                       | None                                  |
+| common.network.name                     | `--network value`                     |
+| common.dataDir                          | `--datadir value`                     |
+| common.engine.api.urls=[value1, value2] | `--execution-endpoint value1`         |
+| common.engine.api.urls=[value1, value2] | `--execution-endpoint value2`         |
+| common.engine.api.urls                  | `--execution-endpoint additionalUrls` |
+| common.engine.jwt.file                  | `--execution-jwt value`               |
+| common.engine.jwt.file                  | `--execution-jwt-id value`            |
 
 ### Lodestar
 
-| Common Config          | Lodestar Setting         |
-| ---------------------- | ------------------------ |
-| common.network.id      | None                     |
-| common.network.name    | `--network value`        |
-| common.dataDir         | `--dataDir value`        |
-| common.engine.api.url  | `--execution.urls value` |
-| common.engine.jwt.file | `--jwtSecret value`      |
-| common.engine.jwt.id   | `--jwtId value`          |
+| Common Config                         | Lodestar Setting                 |
+| ------------------------------------- | -------------------------------- |
+| common.network.id                     | None                             |
+| common.network.name                   | `--network value`                |
+| common.dataDir                        | `--dataDir value`                |
+| common.engine.api.url=[value1,value2] | `--execution.urls value1,value2` |
+| common.engine.jwt.file                | `--jwtSecret value`              |
+| common.engine.jwt.id                  | `--jwtId value`                  |
 
 ### Nimbus-eth2
 
-| Common Config          | Nimbus-eth2 Setting  |
-| ---------------------- | -------------------- |
-| common.network.id      | None                 |
-| common.network.name    | `--network value`    |
-| common.dataDir         | `--data-dir value`   |
-| common.engine.api.url  | `--web3-url value`   |
-| common.engine.jwt.file | `--jwt-secret value` |
+| Common Config                         | Nimbus-eth2 Setting        |
+| ------------------------------------- | -------------------------- |
+| common.network.id                     | None                       |
+| common.network.name                   | `--network value`          |
+| common.dataDir                        | `--data-dir value`         |
+| common.engine.api.url=[value1,value2] | `--web3-url value1,value2` |
+| common.engine.jwt.file                | `--jwt-secret value`       |
 
 ### Prysm
 
-| Common Config                | Prysm Setting                |
-| ---------------------------- | ---------------------------- |
-| common.network.id            | `--chain-id value`           |
-| common.network.name=mainnet  | `--mainnet`                  |
-| common.network.name=sepolia  | `--sepolia`                  |
-| common.network.name=ephemery | `--ephemery`                 |
-| common.network.name=holesky  | `--holesky`                  |
-| common.network.name=hoodi    | `--hoodi`                    |
-| common.dataDir               | `--datadir value`            |
-| common.engine.api.url        | `--execution-endpoint value` |
-| common.engine.jwt.file       | `--jwt-secret`               |
-| common.engine.jwt.file       | `--jwt-id`                   |
+| Common Config                         | Prysm Setting                 |
+| ------------------------------------- | ----------------------------- |
+| common.network.id                     | `--chain-id value`            |
+| common.network.name=mainnet           | `--mainnet`                   |
+| common.network.name=sepolia           | `--sepolia`                   |
+| common.network.name=ephemery          | `--ephemery`                  |
+| common.network.name=holesky           | `--holesky`                   |
+| common.network.name=hoodi             | `--hoodi`                     |
+| common.dataDir                        | `--datadir value`             |
+| common.engine.api.url=[value1,value2] | `--execution-endpoint value1` |
+| common.engine.api.url=[value1,value2] | `--execution-endpoint value2` |
+| common.engine.jwt.file                | `--jwt-secret`                |
+| common.engine.jwt.file                | `--jwt-id`                    |
 
 ### Teku
 
-| Common Config          | Teku Setting                 |
-| ---------------------- | ---------------------------- |
-| common.network.id      | None                         |
-| common.network.name    | `--network=value`            |
-| common.dataDir         | `--data-path=value`          |
-| common.engine.api.url  | `--ee-endpoint=value`        |
-| common.engine.jwt.file | `--ee-jwt-secret-file=value` |
-| common.engine.jwt.id   | `--ee-jwt-secret-id=value`   |
+| Common Config                         | Teku Setting                 |
+| ------------------------------------- | ---------------------------- |
+| common.network.id                     | None                         |
+| common.network.name                   | `--network=value`            |
+| common.dataDir                        | `--data-path=value`          |
+| common.engine.api.url=[value1,value2] | `--ee-endpoint=value1`       |
+| common.engine.api.url=[value1,value2] | `--ee-endpoint=value2`       |
+| common.engine.jwt.file                | `--ee-jwt-secret-file=value` |
+| common.engine.jwt.id                  | `--ee-jwt-secret-id=value`   |
 
 ## Validator Clients
 
@@ -165,5 +165,4 @@ TODO
 - Configuration values are mapped based on the most common usage patterns
 - Some clients may have additional configuration options not shown here
 - Default values are not shown in the tables but can be found in the common configuration schema
-- JWT authentication is the recommended method for Engine API communication
 - Network IDs and names are standardized across clients but may have different internal representations

@@ -27,13 +27,12 @@ describe('Engine Configuration Tests', () => {
           common: {
             ...testConfig.common,
             engine: {
-              enabled: true,
               api: {
                 scheme: 'http' as const,
                 host: 'localhost',
                 allowlist: ['localhost'],
                 port: 8551,
-                url: '{common.engine.api.scheme}://{common.engine.api.host}:{common.engine.api.port}',
+                urls: ['{common.engine.api.scheme}://{common.engine.api.host}:{common.engine.api.port}'],
                 ip: '127.0.0.1',
               },
               jwt: {
@@ -117,7 +116,7 @@ describe('Engine Configuration Tests', () => {
                   host: 'localhost',
                   allowlist: host,
                   port: 8551,
-                  url: '{common.engine.api.scheme}://{common.engine.api.host}:{common.engine.api.port}',
+                  urls: ['{common.engine.api.scheme}://{common.engine.api.host}:{common.engine.api.port}'],
                   ip: '127.0.0.1',
                 },
                 jwt: {
@@ -168,7 +167,7 @@ describe('Engine Configuration Tests', () => {
             engine: {
               enabled: true,
               api: {
-                url: 'http://localhost:8551',
+                urls: ['http://localhost:8551'],
                 host: 'localhost',
                 allowlist: ['localhost'],
                 ip: '127.0.0.1',
@@ -238,7 +237,9 @@ describe('Engine Configuration Tests', () => {
               enabled: true,
               port: 8551,
               api: {
-                url: '{common.engine.api.scheme}://{common.engine.api.host}:{common.engine.api.port}',
+                urls: ['{common.engine.api.scheme}://{common.engine.api.host}:{common.engine.api.port}',
+                  'http://additionalurl:8551'
+                ],
                 host: 'localhost',
                 allowlist: ['localhost'],
                 ip: '127.0.0.1',
@@ -264,26 +265,29 @@ describe('Engine Configuration Tests', () => {
         const scriptString = scriptContent.toString();
         const url = `${config.common.engine.api.scheme}://${config.common.engine.api.host}:${config.common.engine.api.port}`
         const jwtFile = `${config.common.dataDir}/${config.common.network.name}/engine.jwt`
-
+        const additionalUrl = 'http://additionalurl:8551'
         switch (client) {
           case 'lighthouse':
             expect(scriptString).to.contain(`--execution-endpoint ${url}`);
+            expect(scriptString).to.contain(`--execution-endpoint ${additionalUrl}`);
             expect(scriptString).to.contain(`--execution-jwt ${jwtFile}`);
             break;
           case 'lodestar':
-            expect(scriptString).to.contain(`--execution.urls ${url}`);
+            expect(scriptString).to.contain(`--execution.urls ${url},${additionalUrl}`);
             expect(scriptString).to.contain(`--jwtSecret ${jwtFile}`);
             break;
           case 'nimbus-eth2':
-            expect(scriptString).to.contain(`--web3-url ${url}`);
+            expect(scriptString).to.contain(`--web3-url ${url},${additionalUrl}`);
             expect(scriptString).to.contain(`--jwt-secret ${jwtFile}`);
             break;
           case 'prysm':
             expect(scriptString).to.contain(`--execution-endpoint ${url}`);
+            expect(scriptString).to.contain(`--execution-endpoint ${additionalUrl}`);
             expect(scriptString).to.contain(`--jwt-secret ${jwtFile}`);
             break;
           case 'teku':
             expect(scriptString).to.contain(`--ee-endpoint=${url}`);
+            expect(scriptString).to.contain(`--ee-endpoint=${additionalUrl}`);
             expect(scriptString).to.contain(`--ee-jwt-secret-file=${jwtFile}`);
             break;
         }

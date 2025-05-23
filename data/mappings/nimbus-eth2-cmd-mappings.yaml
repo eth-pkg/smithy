@@ -22,7 +22,6 @@ rules:
       Specifies a line-delimited file of bootstrap Ethereum network addresses.
   - flag: --data-dir
     configPath: consensus.dataDir
-    transform: interpolate
     description: >
       The directory where nimbus will store all blockchain data.
   - flag: --direct-peers
@@ -118,7 +117,6 @@ rules:
       Use pre-generated INSECURE password for network private key file [=false].
   - flag: --jwt-secret
     configPath: common.engine.jwt.file
-    transform: interpolate
     description: >
       A file containing the hex-encoded 256 bit secret key to be used for verifying/generating
       JWT tokens.
@@ -169,7 +167,6 @@ rules:
       Increase execution layer block values for builder bid comparison by a percentage [=10].
   - flag: --log-file
     configPath: consensus.logging.file.fullPath
-    transform: interpolate
     enabled:
       - configPath: consensus.logging.file.enabled
         transform: flagEnabled
@@ -430,8 +427,8 @@ rules:
     description: >
       Remote Web3Signer URL that will be used as a source of validators.
   - flag: --web3-url
-    configPath: common.engine.api.url
-    transform: interpolate
+    configPath: common.engine.api.urls
+    transform: joinComma
     description: >
       One or more execution layer Engine API URLs.
   - flag: --wallets-dir

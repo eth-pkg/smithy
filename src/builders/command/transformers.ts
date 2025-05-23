@@ -12,6 +12,16 @@ export const transformFunctions: Record<string, TransformFunction | TransformFun
     return Array.isArray(value) ? value.join(",") : value
   },
 
+  repeatFlag: (value: string | string[]): string[] => {
+    if (Array.isArray(value)) {
+      return value
+    }
+    if (typeof value === 'string') {
+      return value.split(',')
+    }
+    return [value]
+  },
+
   interpolate: (template: string, config: NodeConfig): string => {
     if (typeof template !== 'string') {
       return template

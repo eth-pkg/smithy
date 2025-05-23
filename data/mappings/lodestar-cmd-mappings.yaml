@@ -79,7 +79,6 @@ rules:
 
   - flag: --dataDir
     configPath: consensus.dataDir
-    transform: interpolate
     description: >
         Lodestar root data directory
 
@@ -182,8 +181,8 @@ rules:
         Timeout in milliseconds for execution engine API HTTP client
 
   - flag: --execution.urls
-    configPath: common.engine.api.url
-    transform: interpolate
+    configPath: common.engine.api.urls
+    transform: joinComma
     description: >
         Urls to execution client engine API
 
@@ -233,7 +232,6 @@ rules:
 
   - flag: --jwtSecret
     configPath: common.engine.jwt.file
-    transform: interpolate
     description: >
         File path to a shared hex-encoded jwt secret for authentication with the 
         EL client's rpc server
@@ -256,7 +254,6 @@ rules:
 
   - flag: --logFile
     configPath: consensus.logging.file.fullPath
-    transform: interpolate
     enabled:
       configPath: consensus.logging.file.enabled
       transform: flagEnabled

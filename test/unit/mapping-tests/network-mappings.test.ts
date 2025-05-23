@@ -52,7 +52,7 @@ describe('Network Mappings Tests', () => {
               case 'nethermind':
                 // Nethermind doesn't support network flag, should use network ID instead
                 // TODO how to load network into nethermind
-                expect(false).to.be.true;
+                expect(scriptString).to.contain(`--config ${network}`)
                 expect(scriptString).to.not.contain(`--network ${network}`);
                 expect(scriptString).to.not.contain(`--networkid ${getNetworkId(network)}`);
                 break;

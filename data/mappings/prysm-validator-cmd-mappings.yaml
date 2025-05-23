@@ -19,7 +19,6 @@ rules:
     transform: network
   - configPath: validator.dataDir
     flag: --datadir
-    transform: interpolate
   - configPath: validator.beaconRpcProvider
     flag: --beacon-rpc-provider
   - configPath: validator.beaconRpcProvider

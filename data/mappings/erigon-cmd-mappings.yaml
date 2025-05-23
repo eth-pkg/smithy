@@ -12,7 +12,6 @@ rules:
       HTTP-RPC server listening interface for the Engine API
   - flag: --authrpc.jwtsecret
     configPath: common.engine.jwt.file
-    transform: interpolate
     description: |
       Path to the token that ensures safe connection between CL and EL
   - flag: --authrpc.port
@@ -251,7 +250,6 @@ rules:
       Default: 2, means warning.
   - flag: --datadir
     configPath: execution.dataDir
-    transform: interpolate
     description: |
       Data directory for the databases
   - flag: --db.pagesize

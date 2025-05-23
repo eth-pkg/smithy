@@ -4,7 +4,6 @@ valueFormat: space
 rules:
   - configPath: validator.dataDir
     flag: --datadir
-    transform: interpolate
   - configPath: validator.beaconRpcProvider
     flag: --beacon-nodes
   - configPath: validator.logLevel
