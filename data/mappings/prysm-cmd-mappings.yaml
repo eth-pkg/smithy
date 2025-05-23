@@ -265,10 +265,7 @@ rules:
       transform: flagEnabled
     description: The CIDR subnet for allowing only certain peer connections
   - flag: --p2p-denylist
-    configPath: consensus.p2p.denylist
-    enabled: 
-      configPath: consensus.p2p.enabled
-      transform: flagEnabled
+    configPath: 
     description: The CIDR subnets for denying certain peer connections
   - flag: --p2p-host-dns
     configPath:

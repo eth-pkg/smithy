@@ -74,17 +74,6 @@ properties:
                 type: boolean
                 default: true
                 description: "Enable discovery v4"
-              port:
-                type: number
-                minimum: 1024
-                maximum: 65535
-                default: 30303
-                description: "Port number for discovery v4"
-              address:
-                type: string
-                default: "localhost"
-                description: "Address to listen on for discovery v4"
-                
           v5:
             type: object
             properties:
@@ -92,30 +81,29 @@ properties:
                 type: boolean
                 default: true
                 description: "Enable discovery v5"
-              port:
-                type: number
-                minimum: 1024
-                maximum: 65535
-                default: 30303
-                description: "Port number for discovery v5"
-              address:
-                type: string
-                default: "localhost"
-                description: "Address to listen on for discovery v5"
-      nat: 
+
+      nat:
         type: object
         properties:
           mode:
             type: string
             default: "any"
             description: "NAT configuration"
-            enum:
+            enum: # erigon
               - any
               - none
               - upnp
               - pmp
-              - extip
-              - listen
+              - stun
+              - extip:<IP>
+
+            # enum:   #besu
+            #   - any
+            #   - none
+            #   - auto
+            #   - upnp
+            #   - upnpp2only
+            #   - docker
           enabled:
             type: boolean
             default: true
@@ -139,34 +127,18 @@ properties:
           type: string
         default: []
         description: "List of bootnode enode URLs for initial peer discovery"
-      enrAddress:
-        type: string
-        default: ""
-        description: "ENR (Ethereum Node Record) address to advertise"
-      udpPort:
-        type: number
-        minimum: 1024
-        maximum: 65535
-        default: 30303
-        description: "Port number for P2P networking"
-        errorMessage:
-          minimum: "P2P port must be >= 1024"
-      relayNode:
-        type: string
-        default: ""
-        description: "Relay node address for P2P networking"
       allowlist:
         type: array
         items:
           type: string
         default: ["*"]
         description: "List of allowed CORS origins for P2P networking"
-      denylist:
+      netrestrict:
         type: array
         items:
           type: string
         default: []
-        description: "List of denied CORS origins for P2P networking"
+        description: "The CIDR subnets for denying certain peer connections"
   http:
     type: object
     properties:
@@ -199,74 +171,6 @@ properties:
         errorMessage:
           minimum: "HTTP port must be >= 1024"
           maximum: "HTTP port must be <= 65535"
-      tls:
-        type: object
-        properties:
-          enabled:
-            type: boolean
-            default: false
-            description: "Enable TLS for HTTP JSON-RPC API"
-          certificate:
-            type: object
-            properties:
-              cert:
-                type: string
-                default: ""
-                description: "Path to the TLS certificate file"
-              key:
-                type: string
-                default: ""
-                description: "Path to the TLS key file"
-          keystore:
-            type: object
-            properties:
-              path:
-                type: string
-                default: ""
-                description: "Path to the TLS key file"
-              password:
-                type: string
-                default: ""
-                description: "Password for the TLS key file"
-          truststore:
-            type: object
-            properties:
-              path:
-                type: string
-                default: ""
-                description: "Path to the TLS truststore file"
-              password:
-                type: string
-                default: ""
-                description: "Password for the TLS truststore file"
-          clientAuth:
-            type: object
-            properties:
-              enabled:
-                type: boolean
-                default: false
-                description: "Enable client authentication"
-              caClientsEnabled:
-                type: boolean
-                default: false
-                description: "Enable CA client authentication"
-              path:
-                type: string
-                default: ""
-                description: "Path to the TLS client authentication file"
-          cipherSuites:
-            type: array
-            default: []
-            description: "List of TLS cipher suites to enable"
-            items:
-              type: string
-          protocol:
-            type: string
-            default: "TLS"
-            description: "TLS protocol to use"
-            enum:
-              - TLS
-              - TLSv1.3
   metrics:
     type: object
     properties:
@@ -286,7 +190,7 @@ properties:
       address:
         type: string
         default: "localhost"
-        description: "Address to listen on for metrics server"  
+        description: "Address to listen on for metrics server"
   ws:
     type: object
     properties:
@@ -332,7 +236,7 @@ properties:
           level:
             type: string
             enum:
-              - off 
+              - off
               - error
               - warn
               - info
@@ -496,7 +400,7 @@ properties:
         type: boolean
         default: false
         description: "Enable pruning"
-        
+
   dataDir:
     type: string
     default: "{common.dataDir}/{execution.client.name}"
@@ -528,4 +432,4 @@ properties:
         minimum: 0
         maximum: 100
         default: 50.0
-        description: "Percentile value to measure for eth_gasPrice" 
+        description: "Percentile value to measure for eth_gasPrice"

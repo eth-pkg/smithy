@@ -597,7 +597,7 @@ rules:
       NAT port mapping mechanism
       (any|none|upnp|pmp|pmp:<IP>|extip:<IP>|stun:<IP:PORT>)
   - flag: --netrestrict
-    configPath: 
+    configPath: execution.p2p.netrestrict  
     description: |
       Restricts network communication to the given IP networks (CIDR masks)
   - flag: --networkid

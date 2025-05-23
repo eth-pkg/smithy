@@ -522,7 +522,12 @@ rules:
     description: |
       Path to store user and error logs to disk
   - flag: --log.dir.prefix
-    configPath: 
+    configPath: execution.logging.file.name
+    enabled:
+      - configPath: execution.logging.file.enabled
+        transform: flagEnabled
+      - configPath: execution.logging.enabled
+        transform: flagEnabled
     description: |
       The file name prefix for logs stored to disk
   - flag: --log.dir.verbosity
@@ -615,7 +620,10 @@ rules:
     description: |
       Explicitly set network id (integer)(For testnets: use --chain <testnet_name> instead)
   - flag: --netrestrict
-    configPath: 
+    configPath: execution.p2p.netrestrict
+    enabled:
+      configPath: execution.p2p.enabled
+      transform: flagEnabled
     description: |
       Restricts network communication to the given IP networks (CIDR masks)
   - flag: --nodekey
@@ -933,6 +941,7 @@ rules:
       Enables parallel state flushing
   - flag: --tls
     configPath: 
+    transform: flagEnabled
     description: |
       Enable TLS handshake
   - flag: --tls.cacert
