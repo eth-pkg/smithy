@@ -70,10 +70,10 @@ The `execution.client.name` setting determines which execution client will be ru
 
 | Execution config Name            | Description              |
 | -------------------------------- | ------------------------ |
-| execution.logging.stdout.enabled | Enable stdout logging    |
-| execution.logging.stdout.level   | Logging level            |
-| execution.logging.stdout.format  | Logging format           |
-| execution.logging.stdout.color   | Enable colorized logging |
+| execution.logging.console.enabled | Enable stdout logging    |
+| execution.logging.console.level   | Logging level            |
+| execution.logging.console.format  | Logging format           |
+| execution.logging.console.color   | Enable colorized logging |
 | execution.logging.file.enabled   | Enable file logging      |
 | execution.logging.file.directory | Log directory            |
 | execution.logging.file.level     | Logging level            |
@@ -144,10 +144,10 @@ TODO
 | execution.metrics.enabled            | `--metrics-enabled`                 |
 | execution.metrics.port               | `--metrics-port=value`              |
 | execution.metrics.address            | `--metrics-host=value`              |
-| execution.logging.stdout.enabled     | enables console logging             |
-| execution.logging.stdout.level       | `--logging=value`                   |
-| execution.logging.stdout.format=json | `--json-pretty-print-enabled`       |
-| execution.logging.stdout.color       | `--color-enabled`                   |
+| execution.logging.console.enabled     | enables console logging             |
+| execution.logging.console.level       | `--logging=value`                   |
+| execution.logging.console.format=json | `--json-pretty-print-enabled`       |
+| execution.logging.console.color       | `--color-enabled`                   |
 | execution.logging.file.enabled       | enables file logging                |
 | execution.logging.file.directory     | TODO                                |
 | execution.logging.file.level         | TODO                                |
@@ -197,10 +197,10 @@ TODO
 | execution.metrics.enabled                | `--metrics`                  |
 | execution.metrics.port                   | `--metrics.port value`       |
 | execution.metrics.address                | `--metrics.addr value`       |
-| execution.logging.stdout.enabled         | `--log.console.json`         |
-| execution.logging.stdout.level           | `--verbosity value`          |
-| execution.logging.stdout.format=json     | `--log.console.json`         |
-| execution.logging.stdout.color           | None                         |
+| execution.logging.console.enabled         | `--log.console.json`         |
+| execution.logging.console.level           | `--verbosity value`          |
+| execution.logging.console.format=json     | `--log.console.json`         |
+| execution.logging.console.color           | None                         |
 | execution.logging.file.enabled           | enables file logging         |
 | execution.logging.file.directory         | `--log.dir.path value`       |
 | execution.logging.file.level             | `--log.dir.verbosity value`  |
@@ -251,10 +251,10 @@ TODO
 | execution.metrics.enabled                | `--metrics`                     |
 | execution.metrics.port                   | `--metrics.port value`          |
 | execution.metrics.address                | `--metrics.addr value`          |
-| execution.logging.stdout.enabled         | enables file logging            |
-| execution.logging.stdout.level           | `--verbosity value`             |
-| execution.logging.stdout.format          | `--log.format value`            |
-| execution.logging.stdout.color           | None                            |
+| execution.logging.console.enabled         | enables file logging            |
+| execution.logging.console.level           | `--verbosity value`             |
+| execution.logging.console.format          | `--log.format value`            |
+| execution.logging.console.color           | None                            |
 | execution.logging.file.enabled           | `--log.file value`              |
 | execution.logging.file.directory         | None                            |
 | execution.logging.file.level             | Same as ??`--log.format`        |
@@ -305,10 +305,10 @@ TODO
 | execution.metrics.enabled          | `--Metrics.Enabled`              |
 | execution.metrics.port             | `--Metrics.ExposePort value`     |
 | execution.metrics.address          | `--Metrics.ExposeHost value`     |
-| execution.logging.stdout.enabled   |                                  |
-| execution.logging.stdout.level     |                                  |
-| execution.logging.stdout.format    |                                  |
-| execution.logging.stdout.color     |                                  |
+| execution.logging.console.enabled   |                                  |
+| execution.logging.console.level     |                                  |
+| execution.logging.console.format    |                                  |
+| execution.logging.console.color     |                                  |
 | execution.logging.file.enabled     | `--Init.LogDirectory value`      |
 | execution.logging.file.directory   | `--Init.LogDirectory value`      |
 | execution.logging.file.level       |                                  |
@@ -358,10 +358,10 @@ TODO
 | execution.metrics.enabled                | `--metrics`                  |
 | execution.metrics.port                   |                              |
 | execution.metrics.address                |                              |
-| execution.logging.stdout.enabled         |                              |
-| execution.logging.stdout.level           | `--verbosity value`          |
-| execution.logging.stdout.format          | `--log.stdout.format value`  |
-| execution.logging.stdout.color           | `--color value`              |
+| execution.logging.console.enabled         |                              |
+| execution.logging.console.level           | `--verbosity value`          |
+| execution.logging.console.format          | `--log.stdout.format value`  |
+| execution.logging.console.color           | `--color value`              |
 | execution.logging.file.enabled           |                              |
 | execution.logging.file.directory         | `--log.file.directory value` |
 | execution.logging.file.level             | `--log.file.filter value`    |

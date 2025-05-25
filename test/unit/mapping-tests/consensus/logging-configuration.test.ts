@@ -38,7 +38,7 @@ describe('Consensus Client Logging Configuration Tests', () => {
             },
             logging: {
               enabled: true,
-              stdout: {
+              console: {
                 enabled: true,
                 level: 'info',
                 format: 'json',
@@ -62,7 +62,7 @@ describe('Consensus Client Logging Configuration Tests', () => {
         const logFileName = config.consensus.logging.file.name;
         const logFileFullPath = `${logFileDirectory}/${logFileName}`;
         const logFileFormat = config.consensus.logging.file.format;
-        const logLevel = config.consensus.logging.stdout.level;
+        const logLevel = config.consensus.logging.console.level;
         const fileLogLevel = config.consensus.logging.file.level;
 
 
@@ -118,7 +118,7 @@ describe('Consensus Client Logging Configuration Tests', () => {
             },
             logging: {
               enabled: false,
-              stdout: {
+              console: {
                 enabled: true,
                 level: 'info',
                 format: 'json',
@@ -142,7 +142,7 @@ describe('Consensus Client Logging Configuration Tests', () => {
         const logFileName = config.consensus.logging.file.name;
         const logFileFullPath = `${logFileDirectory}/${logFileName}`;
         const logFileFormat = config.consensus.logging.file.format;
-        const logLevel = config.consensus.logging.stdout.level;
+        const logLevel = config.consensus.logging.console.level;
         const fileLogLevel = config.consensus.logging.file.level;
 
 

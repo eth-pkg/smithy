@@ -1,53 +1,397 @@
 name: prysm-validator
-version: 6.0.0
+version: 6.0.2
 valueFormat: space
 rules:
-  - configPath: common.network.name
-    flag: --mainnet
+  - flag: --accept-terms-of-use
+    configPath: common.acceptTermsOfUse
+    transform: flagEnabled
+    description: >-
+      Accepts Terms and Conditions (for non-interactive environments).
+
+  - flag: --api-timeout
+    configPath:
+    description: >-
+      Specifies the timeout value for API requests in seconds.
+
+  - flag: --attest-timely
+    configPath:
+    description: >-
+      Fixes validator can attest timely after current block processes.
+
+  - flag: --beacon-rest-api-provider
+    configPath:
+    description: >-
+      Beacon node REST API provider endpoint.
+
+  - flag: --beacon-rpc-provider
+    configPath: validator.beaconNodes
+    description: >-
+      Beacon node RPC provider endpoint.
+
+  - flag: --chain-config-file
+    configPath:
+    description: >-
+      Path to a YAML file with chain config values.
+
+  - flag: --clear-db
+    configPath:
+    description: >-
+      Prompt for clearing any previously stored data at the data directory.
+
+  - flag: --config-file
+    configPath:
+    description: >-
+      Filepath to a yaml file with flag values.
+
+  - flag: --datadir
+    configPath: validator.dataDir
+    description: >-
+      Data directory for the databases.
+
+  - flag: --disable-account-metrics
+    configPath:
+    description: >-
+      Disables prometheus metrics for validator accounts. Operators with high
+      volumes of validating keys may wish to disable granular prometheus metrics as
+      it increases the data cardinality.
+
+  - flag: --disable-duties-polling
+    configPath:
+    description: >-
+      Disables polling of duties on dependent root changes.
+
+  - flag: --disable-monitoring
+    configPath:
+    description: >-
+      Disables monitoring service.
+
+  - flag: --disable-rewards-penalties-logging
+    configPath:
+    description: >-
+      Disables reward/penalty logging during cluster deployment.
+
+  - flag: --distributed
+    configPath: validator.distributed
+    transform: flagEnabled
+    description: >-
+      To enable the use of prysm validator client in Distributed Validator Cluster.
+
+  - flag: --dynamic-key-reload-debounce-interval
+    configPath:
+    description: >-
+      (Advanced): Specifies the time duration the validator waits to reload new
+      keys if they have changed on disk.
+
+  - flag: --e2e-config
+    configPath:
+    description: >-
+      Enables the E2E testing config, only for use within end-to-end testing.
+
+  - flag: --enable-beacon-rest-api
+    configPath:
+    description: >-
+      (Experimental): Enables of the beacon REST API when querying a beacon node.
+
+  - flag: --enable-builder
+    configPath:
+    description: >-
+      Enables builder validator registration APIs for the validator client to update
+      settings such as fee recipient and gas limit.
+
+  - flag: --enable-db-backup-webhook
+    configPath:
+    description: >-
+      Serves HTTP handler to initiate database backups. The handler is served on the
+      monitoring port at path /db/backup.
+
+  - flag: --enable-doppelganger
+    configPath: validator.doppelgangerProtection
+    transform: flagEnabled
+    description: >-
+      Enables the validator to perform a doppelganger check. This is not a
+      foolproof method to find duplicate instances in the network.
+
+  - flag: --enable-minimal-slashing-protection
+    configPath:
+    description: >-
+      (Experimental): Enables the minimal slashing protection. See EIP-3076 for
+      more details.
+
+  - flag: --enable-slashing-protection-history-pruning
+    configPath:
+    description: >-
+      Enables the pruning of the validator client's slashing protection database.
+
+  - flag: --enable-tracing
+    configPath:
+    description: >-
+      Enables request tracing.
+  
+  # - flag: --ephemery
+  #   configPath: common.network.name
+  #   transform: network
+  #   description: Runs Prysm configured for the Ephemery test network
+
+  - flag: --force-clear-db
+    configPath:
+    description: >-
+      Clears any previously stored data at the data directory.
+
+  - flag: --graffiti
+    configPath: validator.graffiti.message
+    enabled: 
+      configPath: validator.graffiti.enabled
+      transform: flagEnabled
+    description: >-
+      String to include in proposed blocks.
+
+  - flag: --graffiti-file
+    configPath: validator.graffiti.file
+    enabled: 
+      configPath: validator.graffiti.enabled
+      transform: flagEnabled
+    description: >-
+      Path to a YAML file with graffiti values.
+
+  - flag: --grpc-headers
+    configPath:
+    description: >-
+      Comma separated list of key value pairs to pass as gRPC headers for all gRPC
+      calls.
+
+  - flag: --grpc-max-msg-size
+    configPath:
+    description: >-
+      Integer to define max receive message call size (in bytes). If serving a public
+      gRPC server, set this to a more reasonable size to avoid resource exhaustion
+      from large messages.
+
+  - flag: --grpc-retries
+    configPath:
+    description: >-
+      Number of attempts to retry gRPC requests.
+
+  - flag: --grpc-retry-delay
+    configPath:
+    description: >-
+      Amount of time between gRPC retry requests.
+
+  - flag: --holesky
+    configPath: common.network.name
     transform: network
-  - configPath: common.network.name
-    flag: --sepolia
+    description: >-
+      Runs Prysm configured for the Holesky test network.
+
+  - flag: --hoodi
+    configPath: common.network.name
     transform: network
-  - configPath: common.network.name
-    flag: --holesky
+    description: >-
+      Runs Prysm configured for the Hoodi test network.
+
+  - flag: --http-cors-domain
+    configPath:
+    description: >-
+      Comma separated list of domains from which to accept cross origin requests
+      (browser enforced).
+
+  - flag: --http-host
+    configPath:
+    description: >-
+      Host on which the HTTP server runs on.
+
+  - flag: --http-port
+    configPath:
+    description: >-
+      Port on which the HTTP server runs on.
+
+  - flag: --interop-num-validators
+    configPath:
+    description: >-
+      Number of validators to deterministically generate.
+
+  - flag: --interop-start-index
+    configPath:
+    description: >-
+      Start index to deterministically generate validator keys when used in
+      combination with --interop-num-validators.
+
+  - flag: --keymanager-token-file
+    configPath:
+    description: >-
+      Path to auth token file used for validator apis.
+
+  - flag: --log-file
+    configPath: validator.logging.file.path
+    description: >-
+      Specifies log file name, relative or absolute.
+
+  - flag: --log-format
+    configPath: validator.logging.file.format
+    description: >-
+      Specifies log formatting. Supports: text, json, fluentd, journald.
+
+  - flag: --mainnet
+    configPath: common.network.name
     transform: network
-  - configPath: common.network.name
-    flag: --ephemery
+    description: >-
+      Runs on Ethereum main network. This is the default and can be omitted.
+
+  - flag: --minimal-config
+    configPath:
+    description: >-
+      Uses minimal config with parameters as defined in the spec.
+
+  - flag: --monitoring-host
+    configPath: validator.metrics.address
+    enabled: 
+      configPath: validator.metrics.enabled
+      transform: flagEnabled
+    description: >-
+      Host used for listening and responding metrics for prometheus.
+
+  - flag: --monitoring-port
+    configPath: validator.metrics.port
+    enabled: 
+      configPath: validator.metrics.enabled
+      transform: flagEnabled
+    description: >-
+      Port used to listening and respond metrics for Prometheus.
+
+  - flag: --proposer-settings-file
+    configPath: validator.proposerSettingsFile
+    enabled: 
+      configPath: validator.proposerSettingsFile
+      transform: flagEnabled
+    description: >-
+      Sets path to a YAML or JSON file containing validator settings used when
+      proposing blocks such as fee recipient and gas limit.
+
+  - flag: --proposer-settings-url
+    configPath:
+    description: >-
+      Sets URL to a REST endpoint containing validator settings used when proposing
+      blocks such as fee recipient and gas limit.
+
+  - flag: --rpc
+    configPath:
+    description: >-
+      Enables the RPC server for the validator client (without Web UI).
+
+  - flag: --rpc-host
+    configPath:
+    description: >-
+      Host on which the RPC server should listen.
+
+  - flag: --rpc-port
+    configPath:
+    description: >-
+      RPC port exposed by a validator client.
+
+  - flag: --sepolia
+    configPath: common.network.name
     transform: network
-  - configPath: common.network.name 
-    flag: --hoodi
-    transform: network
-  - configPath: validator.dataDir
-    flag: --datadir
-  - configPath: validator.beaconRpcProvider
-    flag: --beacon-rpc-provider
-  - configPath: validator.beaconRpcProvider
-    flag: --beacon-rest-api-provider
-  - configPath: validator.feeRecipientAddress
-    flag: --suggested-fee-recipient
-  - configPath: validator.metricsPort
-    flag: --monitoring-port
-  - configPath: validator.logFile
-    flag: --log-file
-  - configPath: validator.logFormat
-    flag: --log-format
-  - configPath: validator.logLevel
-    flag: --verbosity
-  - configPath: validator.builderEnabled
-    flag: --enable-builder
-  - configPath: validator.graffiti
-    flag: --graffiti
-  - configPath: validator.graffitiFile
-    flag: --graffiti-file
-  - configPath: validator.proposerConfigFile
-    flag: --proposer-settings-file
-  - configPath: validator.suggestedGasLimit
-    flag: --suggested-gas-limit
-  - configPath: validator.externalSignerKeystore
-    flag: --validators-external-signer-key-file
-  - configPath: validator.externalSignerPublicKeys
-    flag: --validators-external-signer-public-keys
-  - configPath: validator.externalSignerUrl
-    flag: --validators-external-signer-url
-  - configPath: validator.distributed
-    flag: --distributed 
+    description: >-
+      Runs Prysm configured for the Sepolia test network.
+
+  - flag: --slasher-rpc-provider
+    configPath:
+    description: >-
+      Slasher node RPC provider endpoint.
+
+  - flag: --slasher-tls-cert
+    configPath:
+    description: >-
+      Certificate for secure slasher gRPC. Pass this and the tls-key flag in order
+      to use gRPC securely.
+
+  - flag: --suggested-fee-recipient
+    configPath: validator.suggestFeeRecipientAddress
+    description: >-
+      Sets ALL validators' mapping to a suggested eth address to receive gas fees
+      when proposing a block.
+
+  - flag: --suggested-gas-limit
+    configPath: validator.suggestedGasLimit
+    description: >-
+      Sets gas limit for the builder to use for constructing a payload for all the
+      validators.
+
+  - flag: --tls-cert
+    configPath:
+    description: >-
+      Certificate for secure gRPC. Pass this and the tls-key flag in order to use
+      gRPC securely.
+
+  - flag: --trace-sample-fraction
+    configPath:
+    description: >-
+      Indicates what fraction of p2p messages are sampled for tracing.
+
+  - flag: --tracing-endpoint
+    configPath:
+    description: >-
+      Tracing endpoint defines where beacon chain traces are exposed to Jaeger.
+
+  - flag: --tracing-process-name
+    configPath:
+    description: >-
+      Name to apply to tracing tag process_name.
+
+  - flag: --validators-external-signer-key-file
+    configPath: validator.externalSigner.keystore
+    enabled: 
+      configPath: validator.externalSigner.enabled
+      transform: flagEnabled
+    description: >-
+      A file path used to load remote public validator keys and persist them through
+      restarts.
+
+  - flag: --validators-external-signer-public-keys
+    configPath: validator.externalSigner.publicKeys
+    enabled: 
+      configPath: validator.externalSigner.enabled
+      transform: flagEnabled
+    description: >-
+      Comma separated list of public keys OR an external url endpoint for the
+      validator to retrieve public keys from for usage with web3signer.
+
+  - flag: --validators-external-signer-url
+    configPath: validator.externalSigner.url
+    enabled: 
+      configPath: validator.externalSigner.enabled
+      transform: flagEnabled
+    description: >-
+      URL for consensys' web3signer software to use with the Prysm validator
+      client.
+
+  - flag: --validators-registration-batch-size
+    configPath:
+    description: >-
+      Sets the maximum size for one batch of validator registrations. Use a
+      non-positive value to disable batching.
+
+  - flag: --verbosity
+    configPath: validator.logging.console.level
+    description: >-
+      Logging verbosity. (trace, debug, info, warn, error, fatal, panic)
+
+  - flag: --wallet-dir
+    configPath: validator.validatorsDir
+    description: >-
+      Path to a wallet directory on-disk for Prysm validator accounts.
+
+  - flag: --wallet-password-file
+    configPath: validator.secretsDir
+    description: >-
+      Path to a plain-text, .txt file containing your wallet password.
+
+  - flag: --web
+    configPath:
+    description: >-
+      (Work in progress): Enables the web portal for the validator client.
+
+  - flag: --write-wallet-password-on-web-onboarding
+    configPath:
+    description: >-
+      (Danger): Writes the wallet password to the wallet directory on completing
+      Prysm web onboarding. 

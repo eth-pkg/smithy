@@ -36,7 +36,7 @@ properties:
     type: string
     default: "{common.dataDir}/{validator.client.name}-validator"
     description: "Base directory for validator data. Interpolated from common.dataDir and validator.client.name."
-  beaconRpcProvider:
+  beaconNodes:
     type: string
     default: "localhost:5052"
     description: "Beacon node RPC endpoint (host:port)"
@@ -49,7 +49,7 @@ properties:
     description: "Number of validators to run"
     errorMessage:
       minimum: "Number of validators must be at least 1"
-  feeRecipientAddress:
+  suggestFeeRecipientAddress:
     type: string
     default: "0x0000000000000000000000000000000000000000"
     description: "Ethereum address to receive transaction fees"
@@ -130,14 +130,6 @@ properties:
         type: number
         default: 5000
         description: "Timeout in milliseconds for external signer requests"
-      truststore:
-        type: string
-        default: ""
-        description: "Path to external signer truststore"
-      truststorePasswordFile:
-        type: string
-        default: ""
-        description: "Path to file containing external signer truststore password"
   proposerConfig:
     type: object
     properties:
@@ -149,25 +141,6 @@ properties:
         type: string
         default: ""
         description: "Path to proposer configuration file"
-      refreshEnabled:
-        type: boolean
-        default: false
-        description: "Enable refresh of proposer configuration"
-      blindedBlocksEnabled:
-        type: boolean
-        default: false
-        description: "Enable blinded block proposals"
-      refreshInterval:
-        type: number
-        default: 0
-        description: "Refresh interval for proposer configuration"
-      maxValidators:
-        type: number
-        default: 1000000
-        description: "Maximum number of validators"
-      maxProposerDelay:
-        type: number
-        default: 0
   validatorsDir:
     type: string
     default: "$HOME/ethereum/validator/keys"

@@ -280,9 +280,9 @@ rules:
         Logging verbosity level for emitting logs to file
 
   - flag: --logLevel
-    configPath: consensus.logging.stdout.level
+    configPath: consensus.logging.console.level
     enabled:
-      - configPath: consensus.logging.stdout.enabled
+      - configPath: consensus.logging.console.enabled
         transform: flagEnabled
       - configPath: consensus.logging.enabled
         transform: flagEnabled

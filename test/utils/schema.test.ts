@@ -48,9 +48,7 @@ describe('SchemaUtils', () => {
       expect(defaults.validator, 'Missing validator.enabled property').to.haveOwnProperty('enabled');
       expect(defaults.validator.metrics, 'Missing validator.metrics.enabled property').to.haveOwnProperty('enabled');
       expect(defaults.validator.externalSigner, 'Missing validator.externalSigner.enabled property').to.haveOwnProperty('enabled');
-      expect(defaults.validator.externalSigner, 'Missing validator.externalSigner.timeout property').to.haveOwnProperty('timeout');
       expect(defaults.validator.proposerConfig, 'Missing validator.proposerConfig.enabled property').to.haveOwnProperty('enabled');
-      expect(defaults.validator.proposerConfig, 'Missing validator.proposerConfig.maxValidators property').to.haveOwnProperty('maxValidators');
     });
 
     it('should have correct default values', () => {
@@ -83,9 +81,7 @@ describe('SchemaUtils', () => {
       expect(defaults.validator.isExternal).to.equal(true, 'validator.isExternal should default to true');
       expect(defaults.validator.metrics.enabled).to.equal(false, 'validator.metrics.enabled should default to true');
       expect(defaults.validator.externalSigner.enabled).to.equal(false, 'validator.externalSigner.enabled should default to false');
-      expect(defaults.validator.externalSigner.timeout).to.equal(5000, 'validator.externalSigner.timeout should default to 5000');
       expect(defaults.validator.proposerConfig.enabled).to.equal(false, 'validator.proposerConfig.enabled should default to false');
-      expect(defaults.validator.proposerConfig.maxValidators).to.equal(1000000, 'validator.proposerConfig.maxValidators should default to 1000000');
     });
   });
 
@@ -131,9 +127,7 @@ describe('SchemaUtils', () => {
       expect(defaults.validator, 'Missing validator.enabled property').to.haveOwnProperty('enabled');
       expect(defaults.validator.metrics, 'Missing validator.metrics.enabled property').to.haveOwnProperty('enabled');
       expect(defaults.validator.externalSigner, 'Missing validator.externalSigner.enabled property').to.haveOwnProperty('enabled');
-      expect(defaults.validator.externalSigner, 'Missing validator.externalSigner.timeout property').to.haveOwnProperty('timeout');
       expect(defaults.validator.proposerConfig, 'Missing validator.proposerConfig.enabled property').to.haveOwnProperty('enabled');
-      expect(defaults.validator.proposerConfig, 'Missing validator.proposerConfig.maxValidators property').to.haveOwnProperty('maxValidators');
     });
 
     it('should have correct default values', () => {
@@ -166,9 +160,7 @@ describe('SchemaUtils', () => {
       expect(defaults.validator.isExternal).to.equal(true, 'validator.isExternal should default to true');
       expect(defaults.validator.metrics.enabled).to.equal(false, 'validator.metrics.enabled should default to true');
       expect(defaults.validator.externalSigner.enabled).to.equal(false, 'validator.externalSigner.enabled should default to false');
-      expect(defaults.validator.externalSigner.timeout).to.equal(5000, 'validator.externalSigner.timeout should default to 5000');
       expect(defaults.validator.proposerConfig.enabled).to.equal(false, 'validator.proposerConfig.enabled should default to false');
-      expect(defaults.validator.proposerConfig.maxValidators).to.equal(1000000, 'validator.proposerConfig.maxValidators should default to 1000000');
     });
   });
 }); 

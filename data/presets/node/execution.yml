@@ -226,13 +226,13 @@ properties:
   logging:
     type: object
     properties:
-      stdout:
+      console:
         type: object
         properties:
           enabled:
             type: boolean
             default: false
-            description: "Enable stdout logging"
+            description: "Enable console logging"
           level:
             type: string
             enum:

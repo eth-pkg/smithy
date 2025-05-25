@@ -128,10 +128,10 @@ rules:
       The initial state. This value should be a file or URL pointing to an SSZ-encoded finalized
       checkpoint state
   - flag: --log-color-enabled
-    configPath: consensus.logging.stdout.color
+    configPath: consensus.logging.console.color
     transform: flagEnabled
     enabled: 
-      - configPath: consensus.logging.stdout.enabled
+      - configPath: consensus.logging.console.enabled
         transform: flagEnabled
       - configPath: consensus.logging.enabled
         transform: flagEnabled
@@ -140,7 +140,7 @@ rules:
   - flag: --log-destination
     configPath: 
     enabled: 
-      - configPath: consensus.logging.stdout.enabled
+      - configPath: consensus.logging.console.enabled
         transform: flagEnabled
       - configPath: consensus.logging.enabled
         transform: flagEnabled
@@ -179,9 +179,9 @@ rules:
     description: |
       Whether events are logged when validators perform duties
   - flag: --logging
-    configPath: consensus.logging.stdout.level
+    configPath: consensus.logging.console.level
     enabled:
-      - configPath: consensus.logging.stdout.enabled
+      - configPath: consensus.logging.console.enabled
         transform: flagEnabled
       - configPath: consensus.logging.enabled
         transform: flagEnabled
@@ -654,7 +654,7 @@ rules:
       Enable the proposer configuration reload on every proposer preparation (once per
       epoch)
   - flag: --validators-proposer-default-fee-recipient
-    configPath: validator.feeRecipientAddress
+    configPath: validator.suggestFeeRecipientAddress
     enabled: 
       configPath: validator.enabled
       transform: flagEnabled

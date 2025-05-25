@@ -1,6 +1,6 @@
 export interface LogConfig {
   enabled: boolean
-  stdout: {
+  console: {
     enabled: boolean
     level: string
     format: string,

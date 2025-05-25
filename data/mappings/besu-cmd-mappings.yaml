@@ -69,10 +69,10 @@ rules:
     description: >
       Specifies whether to cache precompile results (default: false)
   - flag: --color-enabled
-    configPath: execution.logging.stdout.color
+    configPath: execution.logging.console.color
     transform: flagEnabled
     enabled:
-      - configPath: execution.logging.stdout.enabled
+      - configPath: execution.logging.console.enabled
         transform: flagEnabled
       - configPath: execution.logging.enabled
         transform: flagEnabled
@@ -233,10 +233,10 @@ rules:
     description: >
       Identification for this node in the Client ID
   - flag: --json-pretty-print-enabled
-    configPath: execution.logging.stdout.format
+    configPath: execution.logging.console.format
     transform: isJson
     enabled:
-      - configPath: execution.logging.stdout.enabled
+      - configPath: execution.logging.console.enabled
         transform: flagEnabled
       - configPath: execution.logging.enabled
         transform: flagEnabled
@@ -254,9 +254,9 @@ rules:
       networks that support data blobs, optional for overriding named networks
       default.
   - flag: --logging
-    configPath: execution.logging.stdout.level
+    configPath: execution.logging.console.level
     enabled:
-      - configPath: execution.logging.stdout.enabled
+      - configPath: execution.logging.console.enabled
         transform: flagEnabled
       - configPath: execution.logging.enabled
         transform: flagEnabled

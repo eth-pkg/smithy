@@ -204,7 +204,7 @@ describe('Preset Validation Tests', () => {
 
   it('should reject invalid validator fee recipient address', async () => {
     const config = { ...testConfig };
-    config.validator!.feeRecipientAddress = 'invalid_address';
+    config.validator!.suggestFeeRecipientAddress = 'invalid_address';
 
     try {
       await presetManager.validateAndApplyRules(config, 'default');

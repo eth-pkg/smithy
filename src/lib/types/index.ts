@@ -7,13 +7,14 @@ export * from './p2p'
 export * from './logging'
 export * from './consensus'
 export * from './execution'
+export * from './validator'
 
 // Main Configuration Interface
 import { OperatingSystem } from './basic'
 import { NetworkConfig } from './network'
 import { EngineConfig } from './http'
 import { Consensus } from './consensus'
-import { Validator } from './consensus'
+import { Validator } from './validator'
 import { Execution } from './execution'
 
 export interface Common {

@@ -476,19 +476,19 @@ rules:
     description: |
       Custom node name
   - flag: --log.console.json
-    configPath: execution.logging.stdout.format 
+    configPath: execution.logging.console.format 
     transform: isJson
     enabled:
-      - configPath: execution.logging.stdout.enabled
+      - configPath: execution.logging.console.enabled
         transform: flagEnabled
       - configPath: execution.logging.enabled
         transform: flagEnabled
     description: |
       Format console logs with JSON
   - flag: --log.console.verbosity
-    configPath: execution.logging.stdout.level
+    configPath: execution.logging.console.level
     enabled:
-      - configPath: execution.logging.stdout.enabled
+      - configPath: execution.logging.console.enabled
         transform: flagEnabled
       - configPath: execution.logging.enabled
         transform: flagEnabled
@@ -540,10 +540,10 @@ rules:
     description: |
       Set the log verbosity for logs stored to disk
   - flag: --log.json
-    configPath: execution.logging.stdout.format
+    configPath: execution.logging.console.format
     transform: isJson
     enabled:
-      - configPath: execution.logging.stdout.enabled
+      - configPath: execution.logging.console.enabled
         transform: flagEnabled
       - configPath: execution.logging.enabled
         transform: flagEnabled
@@ -1087,9 +1087,9 @@ rules:
     description: |
       Enables the experimental RLPx V5 (Topic Discovery) mechanism
   - flag: --verbosity
-    configPath: execution.logging.stdout.level
+    configPath: execution.logging.console.level
     enabled:
-      - configPath: execution.logging.stdout.enabled
+      - configPath: execution.logging.console.enabled
         transform: flagEnabled
       - configPath: execution.logging.enabled
         transform: flagEnabled

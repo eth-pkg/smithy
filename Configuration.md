@@ -123,7 +123,7 @@ execution:
   
   # Logging Settings
   logging:
-    stdout:
+    console:
       enabled: false
       level: "info"  # One of: off, error, warn, info, debug, trace, all
       format: "text"
@@ -259,9 +259,9 @@ validator:
   
   # Data and Connection Settings
   dataDir: "{common.dataDir}/{validator.client.name}-validator"
-  beaconRpcProvider: "localhost:5052"
+  beaconNodes: "localhost:5052"
   numValidators: 1
-  feeRecipientAddress: "0x0000000000000000000000000000000000000000"
+  suggestFeeRecipientAddress: "0x0000000000000000000000000000000000000000"
   
   # Metrics Settings
   metrics:
@@ -383,7 +383,7 @@ Smithy uses a preset-based configuration system that allows for easy customizati
        required: true
        dataDir: "{common.dataDir}/metrics"  # Interpolated path
      logging:
-       stdout:
+       console:
          enabled: true
          required: true
        file:
@@ -678,7 +678,7 @@ consensus:
 validator:
   client:
     name: "lighthouse"
-  feeRecipientAddress: "0x123..."
+  suggestFeeRecipientAddress: "0x123..."
 ```
 
 ## Configuration Loading

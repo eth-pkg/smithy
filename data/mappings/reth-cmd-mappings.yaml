@@ -576,9 +576,9 @@ rules:
       
       [default: error]
   - flag: --log.stdout.filter
-    configPath: execution.logging.stdout.level
+    configPath: execution.logging.console.level
     enabled:
-      - configPath: execution.logging.stdout.enabled
+      - configPath: execution.logging.console.enabled
         transform: flagEnabled
       - configPath: execution.logging.enabled
         transform: flagEnabled
@@ -587,9 +587,9 @@ rules:
       
       [default: ]
   - flag: --log.stdout.format
-    configPath: execution.logging.stdout.format
+    configPath: execution.logging.console.format
     enabled:
-      - configPath: execution.logging.stdout.enabled
+      - configPath: execution.logging.console.enabled
         transform: flagEnabled
       - configPath: execution.logging.enabled
         transform: flagEnabled

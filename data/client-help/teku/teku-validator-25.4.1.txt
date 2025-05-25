@@ -1,0 +1,232 @@
+
+teku validator-client [OPTIONS]
+
+Description:
+
+Run a Validator Client that connects to a remote Beacon Node
+
+Options:
+      --beacon-node-api-endpoint, --beacon-node-api-endpoints=<ENDPOINT>[,
+        <ENDPOINT>...]...
+                            Beacon Node REST API endpoint(s). If more than one
+                              endpoint is defined, the first node will be used
+                              as a primary and others as failovers.
+      --beacon-node-api-endpoint, --beacon-node-api-endpoints=<ENDPOINT>[,
+        <ENDPOINT>...]...
+                            Beacon Node REST API endpoint(s). If more than one
+                              endpoint is defined, the first node will be used
+                              as a primary and others as failovers.
+      --beacon-node-ssz-blocks-enabled[=<BOOLEAN>]
+                            Use SSZ encoding for API block requests
+                              Default: true
+  -c, --config-file=<FILENAME>
+                            Path/filename of the yaml config file (default:
+                              none)
+      --data-path, --data-base-path=<FILENAME>
+                            Path to the base directory for storage
+                              Default: /home/eniko/.local/share/teku
+      --data-validator-path=<FILENAME>
+                            Path to validator client data
+                              Default: <data-base-path>/validator
+      --doppelganger-detection-enabled[=<BOOLEAN>]
+                            Enable validators doppelganger detection
+                              Default: false
+      --exit-when-no-validator-keys-enabled[=<BOOLEAN>]
+                            Enable terminating the process if no validator keys
+                              are found during startup
+                              Default: false
+  -h, --help                Show this help message and exit.
+  -l, --logging=<LOG VERBOSITY LEVEL>
+                            Logging verbosity levels: OFF, FATAL, ERROR, WARN,
+                              INFO, DEBUG, TRACE, ALL (default: INFO).
+      --log-color-enabled[=<BOOLEAN>]
+                            Whether Status and Event log messages include a
+                              console color display code
+                              Default: true
+      --log-destination=<LOG_DESTINATION>
+                            Whether a logger is added for the console, the log
+                              file, or both (Valid values: BOTH, CONSOLE,
+                              DEFAULT_BOTH, FILE, CUSTOM)
+                              Default: DEFAULT_BOTH
+      --log-file=<FILENAME> Path containing the location (relative or absolute)
+                              and the log filename. If not set will default to
+                              <data-path>/logs/teku.log
+      --log-file-name-pattern=<REGEX>
+                            Pattern for the filename to apply to rolled over
+                              log files. If not set will default to
+                              <data-path>/logs/teku_%d{yyyy-MM-dd}.log
+      --log-include-events-enabled[=<BOOLEAN>]
+                            Whether frequent update events are logged (e.g.
+                              every slot and epoch event)
+                              Default: true
+      --log-include-validator-duties-enabled[=<BOOLEAN>]
+                            Whether events are logged when validators perform
+                              duties
+                              Default: true
+      --metrics-block-production-performance-tracking-enabled[=<BOOLEAN>]
+                            Whether block production timing metrics are tracked
+                              and reported
+                              Default: false
+      --metrics-block-timing-tracking-enabled[=<BOOLEAN>]
+                            Whether block timing metrics are tracked and
+                              reported
+                              Default: true
+      --metrics-categories[=<METRICS_CATEGORY>[,<METRICS_CATEGORY>...]...]
+                            Metric categories to enable
+                              Default: [JVM, PROCESS, VALIDATOR_PERFORMANCE,
+                              EVENTBUS, STORAGE, VALIDATOR, BEACON, LIBP2P,
+                              EXECUTOR, STORAGE_FINALIZED_DB, DISCOVERY,
+                              NETWORK, STORAGE_HOT_DB, VALIDATOR_DUTY]
+      --metrics-enabled[=<BOOLEAN>]
+                            Enables metrics collection via Prometheus
+                              Default: false
+      --metrics-host-allowlist[=<hostname>[,<hostname>...]...]
+                            Comma-separated list of hostnames to allow, or * to
+                              allow any host
+                              Default: [127.0.0.1, localhost]
+      --metrics-interface=<NETWORK>
+                            Metrics network interface to expose metrics for
+                              Prometheus
+                              Default: 127.0.0.1
+      --metrics-port=<INTEGER>
+                            Metrics port to expose metrics for Prometheus
+                              Default: 8008
+      --metrics-publish-endpoint=<URL>
+                            Publish metrics for node monitoring to an external
+                              service
+      --metrics-publish-interval=<INTEGER>
+                            Interval between metric publications to the
+                              external service (measured in seconds)
+                              Default: 60
+  -n, --network=<NETWORK>   Represents which network to use. Use `auto` to
+                              fetch network configuration from the beacon node
+                              endpoint directly.
+                              Default: auto
+      --shut-down-when-validator-slashed-enabled[=<BOOLEAN>]
+                            If enabled and an owned validator key is detected
+                              as slashed, the node will terminate. In this
+                              case, the service should not be restarted.
+                              Default: false
+  -V, --version             Print version information and exit.
+      --validator-api-bearer-file=<FILENAME>
+                            Use the specified file as the bearer token for the
+                              validator Rest API
+      --validator-api-cors-origins[=<origin>[,<origin>...]...]
+                            Comma separated list of origins to allow, or * to
+                              allow any origin
+                              Default: []
+      --validator-api-docs-enabled[=<BOOLEAN>]
+                            Enable swagger-docs and swagger-ui endpoints
+                              Default: false
+      --validator-api-enabled[=<BOOLEAN>]
+                            Enables Validator Rest API
+                              Default: false
+      --validator-api-host-allowlist[=<hostname>[,<hostname>...]...]
+                            Comma-separated list of hostnames to allow, or * to
+                              allow any host
+                              Default: [127.0.0.1, localhost]
+      --validator-api-interface=<NETWORK>
+                            Interface of Validator Rest API
+                              Default: 127.0.0.1
+      --validator-api-keystore-file=<keystoreFile>
+                            Keystore used for ssl for the validator api.
+      --validator-api-keystore-password-file=<keystorePasswordFile>
+                            Password used to decrypt the keystore for the
+                              validator api.
+      --validator-api-port=<INTEGER>
+                            Port number of Rest API
+                              Default: 5052
+      --validator-is-local-slashing-protection-synchronized-enabled[=<BOOLEAN>]
+                            Restrict local signing to a single operation at a
+                              time.
+                              Default: true
+      --validator-keys=<KEY_DIR>:<PASS_DIR> | <KEY_FILE>:<PASS_FILE>[,<KEY_DIR>:
+        <PASS_DIR> | <KEY_FILE>:<PASS_FILE>...]...
+                            <KEY_DIR>:<PASS_DIR> will find <KEY_DIR>/**.json,
+                              and expect to find <PASS_DIR>/**.txt.
+                            <KEY_FILE>:<PASS_FILE> will expect that the file
+                              <KEY_FILE> exists, and the file containing the
+                              password for it is <PASS_FILE>.
+                            The path separator is operating system dependent,
+                              and should be ';' in windows rather than ':'.
+                              Default: []
+      --validators-builder-registration-default-enabled[=<BOOLEAN>]
+                            Enable validators registration to builder
+                              infrastructure.
+                              Default: false
+      --validators-builder-registration-default-gas-limit=<uint64>
+                            Change the default gas limit used for the
+                              validators registration.
+                              Default: 36000000
+      --validators-early-attestations-enabled[=<BOOLEAN>]
+                            Generate attestations as soon as a block is known,
+                              rather than delaying until the attestation is due
+                              Default: true
+      --validators-external-signer-keystore=<FILE>
+                            Keystore (PKCS12/JKS) to use for TLS mutual
+                              authentication with external signer
+      --validators-external-signer-keystore-password-file=<FILE>
+                            Password file to decrypt keystore (PKCS12/JKS) that
+                              will be used for TLS mutual authentication with
+                              external signer
+      --validators-external-signer-public-keys[=<STRINGS>[,<STRINGS>...]...]
+                            The list of external signer public keys, or a URL
+                              to load the keys from
+                              Default: []
+      --validators-external-signer-slashing-protection-enabled[=<BOOLEAN>]
+                            Enable internal slashing protection for external
+                              signers
+                              Default: true
+      --validators-external-signer-timeout=<INTEGER>
+                            Timeout (in milliseconds) for the external signing
+                              service
+                              Default: 5000
+      --validators-external-signer-truststore=<FILE>
+                            Keystore (PKCS12/JKS) to trust external signer's
+                              self-signed certificate
+      --validators-external-signer-truststore-password-file=<FILE>
+                            Password file to decrypt keystore (PKCS12/JKS) that
+                              will be used to trust external signer's
+                              self-signed certificate
+      --validators-external-signer-url=<NETWORK>
+                            URL for the external signing service
+      --validators-graffiti=<GRAFFITI STRING>
+                            Graffiti value to include during block creation.
+                              Value gets converted to bytes and padded to
+                              Bytes32.
+      --validators-graffiti-client-append-format=<STRING>
+                            Appends CL and EL clients information with a space
+                              to user's graffiti when producing a block on the
+                              Beacon Node. (Valid values: AUTO, CLIENT_CODES,
+                              DISABLED)
+                              Default: AUTO
+      --validators-graffiti-file=<GRAFFITI FILE>
+                            File to load graffiti value to include during block
+                              creation. Value gets converted to bytes and
+                              padded to Bytes32. Takes precedence over
+                              --validators-graffiti. If the file can not be
+                              read, the --validators-graffiti value is used as
+                              a fallback.
+      --validators-keystore-locking-enabled[=<BOOLEAN>]
+                            Enable locking validator keystore files
+                              Default: true
+      --validators-performance-tracking-mode=<TRACKING_MODE>
+                            Set strategy for handling performance tracking.
+                              Valid values: LOGGING, METRICS, ALL, NONE
+                              Default: ALL
+      --validators-proposer-blinded-blocks-enabled[=<BOOLEAN>]
+                            Use blinded blocks when in block production duties
+                              Default: false
+      --validators-proposer-config=<STRING>
+                            remote URL or local file path to load proposer
+                              configuration from
+      --validators-proposer-config-refresh-enabled[=<BOOLEAN>]
+                            Enable the proposer configuration reload on every
+                              proposer preparation (once per epoch)
+                              Default: false
+      --validators-proposer-default-fee-recipient=<ADDRESS>
+                            Default fee recipient sent to the execution engine,
+                              which could use it as fee recipient when
+                              producing a new execution block.
+
+Teku is licensed under the Apache License 2.0

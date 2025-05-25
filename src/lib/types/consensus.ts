@@ -1,4 +1,4 @@
-import { ConsensusClientName, ValidatorClientName } from './clients'
+import { ConsensusClientName } from './clients'
 import { EmptyValue } from './basic'
 import { HttpConfig, MetricsConfig, WebSocketConfig } from './http'
 import { ConsensusP2PConfig } from './p2p'
@@ -14,32 +14,6 @@ export interface CheckpointSyncConfig {
   wss: string
 }
 
-export interface GraffitiConfig {
-  enabled: boolean
-  message: string
-}
-
-export interface ProposerConfig {
-  enabled: boolean
-  file: string
-  refreshEnabled: boolean
-  blindedBlocksEnabled: boolean
-  refreshInterval: number
-  maxValidators: number
-  maxProposerDelay: number
-  maxProposerPriority: number
-}
-
-export interface ExternalSignerConfig {
-  enabled: boolean
-  url: string
-  keystore: string
-  keystorePasswordFile: string
-  publicKeys: string[]
-  timeout: number
-  truststore: string
-  truststorePasswordFile: string
-}
 
 export interface GenesisSyncConfig {
   enabled: boolean
@@ -69,27 +43,3 @@ export interface Consensus {
   builder: BuilderConfig
   genesisSync: GenesisSyncConfig
 }
-
-export interface Validator {
-  client: {
-    name: ValidatorClientName | EmptyValue
-    version: string
-  }
-  isExternal: boolean
-  enabled: boolean
-  dataDir: string
-  beaconRpcProvider: string
-  numValidators: number
-  feeRecipientAddress: string
-  graffiti: GraffitiConfig
-  proposerConfig: ProposerConfig
-  externalSigner: ExternalSignerConfig
-  suggestedGasLimit?: number
-  doppelgangerProtection?: boolean
-  builderEnabled?: boolean
-  metrics: MetricsConfig
-  logging: LogConfig
-  validatorsDir?: string
-  secretsDir?: string
-  distributed?: boolean
-} 

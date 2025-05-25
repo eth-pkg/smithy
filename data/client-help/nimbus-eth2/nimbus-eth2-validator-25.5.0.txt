@@ -1,0 +1,42 @@
+Nimbus validator client v25.5.0-5c0c0c0-stateofus
+
+Usage: 
+nimbus_validator_client [OPTIONS]... command
+
+The following options are available:
+
+     --config-file           Loads the configuration from a TOML file.
+     --log-level             Sets the log level for process and topics (e.g. "DEBUG; TRACE:discv5,libp2p;
+                               REQUIRED:none; DISABLED:none") [=INFO].
+     --log-file              Specifies a path for the written JSON log file (deprecated).
+     --network               The Eth2 network to join [=mainnet].
+  -d, --data-dir              The directory where nimbus will store all blockchain data.
+     --validators-dir        A directory containing validator keystores.
+     --secrets-dir           A directory containing validator keystore passwords.
+     --beacon-node           URL of the beacon node REST API [=http://127.0.0.1:5052].
+     --metrics               Enable the metrics server [=false].
+     --metrics-address       Listening address of the metrics server [=127.0.0.1].
+     --metrics-port          Listening HTTP port of the metrics server [=8008].
+     --status-bar            Display a status bar at the bottom of the terminal screen [=true].
+     --status-bar-contents   Textual template for the contents of the status bar.
+     --graffiti              The graffiti value that will appear in proposed blocks. You can use a
+                               0x-prefixed hex encoded string to specify raw bytes.
+     --suggested-fee-recipient Suggested fee recipient.
+     --suggested-gas-limit   Suggested gas limit [=defaultGasLimit].
+     --payload-builder       Enable external payload builder [=false].
+     --payload-builder-url   Payload builder URL.
+     --local-block-value-boost Increase execution layer block values for builder bid comparison by a percentage
+                               [=10].
+     --doppelganger-detection If enabled, the validator client prudently listens for 2 epochs for attestations from
+                               a validator with the same index (a doppelganger), before sending an attestation
+                               itself. This protects against slashing (due to double-voting) but means you will
+                               miss two attestations when restarting. [=true].
+     --validator-monitor-auto Monitor validator activity automatically for validators active on this beacon
+                               node [=true].
+     --validator-monitor-pubkey One or more validators to monitor - works best when --subscribe-all-subnets is
+                               enabled.
+     --validator-monitor-details Publish detailed metrics for each validator individually - may incur significant
+                               overhead with large numbers of validators [=false].
+     --web3-signer-url       Remote Web3Signer URL that will be used as a source of validators.
+     --web3-signer-update-interval Number of seconds between validator list updates [=3600].
+     --non-interactive       Do not display interactive prompts. Quit on missing configuration.

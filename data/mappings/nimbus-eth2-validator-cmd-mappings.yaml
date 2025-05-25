@@ -1,40 +1,164 @@
 name: nimbus-eth2-validator
-version: 25.3.1
+version: 25.5.0
 valueFormat: space
 rules:
-  - configPath: validator.dataDir
-    flag: --data-dir
-  - configPath: validator.beaconRpcProvider
-    flag: --beacon-node
-  - configPath: validator.feeRecipientAddress
-    flag: --suggested-fee-recipient
-  - configPath: validator.metricsPort
-    flag: --metrics-port
-    parent: --metrics
-  - configPath: validator.metricsEnabled
-    flag: --metrics
-  - configPath: validator.metricsAddress
-    flag: --metrics-address
-    parent: --metrics
-  - configPath: validator.validatorsDir
-    flag: --validators-dir
-  - configPath: validator.secretsDir
-    flag: --secrets-dir
-  - configPath: validator.externalSignerUrl
-    flag: --web3-signer-url
-  - configPath: validator.suggestedGasLimit
-    flag: --suggested-gas-limit
-  - configPath: validator.graffiti
-    flag: --graffiti
-  - configPath: validator.builderEnabled
-    flag: --payload-builder
-  - configPath: validator.distributed
-    flag: --distributed
-  - configPath: validator.doppelgangerProtection
-    flag: --doppelganger-detection
-  - configPath: validator.configFile
-    flag: --config-file
-  - configPath: validator.logLevel
-    flag: --log-level
-  - configPath: validator.logFile
-    flag: --log-file 
+  - flag: --beacon-node
+    configPath: validator.beaconNodes
+    transform: joinComma
+    description: >-
+      URL of the beacon node REST API [=http://127.0.0.1:5052].
+
+  - flag: --config-file
+    configPath:
+    description: >-
+      Loads the configuration from a TOML file.
+
+  - flag: --data-dir
+    configPath: validator.dataDir
+    description: >-
+      The directory where nimbus will store all blockchain data.
+
+  - flag: --doppelganger-detection
+    configPath: validator.doppelgangerProtection
+    transform: flagEnabled
+    description: >-
+      If enabled, the validator client prudently listens for 2 epochs for
+      attestations from a validator with the same index (a doppelganger), before
+      sending an attestation itself. This protects against slashing (due to
+      double-voting) but means you will miss two attestations when restarting.
+      [=true].
+
+  - flag: --graffiti
+    configPath: validator.graffiti.message
+    enabled:
+      configPath: validator.graffiti.enabled
+      transform: flagEnabled
+    description: >-
+      The graffiti value that will appear in proposed blocks. You can use a
+      0x-prefixed hex encoded string to specify raw bytes.
+
+  - flag: --local-block-value-boost
+    configPath:
+    description: >-
+      Increase execution layer block values for builder bid comparison by a
+      percentage [=10].
+
+  - flag: --log-file
+    configPath: validator.logging.file.path
+    enabled:
+      configPath: validator.logging.enabled
+      transform: flagEnabled
+    description: >-
+      Specifies a path for the written JSON log file (deprecated).
+
+  - flag: --log-level
+    configPath: validator.logging.file.level
+    enabled:
+      configPath: validator.logging.enabled
+      transform: flagEnabled
+    description: >-
+      Sets the log level for process and topics (e.g. "DEBUG; TRACE:discv5,libp2p;
+      REQUIRED:none; DISABLED:none") [=INFO].
+
+  - flag: --metrics
+    configPath: validator.metrics.enabled
+    transform: flagEnabled
+    description: >-
+      Enable the metrics server [=false].
+
+  - flag: --metrics-address
+    configPath: validator.metrics.address
+    enabled:
+      configPath: validator.metrics.enabled
+      transform: flagEnabled
+    description: >-
+      Listening address of the metrics server [=127.0.0.1].
+
+  - flag: --metrics-port
+    configPath: validator.metrics.port
+    enabled:
+      configPath: validator.metrics.enabled
+      transform: flagEnabled
+    description: >-
+      Listening HTTP port of the metrics server [=8008].
+
+  - flag: --network
+    configPath:
+    description: >-
+      The Eth2 network to join [=mainnet].
+
+  - flag: --non-interactive
+    configPath:
+    description: >-
+      Do not display interactive prompts. Quit on missing configuration.
+
+  - flag: --payload-builder
+    configPath:
+    description: >-
+      Enable external payload builder [=false].
+
+  - flag: --payload-builder-url
+    configPath:
+    description: >-
+      Payload builder URL.
+
+  - flag: --secrets-dir
+    configPath: validator.secretsDir
+    description: >-
+      A directory containing validator keystore passwords.
+
+  - flag: --status-bar
+    configPath:
+    description: >-
+      Display a status bar at the bottom of the terminal screen [=true].
+
+  - flag: --status-bar-contents
+    configPath:
+    description: >-
+      Textual template for the contents of the status bar.
+
+  - flag: --suggested-fee-recipient
+    configPath: validator.suggestFeeRecipientAddress
+    description: >-
+      Suggested fee recipient.
+
+  - flag: --suggested-gas-limit
+    configPath: validator.suggestedGasLimit
+    description: >-
+      Suggested gas limit [=defaultGasLimit].
+
+  - flag: --validator-monitor-auto
+    configPath:
+    description: >-
+      Monitor validator activity automatically for validators active on this
+      beacon node [=true].
+
+  - flag: --validator-monitor-details
+    configPath:
+    description: >-
+      Publish detailed metrics for each validator individually - may incur
+      significant overhead with large numbers of validators [=false].
+
+  - flag: --validator-monitor-pubkey
+    configPath:
+    description: >-
+      One or more validators to monitor - works best when --subscribe-all-subnets
+      is enabled.
+
+  - flag: --validators-dir
+    configPath: validator.validatorsDir
+    description: >-
+      A directory containing validator keystores.
+
+  - flag: --web3-signer-url
+    configPath: validator.externalSigner.url
+    enabled:
+      configPath: validator.externalSigner.enabled
+      transform: flagEnabled
+    description: >-
+      Remote Web3Signer URL that will be used as a source of validators.
+
+  - flag: --web3-signer-update-interval
+    configPath:
+    description: >-
+      Number of seconds between validator list updates [=3600].

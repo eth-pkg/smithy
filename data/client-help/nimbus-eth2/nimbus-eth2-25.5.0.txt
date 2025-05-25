@@ -1,4 +1,4 @@
-Nimbus beacon node v25.3.1-c00f35a-stateofus
+Nimbus beacon node v25.5.0-5c0c0c0-stateofus
 
 Usage: 
 nimbus_beacon_node [OPTIONS]... command

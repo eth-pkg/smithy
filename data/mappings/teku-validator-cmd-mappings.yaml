@@ -2,7 +2,342 @@ name: teku-validator
 version: 25.4.1
 valueFormat: equals
 rules:
-  - configPath: validator.dataDir
-    flag: --data-path
-  - configPath: common.network.name
-    flag: --network 
+  - flag: --beacon-node-api-endpoint
+    configPath: validator.beaconNodes
+    transform: joinComma
+    description: >
+      Beacon Node REST API endpoint(s). If more than one endpoint is defined, the
+      first node will be used as a primary and others as failovers.
+
+  - flag: --beacon-node-ssz-blocks-enabled
+    configPath:
+    description: >
+      Use SSZ encoding for API block requests.
+
+  - flag: --config-file
+    configPath:
+    description: >
+      Path/filename of the yaml config file.
+
+  - flag: --data-path
+    configPath: validator.dataDir
+    description: >
+      Path to the base directory for storage.
+
+  - flag: --data-validator-path
+    configPath:
+    description: >
+      Path to validator client data.
+
+  - flag: --doppelganger-detection-enabled
+    configPath: validator.doppelgangerProtection
+    transform: flagEnabled
+    description: >
+      Enable validators doppelganger detection.
+
+  - flag: --exit-when-no-validator-keys-enabled
+    configPath:
+    description: >
+      Enable terminating the process if no validator keys are found during
+      startup.
+
+  - flag: --log-color-enabled
+    transform: flagEnabled
+    configPath: validator.logging.console.color
+    description: >
+      Whether Status and Event log messages include a console color display
+      code.
+
+  - flag: --log-destination
+    configPath:
+    description: >
+      Whether a logger is added for the console, the log file, or both (Valid
+      values: BOTH, CONSOLE, DEFAULT_BOTH, FILE, CUSTOM).
+
+  - flag: --log-file
+    configPath: validator.logging.file.path
+    description: >
+      Path containing the location (relative or absolute) and the log filename.
+      If not set will default to <data-path>/logs/teku.log.
+
+  - flag: --log-file-name-pattern
+    configPath:
+    description: >
+      Pattern for the filename to apply to rolled over log files. If not set
+      will default to <data-path>/logs/teku_%d{yyyy-MM-dd}.log.
+
+  - flag: --log-include-events-enabled
+    configPath:
+    description: >
+      Whether frequent update events are logged (e.g. every slot and epoch
+      event).
+
+  - flag: --log-include-validator-duties-enabled
+    configPath:
+    description: >
+      Whether events are logged when validators perform duties.
+
+  - flag: --logging
+    configPath:
+    description: >
+      Logging verbosity levels: OFF, FATAL, ERROR, WARN, INFO, DEBUG, TRACE,
+      ALL.
+
+  - flag: --metrics-block-production-performance-tracking-enabled
+    configPath:
+    description: >
+      Whether block production timing metrics are tracked and reported.
+
+  - flag: --metrics-block-timing-tracking-enabled
+    configPath:
+    description: >
+      Whether block timing metrics are tracked and reported.
+
+  - flag: --metrics-categories
+    configPath:
+    description: >
+      Metric categories to enable.
+
+  - flag: --metrics-enabled
+    configPath: validator.metrics.enabled
+    transform: flagEnabled
+    description: >
+      Enables metrics collection via Prometheus.
+
+  - flag: --metrics-host-allowlist
+    configPath:
+    description: >
+      Comma-separated list of hostnames to allow, or * to allow any host.
+
+  - flag: --metrics-interface
+    configPath: validator.metrics.host
+    enabled:
+      configPath: validator.metrics.enabled
+      transform: flagEnabled
+    description: >
+      Metrics network interface to expose metrics for Prometheus.
+
+  - flag: --metrics-port
+    configPath: validator.metrics.port
+    enabled:
+      configPath: validator.metrics.enabled
+      transform: flagEnabled
+    description: >
+      Metrics port to expose metrics for Prometheus.
+
+  - flag: --metrics-publish-endpoint
+    configPath:
+    description: >
+      Publish metrics for node monitoring to an external service.
+
+  - flag: --metrics-publish-interval
+    configPath:
+    description: >
+      Interval between metric publications to the external service (measured in
+      seconds).
+
+  - flag: --network
+    configPath: common.network.name
+    description: >
+      Represents which network to use. Use `auto` to fetch network
+      configuration from the beacon node endpoint directly.
+
+  - flag: --shut-down-when-validator-slashed-enabled
+    configPath:
+    description: >
+      If enabled and an owned validator key is detected as slashed, the node
+      will terminate. In this case, the service should not be restarted.
+
+  - flag: --validator-api-bearer-file
+    configPath:
+    description: >
+      Use the specified file as the bearer token for the validator Rest API.
+
+  - flag: --validator-api-cors-origins
+    configPath:
+    description: >
+      Comma separated list of origins to allow, or * to allow any origin.
+
+  - flag: --validator-api-docs-enabled
+    configPath:
+    description: >
+      Enable swagger-docs and swagger-ui endpoints.
+
+  - flag: --validator-api-enabled
+    configPath:
+    description: >
+      Enables Validator Rest API.
+
+  - flag: --validator-api-host-allowlist
+    configPath:
+    description: >
+      Comma-separated list of hostnames to allow, or * to allow any host.
+
+  - flag: --validator-api-interface
+    configPath:
+    description: >
+      Interface of Validator Rest API.
+
+  - flag: --validator-api-keystore-file
+    configPath:
+    description: >
+      Keystore used for ssl for the validator api.
+
+  - flag: --validator-api-keystore-password-file
+    configPath:
+    description: >
+      Password used to decrypt the keystore for the validator api.
+
+  - flag: --validator-api-port
+    configPath:
+    description: >
+      Port number of Rest API.
+
+  - flag: --validator-is-local-slashing-protection-synchronized-enabled
+    configPath:
+    description: >
+      Restrict local signing to a single operation at a time.
+
+  - flag: --validator-keys
+    configPath: validator.validatorsDir
+    description: >
+      <KEY_DIR>:<PASS_DIR> will find <KEY_DIR>/**.json, and expect to find
+      <PASS_DIR>/**.txt. <KEY_FILE>:<PASS_FILE> will expect that the file
+      <KEY_FILE> exists, and the file containing the password for it is
+      <PASS_FILE>. The path separator is operating system dependent, and should
+      be ';' in windows rather than ':'.
+
+  - flag: --validators-builder-registration-default-enabled
+    configPath:
+    description: >
+      Enable validators registration to builder infrastructure.
+
+  - flag: --validators-builder-registration-default-gas-limit
+    configPath:
+    description: >
+      Change the default gas limit used for the validators registration.
+
+  - flag: --validators-early-attestations-enabled
+    configPath:
+    description: >
+      Generate attestations as soon as a block is known, rather than delaying
+      until the attestation is due.
+
+  - flag: --validators-external-signer-keystore
+    configPath: validator.externalSigner.keystore
+    enabled:
+      configPath: validator.externalSigner.enabled
+      transform: flagEnabled
+    description: >
+      Keystore (PKCS12/JKS) to use for TLS mutual authentication with external
+      signer.
+
+  - flag: --validators-external-signer-keystore-password-file
+    configPath: validator.externalSigner.keystorePasswordFile
+    enabled:
+      configPath: validator.externalSigner.enabled
+      transform: flagEnabled
+    description: >
+      Password file to decrypt keystore (PKCS12/JKS) that will be used for TLS
+      mutual authentication with external signer.
+
+  - flag: --validators-external-signer-public-keys
+    configPath: validator.externalSigner.publicKeys
+    enabled:
+      configPath: validator.externalSigner.enabled
+      transform: flagEnabled
+    description: >
+      The list of external signer public keys, or a URL to load the keys from.
+
+  - flag: --validators-external-signer-slashing-protection-enabled
+    configPath:
+    description: >
+      Enable internal slashing protection for external signers.
+
+  - flag: --validators-external-signer-timeout
+    configPath:
+    description: >
+      Timeout (in milliseconds) for the external signing service.
+
+  - flag: --validators-external-signer-truststore
+    configPath:
+    description: >
+      Keystore (PKCS12/JKS) to trust external signer's self-signed
+      certificate.
+
+  - flag: --validators-external-signer-truststore-password-file
+    configPath:
+    description: >
+      Password file to decrypt keystore (PKCS12/JKS) that will be used to
+      trust external signer's self-signed certificate.
+
+  - flag: --validators-external-signer-url
+    configPath: validator.externalSigner.url
+    enabled:
+      configPath: validator.externalSigner.enabled
+      transform: flagEnabled
+    description: >
+      URL for the external signing service.
+
+  - flag: --validators-graffiti
+    configPath: validator.graffiti.message
+    enabled:
+      configPath: validator.graffiti.enabled
+      transform: flagEnabled
+    description: >
+      Graffiti value to include during block creation. Value gets converted to
+      bytes and padded to Bytes32.
+
+  - flag: --validators-graffiti-client-append-format
+    configPath:
+    description: >
+      Appends CL and EL clients information with a space to user's graffiti
+      when producing a block on the Beacon Node. (Valid values: AUTO,
+      CLIENT_CODES, DISABLED).
+
+  - flag: --validators-graffiti-file
+    configPath: validator.graffiti.file
+    enabled:
+      configPath: validator.graffiti.enabled
+      transform: flagEnabled
+    description: >
+      File to load graffiti value to include during block creation. Value gets
+      converted to bytes and padded to Bytes32. Takes precedence over
+      --validators-graffiti. If the file can not be read, the
+      --validators-graffiti value is used as a fallback.
+
+  - flag: --validators-keystore-locking-enabled
+    configPath:
+    description: >
+      Enable locking validator keystore files.
+
+  - flag: --validators-performance-tracking-mode
+    configPath:
+    description: >
+      Set strategy for handling performance tracking. Valid values: LOGGING,
+      METRICS, ALL, NONE.
+
+  - flag: --validators-proposer-blinded-blocks-enabled
+    configPath:
+    description: >
+      Use blinded blocks when in block production duties.
+
+  - flag: --validators-proposer-config
+    configPath: validator.proposerConfig.file
+    enabled:
+      configPath: validator.proposerConfig.enabled
+      transform: flagEnabled
+    description: >
+      Remote URL or local file path to load proposer configuration from.
+
+  - flag: --validators-proposer-config-refresh-enabled
+    configPath:
+    description: >
+      Enable the proposer configuration reload on every proposer preparation
+      (once per epoch).
+
+  - flag: --validators-proposer-default-fee-recipient
+    configPath: validator.suggestFeeRecipientAddress
+    description: >
+      Default fee recipient sent to the execution engine, which could use it as
+      fee recipient when producing a new execution block.

@@ -19,12 +19,12 @@ allOf:
           type: object
           required:
             - client
-            - beaconRpcProvider
-            - feeRecipientAddress
+            - beaconNodes
+            - suggestFeeRecipientAddress
           properties:
-            beaconRpcProvider:
+            beaconNodes:
               type: string
-            feeRecipientAddress:
+            suggestFeeRecipientAddress:
               type: string
             client:
               type: object

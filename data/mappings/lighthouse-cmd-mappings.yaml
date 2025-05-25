@@ -171,9 +171,9 @@ rules:
       value of the `network` flag Note: Users should specify separate custom
       datadirs for different networks.
   - flag: --debug-level
-    configPath: consensus.logging.stdout.level
+    configPath: consensus.logging.console.level
     enabled:
-      - configPath: consensus.logging.stdout.enabled
+      - configPath: consensus.logging.console.enabled
         transform: flagEnabled
       - configPath: consensus.logging.enabled
         transform: flagEnabled
@@ -564,19 +564,19 @@ rules:
       multiple IPv4, or multiple IPv6 addresses will not be accepted. If omitted,
       Lighthouse will listen on all interfaces, for both IPv4 and IPv6.
   - flag: --log-color
-    configPath: consensus.logging.stdout.color
+    configPath: consensus.logging.console.color
     transform: isFlag
     enabled:
-      - configPath: consensus.logging.stdout.enabled
+      - configPath: consensus.logging.console.enabled
         transform: flagEnabled
       - configPath: consensus.logging.enabled
         transform: flagEnabled
     description: >-
       Force outputting colors when emitting logs to the terminal.
   - flag: --log-format
-    configPath: consensus.logging.stdout.format
+    configPath: consensus.logging.console.format
     enabled:
-      - configPath: consensus.logging.stdout.enabled
+      - configPath: consensus.logging.console.enabled
         transform: flagEnabled
       - configPath: consensus.logging.enabled
         transform: flagEnabled

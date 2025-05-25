@@ -116,10 +116,10 @@ rules:
   - flag: --engine-endpoint-timeout-seconds
     configPath:
     description: Sets the execution engine timeout for execution payload semantics
-  - flag: --ephemery
-    configPath: common.network.name
-    transform: network
-    description: Runs Prysm configured for the Ephemery test network
+  # - flag: --ephemery
+  #   configPath: common.network.name
+  #   transform: network
+  #   description: Runs Prysm configured for the Ephemery test network
   - flag: --eth1-header-req-limit
     configPath:
     description: Sets the maximum number of headers that a deposit log query can fetch
@@ -381,7 +381,7 @@ rules:
       transform: flagEnabled
     description: Subscribe to all possible attestation and sync subnets
   - flag: --suggested-fee-recipient
-    configPath: validator.feeRecipientAddress
+    configPath: validator.suggestFeeRecipientAddress
     enabled: 
       configPath: validator.enabled
       transform: flagEnabled

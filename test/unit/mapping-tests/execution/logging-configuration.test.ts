@@ -35,7 +35,7 @@ describe('Execution Client Logging Configuration Tests', () => {
           },
           logging: {
             enabled: true,
-            stdout: {
+            console: {
               enabled: true,
               level: 'info',
               format: 'json',
@@ -54,8 +54,8 @@ describe('Execution Client Logging Configuration Tests', () => {
 
       const scriptContent = registry.getScriptContent(client, config);
       const scriptString = scriptContent.toString();
-      const logLevel = config.execution.logging.stdout.level;
-      const stdoutLogFormat = config.execution.logging.stdout.format;
+      const logLevel = config.execution.logging.console.level;
+      const stdoutLogFormat = config.execution.logging.console.format;
       const fileLogFormat = config.execution.logging.file.format;
       const logFile = `${config.execution.logging.file.directory}/${config.execution.logging.file.name}`;
       const directory = config.execution.logging.file.directory;
@@ -114,7 +114,7 @@ describe('Execution Client Logging Configuration Tests', () => {
           },
           logging: {
             enabled: false,
-            stdout: {
+            console: {
               enabled: true,
               level: 'info',
               format: 'json',
@@ -185,7 +185,7 @@ describe('Execution Client Logging Configuration Tests', () => {
           },
           logging: {
             enabled: true,
-            stdout: {
+            console: {
               enabled: false,
               level: 'info',
               format: 'json',
@@ -262,7 +262,7 @@ describe('Execution Client Logging Configuration Tests', () => {
           },
           logging: {
             enabled: true,
-            stdout: {
+            console: {
               enabled: true,
               level: 'info',
               format: 'json',
@@ -281,8 +281,8 @@ describe('Execution Client Logging Configuration Tests', () => {
 
       const scriptContent = registry.getScriptContent(client, config);
       const scriptString = scriptContent.toString();
-      const logLevel = config.execution.logging.stdout.level;
-      const stdoutLogFormat = config.execution.logging.stdout.format;
+      const logLevel = config.execution.logging.console.level;
+      const stdoutLogFormat = config.execution.logging.console.format;
 
       switch (client) {
         case 'besu':

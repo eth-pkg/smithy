@@ -2,40 +2,262 @@ name: lodestar-validator
 version: 1.29.0
 valueFormat: space
 rules:
-  - configPath: validator.dataDir
-    flag: --dataDir
-  - configPath: common.network.name
-    flag: --network
-  - configPath: validator.metricsPort
-    flag: --metrics.port
-    parent: --metrics
-  - configPath: validator.metricsAddress
-    flag: --metrics.address
-    parent: --metrics
-  - configPath: validator.metricsEnabled
-    flag: --metrics
-    parent: --metrics
-  - configPath: validator.graffiti
-    flag: --graffiti
-  - configPath: validator.proposerConfigFile
-    flag: --proposerSettingsFile
-  - configPath: validator.feeRecipientAddress
-    flag: --suggestedFeeRecipient
-  - configPath: validator.defaultGasLimit
-    flag: --defaultGasLimit
-  - configPath: validator.doppelgangerProtection
-    flag: --doppelgangerProtection
-  - configPath: validator.distributed
-    flag: --distributed
-  - configPath: validator.builderEnabled
-    flag: --builder
-  - configPath: validator.externalSignerUrl
-    flag: --externalSigner.url
-  - configPath: validator.externalSignerPublicKeys
-    flag: --externalSigner.pubkeys
-  - configPath: validator.logLevel
-    flag: --logLevel
-  - configPath: validator.logFile
-    flag: --logFile
-  - configPath: validator.logLevel
-    flag: --logFileLevel 
+  - flag: --beaconNodes
+    configPath: validator.beaconNodes
+    transform: joinComma
+    description: |
+      Addresses to connect to BeaconNode
+
+  - flag: --blindedLocal
+    configPath:
+    description: |
+      Request fetching local block in blinded format for produceBlockV3
+
+  - flag: --broadcastValidation
+    configPath:
+    description: |
+      Validations to be run by beacon node for the signed block prior to publishing
+
+  - flag: --builder
+    configPath:
+    description: |
+      An alias for --builder.selection default for the builder flow
+
+  - flag: --builder.boostFactor
+    configPath:
+    description: |
+      Percentage multiplier for block producing beacon node to apply to boost or dampen builder block value
+
+  - flag: --builder.selection
+    configPath:
+    description: |
+      Builder block selection strategy (default, maxprofit, builderalways, builderonly, executionalwayss, executiononly)
+
+  - flag: --dataDir
+    configPath: validator.dataDir
+    description: |
+      Lodestar root data directory
+
+  - flag: --defaultGasLimit
+    configPath: validator.suggestedGasLimit
+    description: |
+      Suggested gas limit to the engine/builder for building execution payloads. Only used post merge.
+
+  - flag: --distributed
+    configPath: validator.distributed
+    enabled: flagEnabled
+    description: |
+      Enables specific features required to run as part of a distributed validator cluster
+
+  - flag: --doppelgangerProtection
+    configPath: validator.doppelgangerProtection
+    transform: flagEnabled
+    description: |
+      Enables Doppelganger protection
+
+  - flag: --externalSigner.fetch
+    configPath: validator.externalSigner.enabled
+    transform: flagEnabled
+    description: |
+      Fetch the list of public keys to validate from an external signer
+
+  - flag: --externalSigner.fetchInterval
+    configPath:
+    description: |
+      Interval in milliseconds between fetching the list of public keys from external signer
+
+  - flag: --externalSigner.pubkeys
+    configPath: validator.externalSigner.publicKeys
+    enabled:
+      configPath: validator.externalSigner.enabled
+      transform: flagEnabled
+    description: |
+      List of validator public keys used by an external signer
+
+  - flag: --externalSigner.url
+    configPath: validator.externalSigner.url
+    enabled:
+      configPath: validator.externalSigner.enabled
+      transform: flagEnabled
+    description: |
+      URL to connect to an external signing server
+
+  - flag: --force
+    configPath:
+    description: |
+      Open validators even if there's a lockfile. Use with caution
+
+  - flag: --graffiti
+    configPath: validator.graffiti.file
+    enabled:
+      configPath: validator.graffiti.enabled
+      transform: flagEnabled
+    description: |
+      Specify your custom graffiti to be included in blocks (plain UTF8 text, 32 characters max)
+
+  - flag: --http.requestWireFormat
+    configPath:
+    description: |
+      Wire format to use in HTTP requests to beacon node (json or ssz)
+
+  - flag: --http.responseWireFormat
+    configPath:
+    description: |
+      Preferred wire format for HTTP responses from beacon node (json or ssz)
+
+  - flag: --importKeystores
+    configPath: validator.validatorsDir
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
+    description: |
+      Path(s) to a directory or single file path to validator keystores, i.e. Launchpad validators
+
+  - flag: --importKeystoresPassword
+    configPath: validator.secretsDir
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
+    description: |
+      Path to a file with password to decrypt all keystores from importKeystores option
+
+  - flag: --keymanager
+    configPath:
+    description: |
+      Enable key manager API server
+
+  - flag: --keymanager.address
+    configPath:
+    description: |
+      Set host for key manager API
+
+  - flag: --keymanager.auth
+    configPath:
+    description: |
+      Enable token bearer authentication for key manager API server
+
+  - flag: --keymanager.cors
+    configPath:
+    description: |
+      Configures the Access-Control-Allow-Origin CORS header for key manager API
+
+  - flag: --keymanager.port
+    configPath:
+    description: |
+      Set port for key manager API
+
+  - flag: --keymanager.tokenFile
+    configPath:
+    description: |
+      Path to file containing bearer token used for key manager API authentication
+
+  - flag: --logFile
+    configPath: validator.logging.file
+    enabled:
+      configPath: validator.logging.enabled
+      transform: flagEnabled
+    description: |
+      Path to output all logs to a persistent log file, use 'none' to disable
+
+  - flag: --logFileDailyRotate
+    configPath:
+    description: |
+      Daily rotate log files, set to an integer to limit the file count, set to 0 (zero) to disable rotation
+
+  - flag: --logFileLevel
+    configPath: validator.logging.format
+    enabled:
+      configPath: validator.logging.enabled
+      transform: flagEnabled
+    description: |
+      Logging verbosity level for emitting logs to file (choices: error, warn, info, verbose, debug, trace)
+
+  - flag: --logLevel
+    configPath:
+    description: |
+      Logging verbosity level for emitting logs to terminal (choices: error, warn, info, verbose, debug, trace)
+
+  - flag: --metrics
+    configPath: validator.metrics.enabled
+    transform: flagEnabled
+    description: |
+      Enable the Prometheus metrics HTTP server
+
+  - flag: --metrics.address
+    configPath: validator.metrics.address
+    enabled:
+      configPath: validator.metrics.enabled
+      transform: flagEnabled
+    description: |
+      Listen address for the Prometheus metrics HTTP server
+
+  - flag: --metrics.port
+    configPath: validator.metrics.port
+    enabled:
+      configPath: validator.metrics.enabled
+      transform: flagEnabled
+    description: |
+      Listen TCP port for the Prometheus metrics HTTP server
+
+  - flag: --monitoring.endpoint
+    configPath:
+    description: |
+      Enables monitoring service for sending clients stats to the specified endpoint of a remote service
+
+  - flag: --monitoring.interval
+    configPath:
+    description: |
+      Interval in milliseconds between sending client stats to the remote service
+
+  - flag: --network
+    configPath: common.network.name
+    description: |
+      Name of the Ethereum Consensus chain network to join (choices: mainnet, gnosis, sepolia, holesky, hoodi, chiado, ephemery, dev)
+
+  - flag: --paramsFile
+    configPath:
+    description: |
+      Network configuration file
+
+  - flag: --proposerSettingsFile
+    configPath: validator.proposerConfig.file
+    enabled:
+      configPath: validator.proposerConfig.enabled
+      transform: flagEnabled
+    description: |
+      A yaml file to specify detailed default and per validator public key customized proposer configs
+
+  - flag: --rcConfig
+    configPath:
+    description: |
+      RC file to supplement command line args, accepted formats: .yml, .yaml, .json
+
+  - flag: --strictFeeRecipientCheck
+    configPath:
+    description: |
+      Enable strict checking of the validator's feeRecipient with the one returned by engine
+
+  - flag: --suggestedFeeRecipient
+    configPath: validator.suggestFeeRecipientAddress
+    description: |
+      Specify fee recipient default for collecting the EL block fees and rewards (a hex string representing 20 bytes address)
+
+  - flag: --terminal-block-hash-epoch-override
+    configPath:
+    description: |
+      Terminal PoW block hash override activation epoch
+
+  - flag: --terminal-block-hash-override
+    configPath:
+    description: |
+      Terminal PoW block hash override
+
+  - flag: --terminal-total-difficulty-override
+    configPath:
+    description: |
+      Terminal PoW block TTD override
+
+  - flag: --useProduceBlockV3
+    configPath:
+    description: |
+      Enable/disable usage of produceBlock V3 for block production, is auto enabled on deneb+ blocks

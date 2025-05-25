@@ -1,0 +1,323 @@
+Description:
+
+Usage:
+  nethermind [options]
+
+Options:
+  -?, -h, --help                                                                                                                    Show help and usage information
+  --version                                                                                                                         Show version information
+  -c, --config <network or file name>                                                                                               The path to the configuration file or the file name (also without extension) of any of the configuration files in the configuration files directory.
+  -cd, --configs-dir, --configsDirectory <path>                                                                                     The path to the configuration files directory.
+  -d, --baseDbPath, --db-dir <path>                                                                                                 The path to the Nethermind database directory.
+  -dd, --data-dir, --datadir <path>                                                                                                 The path to the Nethermind data directory.
+  -lcs, --logger-config, --loggerConfigSource <path>                                                                                The path to the logging configuration file.
+  -l, --log <level>                                                                                                                 Log level (severity). Allowed values: off, trace, debug, info, warn, error.
+  -pd, --plugins-dir, --pluginsDirectory <path>                                                                                     The path to the Nethermind plugins directory.
+  --aura-allowauraprivatechains, --Aura.AllowAuRaPrivateChains <value>                                                              Whether to allow private Aura-based chains only. Do not use with existing Aura-based chains.
+  --aura-forcesealing, --Aura.ForceSealing <value>                                                                                  Whether to seal empty blocks if mining.
+  --aura-minimum2mlngasperblockwhenusingblockgaslimitcontract, --Aura.Minimum2MlnGasPerBlockWhenUsingBlockGasLimitContract <value>  Whether to use 2M gas if the contract returns less than that when using `BlockGasLimitContractTransitions`.
+  --aura-txpriorityconfigfilepath, --Aura.TxPriorityConfigFilePath <value>                                                          The path to the transaction priority rules file to use when selecting transactions from the transaction pool.
+  --aura-txprioritycontractaddress, --Aura.TxPriorityContractAddress <value>                                                        The address of the transaction priority contract to use when selecting transactions from the transaction pool.
+  --blocks-blockproductiontimeoutms, --Blocks.BlockProductionTimeoutMs <value>                                                      The block production timeout, in milliseconds.
+  --blocks-extradata, --Blocks.ExtraData <value>                                                                                    The block header extra data up to 32 bytes in length.
+  --blocks-genesistimeoutms, --Blocks.GenesisTimeoutMs <value>                                                                      The genesis block load timeout, in milliseconds.
+  --blocks-mingasprice, --Blocks.MinGasPrice <value>                                                                                The minimum gas premium (or the gas price before the London hard fork) for transactions accepted by the block producer.
+  --blocks-prewarmstateonblockprocessing, --Blocks.PreWarmStateOnBlockProcessing <value>                                            Whether to pre-warm the state when processing blocks. This can lead to an up to 2x speed-up in the main loop block processing.
+  --blocks-randomizedblocks, --Blocks.RandomizedBlocks <value>                                                                      Whether to change the difficulty of the block randomly within the constraints. Used in NethDev only.
+  --blocks-secondsperslot, --Blocks.SecondsPerSlot <value>                                                                          The block time slot, in seconds.
+  --blocks-targetblockgaslimit, --Blocks.TargetBlockGasLimit <value>                                                                The block gas limit that the block producer should try to reach in the fastest possible way based on the protocol rules. If not specified, then the block producer should follow others.
+  --bloom-index, --Bloom.Index <value>                                                                                              Whether to use the Bloom index. The Bloom index speeds up the RPC log searches.
+  --bloom-indexlevelbucketsizes, --Bloom.IndexLevelBucketSizes <value>                                                              An array of multipliers for index levels. Can be tweaked per chain to boost performance.
+  --bloom-migration, --Bloom.Migration <value>                                                                                      Whether to migrate the previously downloaded blocks to the Bloom index.
+  --bloom-migrationstatistics, --Bloom.MigrationStatistics <value>                                                                  Whether the migration statistics should be calculated and output.
+  --cl-enabled, --CL.Enabled <value>                                                                                                Use enshrined op cl.
+  --cl-l1beaconapiendpoint, --CL.L1BeaconApiEndpoint <value>                                                                        URL to L1 beacon node
+  --cl-l1ethapiendpoint, --CL.L1EthApiEndpoint <value>                                                                              URL to L1 execution node.
+  --cl-p2phost, --CL.P2PHost <value>                                                                                                CL p2p communication host
+  --cl-p2pport, --CL.P2PPort <value>                                                                                                CL p2p communication host
+  --censorshipdetector-addressesforcensorshipdetection, --CensorshipDetector.AddressesForCensorshipDetection <value>                The addresses to detect censorship for.
+  --censorshipdetector-blockcensorshipthreshold, --CensorshipDetector.BlockCensorshipThreshold <value>                              The number of the consecutive blocks with detected potential censorship to report.
+  --censorshipdetector-enabled, --CensorshipDetector.Enabled <value>                                                                Whether to enable censorship detection.
+  --clique-blockperiod, --Clique.BlockPeriod <value>
+  --clique-epoch, --Clique.Epoch <value>
+  --clique-minimumoutofturndelay, --Clique.MinimumOutOfTurnDelay <value>
+  --era-exportdirectory, --Era.ExportDirectory <value>                                                                              Directory of archive export.
+  --era-from, --Era.From <value>                                                                                                    Block number to import/export from.
+  --era-importdirectory, --Era.ImportDirectory <value>                                                                              Directory of era1 archives to be imported.
+  --era-to, --Era.To <value>                                                                                                        Block number to import/export to.
+  --era-trustedaccumulatorfile, --Era.TrustedAccumulatorFile <value>                                                                Accumulator file to be used for trusting era files.
+  --ethstats-contact, --EthStats.Contact <value>                                                                                    The node owner contact details displayed on Ethstats.
+  --ethstats-enabled, --EthStats.Enabled <value>                                                                                    Whether to use Ethstats publishing.
+  --ethstats-name, --EthStats.Name <value>                                                                                          The node name displayed on Ethstats.
+  --ethstats-secret, --EthStats.Secret <value>                                                                                      The Ethstats secret.
+  --ethstats-sendinterval, --EthStats.SendInterval <value>                                                                          The stats update interval, in seconds.
+  --ethstats-server, --EthStats.Server <value>                                                                                      The Ethstats server URL.
+  --healthchecks-enabled, --HealthChecks.Enabled <value>                                                                            Whether to enable the health check.
+  --healthchecks-lowstoragecheckawaitonstartup, --HealthChecks.LowStorageCheckAwaitOnStartup <value>                                Whether to check for low disk space on startup and suspend until enough space is available.
+  --healthchecks-lowstoragespaceshutdownthreshold, --HealthChecks.LowStorageSpaceShutdownThreshold <value>                          The percentage of available disk space below which Nethermind shuts down. `0` to disable.
+  --healthchecks-lowstoragespacewarningthreshold, --HealthChecks.LowStorageSpaceWarningThreshold <value>                            The percentage of available disk space below which a warning is displayed. `0` to disable.
+  --healthchecks-maxintervalclrequesttime, --HealthChecks.MaxIntervalClRequestTime <value>                                          The max request interval, in seconds, in which the consensus client is assumed healthy.
+  --healthchecks-maxintervalwithoutprocessedblock, --HealthChecks.MaxIntervalWithoutProcessedBlock <value>                          The max interval, in seconds, in which the block processing is assumed healthy.
+  --healthchecks-maxintervalwithoutproducedblock, --HealthChecks.MaxIntervalWithoutProducedBlock <value>                            The max interval, in seconds, in which the block production is assumed healthy.
+  --healthchecks-pollinginterval, --HealthChecks.PollingInterval <value>                                                            The health check updates polling interval, in seconds.
+  --healthchecks-slug, --HealthChecks.Slug <value>                                                                                  The URL slug the health checks service is exposed at.
+  --healthchecks-uienabled, --HealthChecks.UIEnabled <value>                                                                        Whether to enable the health checks UI.
+  --healthchecks-webhooksenabled, --HealthChecks.WebhooksEnabled <value>                                                            Whether to enable web hooks.
+  --healthchecks-webhookspayload, --HealthChecks.WebhooksPayload <value>                                                            An escaped JSON paylod to be sent to the web hook on failure.
+  --healthchecks-webhooksrestorepayload, --HealthChecks.WebhooksRestorePayload <value>                                              An escaped JSON paylod to be sent to the web hook on recovery.
+  --healthchecks-webhooksuri, --HealthChecks.WebhooksUri <value>                                                                    The web hook URL.
+  --hive-blocksdir, --Hive.BlocksDir <value>                                                                                        The path to the directory with additional blocks.
+  --hive-chainfile, --Hive.ChainFile <value>                                                                                        The path to the chain definition should be specified as an RLP-encoded block sequence.
+  --hive-enabled, --Hive.Enabled <value>                                                                                            Whether to enable Hive for debugging.
+  --hive-genesisfilepath, --Hive.GenesisFilePath <value>                                                                            The path to the genesis block file.
+  --hive-keysdir, --Hive.KeysDir <value>                                                                                            The path to the keystore directory.
+  --init-autodump, --Init.AutoDump <value>                                                                                          Auto-dump on bad blocks for diagnostics.
+  --init-badblocksstored, --Init.BadBlocksStored <value>                                                                            The maximum number of bad blocks observed on the network that will be stored on disk.
+  --init-basedbpath, --Init.BaseDbPath <value>                                                                                      The base path for all Nethermind databases.
+  --init-chainspecpath, --Init.ChainSpecPath <value>                                                                                The path to the chain spec file.
+  --init-diagnosticmode, --Init.DiagnosticMode <value>                                                                              The diagnostic mode.
+  --init-discoveryenabled, --Init.DiscoveryEnabled <value>                                                                          Whether to enable the node discovery. If disabled, Nethermind doesn't look for other nodes beyond the bootnodes specified.
+  --init-enableunsecureddevwallet, --Init.EnableUnsecuredDevWallet <value>                                                          Whether to enable the in-app wallet/keystore.
+  --init-genesishash, --Init.GenesisHash <value>                                                                                    The hash of the genesis block. If not specified, the genesis block validity is not checked which is useful in the case of ad hoc test/private networks.
+  --init-ismining, --Init.IsMining <value>                                                                                          Whether to seal/mine new blocks.
+  --init-keepdevwalletinmemory, --Init.KeepDevWalletInMemory <value>                                                                Whether to create session-only accounts and delete them on shutdown.
+  --init-kzgsetuppath, --Init.KzgSetupPath <value>                                                                                  The path to KZG trusted setup file.
+  --init-logdirectory, --Init.LogDirectory <value>                                                                                  The path to the Nethermind logs directory.
+  --init-logfilename, --Init.LogFileName <value>                                                                                    The name of the log file.
+  --init-logrules, --Init.LogRules <value>                                                                                          The logs format as `LogPath:LogLevel;*`
+  --init-memoryhint, --Init.MemoryHint <value>                                                                                      The hint on the max memory limit, in bytes, to configure the database and networking memory allocations.
+  --init-peermanagerenabled, --Init.PeerManagerEnabled <value>                                                                      Whether to connect to newly discovered peers.
+  --init-processingenabled, --Init.ProcessingEnabled <value>                                                                        Whether to download/process new blocks.
+  --init-rpcdburl, --Init.RpcDbUrl <value>                                                                                          The URL of the remote node used as a database source when `DiagnosticMode` is set to `RpcDb`.
+  --init-staticnodespath, --Init.StaticNodesPath <value>                                                                            The path to the static nodes file.
+  --init-websocketsenabled, --Init.WebSocketsEnabled <value>                                                                        Whether to enable WebSocket service for the default JSON-RPC port on startup.
+  --jsonrpc-additionalrpcurls, --JsonRpc.AdditionalRpcUrls <value>                                                                  An array of additional JSON-RPC URLs to listen at with protocol and JSON-RPC namespace list. For instance, `[http://localhost:8546|http;ws|eth;web3]`.
+  --jsonrpc-bufferresponses, --JsonRpc.BufferResponses <value>                                                                      Whether to buffer responses before sending them. This allows using of `Content-Length` instead of `Transfer-Encoding: chunked`. Note that it may degrade performance on large responses. The max buffered response length is 2GB. Chunked responses can be larger.
+  --jsonrpc-callsfilterfilepath, --JsonRpc.CallsFilterFilePath <value>                                                              The path to a file with the list of new-line-separated JSON-RPC calls. If specified, only the calls from that file are allowed.
+  --jsonrpc-corsorigins, --JsonRpc.CorsOrigins <value>                                                                              The JSON-RPC server CORS origins.
+  --jsonrpc-enabled, --JsonRpc.Enabled <value>                                                                                      Whether to enable the JSON-RPC service.
+  --jsonrpc-enabledmodules, --JsonRpc.EnabledModules <value>                                                                        An array of JSON-RPC namespaces to enable. For instance, `[debug,eth]`.
+  
+                                                                                                                                    Built-in namespaces:
+  
+                                                                                                                                    - `admin`
+                                                                                                                                    - `client`
+                                                                                                                                    - `debug`
+                                                                                                                                    - `engine`
+                                                                                                                                    - `eth`
+                                                                                                                                    - `evm`
+                                                                                                                                    - `health`
+                                                                                                                                    - `net`
+                                                                                                                                    - `parity`
+                                                                                                                                    - `personal`
+                                                                                                                                    - `proof`
+                                                                                                                                    - `rpc`
+                                                                                                                                    - `subscribe`
+                                                                                                                                    - `trace`
+                                                                                                                                    - `txpool`
+                                                                                                                                    - `web3`
+  --jsonrpc-engineenabledmodules, --JsonRpc.EngineEnabledModules <value>                                                            An array of additional JSON-RPC URLs to listen at with protocol and JSON-RPC namespace list for Engine API.
+  --jsonrpc-enginehost, --JsonRpc.EngineHost <value>                                                                                The Engine API host.
+  --jsonrpc-engineport, --JsonRpc.EnginePort <value>                                                                                The Engine API port.
+  --jsonrpc-estimateerrormargin, --JsonRpc.EstimateErrorMargin <value>                                                              The error margin used in the `eth_estimateGas` JSON-RPC method, in basis points.
+  --jsonrpc-ethmoduleconcurrentinstances, --JsonRpc.EthModuleConcurrentInstances <value>                                            The number of concurrent instances for non-sharable calls:
+  
+                                                                                                                                    - `eth_call`
+                                                                                                                                    - `eth_estimateGas`
+                                                                                                                                    - `eth_getLogs`
+                                                                                                                                    - `eth_newBlockFilter`
+                                                                                                                                    - `eth_newFilter`
+                                                                                                                                    - `eth_newPendingTransactionFilter`
+                                                                                                                                    - `eth_uninstallFilter`
+  
+                                                                                                                                    This limits the load on the CPU and I/O to reasonable levels. If the limit is exceeded, HTTP 503 is returned along with the JSON-RPC error. Defaults to the number of logical processors.
+  --jsonrpc-gascap, --JsonRpc.GasCap <value>                                                                                        The gas limit for `eth_call` and `eth_estimateGas`.
+  --jsonrpc-host, --JsonRpc.Host <value>                                                                                            The JSON-RPC service host.
+  --jsonrpc-ipcunixdomainsocketpath, --JsonRpc.IpcUnixDomainSocketPath <value>                                                      The path to connect a UNIX domain socket over.
+  --jsonrpc-jwtsecretfile, --JsonRpc.JwtSecretFile <value>                                                                          The path to the JWT secret file required for the Engine API authentication.
+  --jsonrpc-maxbatchresponsebodysize, --JsonRpc.MaxBatchResponseBodySize <value>                                                    The max batch size limit for batched JSON-RPC calls.
+  --jsonrpc-maxbatchsize, --JsonRpc.MaxBatchSize <value>                                                                            The max number of JSON-RPC requests in a batch.
+  --jsonrpc-maxloggedrequestparameterscharacters, --JsonRpc.MaxLoggedRequestParametersCharacters <value>                            The max number of characters of a JSON-RPC request parameter printing to the log.
+  --jsonrpc-maxlogsperresponse, --JsonRpc.MaxLogsPerResponse <value>                                                                The max number of logs per response for the `eth_getLogs` JSON-RPC method. `0` to lift the limit.
+  --jsonrpc-maxrequestbodysize, --JsonRpc.MaxRequestBodySize <value>                                                                The max length of HTTP request body, in bytes.
+  --jsonrpc-maxsimulateblockscap, --JsonRpc.MaxSimulateBlocksCap <value>                                                            The max block count limit for the `eth_simulate` JSON-RPC method.
+  --jsonrpc-methodsloggingfiltering, --JsonRpc.MethodsLoggingFiltering <value>                                                      An array of the method names not to log.
+  --jsonrpc-port, --JsonRpc.Port <value>                                                                                            The JSON-RPC service HTTP port.
+  --jsonrpc-reportintervalseconds, --JsonRpc.ReportIntervalSeconds <value>                                                          The interval, in seconds, between the JSON-RPC stats report log.
+  --jsonrpc-requestqueuelimit, --JsonRpc.RequestQueueLimit <value>                                                                  The max number of concurrent requests in the queue for:
+  
+                                                                                                                                    - `eth_call`
+                                                                                                                                    - `eth_estimateGas`
+                                                                                                                                    - `eth_getLogs`
+                                                                                                                                    - `eth_newFilter`
+                                                                                                                                    - `eth_newBlockFilter`
+                                                                                                                                    - `eth_newPendingTransactionFilter`
+                                                                                                                                    - `eth_uninstallFilter`
+  
+                                                                                                                                    `0` to lift the limit.
+  --jsonrpc-rpcrecorderbasefilepath, --JsonRpc.RpcRecorderBaseFilePath <value>                                                      The path to the base file for diagnostic recording.
+  --jsonrpc-rpcrecorderstate, --JsonRpc.RpcRecorderState <value>                                                                    The diagnostic recording mode.
+  --jsonrpc-timeout, --JsonRpc.Timeout <value>                                                                                      The request timeout, in milliseconds.
+  --jsonrpc-websocketsport, --JsonRpc.WebSocketsPort <value>                                                                        The JSON-RPC service WebSockets port.
+  --keystore-blockauthoraccount, --KeyStore.BlockAuthorAccount <value>                                                              An account to use as the block author (coinbase).
+  --keystore-cipher, --KeyStore.Cipher <value>                                                                                      See [Web3 secret storage definition][web3-secret-storage].
+  --keystore-enodeaccount, --KeyStore.EnodeAccount <value>                                                                          An account to use for networking (enode). If neither this nor the `EnodeKeyFile` option is specified, the key is autogenerated in `node.key.plain` file.
+  --keystore-enodekeyfile, --KeyStore.EnodeKeyFile <value>                                                                          The path to the key file to use by for networking (enode). If neither this nor the `EnodeAccount` is specified, the key is autogenerated in `node.key.plain` file.
+  --keystore-ivsize, --KeyStore.IVSize <value>                                                                                      See [Web3 secret storage definition][web3-secret-storage].
+  --keystore-kdf, --KeyStore.Kdf <value>                                                                                            See [Web3 secret storage definition][web3-secret-storage].
+  --keystore-kdfparamsdklen, --KeyStore.KdfparamsDklen <value>                                                                      See [Web3 secret storage definition][web3-secret-storage].
+  --keystore-kdfparamsn, --KeyStore.KdfparamsN <value>                                                                              See [Web3 secret storage definition][web3-secret-storage].
+  --keystore-kdfparamsp, --KeyStore.KdfparamsP <value>                                                                              See [Web3 secret storage definition][web3-secret-storage].
+  --keystore-kdfparamsr, --KeyStore.KdfparamsR <value>                                                                              See [Web3 secret storage definition][web3-secret-storage].
+  --keystore-kdfparamssaltlen, --KeyStore.KdfparamsSaltLen <value>                                                                  See [Web3 secret storage definition][web3-secret-storage].
+  --keystore-keystoredirectory, --KeyStore.KeyStoreDirectory <value>                                                                The path to the keystore directory.
+  --keystore-keystoreencoding, --KeyStore.KeyStoreEncoding <value>                                                                  See [Web3 secret storage definition][web3-secret-storage].
+  --keystore-passwordfiles, --KeyStore.PasswordFiles <value>                                                                        An array of password files paths used to unlock the accounts set with `UnlockAccounts`.
+  --keystore-passwords, --KeyStore.Passwords <value>                                                                                An array of passwords used to unlock the accounts set with `UnlockAccounts`.
+  --keystore-symmetricencrypterblocksize, --KeyStore.SymmetricEncrypterBlockSize <value>                                            See [Web3 secret storage definition][web3-secret-storage].
+  --keystore-symmetricencrypterkeysize, --KeyStore.SymmetricEncrypterKeySize <value>                                                See [Web3 secret storage definition][web3-secret-storage].
+  --keystore-testnodekey, --KeyStore.TestNodeKey <value>                                                                            A plaintext private key to use for testing purposes.
+  --keystore-unlockaccounts, --KeyStore.UnlockAccounts <value>                                                                      An array of accounts to unlock on startup using passwords either in `PasswordFiles` and `Passwords`.
+  --merge-builderrelayurl, --Merge.BuilderRelayUrl <value>                                                                          The URL of a builder relay. If specified, blocks are sent to the relay.
+  --merge-collectionsperdecommit, --Merge.CollectionsPerDecommit <value>                                                            The number of requests to the garbage collector (GC) to release the process memory.
+  
+                                                                                                                                    Allowed values:
+  
+                                                                                                                                    - `-1`: No requests.
+                                                                                                                                    - `0`: Requests every time.
+                                                                                                                                    - A positive number: Requests after that many Engine API calls.
+  --merge-compactmemory, --Merge.CompactMemory <value>                                                                              The memory compaction mode. When set to `Full`, compacts the large object heap (LOH) if `SweepMemory` is set to `Gen2`.
+  --merge-enabled, --Merge.Enabled <value>                                                                                          Whether to enable the Merge hard fork.
+  --merge-finaltotaldifficulty, --Merge.FinalTotalDifficulty <value>                                                                The total difficulty of the last PoW block. Must be greater than or equal to the terminal total difficulty (TTD).
+  --merge-prioritizeblocklatency, --Merge.PrioritizeBlockLatency <value>                                                            Whether to reduce block latency by disabling garbage collection during Engine API calls.
+  --merge-sweepmemory, --Merge.SweepMemory <value>                                                                                  The garbage collection (GC) mode between Engine API calls.
+  --merge-terminalblockhash, --Merge.TerminalBlockHash <value>                                                                      The terminal PoW block hash used for the transition.
+  --merge-terminalblocknumber, --Merge.TerminalBlockNumber <value>                                                                  The terminal PoW block number used for the transition.
+  --merge-terminaltotaldifficulty, --Merge.TerminalTotalDifficulty <value>                                                          The terminal total difficulty (TTD) used for the transition.
+  --metrics-countersenabled, --Metrics.CountersEnabled <value>                                                                      Whether to publish metrics using .NET diagnostics that can be collected with dotnet-counters.
+  --metrics-enabledbsizemetrics, --Metrics.EnableDbSizeMetrics <value>                                                              Whether to publish database size metrics.
+  --metrics-enabled, --Metrics.Enabled <value>                                                                                      Whether to publish various metrics to Prometheus Pushgateway at a given interval.
+  --metrics-exposehost, --Metrics.ExposeHost <value>                                                                                The IP address to expose Prometheus metrics at. The value of `+` means listening on all available hostnames. Setting this to `localhost` prevents remote access.
+  --metrics-exposeport, --Metrics.ExposePort <value>                                                                                The port to expose Prometheus metrics at.
+  --metrics-intervalseconds, --Metrics.IntervalSeconds <value>                                                                      The frequency of pushing metrics to Prometheus, in seconds.
+  --metrics-monitoringgroup, --Metrics.MonitoringGroup <value>                                                                      The Prometheus metrics group name.
+  --metrics-monitoringjob, --Metrics.MonitoringJob <value>                                                                          The Prometheus metrics job name.
+  --metrics-nodename, --Metrics.NodeName <value>                                                                                    The name to display on the Grafana dashboard.
+  --metrics-pushgatewayurl, --Metrics.PushGatewayUrl <value>                                                                        The Prometheus Pushgateway instance URL.
+  --mining-enabled, --Mining.Enabled <value>                                                                                        Whether to produce blocks.
+  --mining-signer, --Mining.Signer <value>                                                                                          The URL of an external signer like [Clef](https://github.com/ethereum/go-ethereum/blob/master/cmd/clef/tutorial.md).
+  --network-bootnodes, --Network.Bootnodes <value>                                                                                  A comma-separated enode list to be used as boot nodes.
+  --network-diagtracerenabled, --Network.DiagTracerEnabled <value>                                                                  Whether to enable a verbose diagnostic tracing.
+  --network-discoverydns, --Network.DiscoveryDns <value>                                                                            Use tree is available through a DNS name. For the default of `<chain name>.ethdisco.net`, leave unspecified.
+  --network-discoveryport, --Network.DiscoveryPort <value>                                                                          The UDP port number for incoming discovery connections. It's recommended to keep it the same as the TCP port (`P2PPort`) because other values have not been tested yet.
+  --network-enableupnp, --Network.EnableUPnP <value>                                                                                Whether to enable automatic port forwarding via UPnP.
+  --network-externalip, --Network.ExternalIp <value>                                                                                The external IP. Use only when the external IP cannot be resolved automatically.
+  --network-localip, --Network.LocalIp <value>                                                                                      The local IP. Use only when the local IP cannot be resolved automatically.
+  --network-maxactivepeers, --Network.MaxActivePeers <value>                                                                        The max allowed number of connected peers.
+  --network-maxnettyarenacount, --Network.MaxNettyArenaCount <value>                                                                The maximum DotNetty arena count. Increasing this on a high-core CPU without increasing the memory budget may reduce chunk size so much that it causes a huge memory allocation.
+  --network-nettyarenaorder, --Network.NettyArenaOrder <value>                                                                      The size of the DotNetty arena order. `-1` to depend on the memory hint.
+  --network-onlystaticpeers, --Network.OnlyStaticPeers <value>                                                                      Whether to use static peers only.
+  --network-p2pport, --Network.P2PPort <value>                                                                                      The TCP port for incoming P2P connections.
+  --network-prioritypeersmaxcount, --Network.PriorityPeersMaxCount <value>                                                          The max number of priority peers. Can be overridden by a plugin.
+  --network-staticpeers, --Network.StaticPeers <value>                                                                              A list of peers to keep connection for. Static peers are affected by `MaxActivePeers`.
+  --optimism-sequencerurl, --Optimism.SequencerUrl <value>                                                                          The sequencer address.
+  --pruning-availablespacecheckenabled, --Pruning.AvailableSpaceCheckEnabled <value>                                                Whether to enables available disk space check.
+  --pruning-cachemb, --Pruning.CacheMb <value>                                                                                      The in-memory cache size, in MB. The bigger the cache size, the bigger the disk space savings.
+  --pruning-fullpruningcompletionbehavior, --Pruning.FullPruningCompletionBehavior <value>                                          The action to take on pruning completion.
+  --pruning-fullpruningdisablelowprioritywrites, --Pruning.FullPruningDisableLowPriorityWrites <value>                              Whether to disable low-priority for pruning writes. Full pruning uses low-priority write operations to prevent blocking block processing. If block processing is not high-priority, set this option to `true` for faster pruning.
+  --pruning-fullpruningmaxdegreeofparallelism, --Pruning.FullPruningMaxDegreeOfParallelism <value>                                  The max number of parallel tasks that can be used by full pruning.
+  
+                                                                                                                                    Allowed values:
+  
+                                                                                                                                    - `-1`: Uses the number of logical processors.
+                                                                                                                                    - `0`: Uses 25% of logical processors.
+                                                                                                                                    - `1`: Runs on a single thread.
+  
+                                                                                                                                    The recommended value depends on the type of the node:
+  
+                                                                                                                                    - If the node needs to be responsive (serves for RPC or validator), then the recommended value is `0` or `-1`.
+                                                                                                                                    - If the node doesn't have many other responsibilities but needs to be able to follow the chain reliably without any delays and produce live logs, the `0` or `1` is recommended.
+                                                                                                                                    - If the node doesn't have to be responsive, has very fast I/O (like NVMe) and the shortest pruning time is to be achieved, then `-1` is recommended.
+  --pruning-fullpruningmemorybudgetmb, --Pruning.FullPruningMemoryBudgetMb <value>                                                  The memory budget, in MB, used for the trie visit. Increasing this value significantly reduces the IOPS requirement at the expense of memory usage. `0` to disable.
+  --pruning-fullpruningminimumdelayhours, --Pruning.FullPruningMinimumDelayHours <value>                                            The minimum delay, in hours, between full pruning operations not to exhaust disk writes.
+  --pruning-fullpruningthresholdmb, --Pruning.FullPruningThresholdMb <value>                                                        The threshold, in MB, to trigger full pruning. Depends on `Mode` and `FullPruningTrigger`.
+  --pruning-fullpruningtrigger, --Pruning.FullPruningTrigger <value>                                                                The full pruning trigger.
+  --pruning-mode, --Pruning.Mode <value>                                                                                            The pruning mode.
+  --pruning-persistenceinterval, --Pruning.PersistenceInterval <value>                                                              The block persistence frequency. If set to `N`, it caches after each `Nth` block even if not required by cache memory usage.
+  --pruning-pruningboundary, --Pruning.PruningBoundary <value>                                                                      The number of past states before the state gets pruned. Used to determine how old of a state to keep from the head.
+  --pruning-trackedpastkeycountmemoryratio, --Pruning.TrackedPastKeyCountMemoryRatio <value>                                        The ratio of memory out of `Pruning.CacheMb` to allocate for the LRU cache, used to track past keys for live pruning.
+  --receipt-compactreceiptstore, --Receipt.CompactReceiptStore <value>                                                              Whether to compact receipts database size at the expense of RPC performance.
+  --receipt-compacttxindex, --Receipt.CompactTxIndex <value>                                                                        Whether to compact receipts transaction index database size at the expense of RPC performance.
+  --receipt-receiptsmigration, --Receipt.ReceiptsMigration <value>                                                                  Whether to migrate the receipts database to the new schema.
+  --receipt-storereceipts, --Receipt.StoreReceipts <value>                                                                          Whether to store receipts after a new block is processed. This setting is independent from downloading receipts in fast sync mode.
+  --receipt-txlookuplimit, --Receipt.TxLookupLimit <value>                                                                          The number of recent blocks to maintain transaction index for. `0` to never remove indices, `-1` to never index.
+  --seq-apikey, --Seq.ApiKey <value>                                                                                                The Seq API key.
+  --seq-minlevel, --Seq.MinLevel <value>                                                                                            The min log level to sent to Seq.
+  --seq-serverurl, --Seq.ServerUrl <value>                                                                                          The Seq instance URL.
+  --shutter-bootnodep2paddresses, --Shutter.BootnodeP2PAddresses <value>                                                            The p2p addresses of the Shutter Keyper network bootnodes.
+  --shutter-enabled, --Shutter.Enabled <value>                                                                                      Whether to enable Shutter.
+  --shutter-instanceid, --Shutter.InstanceID <value>                                                                                Instance ID of Shutter keyper set.
+  --shutter-keybroadcastcontractaddress, --Shutter.KeyBroadcastContractAddress <value>                                              The address of the Shutter key broadcast contract.
+  --shutter-keypersetmanagercontractaddress, --Shutter.KeyperSetManagerContractAddress <value>                                      The address of the Shutter keyper set manager contract.
+  --shutter-p2pport, --Shutter.P2PPort <value>                                                                                      The port to connect to Shutter P2P network with.
+  --shutter-sequencercontractaddress, --Shutter.SequencerContractAddress <value>                                                    The address of the Shutter sequencer contract.
+  --shutter-shutterkeyfile, --Shutter.ShutterKeyFile <value>                                                                        The filename to use for the Shutter P2P key. If this not specified, the key is autogenerated in `shutter.key.plain` file.
+  --shutter-validatorinfofile, --Shutter.ValidatorInfoFile <value>                                                                  The filepath of the validator info json file.
+  --shutter-validatorregistrycontractaddress, --Shutter.ValidatorRegistryContractAddress <value>                                    The address of the Shutter validator registry contract.
+  --snapshot-checksum, --Snapshot.Checksum <value>                                                                                  The SHA-256 checksum of the snapshot file.
+  --snapshot-downloadurl, --Snapshot.DownloadUrl <value>                                                                            The URL of the snapshot file.
+  --snapshot-enabled, --Snapshot.Enabled <value>                                                                                    Whether to enable the Snapshot plugin.
+  --snapshot-snapshotdirectory, --Snapshot.SnapshotDirectory <value>                                                                The path to the directory to store the snapshot file.
+  --snapshot-snapshotfilename, --Snapshot.SnapshotFileName <value>                                                                  The name of the snapshot file.
+  --sync-ancientbodiesbarrier, --Sync.AncientBodiesBarrier <value>                                                                  The earliest body downloaded with fast sync when `DownloadBodiesInFastSync` is set to `true`. The actual value is determined as follows:
+  
+                                                                                                                                    ```
+                                                                                                                                    max{ 1, min{ PivotNumber, AncientBodiesBarrier } }
+                                                                                                                                    ```
+  --sync-ancientreceiptsbarrier, --Sync.AncientReceiptsBarrier <value>                                                              The earliest receipt downloaded with fast sync when `DownloadReceiptsInFastSync` is set to `true`. The actual value is determined as follows:
+  
+                                                                                                                                    ```
+                                                                                                                                    max{ 1, min{ PivotNumber, max{ AncientBodiesBarrier, AncientReceiptsBarrier } } }
+                                                                                                                                    ```
+  --sync-downloadbodiesinfastsync, --Sync.DownloadBodiesInFastSync <value>                                                          Whether to download the block bodies in the Fast sync mode.
+  --sync-downloadheadersinfastsync, --Sync.DownloadHeadersInFastSync <value>                                                        Whether to download the old block headers in the Fast sync mode. If `false`, Nethermind downloads only recent blocks headers.
+  --sync-downloadreceiptsinfastsync, --Sync.DownloadReceiptsInFastSync <value>                                                      Whether to download receipts in the Fast sync mode. This slows down the process by a few hours but allows to interact with dApps that perform extensive historical logs searches.
+  --sync-exitonsynced, --Sync.ExitOnSynced <value>                                                                                  Whether to shut down Nethermind once sync is finished.
+  --sync-exitonsyncedwaittimesec, --Sync.ExitOnSyncedWaitTimeSec <value>                                                            The time, in seconds, to wait before shutting down Nethermind once sync is finished.
+  --sync-fastsync, --Sync.FastSync <value>                                                                                          Whether to use the Fast sync mode (the eth/63 synchronization algorithm).
+  --sync-fastsynccatchupheightdelta, --Sync.FastSyncCatchUpHeightDelta <value>                                                      In Fast sync mode, the min height threshold limit up to which the Full sync, if already on, stays on when the chain is behind the network head. If the limit is exceeded, it switches back to Fast sync. For regular usage scenarios, setting this value lower than 32 is not recommended as this can cause issues with chain reorgs. Note that the last 2 blocks are always processed in Full sync, so setting it lower than 2 has no effect.
+  --sync-fixreceipts, --Sync.FixReceipts <value>                                                                                    Whether to enable receipts validation that checks for receipts that might be missing because of a bug. If needed, receipts are downloaded from the network. If `true`, the pivot number must be same one used originally as it's used as a cut-off point.
+  --sync-fixtotaldifficulty, --Sync.FixTotalDifficulty <value>                                                                      Whether to recalculate the total difficulty from `FixTotalDifficultyStartingBlock` to `FixTotalDifficultyLastBlock`.
+  --sync-fixtotaldifficultylastblock, --Sync.FixTotalDifficultyLastBlock <value>                                                    The last block to recalculate the total difficulty for. If not specified, the best known block is used.
+  --sync-fixtotaldifficultystartingblock, --Sync.FixTotalDifficultyStartingBlock <value>                                            The first block to recalculate the total difficulty for.
+  --sync-maxattemptstoupdatepivot, --Sync.MaxAttemptsToUpdatePivot <value>                                                          The max number of attempts to update the pivot block based on the FCU message from the consensus client.
+  --sync-maxprocessingthreads, --Sync.MaxProcessingThreads <value>                                                                  The max number of threads used for syncing. `0` to use the number of logical processors.
+  --sync-networkingenabled, --Sync.NetworkingEnabled <value>                                                                        Whether to connect to peers and sync.
+  --sync-nonvalidatornode, --Sync.NonValidatorNode <value>                                                                          Whether to operate as a non-validator. If `true`, the `DownloadReceiptsInFastSync` and `DownloadBodiesInFastSync` can be set to `false`.
+  --sync-pivothash, --Sync.PivotHash <value>                                                                                        The hash of the pivot block for the Fast sync mode.
+  --sync-pivotnumber, --Sync.PivotNumber <value>                                                                                    The number of the pivot block for the Fast sync mode.
+  --sync-pivottotaldifficulty, --Sync.PivotTotalDifficulty <value>                                                                  The total difficulty of the pivot block for the Fast sync mode.
+  --sync-snapsync, --Sync.SnapSync <value>                                                                                          Whether to use the Snap sync mode.
+  --sync-snapsyncaccountrangepartitioncount, --Sync.SnapSyncAccountRangePartitionCount <value>                                      The number of account range partitions to create. Increases the Snap sync request concurrency. Allowed values are between between 1 and 256.
+  --sync-strictmode, --Sync.StrictMode <value>                                                                                      Whether to disable some optimizations and do a more extensive sync. Useful when sync state is corrupted.
+  --sync-synchronizationenabled, --Sync.SynchronizationEnabled <value>                                                              Whether to download and process new blocks.
+  --sync-usegethlimitsinfastblocks, --Sync.UseGethLimitsInFastBlocks <value>                                                        Whether to make smaller requests, in Fast Blocks mode, to avoid Geth from disconnecting. On the Geth-heavy networks (e.g., Mainnet), it's  a desired behavior while on Nethermind- or OpenEthereum-heavy networks (Aura), it slows down the sync by a factor of ~4.
+  --tracestore-blockstokeep, --TraceStore.BlocksToKeep <value>                                                                      The number of blocks to store, counting from the head. If `0`, all traces of the processed blocks are stored.
+  --tracestore-deserializationparallelization, --TraceStore.DeserializationParallelization <value>                                  The max parallelization when deserialization requests the `trace_filter` method. `0` to use the number of logical processors. If you experience a resource shortage, set to a low number.
+  --tracestore-enabled, --TraceStore.Enabled <value>                                                                                Whether to enable the TraceStore plugin. If enabled, traces come from the database whenever possible.
+  --tracestore-tracetypes, --TraceStore.TraceTypes <value>                                                                          The type of traces to store.
+  --txpool-blobcachesize, --TxPool.BlobCacheSize <value>                                                                            The max number of full blob transactions cached in memory. The default value uses max 200MB for 6 blobs where one blob is 33MB (256 * 128KB)
+  --txpool-blobssupport, --TxPool.BlobsSupport <value>                                                                              The blobs support mode.
+  --txpool-gaslimit, --TxPool.GasLimit <value>                                                                                      The max transaction gas allowed.
+  --txpool-hashcachesize, --TxPool.HashCacheSize <value>                                                                            The max number of cached hashes of already known transactions. Set automatically by the memory hint.
+  --txpool-inmemoryblobpoolsize, --TxPool.InMemoryBlobPoolSize <value>                                                              The max number of full blob transactions stored in memory. Used only if persistent storage is disabled.
+  --txpool-maxblobtxsize, --TxPool.MaxBlobTxSize <value>                                                                            The max blob transaction size allowed, excluding blobs, in bytes.
+  --txpool-maxpendingblobtxspersender, --TxPool.MaxPendingBlobTxsPerSender <value>                                                  The max number of pending blob transactions per single sender. `0` to lift the limit.
+  --txpool-maxpendingtxspersender, --TxPool.MaxPendingTxsPerSender <value>                                                          The max number of pending transactions per single sender. `0` to lift the limit.
+  --txpool-maxtxsize, --TxPool.MaxTxSize <value>                                                                                    The max transaction size allowed, in bytes.
+  --txpool-minbasefeethreshold, --TxPool.MinBaseFeeThreshold <value>                                                                The minimal percentage of the current base fee that must be surpassed by the max fee (`max_fee_per_gas`) for the transaction to be broadcasted.
+  --txpool-peernotificationthreshold, --TxPool.PeerNotificationThreshold <value>                                                    The average percentage of transaction hashes from persistent broadcast sent to a peer together with hashes of the last added transactions.
+  --txpool-persistentblobstoragesize, --TxPool.PersistentBlobStorageSize <value>                                                    The max number of full blob transactions stored in the database (increasing the number of transactions in the blob pool also results in higher memory usage). The default value uses max 13GB for 6 blobs where one blob is 2GB (16386 * 128KB).
+  --txpool-reportminutes, --TxPool.ReportMinutes <value>                                                                            The current transaction pool state reporting interval, in minutes.
+  --txpool-size, --TxPool.Size <value>                                                                                              The max number of transactions held in the mempool (the more transactions in the mempool, the more memory used).
+  --wallet-devaccounts, --Wallet.DevAccounts <value>                                                                                The number of autogenerated developer accounts to work with. Developer accounts have private keys from `00...01` to `00...n`.

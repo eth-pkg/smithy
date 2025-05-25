@@ -103,7 +103,7 @@ export const testConfig: NodeConfig = {
     },
     logging: {
       enabled: false,
-      stdout: {
+      console: {
         enabled: false,
         level: 'info',
         format: 'json',
@@ -127,9 +127,8 @@ export const testConfig: NodeConfig = {
     },
     enabled: false,
     dataDir: '{common.dataDir}/{common.network.name}/{validator.client.name}',
-    beaconRpcProvider: 'http://localhost:5052',
-    numValidators: 1,
-    feeRecipientAddress: '0x0000000000000000000000000000000000000000',
+    beaconNodes: 'http://localhost:5052',
+    suggestFeeRecipientAddress: '0x0000000000000000000000000000000000000000',
     metrics: {
       enabled: false,
       port: 8080,
@@ -137,11 +136,12 @@ export const testConfig: NodeConfig = {
     },
     graffiti: {
       enabled: false,
+      file: "graffiti.log",
       message: 'test'
     },
     logging: {
       enabled: false,
-      stdout: {
+      console: {
         enabled: false,
         level: 'info',
         format: 'json',
@@ -159,12 +159,6 @@ export const testConfig: NodeConfig = {
     proposerConfig: {
       enabled: false,
       file: '',
-      refreshEnabled: false,
-      blindedBlocksEnabled: false,
-      refreshInterval: 0,
-      maxValidators: 0,
-      maxProposerDelay: 0,
-      maxProposerPriority: 0
     },
     distributed: false,
     secretsDir: '',
@@ -176,9 +170,6 @@ export const testConfig: NodeConfig = {
       keystore: '',
       keystorePasswordFile: '',
       publicKeys: [],
-      timeout: 5000,
-      truststore: '',
-      truststorePasswordFile: ''
     },
   },
   execution: {
@@ -202,7 +193,7 @@ export const testConfig: NodeConfig = {
     },
     logging: {
       enabled: false,
-      stdout: {
+      console: {
         enabled: false,
         level: 'info',
         format: 'json',
