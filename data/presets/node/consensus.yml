@@ -96,18 +96,6 @@ properties:
         maximum: 65535
         default: 9000
         description: "IPv6 P2P port number"    
-      quicPort:
-        type: number
-        minimum: 1024
-        maximum: 65535
-        default: 9001
-        description: "Quic P2P port number"
-      quicPort6:
-        type: number
-        minimum: 1024
-        maximum: 65535
-        default: 9001
-        description: "Quic P2P port number"
       discoveryPort:
         type: number
         minimum: 1024
@@ -146,10 +134,6 @@ properties:
         type: number
         default: 25
         description: "Maximum number of peers to connect to"
-      trustedSetupFile:
-        type: string
-        default: ""
-        description: "Path to the trusted setup file"
       nodiscover:
         type: boolean
         default: false
@@ -237,10 +221,6 @@ properties:
     type: string
     default: ""
     description: "Path to testnet configuration directory"
-  validatorMonitorFile:
-    type: string
-    default: ""
-    description: "Path to file for validator monitoring data"
   builder:
     type: object
     properties:

@@ -126,8 +126,6 @@ describe('Consensus Client P2P Configuration Tests', () => {
           case 'lighthouse':
             expect(scriptString).to.contain(`--port ${port}`); // both udp and tcp
             expect(scriptString).to.contain(`--port6 ${port6}`);
-            expect(scriptString).to.contain(`--quic-port ${quicPort}`);
-            expect(scriptString).to.contain(`--quic-port6 ${quicPort6}`);
             expect(scriptString).to.contain(`--discovery-port ${discoveryPort}`);
             expect(scriptString).to.contain(`--discovery-port6 ${discoveryPort6}`);
             break;
@@ -136,36 +134,24 @@ describe('Consensus Client P2P Configuration Tests', () => {
             expect(scriptString).to.contain(`--port6 ${port6}`);
             expect(scriptString).to.contain(`--discoveryPort ${discoveryPort}`);
             expect(scriptString).to.contain(`--discoveryPort6 ${discoveryPort6}`);
-            // TODO: check if lodestar supports quic
-            // expect(scriptString).to.contain(`--quic-port ${quicPort}`);
-            // expect(scriptString).to.contain(`--quic-port6 ${quicPort6}`);
             break;
           case 'nimbus-eth2':
             expect(scriptString).to.contain(`--tcp-port ${port}`);
             expect(scriptString).to.contain(`--udp-port ${discoveryPort}`);
             // TODO: check if nimbus supports discovery port6
             // expect(scriptString).to.contain(`--udp-port6 ${discoveryPort6}`);
-            // TODO: check if nimbus supports quic
-            // expect(scriptString).to.contain(`--quic-port ${quicPort}`);
-            // expect(scriptString).to.contain(`--quic-port6 ${quicPort6}`);
             break;
           case 'prysm':
             expect(scriptString).to.contain(`--p2p-tcp-port ${port}`);
             expect(scriptString).to.contain(`--p2p-udp-port ${discoveryPort}`);
-            expect(scriptString).to.contain(`--p2p-quic-port ${quicPort}`);
             // TODO: check if prysm supports discovery port6
             // expect(scriptString).to.contain(`--p2p-udp-port6 ${discoveryPort6}`);
-            // TODO: check if prysm supports quic port6
-            // expect(scriptString).to.contain(`--p2p-quic-port6 ${quicPort6}`);
             break;
           case 'teku':
             expect(scriptString).to.contain(`--p2p-port=${port}`);
             expect(scriptString).to.contain(`--p2p-port-ipv6=${port6}`);
             expect(scriptString).to.contain(`--p2p-udp-port=${discoveryPort}`);
             expect(scriptString).to.contain(`--p2p-udp-port-ipv6=${discoveryPort6}`);
-            // TODO: check if teku supports quic
-            // expect(scriptString).to.contain(`--p2p-quic-port ${quicPort}`);
-            // expect(scriptString).to.contain(`--p2p-quic-port-ipv6 ${quicPort6}`);
             break;
         }
       });
@@ -201,8 +187,6 @@ describe('Consensus Client P2P Configuration Tests', () => {
           case 'lighthouse':
             expect(scriptString).to.not.contain(`--port ${port}`); // both udp and tcp
             expect(scriptString).to.not.contain(`--port6 ${port6}`);
-            expect(scriptString).to.not.contain(`--quic-port ${quicPort}`);
-            expect(scriptString).to.not.contain(`--quic-port6 ${quicPort6}`);
             expect(scriptString).to.not.contain(`--discovery-port ${discoveryPort}`);
             expect(scriptString).to.not.contain(`--discovery-port6 ${discoveryPort6}`);
             break;
@@ -219,7 +203,6 @@ describe('Consensus Client P2P Configuration Tests', () => {
           case 'prysm':
             expect(scriptString).to.not.contain(`--p2p-tcp-port ${port}`);
             expect(scriptString).to.not.contain(`--p2p-udp-port ${discoveryPort}`);
-            expect(scriptString).to.not.contain(`--p2p-quic-port ${quicPort}`);
             break;
           case 'teku':
             expect(scriptString).to.not.contain(`--p2p-port=${port}`);
@@ -337,7 +320,6 @@ describe('Consensus Client P2P Configuration Tests', () => {
             // expect(scriptString).to.contain(`--max-peers ${maxPeers}`);
             // TODO: check if this is actually staticpeers
             expect(scriptString).to.contain(`--libp2p-addresses "${staticPeers}"`);
-            expect(scriptString).to.contain(`--trusted-setup-file-override ${trustedSetupFile}`);
             break;
           case 'lodestar':
             expect(scriptString).to.contain(`--targetPeers ${targetPeers}`);
@@ -406,7 +388,6 @@ describe('Consensus Client P2P Configuration Tests', () => {
             expect(scriptString).to.not.contain(`--target-peers ${targetPeers}`);
             expect(scriptString).to.not.contain(`--trusted-peers "${trustedPeers}"`);
             expect(scriptString).to.not.contain(`--libp2p-addresses "${staticPeers}"`);
-            expect(scriptString).to.not.contain(`--trusted-setup-file-override ${trustedSetupFile}`);
             break;
           case 'lodestar':
             expect(scriptString).to.not.contain(`--staticpeers "${staticPeers}"`);
@@ -621,7 +602,7 @@ describe('Consensus Client P2P Configuration Tests', () => {
         }
       });
 
-  
+
       it('should handle nat setting when p2p is enabled', () => {
         const config = schemaUtils.deepMerge(testConfig, {
           common: {
@@ -658,7 +639,7 @@ describe('Consensus Client P2P Configuration Tests', () => {
         }
       });
 
-       
+
       it('should handle nat setting when p2p is enabled', () => {
         const config = schemaUtils.deepMerge(testConfig, {
           common: {

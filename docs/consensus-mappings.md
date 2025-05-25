@@ -34,8 +34,6 @@
 | consensus.p2p.enabled             | Enable P2P networking                 |
 | consensus.p2p.port                | Port number for P2P UDP and TCP       |
 | consensus.p2p.port6               | IPv6 P2P port number                  |
-| consensus.p2p.quicPort            | Quic P2P port number                  |
-| consensus.p2p.quicPort6           | IPv6 Quic P2P port number             |
 | consensus.p2p.discoveryPort       | Discovery P2P port number             |
 | consensus.p2p.discoveryPort6      | IPv6 Discovery P2P port number        |
 | consensus.p2p.bootnodes           | List of bootnode enode URLs           |
@@ -43,7 +41,6 @@
 | consensus.p2p.trustedPeers        | List of trusted peers to connect to   |
 | consensus.p2p.targetPeers         | Target number of peers to connect to  |
 | consensus.p2p.maxPeers            | Maximum number of peers to connect to |
-| consensus.p2p.trustedSetupFile    | Path to the trusted setup file        |
 | consensus.p2p.nodiscover          | Disable peer discovery                |
 | consensus.p2p.listenAddress       | Listen address for P2P networking     |
 | consensus.p2p.localPeerDiscovery  | Enable local peer discovery           |
@@ -105,8 +102,6 @@
 | consensus.p2p.enabled                                 | enable p2p overriding                 |
 | consensus.p2p.port                                    | `--port value`                        |
 | consensus.p2p.port6                                   | `--port6 value`                       |
-| consensus.p2p.quicPort                                | `--quic-port value`                   |
-| consensus.p2p.quicPort6                               | `--quic-port6 value`                  |
 | consensus.p2p.discoveryPort                           | `--discovery-port value`              |
 | consensus.p2p.discoveryPort6                          | `--discovery-port6 value`             |
 | consensus.p2p.bootnodes                               | `--boot-nodes value`                  |
@@ -114,7 +109,6 @@
 | consensus.p2p.trustedPeers                            | `--trusted-peers value`               |
 | consensus.p2p.targetPeers                             | `--target-peers value`                |
 | consensus.p2p.maxPeers                                | None                                  |
-| consensus.p2p.trustedSetupFile                        | `--trusted-setup-file-override value` |
 | consensus.p2p.nodiscover                              | None                                  |
 | consensus.p2p.listenAddress                           | `--listen-address value`              |
 | consensus.p2p.localPeerDiscovery                      | `--enable-private-discovery`          |
@@ -134,7 +128,6 @@
 | consensus.logging.file                                | TODO                                  |
 | consensus.logging.format                              | TODO                                  |
 | consensus.testnetDir                                  | TODO                                  |
-| consensus.validatorMonitorFile                        | TODO                                  |
 | consensus.builder.enabled                             | enable builder                        |
 | consensus.builder.url                                 | `--builder-url value`                 |
 | consensus.dataDir                                     | `--datadir value`                     |
@@ -154,8 +147,6 @@
 | consensus.p2p.enabled                                 | enable p2p                      |
 | consensus.p2p.port                                    | `--port value`                  |
 | consensus.p2p.port6                                   | `--port6 value`                 |
-| consensus.p2p.quicPort                                | None                            |
-| consensus.p2p.quicPort6                               | NOne                            |
 | consensus.p2p.discoveryPort                           | `--discoveryPort value`         |
 | consensus.p2p.discoveryPort6                          | `--discoveryPort6 value`        |
 | consensus.p2p.bootnodes                               | `--bootnodes value`             |
@@ -163,7 +154,6 @@
 | consensus.p2p.trustedPeers                            | None                            |
 | consensus.p2p.targetPeers                             | `--targetPeers value`           |
 | consensus.p2p.maxPeers                                | None                            |
-| consensus.p2p.trustedSetupFile                        | None                            |
 | consensus.p2p.nodiscover                              | None                            |
 | consensus.p2p.listenAddress                           | `--listenAddress value`         |
 | consensus.p2p.localPeerDiscovery                      | `--mdns`                        |
@@ -183,7 +173,6 @@
 | consensus.logging.file                                | TODO                            |
 | consensus.logging.format                              | TODO                            |
 | consensus.testnetDir                                  | TODO                            |
-| consensus.validatorMonitorFile                        | TODO                            |
 | consensus.builder.enabled                             | `--builder`                     |
 | consensus.builder.url                                 | `--builder.url value`           |
 | consensus.dataDir                                     | `--dataDir`                     |
@@ -203,8 +192,6 @@
 | consensus.p2p.enabled                                 | enable p2p                             |
 | consensus.p2p.port                                    | `--tcp-port`                           |
 | consensus.p2p.port6                                   | None                                   |
-| consensus.p2p.quicPort                                | None                                   |
-| consensus.p2p.quicPort6                               | None                                   |
 | consensus.p2p.discoveryPort                           | `--discovery-port value`               |
 | consensus.p2p.discoveryPort6                          | None                                   |
 | consensus.p2p.bootnodes                               | `--bootnodes value`                    |
@@ -212,8 +199,7 @@
 | consensus.p2p.trustedPeers                            | None                                   |
 | consensus.p2p.targetPeers                             | None                                   |
 | consensus.p2p.maxPeers                                | `--max-peers value`                    |
-| consensus.p2p.trustedSetupFile                        | None                                   |
-| consensus.p2p.nodiscover                              | NOne                                   |
+| consensus.p2p.nodiscover                              | None                                   |
 | consensus.p2p.listenAddress                           | `--listen-address value`               |
 | consensus.p2p.localPeerDiscovery                      | None                                   |
 | consensus.p2p.subscribeAllSubnets                     | `--subscribe-all-subnets`              |
@@ -232,7 +218,6 @@
 | consensus.logging.file                                | TODO                                   |
 | consensus.logging.format                              | TODO                                   |
 | consensus.testnetDir                                  | TODO                                   |
-| consensus.validatorMonitorFile                        | TODO                                   |
 | consensus.builder.enabled                             | eanble builder                         |
 | consensus.builder.url                                 | `--payload-builder-url value`          |
 | consensus.dataDir                                     | `--data-dir value`                     |
@@ -252,8 +237,6 @@
 | consensus.p2p.enabled                                 | enable p2p                             |
 | consensus.p2p.port                                    | `--p2p-tcp-port value`                 |
 | consensus.p2p.port6                                   | None                                   |
-| consensus.p2p.quicPort                                | `--p2p-quic-port value`                |
-| consensus.p2p.quicPort6                               | None                                   |
 | consensus.p2p.discoveryPort                           | `--p2p-udp-port value`                 |
 | consensus.p2p.discoveryPort6                          | None                                   |
 | consensus.p2p.bootnodes                               | `--bootstrap-node value`               |
@@ -261,7 +244,6 @@
 | consensus.p2p.trustedPeers                            | `--peer value`                         |
 | consensus.p2p.targetPeers                             | None                                   |
 | consensus.p2p.maxPeers                                | `--p2p-max-peers value`                |
-| consensus.p2p.trustedSetupFile                        | None                                   |
 | consensus.p2p.nodiscover                              | `--no-discovery`                       |
 | consensus.p2p.listenAddress                           | `--p2p-local-ip value`                 |
 | consensus.p2p.localPeerDiscovery                      | None                                   |
@@ -281,7 +263,6 @@
 | consensus.logging.file                                | TODO                                   |
 | consensus.logging.format                              | TODO                                   |
 | consensus.testnetDir                                  | TODO                                   |
-| consensus.validatorMonitorFile                        | TODO                                   |
 | consensus.builder.enabled                             | enable builder                         |
 | consensus.builder.url                                 | `--http-mev-relay value`               |
 | consensus.dataDir                                     | `--datadir`                            |
@@ -301,8 +282,6 @@
 | consensus.p2p.enabled                                 | `--p2p-enabled`                                |
 | consensus.p2p.port                                    | `--p2p-port value`                             |
 | consensus.p2p.port6                                   | `--p2p-port6 value`                            |
-| consensus.p2p.quicPort                                | None                                           |
-| consensus.p2p.quicPort6                               | None                                           |
 | consensus.p2p.discoveryPort                           | `--p2p-discovery-port value`                   |
 | consensus.p2p.discoveryPort6                          | `--p2p-discovery-port6 value`                  |
 | consensus.p2p.bootnodes                               | `--p2p-discovery-bootnodes value`              |
@@ -310,7 +289,6 @@
 | consensus.p2p.trustedPeers                            | None                                           |
 | consensus.p2p.targetPeers                             | None                                           |
 | consensus.p2p.maxPeers                                | `--p2p-peer-upper-bound value`                 |
-| consensus.p2p.trustedSetupFile                        | None                                           |
 | consensus.p2p.nodiscover=false                        | `--p2p-discovery-enabled`                      |
 | consensus.p2p.listenAddress                           | `--p2p-interface value`                        |
 | consensus.p2p.localPeerDiscovery                      | `--p2p-discovery-site-local-addresses-enabled` |
@@ -330,7 +308,6 @@
 | consensus.logging.file                                | TODO                                           |
 | consensus.logging.format                              | TODO                                           |
 | consensus.testnetDir                                  | TODO                                           |
-| consensus.validatorMonitorFile                        | TODO                                           |
 | consensus.builder.enabled                             | enable builder                                 |
 | consensus.builder.url                                 | `--builder-endpoint value`                     |
 | consensus.dataDir                                     | `--data-path`                                  |

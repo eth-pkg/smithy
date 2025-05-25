@@ -304,10 +304,7 @@ rules:
       transform: flagEnabled
     description: The file containing the private key for peer communication
   - flag: --p2p-quic-port
-    configPath: consensus.p2p.quicPort
-    enabled: 
-      configPath: consensus.p2p.enabled
-      transform: flagEnabled
+    configPath: 
     description: The QUIC port used by libp2p
   - flag: --p2p-static-id
     configPath: consensus.p2p.staticId

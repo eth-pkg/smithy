@@ -822,17 +822,11 @@ rules:
       If present, the chain database will be deleted without confirmation. Use
       with caution.
   - flag: --quic-port
-    configPath: consensus.p2p.quicPort
-    enabled:
-      configPath: consensus.p2p.enabled
-      transform: flagEnabled
+    configPath: 
     description: >-
       The UDP port that quic will listen on. Defaults to `port` + 1
   - flag: --quic-port6
-    configPath: consensus.p2p.quicPort6
-    enabled:
-      configPath: consensus.p2p.enabled
-      transform: flagEnabled
+    configPath: 
     description: >-
       The UDP port that quic will listen on over IPv6 if listening over both IPv4
       and IPv6. Defaults to `port6` + 1
@@ -980,7 +974,7 @@ rules:
       One or more comma-delimited trusted peer ids which always have the highest
       score according to the peer scoring system.
   - flag: --trusted-setup-file-override
-    configPath: consensus.p2p.trustedSetupFile
+    configPath: 
     enabled:
       configPath: consensus.p2p.enabled
       transform: flagEnabled

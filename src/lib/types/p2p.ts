@@ -28,8 +28,6 @@ export type ConsensusP2PConfig = {
   listenAddress: string
   port: number // both udp and tcp
   port6: number // both udp and tcp
-  quicPort: number // quic
-  quicPort6: number // quic
   discoveryPort: number // discovery udp
   discoveryPort6: number // discovery udp
   bootnodes: string[]
@@ -37,7 +35,6 @@ export type ConsensusP2PConfig = {
   trustedPeers: string[]
   targetPeers: number
   maxPeers: number
-  trustedSetupFile: string
   nodiscover: boolean
   localPeerDiscovery: boolean
   subscribeAllSubnets: boolean
