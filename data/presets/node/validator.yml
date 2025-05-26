@@ -37,18 +37,13 @@ properties:
     default: "{common.dataDir}/{validator.client.name}-validator"
     description: "Base directory for validator data. Interpolated from common.dataDir and validator.client.name."
   beaconNodes:
-    type: string
-    default: "localhost:5052"
-    description: "Beacon node RPC endpoint (host:port)"
+    type: array
+    items:
+      type: string
+    default: ["localhost:5052"]
+    description: "Beacon node RPC endpoint(s) (host:port)"
     errorMessage:
       pattern: "Beacon RPC provider must be a valid host:port"
-  numValidators:
-    type: number
-    minimum: 1
-    default: 1
-    description: "Number of validators to run"
-    errorMessage:
-      minimum: "Number of validators must be at least 1"
   suggestFeeRecipientAddress:
     type: string
     default: "0x0000000000000000000000000000000000000000"
@@ -97,10 +92,6 @@ properties:
     type: boolean
     default: true
     description: "Enable protection against duplicate validator instances"
-  builderEnabled:
-    type: boolean
-    default: false
-    description: "Enable block builder API"
   externalSigner:
     type: object
     properties:
@@ -126,10 +117,6 @@ properties:
           type: string
         default: []
         description: "List of public keys for external signer"
-      timeout:
-        type: number
-        default: 5000
-        description: "Timeout in milliseconds for external signer requests"
   proposerConfig:
     type: object
     properties:

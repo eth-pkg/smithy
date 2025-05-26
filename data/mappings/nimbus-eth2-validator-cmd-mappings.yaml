@@ -5,22 +5,34 @@ rules:
   - flag: --beacon-node
     configPath: validator.beaconNodes
     transform: joinComma
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >-
       URL of the beacon node REST API [=http://127.0.0.1:5052].
 
   - flag: --config-file
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >-
       Loads the configuration from a TOML file.
 
   - flag: --data-dir
     configPath: validator.dataDir
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >-
       The directory where nimbus will store all blockchain data.
 
   - flag: --doppelganger-detection
     configPath: validator.doppelgangerProtection
     transform: flagEnabled
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >-
       If enabled, the validator client prudently listens for 2 epochs for
       attestations from a validator with the same index (a doppelganger), before
@@ -31,14 +43,19 @@ rules:
   - flag: --graffiti
     configPath: validator.graffiti.message
     enabled:
-      configPath: validator.graffiti.enabled
-      transform: flagEnabled
+      - configPath: validator.graffiti.enabled
+        transform: flagEnabled
+      - configPath: validator.enabled
+        transform: flagEnabled
     description: >-
       The graffiti value that will appear in proposed blocks. You can use a
       0x-prefixed hex encoded string to specify raw bytes.
 
   - flag: --local-block-value-boost
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >-
       Increase execution layer block values for builder bid comparison by a
       percentage [=10].
@@ -46,119 +63,175 @@ rules:
   - flag: --log-file
     configPath: validator.logging.file.path
     enabled:
-      configPath: validator.logging.enabled
-      transform: flagEnabled
+      - configPath: validator.logging.enabled
+        transform: flagEnabled
+      - configPath: validator.enabled
+        transform: flagEnabled
     description: >-
       Specifies a path for the written JSON log file (deprecated).
 
   - flag: --log-level
     configPath: validator.logging.file.level
     enabled:
-      configPath: validator.logging.enabled
-      transform: flagEnabled
+      - configPath: validator.logging.enabled
+        transform: flagEnabled
+      - configPath: validator.enabled
+        transform: flagEnabled
     description: >-
       Sets the log level for process and topics (e.g. "DEBUG; TRACE:discv5,libp2p;
       REQUIRED:none; DISABLED:none") [=INFO].
 
   - flag: --metrics
     configPath: validator.metrics.enabled
-    transform: flagEnabled
+    enabled:
+      - configPath: validator.metrics.enabled
+        transform: flagEnabled
+      - configPath: validator.enabled
+        transform: flagEnabled
     description: >-
       Enable the metrics server [=false].
 
   - flag: --metrics-address
-    configPath: validator.metrics.address
+    configPath: validator.metrics.host
     enabled:
-      configPath: validator.metrics.enabled
-      transform: flagEnabled
+      - configPath: validator.metrics.enabled
+        transform: flagEnabled
+      - configPath: validator.enabled
+        transform: flagEnabled
     description: >-
       Listening address of the metrics server [=127.0.0.1].
 
   - flag: --metrics-port
     configPath: validator.metrics.port
     enabled:
-      configPath: validator.metrics.enabled
-      transform: flagEnabled
+      - configPath: validator.metrics.enabled
+        transform: flagEnabled
+      - configPath: validator.enabled
+        transform: flagEnabled
     description: >-
       Listening HTTP port of the metrics server [=8008].
 
   - flag: --network
-    configPath:
+    configPath: common.network.name
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >-
       The Eth2 network to join [=mainnet].
 
   - flag: --non-interactive
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >-
       Do not display interactive prompts. Quit on missing configuration.
 
   - flag: --payload-builder
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >-
       Enable external payload builder [=false].
 
   - flag: --payload-builder-url
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >-
       Payload builder URL.
 
   - flag: --secrets-dir
     configPath: validator.secretsDir
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >-
       A directory containing validator keystore passwords.
 
   - flag: --status-bar
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >-
       Display a status bar at the bottom of the terminal screen [=true].
 
   - flag: --status-bar-contents
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >-
       Textual template for the contents of the status bar.
 
   - flag: --suggested-fee-recipient
     configPath: validator.suggestFeeRecipientAddress
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >-
       Suggested fee recipient.
 
   - flag: --suggested-gas-limit
     configPath: validator.suggestedGasLimit
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >-
       Suggested gas limit [=defaultGasLimit].
 
   - flag: --validator-monitor-auto
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >-
       Monitor validator activity automatically for validators active on this
       beacon node [=true].
 
   - flag: --validator-monitor-details
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >-
       Publish detailed metrics for each validator individually - may incur
       significant overhead with large numbers of validators [=false].
 
   - flag: --validator-monitor-pubkey
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >-
       One or more validators to monitor - works best when --subscribe-all-subnets
       is enabled.
 
   - flag: --validators-dir
     configPath: validator.validatorsDir
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >-
       A directory containing validator keystores.
 
   - flag: --web3-signer-url
     configPath: validator.externalSigner.url
     enabled:
-      configPath: validator.externalSigner.enabled
-      transform: flagEnabled
+      - configPath: validator.externalSigner.enabled
+        transform: flagEnabled
+      - configPath: validator.enabled
+        transform: flagEnabled
     description: >-
       Remote Web3Signer URL that will be used as a source of validators.
 
   - flag: --web3-signer-update-interval
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >-
       Number of seconds between validator list updates [=3600].

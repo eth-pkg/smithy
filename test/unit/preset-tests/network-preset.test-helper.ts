@@ -127,7 +127,7 @@ export const testConfig: NodeConfig = {
     },
     enabled: false,
     dataDir: '{common.dataDir}/{common.network.name}/{validator.client.name}',
-    beaconNodes: 'http://localhost:5052',
+    beaconNodes: ['http://localhost:5052'],
     suggestFeeRecipientAddress: '0x0000000000000000000000000000000000000000',
     metrics: {
       enabled: false,

@@ -130,6 +130,7 @@ describe('DataDir Interpolation Tests', () => {
             dataDir: '{common.dataDir}/{validator.client.name}-validator'
           }
         };
+        config.validator.enabled = true;
         const scriptContent = registry.getScriptContent(client, config, true);
         const scriptString = scriptContent.toString();
         const expectedDataDir = `${config.common.dataDir}/${client}-validator`;

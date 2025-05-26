@@ -5,12 +5,18 @@ rules:
   - flag: --beacon-nodes
     configPath: validator.beaconNodes
     transform: joinComma
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       Comma-separated addresses to one or more beacon node HTTP APIs. Default is
       http://localhost:5052.
 
   - flag: --beacon-nodes-sync-tolerances
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       A comma-separated list of 3 values which sets the size of each sync
       distance range when determining the health of each connected beacon node.
@@ -30,6 +36,9 @@ rules:
 
   - flag: --beacon-nodes-tls-certs
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       Comma-separated paths to custom TLS certificates to use when connecting to a
       beacon node (and/or proposer node). These certificates must be in PEM format
@@ -38,6 +47,9 @@ rules:
 
   - flag: --broadcast
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       Comma-separated list of beacon API topics to broadcast to all beacon nodes.
       Default (when flag is omitted) is to broadcast subscriptions only. [possible
@@ -45,6 +57,9 @@ rules:
 
   - flag: --builder-boost-factor
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       Defines the boost factor, a percentage multiplier to apply to the builder's
       payload value when choosing between a builder payload header and payload
@@ -52,6 +67,9 @@ rules:
 
   - flag: --builder-proposals
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       If this flag is set, Lighthouse will query the Beacon Node for only block
       headers during proposals and will sign over headers. Useful for outsourcing
@@ -59,12 +77,18 @@ rules:
 
   - flag: --builder-registration-timestamp-override
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       This flag takes a unix timestamp value that will be used to override the
       timestamp used in the builder api registration.
 
   - flag: --datadir
     configPath: validator.dataDir
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       Used to specify a custom root data directory for lighthouse keys and
       databases. Defaults to $HOME/.lighthouse/{network} where network is the
@@ -72,13 +96,21 @@ rules:
       datadirs for different networks.
 
   - flag: --debug-level
-    configPath: validator.console.level
+    configPath: validator.logging.console.level
+    enabled:
+      - configPath: validator.logging.console.enabled
+        transform: flagEnabled
+      - configPath: validator.enabled
+        transform: flagEnabled
     description: >
       Specifies the verbosity level used when emitting logs to the terminal.
       [default: info] [possible values: info, debug, trace, warn, error, crit]
 
   - flag: --disable-attesting
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       Disable the performance of attestation duties (and sync committee duties).
       This flag should only be used in emergencies to prioritise block proposal
@@ -86,6 +118,9 @@ rules:
 
   - flag: --disable-auto-discover
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       If present, do not attempt to discover new validators in the validators-dir.
       Validators will need to be manually added to the validator_definitions.yml
@@ -93,16 +128,25 @@ rules:
 
   - flag: --disable-latency-measurement-service
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       Disables the service that periodically attempts to measure latency to BNs.
 
   - flag: --disable-log-timestamp
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       If present, do not include timestamps in logging output.
 
   - flag: --disable-malloc-tuning
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       If present, do not configure the system allocator. Providing this flag will
       generally increase memory usage, it should only be provided when debugging
@@ -110,6 +154,9 @@ rules:
 
   - flag: --disable-slashing-protection-web3signer
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       Disable Lighthouse's slashing protection for all web3signer keys. This can
       reduce the I/O burden on the VC but is only safe if slashing protection is
@@ -121,6 +168,9 @@ rules:
   - flag: --distributed
     configPath: validator.distributed
     transform: flagEnabled
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       Enables functionality required for running the validator in a distributed
       validator cluster.
@@ -128,6 +178,9 @@ rules:
   - flag: --enable-doppelganger-protection
     configPath: validator.doppelgangerProtection
     transform: flagEnabled
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       If this flag is set, Lighthouse will delay startup for three epochs and
       monitor for messages on the network by any of the validators managed by
@@ -141,6 +194,9 @@ rules:
 
   - flag: --enable-high-validator-count-metrics
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       Enable per validator metrics for > 64 validators. Note: This flag is
       automatically enabled for <= 64 validators. Enabling this metric for higher
@@ -149,6 +205,9 @@ rules:
 
   - flag: --gas-limit
     configPath: validator.suggestedGasLimit
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       The gas limit to be used in all builder proposals for all validators managed
       by this validator client. Note this will not necessarily be used if the gas
@@ -157,6 +216,9 @@ rules:
 
   - flag: --genesis-state-url
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       A URL of a beacon-API compatible server from which to download the genesis
       state. Checkpoint sync server URLs can generally be used with this flag. If
@@ -166,27 +228,46 @@ rules:
 
   - flag: --genesis-state-url-timeout
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       The timeout in seconds for the request to --genesis-state-url. [default:
       180]
 
   - flag: --graffiti
     configPath: validator.graffiti.message
+    enabled:
+      - configPath: validator.enabled
+        transform: flagEnabled
+      - configPath: validator.graffiti.enabled
+        transform: flagEnabled
     description: >
       Specify your custom graffiti to be included in blocks.
 
   - flag: --graffiti-file
     configPath: validator.graffiti.file
+    enabled:
+      - configPath: validator.enabled
+        transform: flagEnabled
+      - configPath: validator.graffiti.enabled
+        transform: flagEnabled
     description: >
       Specify a graffiti file to load validator graffitis from.
 
   - flag: --http
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       Enable the RESTful HTTP API server. Disabled by default.
 
   - flag: --http-address
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       Set the address for the HTTP address. The HTTP server is not encrypted and
       therefore it is unsafe to publish on a public network. When this flag is
@@ -197,6 +278,9 @@ rules:
 
   - flag: --http-allow-keystore-export
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       If present, allow access to the DELETE /lighthouse/keystores HTTP API
       method, which allows exporting keystores and passwords to HTTP API
@@ -206,6 +290,9 @@ rules:
 
   - flag: --http-allow-origin
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       Set the value of the Access-Control-Allow-Origin response HTTP header. Use *
       to allow any origin (not recommended in production). If no value is
@@ -214,11 +301,17 @@ rules:
 
   - flag: --http-port
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       Set the listen TCP port for the RESTful HTTP API server. [default: 5062]
 
   - flag: --http-store-passwords-in-secrets-dir
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       If present, any validators created via the HTTP will have keystore
       passwords stored in the secrets-dir rather than the validator definitions
@@ -226,12 +319,18 @@ rules:
 
   - flag: --http-token-path
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       Path to file containing the HTTP API token for validator client
       authentication. If not specified, defaults to {validators-dir}/api-token.txt.
 
   - flag: --init-slashing-protection
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       If present, do not require the slashing protection database to exist before
       running. You SHOULD NOT use this flag unless you're certain that a new
@@ -242,11 +341,17 @@ rules:
   - flag: --log-color
     configPath: validator.logging.console.color
     transform: flagEnabled
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       Force outputting colors when emitting logs to the terminal.
 
   - flag: --log-format
     configPath: validator.logging.console.format
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       Specifies the log format used when emitting logs to the terminal. [possible
       values: JSON]
@@ -254,8 +359,10 @@ rules:
   - flag: --logfile
     configPath: validator.logging.file.path
     enabled:
-      configPath: validator.logging.enabled
-      transform: flagEnabled
+      - configPath: validator.logging.enabled
+        transform: flagEnabled
+      - configPath: validator.enabled
+        transform: flagEnabled
     description: >
       File path where the log file will be stored. Once it grows to the value
       specified in `--logfile-max-size` a new log file is generated where future
@@ -264,6 +371,9 @@ rules:
 
   - flag: --logfile-compress
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       If present, compress old log files. This can help reduce the space needed
       to store old logs.
@@ -271,35 +381,48 @@ rules:
   - flag: --logfile-debug-level
     configPath: validator.logging.file.level
     enabled:
-      configPath: validator.logging.enabled
-      transform: flagEnabled
+      - configPath: validator.logging.enabled
+        transform: flagEnabled
+      - configPath: validator.enabled
+        transform: flagEnabled
     description: >
       The verbosity level used when emitting logs to the log file. [default:
       debug] [possible values: info, debug, trace, warn, error, crit]
 
   - flag: --logfile-format
-    configPath: validator.logging.format
+    configPath: validator.logging.file.format
     enabled:
-      configPath: validator.logging.enabled
-      transform: flagEnabled
+      - configPath: validator.logging.enabled
+        transform: flagEnabled
+      - configPath: validator.enabled
+        transform: flagEnabled
     description: >
       Specifies the log format used when emitting logs to the logfile. [possible
       values: DEFAULT, JSON]
 
   - flag: --logfile-max-number
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       The maximum number of log files that will be stored. If set to 0,
       background file logging is disabled. [default: 10]
 
   - flag: --logfile-max-size
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       The maximum size (in MB) each log file can grow to before rotating. If set
       to 0, background file logging is disabled. [default: 200]
 
   - flag: --logfile-no-restricted-perms
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       If present, log files will be generated as world-readable meaning they can
       be read by any user on the machine. Note that logs can often contain
@@ -309,6 +432,9 @@ rules:
 
   - flag: --long-timeouts-multiplier
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       If present, the validator client will use a multiplier for the timeout when
       making requests to the beacon node. This only takes effect when the
@@ -320,20 +446,28 @@ rules:
   - flag: --metrics
     configPath: validator.metrics.enabled
     transform: flagEnabled
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       Enable the Prometheus metrics HTTP server. Disabled by default.
 
   - flag: --metrics-address
-    configPath: validator.metrics.address
+    configPath: validator.metrics.host
     enabled:
-      configPath: validator.metrics.enabled
-      transform: flagEnabled
+      - configPath: validator.metrics.enabled
+        transform: flagEnabled
+      - configPath: validator.enabled
+        transform: flagEnabled
     description: >
       Set the listen address for the Prometheus metrics HTTP server. [default:
       127.0.0.1]
 
   - flag: --metrics-allow-origin
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       Set the value of the Access-Control-Allow-Origin response HTTP header. Use *
       to allow any origin (not recommended in production). If no value is
@@ -343,14 +477,19 @@ rules:
   - flag: --metrics-port
     configPath: validator.metrics.port
     enabled:
-      configPath: validator.metrics.enabled
-      transform: flagEnabled
+      - configPath: validator.metrics.enabled
+        transform: flagEnabled
+      - configPath: validator.enabled
+        transform: flagEnabled
     description: >
       Set the listen TCP port for the Prometheus metrics HTTP server. [default:
       5064]
 
   - flag: --monitoring-endpoint
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       Enables the monitoring service for sending system metrics to a remote
       endpoint. This can be used to monitor your setup on certain services (e.g.
@@ -362,31 +501,46 @@ rules:
 
   - flag: --monitoring-endpoint-period
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       Defines how many seconds to wait between each message sent to the
       monitoring-endpoint. [default: 60]
 
   - flag: --network
     configPath: common.network.name
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       Name of the Eth2 chain Lighthouse will sync and follow. [possible values:
       mainnet, gnosis, chiado, sepolia, holesky, hoodi]
 
   - flag: --prefer-builder-proposals
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       If this flag is set, Lighthouse will always prefer blocks constructed by
       builders, regardless of payload value.
 
   - flag: --proposer-nodes
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       Comma-separated addresses to one or more beacon node HTTP APIs. These
       specify nodes that are used to send beacon block proposals. A failure will
       revert back to the standard beacon nodes specified in --beacon-nodes.
 
   - flag: --secrets-dir
-    configPath: validators.secretsDir
+    configPath: validator.secretsDir
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       The directory which contains the password to unlock the validator voting
       keypairs. Each password should be contained in a file where the name is the
@@ -395,11 +549,17 @@ rules:
 
   - flag: --stdin-inputs
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       If present, read all user inputs from stdin instead of tty.
 
   - flag: --suggested-fee-recipient
     configPath: validator.suggestFeeRecipientAddress
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       Once the merge has happened, this address will receive transaction fees from
       blocks proposed by this validator client. If a fee recipient is configured
@@ -407,18 +567,27 @@ rules:
 
   - flag: --testnet-dir
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       Path to directory containing eth2_testnet specs. Defaults to a hard-coded
       Lighthouse testnet. Only effective if there is no existing database.
 
   - flag: --unencrypted-http-transport
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       This is a safety flag to ensure that the user is aware that the http
       transport is unencrypted and using a custom HTTP address is unsafe.
 
   - flag: --use-long-timeouts
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       If present, the validator client will use longer timeouts for requests made
       to the beacon node. This flag is generally not recommended, longer timeouts
@@ -426,6 +595,9 @@ rules:
 
   - flag: --validator-registration-batch-size
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       Defines the number of validators per validator/register_validator request
       sent to the BN. This value can be reduced to avoid timeouts from builders.
@@ -433,6 +605,9 @@ rules:
 
   - flag: --validators-dir
     configPath: validator.validatorsDir
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       The directory which contains the validator keystores, deposit data for each
       validator along with the common slashing protection database and the
@@ -440,12 +615,18 @@ rules:
 
   - flag: --web3-signer-keep-alive-timeout
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       Keep-alive timeout for each web3signer connection. Set to '0' to never
       timeout. [default: 20000]
 
   - flag: --web3-signer-max-idle-connections
     configPath:
+    enabled:
+      configPath: validator.enabled
+      transform: flagEnabled
     description: >
       Maximum number of idle connections to maintain per web3signer host. Default
       is unlimited.

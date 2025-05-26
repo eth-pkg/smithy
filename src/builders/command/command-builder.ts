@@ -1,6 +1,7 @@
 import { OperatingSystem, NodeConfig } from "@/lib/types";
 import {
   FlagEnabledFunction,
+  LogDestinationFunction,
   transformers,
   TransformFunction,
   TransformFunctionWithConfig,
@@ -8,7 +9,7 @@ import {
 import { getValueFromPath } from "./utils";
 
 type Rule = {
-  configPath: string;
+  configPath: string | string[];
   flag: string;
   transform?: string;
   parent?: string;
@@ -126,7 +127,12 @@ export class CommandBuilder {
         }
       }
 
-      const value = getValueFromPath(config, rule.configPath);
+      let value: any;
+      if (Array.isArray(rule.configPath)) {
+        value = rule.configPath.map((path) => getValueFromPath(config, path));
+      } else {
+        value = getValueFromPath(config, rule.configPath);
+      }
 
       if (value !== undefined) {
         let transformedValue = value;
@@ -136,9 +142,12 @@ export class CommandBuilder {
             transformers["interpolate"] as TransformFunctionWithConfig
           )(value, config);
         } else if (Array.isArray(value)) {
-          transformedValue = value.map(item => 
-            typeof item === "string" 
-              ? (transformers["interpolate"] as TransformFunctionWithConfig)(item, config)
+          transformedValue = value.map((item) =>
+            typeof item === "string"
+              ? (transformers["interpolate"] as TransformFunctionWithConfig)(
+                  item,
+                  config
+                )
               : item
           );
         }
@@ -150,9 +159,15 @@ export class CommandBuilder {
             );
           }
 
-          transformedValue = (
-            transformers[rule.transform] as TransformFunction
-          )(transformedValue, os, rule.flag);
+          if (rule.transform === "logDestination") {
+            transformedValue = (
+              transformers[rule.transform] as LogDestinationFunction
+            )(value[0], value[1]);
+          } else {
+            transformedValue = (
+              transformers[rule.transform] as TransformFunction
+            )(transformedValue, os, rule.flag);
+          }
         }
 
         if (
@@ -160,7 +175,10 @@ export class CommandBuilder {
           rule.transform !== "booleanFlag"
         ) {
           builder.addFlag(rule.flag, transformedValue);
-        } else if (Array.isArray(transformedValue) && rule.transform === "repeatFlag") {
+        } else if (
+          Array.isArray(transformedValue) &&
+          rule.transform === "repeatFlag"
+        ) {
           // Handle array values by adding multiple flag arguments
           for (const value of transformedValue) {
             builder.addArg(rule.flag, value);

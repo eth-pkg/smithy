@@ -94,11 +94,4 @@ validator:
     enabled: true
     port: 5054
     host: 127.0.0.1
-  http:
-    enabled: false
-    port: 5052
-    address: localhost
-    allowlist: ["*"]
-  builder:
-    enabled: false
-    url: "" 
+  beaconNodes: [http://localhost:8551]

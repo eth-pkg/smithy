@@ -6,8 +6,9 @@ export type TransformFunctionWithConfig = (value: any, config: NodeConfig) => an
 
 export type FlagEnabledFunction = (value: any) => boolean
 export type FlagTransformFunction = (value: any, os: string, flag: string) => boolean
+export type LogDestinationFunction = (fileEnabled: boolean, consoleEnabled: boolean) => string
 
-export const transformFunctions: Record<string, TransformFunction | TransformFunctionWithConfig> = {
+export const transformFunctions: Record<string, TransformFunction | TransformFunctionWithConfig | LogDestinationFunction> = {
   joinComma: (value: string | string[]): string => {
     return Array.isArray(value) ? value.join(",") : value
   },
@@ -70,6 +71,18 @@ export const transformFunctions: Record<string, TransformFunction | TransformFun
     return value
   },
 
+  logDestination: (fileEnabled: boolean, consoleEnabled: boolean) => {
+    if (fileEnabled && consoleEnabled) {
+      return 'BOTH'
+    }
+    if (fileEnabled) {
+      return 'FILE'
+    }
+    if (consoleEnabled) {
+      return 'CONSOLE'
+    }
+    return 'NONE'
+  },
 }
 
 export const flagFunctions: Record<string, FlagEnabledFunction | FlagTransformFunction> = {

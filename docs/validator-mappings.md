@@ -78,38 +78,38 @@ Mapped to the right process validator name, and version used internally to decid
 
 ### Lighthouse
 
-| Common Config Name                            | Lighthouse Setting                |
-| --------------------------------------------- | --------------------------------- |
-| validator.dataDir                             | `--datadir value`                 |
-| validator.beaconNodes                         | `--beacon-nodes value`            |
-| validator.suggestFeeRecipientAddress          | `--suggested-fee-recipient value` |
-| validator.metrics.enabled                     | `--metrics`                       |
-| validator.metrics.host                        | `--metrics-address value`         |
-| validator.metrics.port                        | `--metrics-port value`            |
-| validator.graffiti.enabled                    | enable graffiti                   |
-| validator.graffiti.message                    | `--graffiti value`                |
-| validator.graffiti.file                       | `--graffiti-file value`           |
-| validator.proposerConfig.enabled              | there is proposer nodes           |
-| validator.proposerConfig.file                 |                                   |
-| validator.externalSigner.enabled              |                                   |
-| validator.externalSigner.url                  |                                   |
-| validator.externalSigner.keystore             |                                   |
-| validator.externalSigner.keystorePasswordFile |                                   |
-| validator.externalSigner.publicKeys           |                                   |
-| validator.logging.enabled                     | Enable logging                    |
-| validator.logging.file.enabled                | Enable file logging               |
-| validator.logging.file.format                 | `--logfile-format value`          |
-| validator.logging.file.level                  | `--logfile-debug-level value`     |
-| validator.logging.file.path                   | `--logfile value`                 |
-| validator.logging.console.enabled             | Enable console logging            |
-| validator.logging.console.color=true          | `--log-color`                     |
-| validator.logging.console.format              | `--log-format value`              |
-| validator.logging.console.level               | `--debug-level value`             |
-| validator.validatorsDir                       | `--validators-dir value`          |
-| validator.secretsDir                          | `--secrets-dir value`             |
-| validator.distributed                         | `--distributed`                   |
-| validator.suggestedGasLimit                   | `--suggested-gas-limit value`     |
-| validator.doppelgangerProtection              | `--enable-doppelganger-detection` |
+| Common Config Name                            | Lighthouse Setting                 |
+| --------------------------------------------- | ---------------------------------- |
+| validator.dataDir                             | `--datadir value`                  |
+| validator.beaconNodes                         | `--beacon-nodes value`             |
+| validator.suggestFeeRecipientAddress          | `--suggested-fee-recipient value`  |
+| validator.metrics.enabled                     | `--metrics`                        |
+| validator.metrics.host                        | `--metrics-address value`          |
+| validator.metrics.port                        | `--metrics-port value`             |
+| validator.graffiti.enabled                    | enable graffiti                    |
+| validator.graffiti.message                    | `--graffiti value`                 |
+| validator.graffiti.file                       | `--graffiti-file value`            |
+| validator.proposerConfig.enabled              | there is proposer nodes            |
+| validator.proposerConfig.file                 |                                    |
+| validator.externalSigner.enabled              |                                    |
+| validator.externalSigner.url                  |                                    |
+| validator.externalSigner.keystore             |                                    |
+| validator.externalSigner.keystorePasswordFile |                                    |
+| validator.externalSigner.publicKeys           |                                    |
+| validator.logging.enabled                     | Enable logging                     |
+| validator.logging.file.enabled                | Enable file logging                |
+| validator.logging.file.format                 | `--logfile-format value`           |
+| validator.logging.file.level                  | `--logfile-debug-level value`      |
+| validator.logging.file.path                   | `--logfile value`                  |
+| validator.logging.console.enabled             | Enable console logging             |
+| validator.logging.console.color=true          | `--log-color`                      |
+| validator.logging.console.format              | `--log-format value`               |
+| validator.logging.console.level               | `--debug-level value`              |
+| validator.validatorsDir                       | `--validators-dir value`           |
+| validator.secretsDir                          | `--secrets-dir value`              |
+| validator.distributed                         | `--distributed`                    |
+| validator.suggestedGasLimit                   | `--gas-limit value`                |
+| validator.doppelgangerProtection              | `--enable-doppelganger-protection` |
 
 ### Lodestar
 
@@ -162,7 +162,7 @@ Mapped to the right process validator name, and version used internally to decid
 | validator.proposerConfig.enabled              | None                              |
 | validator.proposerConfig.file                 | None                              |
 | validator.externalSigner.enabled              |                                   |
-| validator.externalSigner.url                  | `--external-signer-url value`     |
+| validator.externalSigner.url                  | `--web3-signer-url value`         |
 | validator.externalSigner.keystore             |                                   |
 | validator.externalSigner.keystorePasswordFile |                                   |
 | validator.externalSigner.publicKeys           |                                   |
@@ -177,44 +177,44 @@ Mapped to the right process validator name, and version used internally to decid
 | validator.logging.console.level               |                                   |
 | validator.validatorsDir                       | `--validators-dir`                |
 | validator.secretsDir                          | `--secrets-dir`                   |
-| validator.distributed                         | `--distributed`                   |
+| validator.distributed                         | None                              |
 | validator.suggestedGasLimit                   | `--suggested-gas-limit value`     |
 | validator.doppelgangerProtection              | `--doppelganger-detection`        |
 
 ### Prysm
 
-| Common Config Name                            | Prysm Setting                     |
-| --------------------------------------------- | --------------------------------- |
-| validator.dataDir                             | `--datadir value`                 |
-| validator.beaconNodes                         | `--beacon-rpc-provider value`     |
-| validator.suggestFeeRecipientAddress          | `--suggested-fee-recipient value` |
-| validator.metrics.enabled                     | enable monitoring                 |
-| validator.metrics.host                        | `--monitoring-host value`         |
-| validator.metrics.port                        | `--monitoring-port value`         |
-| validator.graffiti.enabled                    | enable graffiti                   |
-| validator.graffiti.message                    | `--graffiti value`                |
-| validator.graffiti.file                       | `--graffiti-file value`           |
-| validator.proposerConfig.enabled              | enable proposer settings file     |
-| validator.proposerConfig.file                 | `--proposer-settings-file value`  |
-| validator.externalSigner.enabled              | enable external signers           |
-| validator.externalSigner.url                  | `--external-signer-url`           |
-| validator.externalSigner.keystore             | `--external-signer-key-file`      |
-| validator.externalSigner.keystorePasswordFile | None                              |
-| validator.externalSigner.publicKeys           | `--external-signer-public-keys`   |
-| validator.logging.enabled                     | Enable logging                    |
-| validator.logging.file.enabled                | Enable file logging               |
-| validator.logging.file.format                 | `--log-format value`              |
-| validator.logging.file.level                  |                                   |
-| validator.logging.file.path                   | `--log-file value`                |
-| validator.logging.console.enabled             | Enable console logging            |
-| validator.logging.console.color               | Enable coloring console logging   |
-| validator.logging.console.format              |                                   |
-| validator.logging.console.level               | `--verbosity value`               |
-| validator.validatorsDir                       | `--wallet-dir value`              |
-| validator.secretsDir                          | `--wallet-password-file value`    |
-| validator.distributed                         | `--distributed`                   |
-| validator.suggestedGasLimit                   | `--suggested-gas-limit value`     |
-| validator.doppelgangerProtection              | `--enable-doppelganger`           |
+| Common Config Name                            | Prysm Setting                              |
+| --------------------------------------------- | ------------------------------------------ |
+| validator.dataDir                             | `--datadir value`                          |
+| validator.beaconNodes                         | `--beacon-rpc-provider value`              |
+| validator.suggestFeeRecipientAddress          | `--suggested-fee-recipient value`          |
+| validator.metrics.enabled                     | enable monitoring                          |
+| validator.metrics.host                        | `--monitoring-host value`                  |
+| validator.metrics.port                        | `--monitoring-port value`                  |
+| validator.graffiti.enabled                    | enable graffiti                            |
+| validator.graffiti.message                    | `--graffiti value`                         |
+| validator.graffiti.file                       | `--graffiti-file value`                    |
+| validator.proposerConfig.enabled              | enable proposer settings file              |
+| validator.proposerConfig.file                 | `--proposer-settings-file value`           |
+| validator.externalSigner.enabled              | enable external signers                    |
+| validator.externalSigner.url                  | `--validators-external-signer-url`         |
+| validator.externalSigner.keystore             | `--validators-external-signer-key-file`    |
+| validator.externalSigner.keystorePasswordFile | None                                       |
+| validator.externalSigner.publicKeys           | `--validators-external-signer-public-keys` |
+| validator.logging.enabled                     | Enable logging                             |
+| validator.logging.file.enabled                | Enable file logging                        |
+| validator.logging.file.format                 | `--log-format value`                       |
+| validator.logging.file.level                  |                                            |
+| validator.logging.file.path                   | `--log-file value`                         |
+| validator.logging.console.enabled             | Enable console logging                     |
+| validator.logging.console.color               | Enable coloring console logging            |
+| validator.logging.console.format              |                                            |
+| validator.logging.console.level               | `--verbosity value`                        |
+| validator.validatorsDir                       | `--wallet-dir value`                       |
+| validator.secretsDir                          | `--wallet-password-file value`             |
+| validator.distributed                         | `--distributed`                            |
+| validator.suggestedGasLimit                   | `--suggested-gas-limit value`              |
+| validator.doppelgangerProtection              | `--enable-doppelganger`                    |
 
 ### Teku
 
@@ -245,7 +245,7 @@ Mapped to the right process validator name, and version used internally to decid
 | validator.logging.console.color               | `--log-color-enabled`                                       |
 | validator.logging.console.format              | None                                                        |
 | validator.logging.console.level               | Same as `--logging value`                                   |
-| validator.validatorsDir                       | `--validators-keys value`                                   |
+| validator.validatorsDir                       | `--validator-keys value`                                    |
 | validator.secretsDir                          | ??                                                          |
 | validator.distributed                         | None                                                        |
 | validator.suggestedGasLimit                   | ??                                                          |

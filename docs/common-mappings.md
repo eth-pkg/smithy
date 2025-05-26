@@ -158,7 +158,50 @@
 
 ## Validator Clients
 
-TODO
+### Lighthouse
+
+| Common Config                           | Lighthouse Setting                    |
+| --------------------------------------- | ------------------------------------- |
+| common.network.id                       | None                                  |
+| common.network.name                     | `--network value`                     |
+| common.dataDir                          | `--datadir value`                     |
+
+### Lodestar
+
+| Common Config                         | Lodestar Setting                 |
+| ------------------------------------- | -------------------------------- |
+| common.network.id                     | None                             |
+| common.network.name                   | `--network value`                |
+| common.dataDir                        | `--dataDir value`                |
+
+### Nimbus-eth2
+
+| Common Config                         | Nimbus-eth2 Setting        |
+| ------------------------------------- | -------------------------- |
+| common.network.id                     | None                       |
+| common.network.name                   | `--network value`          |
+| common.dataDir                        | `--data-dir value`         |
+
+### Prysm
+
+| Common Config                         | Prysm Setting                 |
+| ------------------------------------- | ----------------------------- |
+| common.network.id                     | `--chain-id value`            |
+| common.network.name=mainnet           | `--mainnet`                   |
+| common.network.name=sepolia           | `--sepolia`                   |
+| common.network.name=ephemery          | `--ephemery`                  |
+| common.network.name=holesky           | `--holesky`                   |
+| common.network.name=hoodi             | `--hoodi`                     |
+| common.dataDir                        | `--datadir value`             |
+
+### Teku
+
+| Common Config                         | Teku Setting                 |
+| ------------------------------------- | ---------------------------- |
+| common.network.id                     | None                         |
+| common.network.name                   | `--network=value`            |
+| common.dataDir                        | `--data-path=value`          |
+
 
 ## Notes
 

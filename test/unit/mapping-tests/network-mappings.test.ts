@@ -149,6 +149,7 @@ describe('Network Mappings Tests', () => {
                 }
               }
             };
+            config.validator.enabled = true;
             const scriptContent = registry.getScriptContent(client, config, true);
             const scriptString = scriptContent.toString();
 
@@ -161,7 +162,7 @@ describe('Network Mappings Tests', () => {
                 expect(scriptString).to.contain(`--network ${network}`);
                 break;
               case 'nimbus-eth2':
-                expect(scriptString).to.not.contain(`--network ${network}`);
+                expect(scriptString).to.contain(`--network ${network}`);
                 expect(scriptString).to.not.contain(`--networkid ${getNetworkId(network)}`);
                 break;
               case 'prysm':

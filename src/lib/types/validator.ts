@@ -11,7 +11,7 @@ export interface Validator {
   isExternal: boolean;
   enabled: boolean;
   dataDir: string;
-  beaconNodes: string;
+  beaconNodes: string[];
   suggestFeeRecipientAddress: string;
   graffiti: GraffitiConfig;
   proposerConfig: ProposerConfig;
