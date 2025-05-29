@@ -133,7 +133,7 @@ Smithy uses JSON schema-based presets with:
 1. **Schema**: Defines standardized settings across clients (e.g., data directories, ports), requiring only JSON schema knowledge.
 2. **Validation**: Enforces rules for network consistency, valid ports, and client compatibility (e.g., blocks Lighthouse with Prysm validator).
 3. **Defaults**: Applies JSON schema defaults (e.g., numbers, enums, or interpolated strings like `/home/user/ethereum/{common.network.name}`, where `{common.network.name}` is replaced by values like `mainnet`).
-4. **Mappings**: Maps standard schema settings to client-specific flags (e.g., `reth-cmd-mappings.yaml`), often with minimal or no transformation, extensible for new versions or flags.
+4. **Mappings**: Maps standard schema settings to client-specific flags (e.g., `reth-cmd-mappings.yaml`), often with minimal or no transformation, extensible for new versions or flags. See the [execution mappings](docs/execution-mappings.md), [consensus mappings](docs/consensus-mappings.md), [validator mappings](docs/validator-mappings.md), and [common mappings](docs/common-mappings.md) for details.
 5. **Transformers**: Formats values for client compatibility when needed (e.g., `joinComma` for arrays, `interpolate` for strings like `/home/user/ethereum/{common.network.name}`).
 
 Example mapping:

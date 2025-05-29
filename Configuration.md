@@ -12,30 +12,24 @@ The configuration schema is organized into four main sections, each handling dif
 ```yaml
 common:
   # Basic Settings
-  acceptTermsOfUse: false
-  dataDir: "/home/user/{common.network.name}"
+  acceptTermsOfUse: false  # Accept the terms of use
+  dataDir: "/home/user/{common.network.name}"  # Base directory for storing Ethereum client data
   
   # Network Settings
   network:
-    id: 1  # Network ID (1 for mainnet, 11155111 for sepolia, etc.)
+    id: 1  # The Ethereum network ID (1 for mainnet, 11155111 for sepolia, etc.)
     name: "mainnet"  # One of: mainnet, sepolia, holesky, hoodi, ephemery, custom
   
   # Engine API Settings
   engine:
-    enabled: true
-    communication:
-      method: "jwt"  # One of: jwt, ipc
-      jwt:
-        file: "{common.dataDir}/{common.network.name}/engine.jwt"
-        id: ""
-      ipc:
-        path: "{common.dataDir}/{common.network.name}/engine.ipc"
+    jwt:
+      file: "{common.dataDir}/{common.network.name}/engine.jwt"  # Path to the JWT secret file for Engine API
+      id: ""  # JWT claims id for client identification
     api:
       port: 8551  # Port number for the Engine API (1024-65535)
-      url: "{common.engine.api.scheme}://{common.engine.api.host}:{common.engine.api.port}"
-      host: "localhost"
-      allowlist: ["localhost"]
-      ip: "127.0.0.1"
+      urls: ["{common.engine.api.scheme}://{common.engine.api.host}:{common.engine.api.port}"]  # List of Engine API endpoints
+      host: "localhost"  # Hostname for the Engine API
+      allowlist: ["localhost"]  # Allowed hostnames for the Engine API
       scheme: "http"  # One of: http, https
   
   # System Settings
@@ -54,132 +48,93 @@ execution:
   
   # P2P Settings
   p2p:
-    address: "localhost"
-    port: 30303
+    address: "localhost"  # Network interface to listen on
+    port: 30303  # Port number for P2P networking (1024-65535)
     dnsDiscovery:
-      enabled: true
-      url: ""
+      enabled: true  # Enable DNS discovery
+      url: ""  # URL for DNS discovery
     discovery:
-      enabled: true
-      port: 30303
+      enabled: true  # Enable discovery
+      port: 30303  # Port number for discovery
       v4:
-        enabled: true
-        port: 30303
-        address: "localhost"
+        enabled: true  # Enable discovery v4
       v5:
-        enabled: true
-        port: 30303
-        address: "localhost"
+        enabled: true  # Enable discovery v5
     nat:
-      mode: "any"  # One of: any, none, upnp, pmp, extip, listen
-      enabled: true
-    identity: ""
-    maxPeers: 50
-    bootnodes: []
-    enrAddress: ""
-    udpPort: 30303
-    relayNode: ""
-    allowlist: ["*"]
-    denylist: []
+      mode: "any"  # One of: any, none, upnp, pmp, stun, extip:<IP>
+      enabled: true  # Enable NAT configuration
+    identity: ""  # Identity of the node
+    maxPeers: 50  # Maximum number of P2P peers to connect to (1-1000)
+    bootnodes: []  # List of bootnode enode URLs for initial peer discovery
+    allowlist: ["*"]  # List of allowed CORS origins for P2P networking
+    netrestrict: []  # The CIDR subnets for denying certain peer connections
   
   # HTTP API Settings
   http:
-    enabled: false
-    modules: ["eth", "net", "web3"]
-    address: "localhost"
-    allowlist: ["*"]
-    port: 8545
-    tls:
-      enabled: false
-      certificate:
-        cert: ""
-        key: ""
-      keystore:
-        path: ""
-        password: ""
-      truststore:
-        path: ""
-        password: ""
-      clientAuth:
-        enabled: false
-        caClientsEnabled: false
-        path: ""
-      cipherSuites: []
-      protocol: "TLS"  # One of: TLS, TLSv1.3
+    enabled: false  # Enable HTTP JSON-RPC API
+    modules: ["eth", "net", "web3"]  # List of JSON-RPC API namespaces to enable
+    address: "localhost"  # Address to listen on
+    allowlist: ["*"]  # List of allowed CORS origins for HTTP API
+    port: 8545  # Port number for HTTP JSON-RPC API (1024-65535)
   
   # Metrics Settings
   metrics:
-    enabled: false
-    port: 6060
-    address: "localhost"
+    enabled: false  # Enable metrics collection and reporting
+    port: 6060  # Port number for metrics server (1024-65535)
+    address: "localhost"  # Address to listen on for metrics server
   
   # WebSocket Settings
   ws:
-    enabled: false
-    port: 8546
-    address: "localhost"
-    modules: ["eth", "net", "web3"]
-    allowlist: ["*"]
+    enabled: false  # Enable WebSocket JSON-RPC API
+    port: 8546  # Port number for WebSocket JSON-RPC API (1024-65535)
+    address: "localhost"  # Address to listen on for WebSocket JSON-RPC API
+    modules: ["eth", "net", "web3"]  # List of JSON-RPC API namespaces to enable
+    allowlist: ["*"]  # List of allowed CORS origins for WebSocket JSON-RPC API
   
   # Logging Settings
   logging:
     console:
-      enabled: false
+      enabled: false  # Enable console logging
       level: "info"  # One of: off, error, warn, info, debug, trace, all
-      format: "text"
-      color: true
+      format: "text"  # Logging format
+      color: true  # Enable colorized logging
     file:
-      enabled: false
-      directory: "{common.dataDir}/logs"
-      level: "info"
-      format: "text"
-      name: "{execution.client.name}.log"
-      fullPath: "{execution.logging.file.directory}/{execution.logging.file.name}"
+      enabled: false  # Enable file logging
+      directory: "{common.dataDir}/logs"  # Directory to write logs to
+      level: "info"  # Logging level
+      format: "text"  # Logging format
+      name: "{execution.client.name}.log"  # Name of the log file
+      fullPath: "{execution.logging.file.directory}/{execution.logging.file.name}"  # Full path to the log file
   
   # GraphQL Settings
   graphql:
-    enabled: false
-    address: "localhost"
-    port: 8547
-    allowlist: []
+    enabled: false  # Enable GraphQL HTTP service
+    address: "localhost"  # Host for GraphQL HTTP to listen on
+    port: 8547  # Port for GraphQL HTTP to listen on (1024-65535)
+    allowlist: []  # Comma separated origin domain URLs for CORS validation
   
   # Transaction Pool Settings
   txpool:
-    enabled: false
-    blobPriceBump: 100
-    disableLocals: false
-    enableSaveRestore: false
-    layerMaxCapacity: 25000000
-    limitByAccountPercentage: 0.001
-    maxFutureBySender: 200
-    maxPrioritized: 4000
-    maxPrioritizedByType:
-      BLOB: 9
-    minGasPrice: "0x3e8"
-    minScore: -128
-    priceBump: 10
-    prioritySenders: []
-    retentionHours: 13
-    saveFile: "txpool.dump"
+    enabled: false  # Enable transaction pool
   
   # Beacon Settings
   beacon:
-    enabled: false
+    enabled: false  # Enable beacon
   
   # Pruning Settings
   pruning:
-    enabled: false
+    enabled: false  # Enable pruning
   
   # Data Directory
-  dataDir: "{common.dataDir}/{execution.client.name}"
+  dataDir: "{common.dataDir}/{execution.client.name}"  # Base directory for execution client data
   
   # Gas Price Oracle Settings
   gpo:
-    enabled: false
-    blocks: 100
-    maxPrice: 500000000000
-    ignorePrice: 2
-    percentile: 50.0
+    enabled: false  # Enable gas price oracle
+    blocks: 100  # Number of blocks to consider for eth_gasPrice
+    maxPrice: 500000000000  # Maximum gas price for eth_gasPrice
+    ignorePrice: 2  # Gas Price below which gpo will ignore transactions
+    percentile: 50.0  # Percentile value to measure for eth_gasPrice
 ```
 
 ### 3. Consensus Client Configuration
@@ -192,51 +147,60 @@ consensus:
   
   # HTTP API Settings
   http:
-    enabled: false
+    enabled: false  # Enable HTTP JSON-RPC API
     api: ["eth", "net", "web3"]  # List of JSON-RPC API namespaces to enable
-    address: "localhost"
-    allowlist: ["*"]  # List of allowed CORS origins
+    address: "localhost"  # Address to listen on
+    allowlist: ["*"]  # List of allowed CORS origins for HTTP API
     port: 8545  # Port number for HTTP JSON-RPC API (1024-65535)
   
   # Metrics Settings
   metrics:
-    enabled: false
-    host: "127.0.0.1"
-    port: 8008  # Port number for metrics server (1024-65535)
+    enabled: false  # Enable metrics collection and reporting
+    host: "127.0.0.1"  # IP address to bind the metrics server to
+    port: 8008  # Port number for metrics server of the consensus client (1024-65535)
   
   # P2P Settings
   p2p:
-    enabled: true
-    port: 9000  # Port number for P2P networking (1024-65535)
-    port6: 9000  # IPv6 P2P port number (0 to disable IPv6)
-    udpPort: 9000  # Port number for P2P networking (1024-65535)
+    enabled: true  # Enable P2P networking of the consensus client
+    port: 9000  # Port number for P2P UDP and TCP (1024-65535)
+    port6: 9000  # IPv6 P2P port number (1024-65535)
+    discoveryPort: 9002  # Discovery P2P port number (1024-65535)
+    discoveryPort6: 9002  # Discovery P2P port number (1024-65535)
     bootnodes: []  # List of bootnode enode URLs for initial peer discovery
-    enrAddress: ""  # ENR (Ethereum Node Record) address to advertise
+    staticPeers: []  # List of static peers to connect to
+    trustedPeers: []  # List of trusted peers to connect to
+    targetPeers: 25  # Target number of peers to connect to
+    maxPeers: 25  # Maximum number of peers to connect to
+    nodiscover: false  # Disable peer discovery
+    listenAddress: ""  # Listen address for P2P networking
+    localPeerDiscovery: false  # Enable local peer discovery
+    subscribeAllSubnets: false  # Subscribe to all subnets
+    upnp: false  # Enable UPnP
+    staticId: ""  # Static ID for the node
   
   # Checkpoint Sync Settings
   checkpointSync:
-    enabled: false
+    enabled: false  # Enable checkpoint sync
     url: ""  # URL of a trusted beacon node for checkpoint sync
     state: ""  # State root hash to use for checkpoint sync
-    ignoreWeakSubjectivityPeriod: false
+    ignoreWeakSubjectivityPeriod: false  # Ignore weak subjectivity period
     force: false  # Force checkpoint sync from weak subjectivity
-    wss: ""  # Weak subjectivity checkpoint in <blockRoot>:<epoch> format
+    wss: ""  # Weak subjectivity checkpoint in <blockRoot>:<epoch> format for sync starting point
   
   # Genesis Sync Settings
   genesisSync:
-    enabled: false
+    enabled: false  # Enable genesis sync
     state: ""  # Path to genesis state file
     url: ""  # URL of a trusted beacon node for genesis sync
   
   # Logging Settings
   logging:
-    enabled: false
+    enabled: false  # Enable logging of the consensus client
     file: ""  # Path to store consensus client logs
     format: "auto"  # One of: auto, json, plain
   
   # Additional Settings
   testnetDir: ""  # Path to testnet configuration directory
-  validatorMonitorFile: ""  # Path to file for validator monitoring data
   
   # Builder Settings
   builder:
@@ -251,60 +215,59 @@ consensus:
 ```yaml
 validator:
   # Basic Settings
-  enabled: false
-  isExternal: true
+  enabled: false  # Enable validator functionality
+  isExternal: true  # Is the validator external to the node, in different process
   client:
     name: ""  # Required when staking is enabled, one of: lighthouse, lodestar, nimbus-eth2, prysm, teku
     version: ""  # Optional, semver string
   
   # Data and Connection Settings
-  dataDir: "{common.dataDir}/{validator.client.name}-validator"
-  beaconNodes: "localhost:5052"
-  numValidators: 1
-  suggestFeeRecipientAddress: "0x0000000000000000000000000000000000000000"
+  dataDir: "{common.dataDir}/{validator.client.name}-validator"  # Base directory for validator data
+  beaconNodes: ["localhost:5052"]  # Beacon node RPC endpoint(s) (host:port)
+  suggestFeeRecipientAddress: "0x0000000000000000000000000000000000000000"  # Ethereum address to receive transaction fees
   
   # Metrics Settings
   metrics:
-    enabled: false
-    host: "127.0.0.1"
-    port: null
+    enabled: false  # Enable validator metrics collection
+    host: "127.0.0.1"  # IP address to bind the metrics server to
+    port: null  # Port number for metrics server (1024-65535)
   
   # Graffiti Settings
   graffiti:
-    enabled: false
-    message: ""
-    file: ""
+    enabled: false  # Enable graffiti on proposed blocks
+    message: ""  # Custom graffiti message to include in proposed blocks
+    file: ""  # Path to file containing graffiti messages
   
   # Validator Settings
-  suggestedGasLimit: 30000000
-  doppelgangerProtection: true
-  builderEnabled: false
+  suggestedGasLimit: 30000000  # Suggested gas limit for proposed blocks
+  doppelgangerProtection: true  # Enable protection against duplicate validator instances
+  builderEnabled: false  # Enable block builder API for MEV
   
   # External Signer Settings
   externalSigner:
-    enabled: false
-    url: ""
-    keystore: ""
-    keystorePasswordFile: ""
-    publicKeys: []
-    timeout: 5000
-    truststore: ""
-    truststorePasswordFile: ""
+    enabled: false  # Enable external signer
+    url: ""  # URL for external signer service
+    keystore: ""  # Path to external signer keystore
+    keystorePasswordFile: ""  # Path to file containing external signer keystore password
+    publicKeys: []  # List of public keys for external signer
+    timeout: 5000  # Timeout for external signer requests
+    truststore: ""  # Path to external signer truststore
+    truststorePasswordFile: ""  # Path to file containing external signer truststore password
   
   # Proposer Settings
   proposerConfig:
-    enabled: false
-    file: ""
-    refreshEnabled: false
-    blindedBlocksEnabled: false
-    refreshInterval: 0
-    maxValidators: 1000000
-    maxProposerDelay: 0
+    enabled: false  # Enable proposer configuration
+    file: ""  # Path to proposer configuration file
+    refreshEnabled: false  # Enable automatic refresh of proposer configuration
+    blindedBlocksEnabled: false  # Enable blinded blocks
+    refreshInterval: 0  # Interval in seconds to refresh proposer configuration
+    maxValidators: 1000000  # Maximum number of validators to support
+    maxProposerDelay: 0  # Maximum delay in seconds for proposer duties
   
   # Directory Settings
-  validatorsDir: "$HOME/ethereum/validator/keys"
-  secretsDir: "$HOME/ethereum/validator/secrets"
-  distributed: false
+  validatorsDir: "$HOME/ethereum/validator/keys"  # Directory containing validator keys
+  secretsDir: "$HOME/ethereum/validator/secrets"  # Directory containing validator secrets
+  distributed: false  # Enable distributed validator mode
 ```
 
 ## Preset System
@@ -416,17 +379,11 @@ Presets include comprehensive validation rules that ensure compatibility between
      client:
        name:
          enum: ["geth", "besu", "nethermind", "reth"]
-     communication:
-       method:
-         enum: ["jwt", "ipc"]
-         # Validation rule: IPC only supported by certain clients
-         if:
-           client.name: ["geth", "besu"]
-         then:
-           method: ["jwt", "ipc"]
-         else:
-           method: ["jwt"]
-         errorMessage: "IPC communication is only supported by Geth and Besu clients"
+     engine:
+       jwt:
+         required: true
+         file: "{common.dataDir}/{common.network.name}/engine.jwt"
+         errorMessage: "JWT file is required for Engine API authentication"
    ```
 
 2. **Feature Compatibility**:
