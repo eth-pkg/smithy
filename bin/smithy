@@ -9,7 +9,7 @@ set -euo pipefail
 readonly SCRIPT_NAME="${0##*/}"
 readonly SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 readonly PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
-readonly CLI_PATH="${PROJECT_ROOT}/dist/cli.js"
+readonly CLI_PATH="${PROJECT_ROOT}/dist/src/cli.js"
 readonly DATA_DIR="${PROJECT_ROOT}/dist/data"
 
 error() {
