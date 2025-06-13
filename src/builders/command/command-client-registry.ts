@@ -1,4 +1,4 @@
-import { ExecutionClientName, NodeConfig, ValidatorClientName, ConsensusClientName } from "@/lib/types"
+import { ExecutionClientName, NodeConfig, ValidatorClientName, ConsensusClientName } from "@/types"
 import { CommandBuilder } from "./command-builder"
 import * as path from "path"
 import * as fs from "fs"

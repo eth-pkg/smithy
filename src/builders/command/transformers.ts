@@ -1,4 +1,4 @@
-import { NodeConfig } from "@/lib/types"
+import { NodeConfig } from "@/types"
 import { getValueFromPath } from "./utils"
 
 export type TransformFunction = (value: any, os: string, flag: string) => any

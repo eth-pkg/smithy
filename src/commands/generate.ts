@@ -1,8 +1,21 @@
 import * as fs from "fs-extra";
-import { GenerateOptions, NodeConfig, ExecutionClientName, ConsensusClientName, ValidatorClientName, Execution, Consensus, Validator } from "@/lib/types";
-import { ConfigManager } from "@/utils/config";
+import {
+  GenerateOptions,
+  NodeConfig,
+  ExecutionClientName,
+  ConsensusClientName,
+  ValidatorClientName,
+  Execution,
+  Consensus,
+  Validator,
+} from "@/types";
+import { NodeConfigManager } from "@/utils/node-config";
 import { Logger } from "@/utils/logger";
-import { EXECUTION_CLIENTS, CONSENSUS_CLIENTS, VALIDATOR_CLIENTS } from "@/lib/client-names";
+import {
+  EXECUTION_CLIENTS,
+  CONSENSUS_CLIENTS,
+  VALIDATOR_CLIENTS,
+} from "@/types";
 import { CommandClientRegistry } from "@/builders/command/command-client-registry";
 import inquirer from "inquirer";
 
@@ -11,52 +24,32 @@ import inquirer from "inquirer";
  * @param options Generation options
  */
 export async function generate(
-  options: Partial<GenerateOptions>,
+  options: Partial<GenerateOptions>
 ): Promise<void> {
   const logger = new Logger(options.verbose ? "verbose" : "info");
-  const configManager = new ConfigManager(options.verbose);
-
+  const nodeconfig = new NodeConfigManager(options.verbose);
   const preset = options.preset || "default";
   logger.info(`Using preset: ${preset}`);
 
   let userConfig: Partial<NodeConfig> = {};
-
   if (options.configFile) {
     logger.info(`Loading config file: ${options.configFile}`);
     try {
-      userConfig = await configManager.loadConfigFile(options.configFile);
+      userConfig = await nodeconfig.loadConfigFile(options.configFile);
       logger.debug(`Loaded config: ${JSON.stringify(userConfig, null, 2)}`);
     } catch (error) {
-      if (error instanceof Error) {
-        logger.error(`Failed to load config file: ${error.message}`);
-        throw new Error(`Failed to load config file: ${error.message}`);
-      } else {
-        logger.error(`Failed to load config file: Unknown error`);
-        throw new Error('Failed to load config file: Unknown error');
-      }
+      handleError(error, logger, "Failed to load config file");
     }
+  } else if (preset.startsWith("default") && !options.configFile) {
+    logger.info(`Loading default config: ${preset}`);
+    userConfig = await nodeconfig.loadDefaultConfig(preset);
   }
-  userConfig = configManager.mergeOptionsWithConfig(userConfig, options);
+
+  userConfig = nodeconfig.mergeOptionsWithConfig(userConfig, options);
   logger.debug(`Merged config: ${JSON.stringify(userConfig, null, 2)}`);
 
-  const configExecution = userConfig.execution?.client?.name || "";
-  const configConsensus = userConfig.consensus?.client?.name || "";
-  const configValidator = userConfig.validator?.client?.name || "";
-
-  logger.debug(`Config values - Execution: ${configExecution}, Consensus: ${configConsensus}, Validator: ${configValidator}`);
-
-  const missingFields: string[] = [];
-  if (!configExecution && !options.execution) {
-    missingFields.push('execution');
-  }
-  if (!configConsensus && !options.consensus) {
-    missingFields.push('consensus');
-  }
-  if ((userConfig.validator?.enabled === true && !userConfig.validator?.client?.name)) {
-    missingFields.push('validator');
-  }
-
-  logger.debug(`Missing fields: ${missingFields.join(', ')}`);
+  const missingFields = determineMissingFields(userConfig, options);
+  logger.debug(`Missing fields: ${missingFields.join(", ")}`);
 
   const finalOptions = await promptForMissingOptions(options, missingFields);
 
@@ -83,20 +76,16 @@ export async function generate(
     },
   } as Validator;
 
+  console.log("userConfig", userConfig);
   try {
-    const config = await configManager.processConfigWithPreset(userConfig, preset);
-
+    const config = await nodeconfig.processConfigWithPreset(
+      userConfig,
+      preset
+    );
     await generateClientCommands(config, finalOptions, logger);
-
     logger.success("Client commands generated successfully");
   } catch (error) {
-    if (error instanceof Error) {
-      logger.error(`Config validation failed: ${error.message}`);
-      throw new Error(`Config validation failed: ${error.message}`);
-    } else {
-      logger.error("Config validation failed with an unknown error");
-      throw new Error('Config validation failed with an unknown error');
-    }
+    handleError(error, logger, "Config validation failed");
   }
 }
 
@@ -111,24 +100,9 @@ async function promptForMissingOptions(
   missingFields: string[] = []
 ): Promise<GenerateOptions> {
   const questions = [];
+  const configValues = await loadConfigValues(options);
 
-  let configExecution = "";
-  let configConsensus = "";
-  let configValidator = "";
-
-  if (options.configFile) {
-    try {
-      const configManager = new ConfigManager();
-      const loadedConfig = await configManager.loadConfigFile(options.configFile);
-      configExecution = loadedConfig.execution?.client?.name || "";
-      configConsensus = loadedConfig.consensus?.client?.name || "";
-      configValidator = loadedConfig.validator?.enabled ? loadedConfig.validator?.client?.name || "" : "";
-    } catch (error) {
-      throw new Error(`Failed to load config file values: ${error}`);
-    }
-  }
-
-  if ((missingFields.includes('execution') || !options.execution) && !options.execution && !configExecution) {
+  if (shouldPromptForField("execution", options, configValues.execution)) {
     questions.push({
       type: "list",
       name: "execution",
@@ -137,7 +111,7 @@ async function promptForMissingOptions(
     });
   }
 
-  if ((missingFields.includes('consensus') || !options.consensus) && !options.consensus && !configConsensus) {
+  if (shouldPromptForField("consensus", options, configValues.consensus)) {
     questions.push({
       type: "list",
       name: "consensus",
@@ -146,7 +120,7 @@ async function promptForMissingOptions(
     });
   }
 
-  if ((missingFields.includes('validator'))) {
+  if (missingFields.includes("validator")) {
     questions.push({
       type: "list",
       name: "validator",
@@ -164,18 +138,42 @@ async function promptForMissingOptions(
     });
   }
 
-  const answers: Record<string, any> = questions.length > 0 ? await inquirer.prompt(questions) : {};
+  const answers = questions.length > 0 ? await inquirer.prompt(questions) : {};
 
-  const result: GenerateOptions = {
+  return {
     preset: options.preset || "default",
-    execution: options.execution || configExecution || answers.execution || "",
-    consensus: options.consensus || configConsensus || answers.consensus || "",
-    validator: options.validator || configValidator || answers.validator,
+    execution:
+      options.execution || configValues.execution || answers.execution || "",
+    consensus:
+      options.consensus || configValues.consensus || answers.consensus || "",
+    validator: options.validator || configValues.validator || answers.validator,
     output: options.output || answers.output || "./node-commands",
     configFile: options.configFile,
   };
+}
 
-  return result;
+/**
+ * Load configuration values from the config file
+ * @param options Command line options
+ * @returns Object containing execution, consensus, and validator client names
+ */
+async function loadConfigValues(options: Partial<GenerateOptions>) {
+  if (!options.configFile)
+    return { execution: "", consensus: "", validator: "" };
+
+  try {
+    const configManager = new NodeConfigManager();
+    const loadedConfig = await configManager.loadConfigFile(options.configFile);
+    return {
+      execution: loadedConfig.execution?.client?.name || "",
+      consensus: loadedConfig.consensus?.client?.name || "",
+      validator: loadedConfig.validator?.enabled
+        ? loadedConfig.validator?.client?.name || ""
+        : "",
+    };
+  } catch (error) {
+    throw new Error(`Failed to load config file values: ${error}`);
+  }
 }
 
 /**
@@ -187,25 +185,78 @@ async function promptForMissingOptions(
 async function generateClientCommands(
   config: NodeConfig,
   options: GenerateOptions,
-  logger: Logger,
+  logger: Logger
 ): Promise<void> {
   const outputDir = options.output || "./node-commands";
   const registry = new CommandClientRegistry();
 
   await fs.ensureDir(outputDir);
 
-  if (options.execution) {
-    logger.info(`Generating command for execution client: ${options.execution}`);
-    registry.generateScript(options.execution as ExecutionClientName, config, outputDir);
-  }
+  const clients = [
+    { type: "execution", name: options.execution },
+    { type: "consensus", name: options.consensus },
+    { type: "validator", name: options.validator },
+  ] as const;
 
-  if (options.consensus) {
-    logger.info(`Generating command for consensus client: ${options.consensus}`);
-    registry.generateScript(options.consensus as ConsensusClientName, config, outputDir);
-  }
-
-  if (options.validator) {
-    logger.info(`Generating command for validator client: ${options.validator}`);
-    registry.generateScript(options.validator as ValidatorClientName, config, outputDir, true);
+  for (const { type, name } of clients) {
+    if (name) {
+      logger.info(`Generating command for ${type} client: ${name}`);
+      registry.generateScript(
+        name as ExecutionClientName | ConsensusClientName | ValidatorClientName,
+        config,
+        outputDir,
+        type === "validator"
+      );
+    }
   }
 }
+
+/**
+ * Check if a field should be prompted for
+ * @param field The field name to check
+ * @param options Command line options
+ * @param configValue Value from config file
+ * @returns Whether the field should be prompted for
+ */
+function shouldPromptForField(
+  field: string,
+  options: Partial<GenerateOptions>,
+  configValue: string
+): boolean {
+  return !options[field as keyof GenerateOptions] && !configValue;
+}
+
+/**
+ * Determine which fields are missing from the configuration
+ * @param userConfig The current user configuration
+ * @param options The command line options
+ * @returns Array of missing field names
+ */
+function determineMissingFields(
+  userConfig: Partial<NodeConfig>,
+  options: Partial<GenerateOptions>
+): string[] {
+  const missingFields: string[] = [];
+
+  if (!userConfig.execution?.client?.name && !options.execution) {
+    missingFields.push("execution");
+  }
+  if (!userConfig.consensus?.client?.name && !options.consensus) {
+    missingFields.push("consensus");
+  }
+  if (
+    userConfig.validator?.enabled === true &&
+    !userConfig.validator?.client?.name
+  ) {
+    missingFields.push("validator");
+  }
+
+  return missingFields;
+}
+
+function handleError(error: unknown, logger: Logger, context: string): never {
+  const message = error instanceof Error ? error.message : "Unknown error";
+  logger.error(`${context}: ${message}`);
+  throw new Error(`${context}: ${message}`);
+}
+

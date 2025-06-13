@@ -1,20 +1,26 @@
 import * as fs from "fs-extra";
 import * as path from "path";
 import * as yaml from "js-yaml";
-import { NodeConfig } from "@/lib/types";
+import { NodeConfig } from "@/types";
 import { Logger } from "./logger";
 import { PresetManager } from "./preset";
 
 /**
  * Configuration manager for loading and handling user configs
  */
-export class ConfigManager {
+export class NodeConfigManager {
   private logger: Logger;
   private presetManager: PresetManager;
 
   constructor(verbose = false) {
     this.logger = new Logger(verbose ? "verbose" : "info");
     this.presetManager = new PresetManager(verbose);
+  }
+
+
+  async loadDefaultConfig(configName: string): Promise<Partial<NodeConfig>> {
+    const config = await this.presetManager.loadDefaultConfig(configName);
+    return config;
   }
 
   /**
@@ -144,40 +150,9 @@ export class ConfigManager {
         presetName
       );
     } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(`Failed to process config with preset: ${error.message}`);
-      }
       throw error;
-    }
-  }
-
-  /**
-   * Save a configuration to a file
-   */
-  async saveConfig(config: NodeConfig, filePath: string): Promise<void> {
-    try {
-      const dirPath = path.dirname(filePath);
-      await fs.ensureDir(dirPath);
-
-      let content: string;
-      if (filePath.endsWith('.json')) {
-        content = JSON.stringify(config, null, 2);
-      } else if (filePath.endsWith('.yml') || filePath.endsWith('.yaml')) {
-        content = yaml.dump(config);
-      } else {
-        // Default to YAML
-        content = yaml.dump(config);
-      }
-
-      await fs.writeFile(filePath, content, 'utf-8');
-      this.logger.debug(`Config saved to: ${filePath}`);
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(`Failed to save config to ${filePath}: ${error.message}`);
-      }
-      throw new Error(`Failed to save config to ${filePath}`);
     }
   }
 }
 
-export default ConfigManager;
+export default NodeConfigManager;

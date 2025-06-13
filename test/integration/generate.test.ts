@@ -3,7 +3,7 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 import { generate } from '@/commands/generate';
 
-describe('Config Generation', () => {
+describe.only('Config Generation', () => {
   const testOutputDir = path.join(process.cwd(), 'test-output');
 
   beforeEach(async () => {

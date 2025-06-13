@@ -4,7 +4,7 @@ import {
   ExecutionClientName,
   ConsensusClientName,
   ValidatorClientName,
-} from "@/lib/types";
+} from "@/types";
 import { testConfig } from "@test/fixtures/configs";
 import SchemaUtils from "@/utils/schema";
 

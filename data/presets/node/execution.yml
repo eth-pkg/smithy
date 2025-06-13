@@ -19,26 +19,22 @@ properties:
           enum: "Execution client must be one of: besu, erigon, geth, nethermind, reth"
       version:
         type: string
-        default: ""
         description: "The version of the execution client to use"
         errorMessage:
           pattern: "Version must be a valid semver string"
   isExternal:
     type: boolean
-    default: true
     description: "Is the consensus client external to the node, in different process"
   p2p:
     type: object
     properties:
       address:
         type: string
-        default: "localhost"
         description: "Network interface to listen on"
       port:
         type: number
         minimum: 1024
         maximum: 65535
-        default: 30303
         description: "Port number for P2P networking"
         errorMessage:
           minimum: "P2P port must be >= 1024"
@@ -48,48 +44,40 @@ properties:
         properties:
           enabled:
             type: boolean
-            default: true
             description: "Enable DNS discovery"
           url:
             type: string
-            default: ""
             description: "URL for DNS discovery"
       discovery:
         type: object
         properties:
           enabled:
             type: boolean
-            default: true
             description: "Enable discovery"
           port:
             type: number
             minimum: 1024
             maximum: 65535
-            default: 30303
             description: "Port number for discovery"
           v4:
             type: object
             properties:
               enabled:
                 type: boolean
-                default: true
                 description: "Enable discovery v4"
           v5:
             type: object
             properties:
               enabled:
                 type: boolean
-                default: true
                 description: "Enable discovery v5"
-
       nat:
         type: object
         properties:
           mode:
             type: string
-            default: "any"
             description: "NAT configuration"
-            enum: # erigon
+            enum:
               - any
               - none
               - upnp
@@ -106,17 +94,14 @@ properties:
             #   - docker
           enabled:
             type: boolean
-            default: true
             description: "Enable NAT configuration"
       identity:
         type: string
-        default: ""
         description: "Identity of the node"
       maxPeers:
         type: number
         minimum: 1
         maximum: 1000
-        default: 50
         description: "Maximum number of P2P peers to connect to"
         errorMessage:
           minimum: "Max peers must be at least 1"
@@ -125,40 +110,33 @@ properties:
         type: array
         items:
           type: string
-        default: []
         description: "List of bootnode enode URLs for initial peer discovery"
       allowlist:
         type: array
         items:
           type: string
-        default: ["*"]
         description: "List of allowed CORS origins for P2P networking"
       netrestrict:
         type: array
         items:
           type: string
-        default: []
         description: "The CIDR subnets for denying certain peer connections"
   http:
     type: object
     properties:
       enabled:
         type: boolean
-        default: false
         description: "Enable HTTP JSON-RPC API"
       modules:
         type: array
         minItems: 1
-        default: ["eth", "net", "web3"]
         description: "List of JSON-RPC API namespaces to enable"
         items:
           type: string
       address:
         type: string
-        default: "localhost"
       allowlist:
         type: array
-        default: ["*"]
         description: "List of allowed CORS origins for HTTP API"
         items:
           type: string
@@ -166,7 +144,6 @@ properties:
         type: number
         minimum: 1024
         maximum: 65535
-        default: 8545
         description: "Port number for HTTP JSON-RPC API"
         errorMessage:
           minimum: "HTTP port must be >= 1024"
@@ -176,50 +153,42 @@ properties:
     properties:
       enabled:
         type: boolean
-        default: false
         description: "Enable metrics collection and reporting"
       port:
         type: number
         minimum: 1024
         maximum: 65535
-        default: 6060
         description: "Port number for metrics server"
         errorMessage:
           minimum: "Metrics port must be >= 1024"
           maximum: "Metrics port must be <= 65535"
       address:
         type: string
-        default: "localhost"
         description: "Address to listen on for metrics server"
   ws:
     type: object
     properties:
       enabled:
         type: boolean
-        default: false
         description: "Enable WebSocket JSON-RPC API"
       port:
         type: number
         minimum: 1024
         maximum: 65535
-        default: 8546
         description: "Port number for WebSocket JSON-RPC API"
         errorMessage:
           minimum: "WebSocket port must be >= 1024"
           maximum: "WebSocket port must be <= 65535"
       address:
         type: string
-        default: "localhost"
         description: "Address to listen on for WebSocket JSON-RPC API"
       modules:
         type: array
-        default: ["eth", "net", "web3"]
         description: "List of JSON-RPC API namespaces to enable"
         items:
           type: string
       allowlist:
         type: array
-        default: ["*"]
         description: "List of allowed CORS origins for WebSocket JSON-RPC API"
         items:
           type: string
@@ -231,7 +200,6 @@ properties:
         properties:
           enabled:
             type: boolean
-            default: false
             description: "Enable console logging"
           level:
             type: string
@@ -243,59 +211,47 @@ properties:
               - debug
               - trace
               - all
-            default: "info"
             description: "Logging level"
           format:
             type: string
-            default: "text"
             description: "Logging format"
           color:
             type: boolean
-            default: true
             description: "Enable colorized logging"
       file:
         type: object
         properties:
           enabled:
             type: boolean
-            default: false
             description: "Enable file logging"
           directory:
             type: string
-            default: "{common.dataDir}/logs"
             description: "Directory to write logs to"
           level:
             type: string
-            default: "info"
             description: "Logging level"
           format:
             type: string
-            default: "text"
             description: "Logging format"
           name:
             type: string
-            default: "{execution.client.name}.log"
             description: "Name of the log file"
           fullPath:
             type: string
-            default: "{execution.logging.file.directory}/{execution.logging.file.name}"
             description: "Full path to the log file"
   graphql:
     type: object
     properties:
       enabled:
         type: boolean
-        default: false
         description: "Enable GraphQL HTTP service"
       address:
         type: string
-        default: "localhost"
         description: "Host for GraphQL HTTP to listen on"
       port:
         type: number
         minimum: 1024
         maximum: 65535
-        default: 8547
         description: "Port for GraphQL HTTP to listen on"
         errorMessage:
           minimum: "GraphQL port must be >= 1024"
@@ -304,14 +260,12 @@ properties:
         type: array
         items:
           type: string
-        default: []
         description: "Comma separated origin domain URLs for CORS validation"
   txpool:
     type: object
     properties:
       enabled:
         type: boolean
-        default: false
         description: "Enable transaction pool"
 
   beacon:
@@ -319,45 +273,37 @@ properties:
     properties:
       enabled:
         type: boolean
-        default: false
         description: "Enable beacon"
   pruning:
     type: object
     properties:
       enabled:
         type: boolean
-        default: false
         description: "Enable pruning"
 
   dataDir:
     type: string
-    default: "{common.dataDir}/{execution.client.name}"
     description: "Base directory for execution client data. Interpolated from common.dataDir and execution.client.name."
   gpo:
     type: object
     properties:
       enabled:
         type: boolean
-        default: false
         description: "Enable gas price oracle"
       blocks:
         type: number
         minimum: 1
-        default: 100
         description: "Number of blocks to consider for eth_gasPrice"
       maxPrice:
         type: number
         minimum: 0
-        default: 500000000000
         description: "Maximum gas price for eth_gasPrice"
       ignorePrice:
         type: number
         minimum: 0
-        default: 2
         description: "Gas Price below which gpo will ignore transactions"
       percentile:
         type: number
         minimum: 0
         maximum: 100
-        default: 50.0
         description: "Percentile value to measure for eth_gasPrice"

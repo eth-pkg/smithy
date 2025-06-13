@@ -3,11 +3,9 @@ type: object
 properties:
   enabled:
     type: boolean
-    default: false
     description: "Enable validator functionality"
   isExternal:
     type: boolean
-    default: true
     description: "Is the validator external to the node, in different process"
   client:
     type: object
@@ -25,10 +23,8 @@ properties:
         description: "The validator client implementation to use (required when staking is enabled)"
         errorMessage:
           enum: "Validator client must be one of: lighthouse, lodestar, nimbus-eth2, prysm, teku"
-        default: ""
       version:
         type: string
-        default: ""
         description: "The version of the validator client to use"
         errorMessage:
           pattern: "Version must be a valid semver string"
@@ -40,13 +36,11 @@ properties:
     type: array
     items:
       type: string
-    default: ["localhost:5052"]
     description: "Beacon node RPC endpoint(s) (host:port)"
     errorMessage:
       pattern: "Beacon RPC provider must be a valid host:port"
   suggestFeeRecipientAddress:
     type: string
-    default: "0x0000000000000000000000000000000000000000"
     description: "Ethereum address to receive transaction fees"
     pattern: "^0x[a-fA-F0-9]{40}$"
     errorMessage:
@@ -56,11 +50,9 @@ properties:
     properties:
       enabled:
         type: boolean
-        default: false
         description: "Enable validator metrics collection"  
       host:
         type: string
-        default: "127.0.0.1"
         description: "IP address to bind the metrics server to"
       port:
         type: number
@@ -74,69 +66,54 @@ properties:
     properties:
       enabled:
         type: boolean
-        default: false
         description: "Enable graffiti on proposed blocks"
       message:
         type: string
-        default: ""
         description: "Custom graffiti message to include in proposed blocks"
       file:
         type: string
-        default: ""
         description: "Path to file containing graffiti messages"
   suggestedGasLimit:
     type: number
-    default: 30000000
     description: "Suggested gas limit for proposed blocks"
   doppelgangerProtection:
     type: boolean
-    default: true
     description: "Enable protection against duplicate validator instances"
   externalSigner:
     type: object
     properties:
       enabled:
         type: boolean
-        default: false
         description: "Enable external signer"
       url:
         type: string
-        default: ""
         description: "URL for external signer service"
       keystore:
         type: string
-        default: ""
         description: "Path to external signer keystore"
       keystorePasswordFile:
         type: string
-        default: ""
         description: "Path to file containing external signer keystore password"
       publicKeys:
         type: array
         items:
           type: string
-        default: []
         description: "List of public keys for external signer"
   proposerConfig:
     type: object
     properties:
       enabled:
         type: boolean
-        default: false
         description: "Enable proposer configuration"
       file:
         type: string
-        default: ""
         description: "Path to proposer configuration file"
   validatorsDir:
     type: string
-    default: "$HOME/ethereum/validator/keys"
     description: "Directory containing validator keys"
   secretsDir:
     type: string
-    default: "$HOME/ethereum/validator/secrets"
     description: "Directory containing validator secrets"
   distributed:
     type: boolean
-    default: false
     description: "Enable distributed validator mode" 

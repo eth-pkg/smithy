@@ -3,11 +3,9 @@ type: object
 properties:
   acceptTermsOfUse:
     type: boolean
-    default: false
     description: "Accept the terms of use"
   dataDir:
     type: string
-    default: "/home/user/{common.network.name}"
     description: "Base directory for storing Ethereum client data"
   engine:
     type: object
@@ -19,11 +17,9 @@ properties:
         properties:
           file:
             type: string
-            default: "{common.dataDir}/{common.network.name}/engine.jwt"
             description: "Path to the JWT secret file for Engine API"
           id:
             type: string
-            default: ""
             description: "JWT claims id for client identification"
       api:
         type: object
@@ -32,7 +28,6 @@ properties:
             type: number
             minimum: 1024
             maximum: 65535
-            default: 8551
             description: "Port number for the Engine API"
             errorMessage:
               minimum: "Engine API port must be >= 1024"
@@ -42,24 +37,20 @@ properties:
             minItems: 1
             items:
               type: string
-            default: ["{common.engine.api.scheme}://{common.engine.api.host}:{common.engine.api.port}"]
             description: "List of Engine API endpoints consumed by the consensus client"
           host:
             type: string
-            default: "localhost"
             description: "Hostname for the Engine API"
           allowlist:
             type: array
             items:
               type: string
-            default: ["localhost"]
             description: "Allowed hostnames for the Engine API"
           scheme:
             type: string
             enum:
               - http
               - https
-            default: "http"
             description: "Protocol scheme for Engine API communication"
             errorMessage:
               enum: "Engine scheme must be either 'http' or 'https'"
@@ -69,7 +60,6 @@ properties:
       id:
         type: number
         minimum: 1
-        default: 1
         description: "The Ethereum network ID (1 for mainnet, 11155111 for sepolia, etc.)"
         errorMessage:
           minimum: "Network ID must be a positive number"
@@ -82,7 +72,6 @@ properties:
           - hoodi
           - ephemery
           - custom
-        default: "mainnet"
         description: "Ethereum network to connect to"
         errorMessage:
           enum: "Network must be one of: mainnet, sepolia, holesky, hoodi, ephemery, custom"
@@ -94,7 +83,6 @@ properties:
       - linux
       - darwin
       - windows
-    default: "linux"
     description: "Target operating system for client configuration"
     errorMessage:
       enum: "Operating system must be one of: linux, darwin, windows"

@@ -15,7 +15,6 @@ common:
     id: 1
     name: "mainnet"
   operatingSystem: "linux"
-  
 execution:
   client:
     name: "geth"
@@ -63,8 +62,6 @@ execution:
       enabled: false
       level: "info"
       format: "text"
-
-
 consensus:
   client:
     name: "lighthouse"
@@ -116,20 +113,3 @@ consensus:
     enabled: false
     url: ""
   dataDir: "{common.dataDir}/{consensus.client.name}" 
-
-validator:
-  isExternal: true
-  client:
-    name: nimbus-eth2
-    version: ''
-  enabled: true
-  graffiti:
-    enabled: false
-    message: ""
-  dataDir: "{common.dataDir}/{validator.client.name}"
-  metrics:
-    enabled: true
-    port: 5054
-    host: 127.0.0.1
-  beaconNodes: [http://localhost:8551]
-  suggestFeeRecipientAddress: "0x0000000000000000000000000000000000000000"

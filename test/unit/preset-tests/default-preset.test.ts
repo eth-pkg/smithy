@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { describe, it, beforeEach } from 'mocha';
 import { PresetManager } from '@/utils/preset';
-import { NodeConfig } from '@/lib/types';
+import { NodeConfig } from '@/types';
 import { baseConfig, testConfig } from '@test/fixtures/configs';
 
 describe('Default Preset Tests', () => {

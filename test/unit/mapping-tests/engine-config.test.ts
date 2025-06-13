@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { CommandClientRegistry } from '@/builders/command/command-client-registry';
-import { ExecutionClientName, ConsensusClientName } from '@/lib/types';
+import { ExecutionClientName, ConsensusClientName } from '@/types';
 import { testConfig } from '@test/fixtures/configs';
 
 describe('Engine Configuration Tests', () => {

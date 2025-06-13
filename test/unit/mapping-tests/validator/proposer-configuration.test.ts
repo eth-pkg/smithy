@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { CommandClientRegistry } from '@/builders/command/command-client-registry';
-import { ValidatorClientName } from '@/lib/types';
+import { ValidatorClientName } from '@/types';
 import { testConfig } from '@test/fixtures/configs';
 import SchemaUtils from '@/utils/schema';
 

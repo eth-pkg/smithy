@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { CommandClientRegistry } from '@/builders/command/command-client-registry';
-import { ConsensusClientName, DeepPartial, NodeConfig } from '@/lib/types';
+import { ConsensusClientName, DeepPartial, NodeConfig } from '@/types';
 import SchemaUtils from '@/utils/schema';
 import { testConfig } from '@test/fixtures/configs';
 

@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { describe, it, beforeEach } from 'mocha';
 import { PresetManager } from '@/utils/preset';
-import { DeepPartial, NodeConfig } from '@/lib/types';
+import { DeepPartial, NodeConfig } from '@/types';
 
 describe('Staker Preset Tests', () => {
   let presetManager: PresetManager;

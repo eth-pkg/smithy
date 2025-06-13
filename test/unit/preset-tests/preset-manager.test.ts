@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { PresetManager } from '@/utils/preset';
 import { baseConfig, testConfig } from '@test/fixtures/configs';
-import { ExecutionClientName, ConsensusClientName, NodeConfig, ValidatorClientName } from '@/lib/types';
+import { ExecutionClientName, ConsensusClientName, NodeConfig, ValidatorClientName } from '@/types';
 
 describe('PresetManager', () => {
   let presetManager: PresetManager;

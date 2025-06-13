@@ -1,4 +1,4 @@
-import { NodeConfig, Common } from '@/lib/types';
+import { NodeConfig, Common } from '@/types';
 
 export const baseConfig: Common = {
   engine: {

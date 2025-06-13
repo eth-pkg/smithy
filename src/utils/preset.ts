@@ -3,7 +3,7 @@ import * as path from "path";
 import * as yaml from "js-yaml";
 import Ajv from "ajv";
 import ajvErrors from "ajv-errors";
-import { NodeConfig, DeepPartial } from "@/lib/types";
+import { NodeConfig, DeepPartial } from "@/types";
 import { Logger } from "./logger";
 import SchemaUtils from "./schema";
 
@@ -206,7 +206,6 @@ export class PresetManager {
 
       const ajv = new Ajv({
         allErrors: true,
-        useDefaults: true,
         coerceTypes: true,
         loadSchema: this.loadSchema.bind(this),
         strict: true
@@ -215,34 +214,17 @@ export class PresetManager {
 
       const validate = await ajv.compileAsync(validationSchema);
 
-      // Extract defaults from the schema
-      const schemaLoader = new SchemaUtils(this.getPresetsDir());
-      const schemaPath = schemaLoader.resolvePath(presetName);
-      const defaults = schemaLoader.extractDefaults(schemaPath) || {};
-      // Create a new config object with defaults applied
-      const configWithDefaults = { ...defaults };
-      // Deep merge the user's config on top of the defaults
-      this.deepMerge(configWithDefaults, config);
 
       // Validate the final config
-      const valid = validate(configWithDefaults);
+      const valid = validate(config);
 
       if (!valid) {
         const formattedErrors = this.formatValidationErrors(validate.errors || []);
         throw new Error(formattedErrors);
       }
 
-      return configWithDefaults as NodeConfig;
+      return config as NodeConfig;
     } catch (error) {
-      if (error instanceof Error &&
-        (error.message.includes('Cannot override constant values') ||
-          error.message.includes('Network must be set to') ||
-          error.message.includes('Network ID must be set to'))) {
-        throw error;
-      }
-      if (error instanceof Error) {
-        throw new Error(`Failed to process config with preset: ${error.message}`);
-      }
       throw error;
     }
   }

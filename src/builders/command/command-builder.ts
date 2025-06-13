@@ -1,4 +1,4 @@
-import { OperatingSystem, NodeConfig } from "@/lib/types";
+import { OperatingSystem, NodeConfig } from "@/types";
 import {
   FlagEnabledFunction,
   LogDestinationFunction,

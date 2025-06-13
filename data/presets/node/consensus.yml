@@ -19,7 +19,6 @@ properties:
           enum: "Consensus client must be one of: lighthouse, lodestar, nimbus-eth2, prysm, teku"
       version:
         type: string
-        default: ""
         description: "The version of the consensus client to use"
         errorMessage:
           pattern: "Version must be a valid semver string"
@@ -28,21 +27,17 @@ properties:
     properties:
       enabled:
         type: boolean
-        default: false
         description: "Enable HTTP JSON-RPC API"
       api:
         type: array
         minItems: 1
-        default: ["eth", "net", "web3"]
         description: "List of JSON-RPC API namespaces to enable"
         items:
           type: string
       address:
         type: string
-        default: "localhost"
       allowlist:
         type: array
-        default: ["*"]
         description: "List of allowed CORS origins for HTTP API"
         items:
           type: string
@@ -50,7 +45,6 @@ properties:
         type: number
         minimum: 1024
         maximum: 65535
-        default: 8545
         description: "Port number for HTTP JSON-RPC API"
         errorMessage:
           minimum: "HTTP port must be >= 1024"
@@ -60,17 +54,14 @@ properties:
     properties:
       enabled:
         type: boolean
-        default: false
         description: "Enable metrics collection and reporting"
       host:
         type: string
-        default: "127.0.0.1"
         description: "IP address to bind the metrics server to"
       port:
         type: number
         minimum: 1024
         maximum: 65535
-        default: 8008
         description: "Port number for metrics server of the consensus client"
         errorMessage:
           minimum: "Metrics port must be >= 1024"
@@ -80,13 +71,11 @@ properties:
     properties:
       enabled:
         type: boolean
-        default: true
         description: "Enable P2P networking of the consensus client"
       port:
         type: number
         minimum: 1024
         maximum: 65535
-        default: 9000
         description: "Port number for P2P UDP and TCP"
         errorMessage:
           minimum: "P2P port must be >= 1024"
@@ -94,122 +83,96 @@ properties:
         type: number
         minimum: 1024
         maximum: 65535
-        default: 9000
         description: "IPv6 P2P port number"    
       discoveryPort:
         type: number
         minimum: 1024
         maximum: 65535
-        default: 9002
         description: "Discovery P2P port number"
       discoveryPort6:
         type: number
         minimum: 1024
         maximum: 65535
-        default: 9002
         description: "Discovery P2P port number"
       bootnodes:
         type: array
         items:
           type: string
-        default: []
         description: "List of bootnode enode URLs for initial peer discovery"
       staticPeers:
         type: array
         items:
           type: string
-        default: []
         description: "List of static peers to connect to"
       trustedPeers:
         type: array
         items:
           type: string
-        default: []
         description: "List of trusted peers to connect to"
       targetPeers:
         type: number
-        default: 25
         description: "Target number of peers to connect to"
       maxPeers:
         type: number
-        default: 25
         description: "Maximum number of peers to connect to"
       nodiscover:
         type: boolean
-        default: false
         description: "Disable peer discovery"
       listenAddress:
         type: string
-        default: ""
         description: "Listen address for P2P networking"
       localPeerDiscovery:
         type: boolean
-        default: false
         description: "Enable local peer discovery"
       subscribeAllSubnets:
         type: boolean
-        default: false
       upnp:
         type: boolean
-        default: false
         description: "Enable UPnP"
       staticId:
         type: string
-        default: ""
         description: "Static ID for the node"
   checkpointSync:
     type: object
     properties:
       enabled:
         type: boolean
-        default: false
         description: "Enable checkpoint sync"
       url:
         type: string
-        default: ""
         description: "URL of a trusted beacon node for checkpoint sync"
-
       state:
         type: string
-        default: ""
         description: "State root hash to use for checkpoint sync"
       ignoreWeakSubjectivityPeriod:
         type: boolean
-        default: false
         description: "Ignore weak subjectivity period"
       force:
         type: boolean
-        default: false
         description: "Force checkpoint sync from weak subjectivity"
       wss:
         type: string
-        default: ""
         description: "Weak subjectivity checkpoint in <blockRoot>:<epoch> format for sync starting point. "
   genesisSync:
     type: object
     properties:
       enabled:
         type: boolean
-        default: false
         description: "Enable genesis sync"
       state:
         type: string
-        default: ""
         description: "Path to genesis state file"
       url:
         type: string
-        default: ""
         description: "URL of a trusted beacon node for genesis sync"
   loggging: 
     type: object
     properties:
       enabled:
         type: boolean
-        default: false
         description: "Enable logging of the consensus client"
       file:
         type: string
-        default: ""
         description: "Path to store consensus client logs"
       format:
         type: string
@@ -219,20 +182,16 @@ properties:
           - plain
   testnetDir:
     type: string
-    default: ""
     description: "Path to testnet configuration directory"
   builder:
     type: object
     properties:
       enabled:
         type: boolean
-        default: false
         description: "Enable block builder API for MEV"
       url:
         type: string
-        default: ""
         description: "URL for the block builder API"
   dataDir:
     type: string
-    default: "{common.dataDir}/{consensus.client.name}"
     description: "Base directory for consensus client data. Interpolated from common.dataDir and consensus.client.name." 
