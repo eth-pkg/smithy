@@ -1,7 +1,6 @@
 export * from "./commands";
 import { generate } from "./commands/generate";
 import { listPresets } from "./commands/preset";
-import { clients, getClientNames } from "./clients";
 
 /**
  * Main library API for programmatic usage
@@ -18,13 +17,13 @@ export default {
    */
   listPresets,
 
-  /**
-   * Get all available client names by type
-   */
-  getClientNames,
+  // /**
+  //  * Get all available client names by type
+  //  */
+  // getClientNames,
 
-  /**
-   * All registered clients
-   */
-  clients,
+  // /**
+  //  * All registered clients
+  //  */
+  // clients,
 };

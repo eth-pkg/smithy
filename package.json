@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && mkdir -p dist/data && cp -r data/mappings data/presets dist/data/",
     "dev": "ts-node-dev --transpile-only src/cli.ts",
     "test": "mocha -r tsconfig-paths/register -r ts-node/register -r ./test/setup.ts \"test/**/*.test.ts\"",
     "test:watch": "mocha -r tsconfig-paths/register -r ts-node/register -r ./test/setup.ts --watch \"test/**/*.test.ts\"",

@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+# smithy - A CLI tool for generating Ethereum client configurations
+# Usage: smithy [command] [options]
+# Example: smithy generate --execution geth --consensus lighthouse
+
+set -euo pipefail
+
+readonly SCRIPT_NAME="${0##*/}"
+readonly SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+readonly PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+readonly CLI_PATH="${PROJECT_ROOT}/dist/cli.js"
+readonly DATA_DIR="${PROJECT_ROOT}/dist/data"
+
+error() {
+    echo "${SCRIPT_NAME}: error: $*" >&2
+    exit 1
+}
+
+check_dependencies() {
+    if ! command -v node >/dev/null 2>&1; then
+        error "Node.js is not installed"
+    fi
+}
+
+check_cli_built() {
+    if [[ ! -f "${CLI_PATH}" ]]; then
+        error "CLI not found at ${CLI_PATH}. Please run 'npm run build' first"
+    fi
+    if [[ ! -d "${DATA_DIR}" ]]; then
+        error "Data directory not found at ${DATA_DIR}. Please run 'npm run build' first"
+    fi
+}
+
+main() {
+    check_dependencies
+    check_cli_built
+    exec node "${CLI_PATH}" "$@"
+}
+
+main "$@" 
