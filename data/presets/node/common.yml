@@ -25,7 +25,6 @@ properties:
             type: string
             default: ""
             description: "JWT claims id for client identification"
-
       api:
         type: object
         properties:
@@ -64,7 +63,6 @@ properties:
             description: "Protocol scheme for Engine API communication"
             errorMessage:
               enum: "Engine scheme must be either 'http' or 'https'"
-
   network:
     type: object
     properties:
@@ -88,7 +86,8 @@ properties:
         description: "Ethereum network to connect to"
         errorMessage:
           enum: "Network must be one of: mainnet, sepolia, holesky, hoodi, ephemery, custom"
-
+      custom:
+        $ref: ./node/custom-network.yml
   operatingSystem:
     type: string
     enum:

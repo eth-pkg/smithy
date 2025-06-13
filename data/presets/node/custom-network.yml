@@ -1,0 +1,222 @@
+$id: custom-network.yml
+type: object
+if:
+  properties:
+    network:
+      properties:
+        name:
+          const: "custom"
+then:
+  properties:
+    common:
+      properties:
+        network:
+          properties:
+            custom:
+              type: object
+              required: [testnetDir]
+              allOf:
+                - if:
+                    properties:
+                      execution:
+                        properties:
+                          client:
+                            properties:
+                              name:
+                                const: "besu"
+                    required: ["execution"]
+                  then:
+                    required: [besuGenesisFile]
+                - if:
+                    properties:
+                      execution:
+                        properties:
+                          client:
+                            properties:
+                              name:
+                                const: "erigon"
+                    required: ["execution"]
+                  then:
+                    required: [genesisFile]
+                - if:
+                    properties:
+                      execution:
+                        properties:
+                          client:
+                            properties:
+                              name:
+                                const: "geth"
+                    required: ["execution"]
+                  then:
+                    required: [genesisFile]
+                - if:
+                    properties:
+                      execution:
+                        properties:
+                          client:
+                            properties:
+                              name:
+                                const: "nethermind"
+                    required: ["execution"]
+                  then:
+                    required: [chainSpecFile]
+                - if:
+                    properties:
+                      execution:
+                        properties:
+                          client:
+                            properties:
+                              name:
+                                const: "reth"
+                    required: ["execution"]
+                  then:
+                    required: [genesisFile]
+                - if:
+                    properties:
+                      consensus:
+                        properties:
+                          client:
+                            properties:
+                              name:
+                                const: "lighthouse"
+                    required: ["consensus"]
+                  then:
+                    required: [testnetDir]
+                - if:
+                    properties:
+                      consensus:
+                        properties:
+                          client:
+                            properties:
+                              name:
+                                const: "lodestar"
+                    required: ["consensus"]
+                  then:
+                    required: [genesisSSZFile]
+                - if:
+                    properties:
+                      consensus:
+                        properties:
+                          client:
+                            properties:
+                              name:
+                                const: "prysm"
+                    required: ["consensus"]
+                  then:
+                    required: [genesisSSZFile]
+                - if:
+                    properties:
+                      consensus:
+                        properties:
+                          client:
+                            properties:
+                              name:
+                                const: "nimbus-eth2"
+                    required: ["consensus"]
+                  then:
+                    required: [testnetDir]
+                - if:
+                    properties:
+                      consensus:
+                        properties:
+                          client:
+                            properties:
+                              name:
+                                const: "teku"
+                    required: ["consensus"]
+                  then:
+                    required: [paramsFile]
+                - if:
+                    properties:
+                      validator:
+                        properties:
+                          client:
+                            properties:
+                              name:
+                                const: "lighthouse"
+                    required: ["validator"]
+                  then:
+                    required: [testnetDir]
+                - if:
+                    properties:
+                      validator:
+                        properties:
+                          client:
+                            properties:
+                              name:
+                                const: "lodestar"
+                    required: ["validator"]
+                  then:
+                    required: [genesisSSZFile]
+                - if:
+                    properties:
+                      validator:
+                        properties:
+                          client:
+                            properties:
+                              name:
+                                const: "prysm"
+                    required: ["validator"]
+                  then:
+                    required: [genesisSSZFile]
+                - if:
+                    properties:
+                      validator:
+                        properties:
+                          client:
+                            properties:
+                              name:
+                                const: "nimbus-eth2"
+                    required: ["validator"]
+                  then:
+                    required: [testnetDir]
+                - if:
+                    properties:
+                      validator:
+                        properties:
+                          client:
+                            properties:
+                              name:
+                                const: "teku"
+                    required: ["validator"]
+                  then:
+                    required: [paramsFile]
+              properties:
+                name:
+                  type: string
+                  description: "The name of the custom network"
+                  default: "devnet"
+                testnetDir:
+                  type: string
+                  description: "Path to the testnet directory generated by tools like ethereum-genesis-generator"
+                  default: "{common.dataDir}/{common.network.custom.name}"
+                besuGenesisFile:
+                  type: string
+                  description: "Path to the custom network genesis file"
+                  default: "{common.testnetDir}/besu.json"
+                  errorMessage:
+                    required: "Custom network genesis file is required when using Besu and a custom network"
+                paramsFile:
+                  type: string
+                  description: "Path to the custom network params file"
+                  default: "{common.testnetDir}/config.yaml"
+                  errorMessage:
+                    required: "Custom network params file is required when using Teku and a custom network"
+                chainSpecFile:
+                  type: string
+                  description: "Path to the custom network chain spec file"
+                  default: "{common.testnetDir}/chainspec.json"
+                  errorMessage:
+                    required: "Custom network chain spec file is required when using Nethermind and a custom network"
+                genesisFile:
+                  type: string
+                  description: "Path to the custom network genesis file"
+                  default: "{common.testnetDir}/genesis.json"
+                  errorMessage:
+                    required: "Custom network genesis file is required when using Erigon, Geth, or Reth and a custom network"
+                genesisSSZFile:
+                  type: string
+                  description: "Path to the custom network genesis SSZ file"
+                  default: "{common.testnetDir}/genesis.ssz"
+                  errorMessage:
+                    required: "Custom network genesis SSZ file is required when using Lodestar, Prysm and a custom network"

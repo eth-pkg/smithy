@@ -719,6 +719,9 @@ rules:
       monitoring-endpoint. Default: 60s
   - flag: --network
     configPath: common.network.name
+    enabled:
+      configPath: common.network.name
+      transform: standardNetworkEnabled
     description: >-
       Name of the Eth2 chain Lighthouse will sync and follow. [possible values:
       mainnet, gnosis, chiado, sepolia, holesky, hoodi]
@@ -960,7 +963,10 @@ rules:
     description: >-
       The target number of peers.
   - flag: --testnet-dir
-    configPath: consensus.testnetDir
+    configPath: common.network.custom.testnetDir
+    enabled:
+      configPath: common.network.name
+      transform: customNetworkEnabled
     description: >-
       Path to directory containing eth2_testnet specs. Defaults to a hard-coded
       Lighthouse testnet. Only effective if there is no existing database.

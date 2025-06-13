@@ -351,11 +351,17 @@ rules:
 
   - flag: --network
     configPath: common.network.name
+    enabled:
+      configPath: common.network.name
+      transform: standardNetworkEnabled
     description: >
         Name of the Ethereum Consensus chain network to join
 
   - flag: --paramsFile
-    configPath: 
+    configPath: common.network.custom.genesisSSZFile
+    enabled:
+      configPath: common.network.name
+      transform: customNetworkEnabled
     description: >
         Network configuration file
 

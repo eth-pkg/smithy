@@ -120,6 +120,9 @@ export const flagFunctions: Record<string, FlagEnabledFunction | FlagTransformFu
 
   isJson: (value: string): boolean => value === "json",
 
+  customNetworkEnabled: (value: string): boolean => value === "custom",
+  standardNetworkEnabled: (value: string): boolean => value !== "custom",
+
 }
 
 export const transformers = {

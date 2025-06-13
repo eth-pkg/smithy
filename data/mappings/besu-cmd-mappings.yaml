@@ -141,7 +141,10 @@ rules:
     description: >
       Contact address to send to ethstats server
   - flag: --genesis-file
-    configPath:
+    configPath: common.network.custom.besuGenesisFile
+    enabled:
+      configPath: common.network.name
+      transform: customNetworkEnabled
     description: >
       Genesis file for your custom network. Setting this option requires
       --network-id to be set. (Cannot be used with --network)
@@ -382,10 +385,14 @@ rules:
       Comma-separated list of allowed IP subnets (e.g., '192.168.1.0/24,10.0.0.0/8').
   - flag: --network
     configPath: common.network.name
+    enabled:
+      configPath: common.network.name
+      transform: standardNetworkEnabled
     description: >
       Synchronize against the indicated network, possible values are MAINNET,
       SEPOLIA, HOLESKY, HOODI, EPHEMERY, LUKSO, DEV, FUTURE_EIPS,
       EXPERIMENTAL_EIPS, CLASSIC, MORDOR. (default: MAINNET)
+
   - flag: --network-id
     configPath: common.network.id
     description: >

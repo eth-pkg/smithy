@@ -113,7 +113,15 @@ rules:
       transform: flagEnabled
     description: |
       The genesis state. This value should be a file or URL pointing to an SSZ-encoded finalized
-      checkpoint state    
+      checkpoint state   
+  - flag: --genesis-state
+    configPath: common.network.custom.genesisSSZFile
+    enabled:
+      configPath: common.network.name
+      transform: customNetworkEnabled
+    description: |
+      The genesis state. This value should be a file or URL pointing to an SSZ-encoded finalized
+      checkpoint state         
   - flag: --ignore-weak-subjectivity-period-enabled
     configPath: consensus.checkpointSync.ignoreWeakSubjectivityPeriod
     transform: isFlag
@@ -251,8 +259,18 @@ rules:
       Interval between metric publications to the external service (measured in seconds)
   - flag: --network
     configPath: common.network.name
+    enabled:
+      configPath: common.network.name
+      transform: standardNetworkEnabled
     description: |
       Represents which network to use
+  - flag: --network
+    configPath: common.network.custom.paramsFile
+    enabled:
+      configPath: common.network.name
+      transform: customNetworkEnabled
+    description: |
+      Represents which network to use    
   - flag: --p2p-advertised-ip
     configPath: 
     enabled: 

@@ -114,10 +114,22 @@ rules:
   - flag: --network
     configPath: common.network.name
     enabled:
-      configPath: validator.enabled
-      transform: flagEnabled
+      - configPath: validator.enabled
+        transform: flagEnabled
+      - configPath: common.network.name
+        transform: standardNetworkEnabled  
     description: >-
       The Eth2 network to join [=mainnet].
+
+  - flag: --network
+    configPath: common.network.custom.testnetDir
+    enabled:
+      - configPath: validator.enabled
+        transform: flagEnabled
+      - configPath: common.network.name
+        transform: customNetworkEnabled
+    description: >
+      The Eth2 network to join [=mainnet]. 
 
   - flag: --non-interactive
     configPath:

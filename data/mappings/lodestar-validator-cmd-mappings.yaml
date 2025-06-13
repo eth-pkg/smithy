@@ -304,16 +304,20 @@ rules:
   - flag: --network
     configPath: common.network.name
     enabled:
-      configPath: validator.enabled
-      transform: flagEnabled
+      - configPath: validator.enabled
+        transform: flagEnabled
+      - configPath: common.network.name
+        transform: standardNetworkEnabled
     description: |
       Name of the Ethereum Consensus chain network to join (choices: mainnet, gnosis, sepolia, holesky, hoodi, chiado, ephemery, dev)
 
   - flag: --paramsFile
-    configPath:
+    configPath: common.network.custom.genesisSSZFile
     enabled:
-      configPath: validator.enabled
-      transform: flagEnabled
+      - configPath: validator.enabled
+        transform: flagEnabled
+      - configPath: common.network.name
+        transform: customNetworkEnabled
     description: |
       Network configuration file
 

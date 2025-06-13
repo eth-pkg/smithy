@@ -511,8 +511,10 @@ rules:
   - flag: --network
     configPath: common.network.name
     enabled:
-      configPath: validator.enabled
-      transform: flagEnabled
+      - configPath: validator.enabled
+        transform: flagEnabled
+      - configPath: common.network.name
+        transform: standardNetworkEnabled
     description: >
       Name of the Eth2 chain Lighthouse will sync and follow. [possible values:
       mainnet, gnosis, chiado, sepolia, holesky, hoodi]
@@ -566,10 +568,12 @@ rules:
       in the validator definitions it takes priority over this value.
 
   - flag: --testnet-dir
-    configPath:
+    configPath: common.network.custom.testnetDir
     enabled:
-      configPath: validator.enabled
-      transform: flagEnabled
+      - configPath: validator.enabled
+        transform: flagEnabled
+      - configPath: common.network.name
+        transform: customNetworkEnabled
     description: >
       Path to directory containing eth2_testnet specs. Defaults to a hard-coded
       Lighthouse testnet. Only effective if there is no existing database.

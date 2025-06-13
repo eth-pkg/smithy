@@ -103,6 +103,9 @@ rules:
       [default: 3]
   - flag: --chain
     configPath: common.network.name
+    enabled:
+      configPath: common.network.name
+      transform: standardNetworkEnabled
     description: >
       The chain this node is running.
       Possible values are either a built-in chain or the path to a chain specification file.
@@ -111,6 +114,20 @@ rules:
           mainnet, sepolia, holesky, hoodi, dev
       
       [default: mainnet]
+  ## duplicate flag, for custom networks
+  - flag: --chain
+    configPath: common.network.custom.genesisFile
+    enabled:
+      configPath: common.network.name
+      transform: customNetworkEnabled
+    description: >
+      The chain this node is running.
+      Possible values are either a built-in chain or the path to a chain specification file.
+      
+      Built-in chains:
+          mainnet, sepolia, holesky, hoodi, dev
+      
+      [default: mainnet]    
   - flag: --color
     configPath:
     description: >

@@ -143,8 +143,14 @@ rules:
     configPath: consensus.genesisSync.state
     enabled:
       configPath: consensus.genesisSync.enabled
-      transform: flagEnabled
+      transform: flagEnabled    
     description: Load a genesis state from ssz file
+  - flag: --genesis-state
+    configPath: common.network.custom.genesisSSZFile
+    enabled:
+      configPath: common.network.name
+      transform: customNetworkEnabled    
+    description: Load a genesis state from ssz file   
   - flag: --grpc-max-msg-size
     configPath:
     description: Integer to define max receive message call size in bytes

@@ -267,7 +267,10 @@ rules:
     description: >
       The base path for all Nethermind databases.
   - flag: --Init.ChainSpecPath
-    configPath:
+    configPath: common.network.custom.chainSpecFile
+    enabled:
+      configPath: common.network.name
+      transform: customNetworkEnabled
     description: >
       The path to the chain spec file.
   - flag: --Init.DiagnosticMode
