@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { describe, it, beforeEach } from 'mocha';
 import { PresetManager } from '@/utils/preset';
-import { testConfig } from './network-preset.test-helper';
+import { testConfig } from '@test/fixtures/configs';
 
 describe('Preset Validation Tests', () => {
   let presetManager: PresetManager;

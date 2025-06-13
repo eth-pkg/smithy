@@ -1,8 +1,9 @@
 import { expect } from 'chai';
 import { CommandClientRegistry } from '@/builders/command/command-client-registry';
 import { ConsensusClientName } from '@/lib/types';
-import { testConfig } from '../../preset-tests/network-preset.test-helper';
 import SchemaUtils from '@/utils/schema';
+import { testConfig } from '@test/fixtures/configs';
+
 
 describe('Consensus Client Metrics Configuration Tests', () => {
   let registry: CommandClientRegistry;

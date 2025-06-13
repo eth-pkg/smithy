@@ -5,10 +5,10 @@ import {
   ConsensusClientName,
   ValidatorClientName,
 } from "@/lib/types";
-import { testConfig } from "../preset-tests/network-preset.test-helper";
+import { testConfig } from "@test/fixtures/configs";
 import SchemaUtils from "@/utils/schema";
 
-describe.only("Custom Network Mappings Tests", () => {
+describe("Custom Network Mappings Tests", () => {
   let registry: CommandClientRegistry;
   const schemaUtils = new SchemaUtils("");
 

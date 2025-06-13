@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import { CommandClientRegistry } from '@/builders/command/command-client-registry';
 import { ConsensusClientName, DeepPartial, NodeConfig } from '@/lib/types';
-import { testConfig } from '../../preset-tests/network-preset.test-helper';
 import SchemaUtils from '@/utils/schema';
+import { testConfig } from '@test/fixtures/configs';
 
 describe('Consensus Client Checkpoint Configuration Tests', () => {
   let registry: CommandClientRegistry;

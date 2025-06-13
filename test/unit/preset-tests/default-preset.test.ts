@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { describe, it, beforeEach } from 'mocha';
 import { PresetManager } from '@/utils/preset';
 import { NodeConfig } from '@/lib/types';
-import { baseConfig, testConfig } from './network-preset.test-helper';
+import { baseConfig, testConfig } from '@test/fixtures/configs';
 
 describe('Default Preset Tests', () => {
   let presetManager: PresetManager;
@@ -18,7 +18,7 @@ describe('Default Preset Tests', () => {
         ...baseConfig,
         network: {
           name: 'mainnet',
-          id: 1
+          id: 1,
         },
         dataDir: '$HOME/ethereum/mainnet'
       }

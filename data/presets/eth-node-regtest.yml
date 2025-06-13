@@ -1,0 +1,5 @@
+$id: eth-node-regtest.yml
+allOf:
+  - $ref: ../default.yml
+  - $ref: ../networks/regtest.yml
+  - $ref: ../features/staker.yml

@@ -1,8 +1,7 @@
 import { expect } from 'chai';
 import { PresetManager } from '@/utils/preset';
-import { baseConfig } from './network-preset.test-helper';
+import { baseConfig, testConfig } from '@test/fixtures/configs';
 import { ExecutionClientName, ConsensusClientName, NodeConfig, ValidatorClientName } from '@/lib/types';
-import { testConfig } from '../preset-tests/network-preset.test-helper';
 
 describe('PresetManager', () => {
   let presetManager: PresetManager;

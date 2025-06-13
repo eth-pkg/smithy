@@ -86,8 +86,8 @@ properties:
         description: "Ethereum network to connect to"
         errorMessage:
           enum: "Network must be one of: mainnet, sepolia, holesky, hoodi, ephemery, custom"
-      custom:
-        $ref: ./node/custom-network.yml
+      # custom:
+      #   $ref: ./node/custom-network.yml
   operatingSystem:
     type: string
     enum:

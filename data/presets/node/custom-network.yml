@@ -2,25 +2,35 @@ $id: custom-network.yml
 type: object
 if:
   properties:
-    network:
+    common:
+      type: object
       properties:
-        name:
-          const: "custom"
+        network:
+          type: object
+          properties:
+            name:
+              const: "custom"
 then:
   properties:
     common:
+      type: object
       properties:
         network:
+          type: object
+          required: [custom]
           properties:
             custom:
+              
               type: object
               required: [testnetDir]
               allOf:
                 - if:
                     properties:
                       execution:
+                        type: object
                         properties:
                           client:
+                            type: object
                             properties:
                               name:
                                 const: "besu"
@@ -30,8 +40,10 @@ then:
                 - if:
                     properties:
                       execution:
+                        type: object
                         properties:
                           client:
+                            type: object
                             properties:
                               name:
                                 const: "erigon"
@@ -41,8 +53,10 @@ then:
                 - if:
                     properties:
                       execution:
+                        type: object
                         properties:
                           client:
+                            type: object
                             properties:
                               name:
                                 const: "geth"
@@ -52,8 +66,10 @@ then:
                 - if:
                     properties:
                       execution:
+                        type: object
                         properties:
                           client:
+                            type: object
                             properties:
                               name:
                                 const: "nethermind"
@@ -63,8 +79,10 @@ then:
                 - if:
                     properties:
                       execution:
+                        type: object
                         properties:
                           client:
+                            type: object
                             properties:
                               name:
                                 const: "reth"
@@ -74,8 +92,10 @@ then:
                 - if:
                     properties:
                       consensus:
+                        type: object
                         properties:
                           client:
+                            type: object
                             properties:
                               name:
                                 const: "lighthouse"
@@ -85,8 +105,10 @@ then:
                 - if:
                     properties:
                       consensus:
+                        type: object
                         properties:
                           client:
+                            type: object
                             properties:
                               name:
                                 const: "lodestar"
@@ -96,8 +118,10 @@ then:
                 - if:
                     properties:
                       consensus:
+                        type: object
                         properties:
                           client:
+                            type: object
                             properties:
                               name:
                                 const: "prysm"
@@ -107,8 +131,10 @@ then:
                 - if:
                     properties:
                       consensus:
+                        type: object
                         properties:
                           client:
+                            type: object
                             properties:
                               name:
                                 const: "nimbus-eth2"
@@ -118,8 +144,10 @@ then:
                 - if:
                     properties:
                       consensus:
+                        type: object
                         properties:
                           client:
+                            type: object
                             properties:
                               name:
                                 const: "teku"
@@ -129,8 +157,10 @@ then:
                 - if:
                     properties:
                       validator:
+                        type: object
                         properties:
                           client:
+                            type: object
                             properties:
                               name:
                                 const: "lighthouse"
@@ -140,8 +170,10 @@ then:
                 - if:
                     properties:
                       validator:
+                        type: object
                         properties:
                           client:
+                            type: object
                             properties:
                               name:
                                 const: "lodestar"
@@ -151,8 +183,10 @@ then:
                 - if:
                     properties:
                       validator:
+                        type: object
                         properties:
                           client:
+                            type: object
                             properties:
                               name:
                                 const: "prysm"
@@ -162,8 +196,10 @@ then:
                 - if:
                     properties:
                       validator:
+                        type: object
                         properties:
                           client:
+                            type: object
                             properties:
                               name:
                                 const: "nimbus-eth2"
@@ -173,8 +209,10 @@ then:
                 - if:
                     properties:
                       validator:
+                        type: object
                         properties:
                           client:
+                            type: object
                             properties:
                               name:
                                 const: "teku"

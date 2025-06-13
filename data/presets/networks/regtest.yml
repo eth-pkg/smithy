@@ -1,0 +1,39 @@
+$id: regtest
+type: object
+required:
+  - common
+properties:
+  common:
+    type: object
+    required:
+      - network
+    properties:
+      network:
+        type: object
+        required:
+          - name
+          - id
+          - custom
+        properties:
+          name:
+            type: string
+            const: custom
+            errorMessage: 
+              const: "Network must be set to 'custom'"
+          id:
+            type: number
+            const: 1377
+            errorMessage: 
+              const: "Network ID must be set to 1377" 
+          custom:
+            type: object
+            required:
+              - testnetDir
+              - name
+            properties:
+              name:
+                type: string
+                default: "regtest"
+              testnetDir:
+                type: string
+                default: "{common.dataDir}/regtest"
