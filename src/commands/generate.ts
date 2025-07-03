@@ -76,7 +76,6 @@ export async function generate(
     },
   } as Validator;
 
-  console.log("userConfig", userConfig);
   try {
     const config = await nodeconfig.processConfigWithPreset(
       userConfig,

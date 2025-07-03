@@ -5,7 +5,6 @@ import Ajv from "ajv";
 import ajvErrors from "ajv-errors";
 import { NodeConfig, DeepPartial } from "@/types";
 import { Logger } from "./logger";
-import SchemaUtils from "./schema";
 
 interface SchemaProperty {
   type?: string;

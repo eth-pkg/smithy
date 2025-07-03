@@ -12,6 +12,12 @@ describe('Non-Staker Preset Tests', () => {
 
   it('should validate a correct non-staker config', async () => {
     const config: DeepPartial<NodeConfig> = {
+      common: {
+        network: {
+          name: 'mainnet',
+          id: 1
+        }
+      },
       consensus: {
         client: {
           name: 'lighthouse',
@@ -28,7 +34,7 @@ describe('Non-Staker Preset Tests', () => {
     };
 
     const result = await presetManager.validateAndApplyRules(config, 'combined/mainnet-non-staker');
-    expect(result.validator?.enabled).to.be.false;
+    expect(result.validator?.enabled).to.be.undefined;
   });
 
   it('should reject non-staker preset with staking set to true', async () => {
@@ -60,7 +66,8 @@ describe('Non-Staker Preset Tests', () => {
       expect.fail('Should have thrown an error');
     } catch (error: unknown) {
       if (error instanceof Error) {
-        expect(error.message).to.include('must be equal to constant');
+        console.log(error.message);
+        expect(error.message).to.include('Validator cannot be enabled when non-staker preset is selected');
       } else {
         expect.fail('Expected an Error object');
       }

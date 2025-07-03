@@ -1,119 +1,125 @@
 $id: validator.yml
 type: object
-properties:
-  enabled:
-    type: boolean
-    description: "Enable validator functionality"
-  isExternal:
-    type: boolean
-    description: "Is the validator external to the node, in different process"
-  client:
-    type: object
-    required: [name]
-    properties:
-      name:
-        type: string
-        enum:
-          - lighthouse
-          - lodestar
-          - nimbus-eth2
-          - prysm
-          - teku
-          - ""
-        description: "The validator client implementation to use (required when staking is enabled)"
-        errorMessage:
-          enum: "Validator client must be one of: lighthouse, lodestar, nimbus-eth2, prysm, teku"
-      version:
-        type: string
-        description: "The version of the validator client to use"
-        errorMessage:
-          pattern: "Version must be a valid semver string"
-  dataDir:
-    type: string
-    default: "{common.dataDir}/{validator.client.name}-validator"
-    description: "Base directory for validator data. Interpolated from common.dataDir and validator.client.name."
-  beaconNodes:
-    type: array
-    items:
-      type: string
-    description: "Beacon node RPC endpoint(s) (host:port)"
-    errorMessage:
-      pattern: "Beacon RPC provider must be a valid host:port"
-  suggestFeeRecipientAddress:
-    type: string
-    description: "Ethereum address to receive transaction fees"
-    pattern: "^0x[a-fA-F0-9]{40}$"
-    errorMessage:
-      pattern: "Fee recipient address must be a valid Ethereum address"
-  metrics:
-    type: object
-    properties:
-      enabled:
-        type: boolean
-        description: "Enable validator metrics collection"  
-      host:
-        type: string
-        description: "IP address to bind the metrics server to"
-      port:
-        type: number
-        minimum: 1024
-        maximum: 65535
-        errorMessage:
-          minimum: "Metrics port must be >= 1024"
-          maximum: "Metrics port must be <= 65535"
-  graffiti: 
-    type: object
-    properties:
-      enabled:
-        type: boolean
-        description: "Enable graffiti on proposed blocks"
-      message:
-        type: string
-        description: "Custom graffiti message to include in proposed blocks"
-      file:
-        type: string
-        description: "Path to file containing graffiti messages"
-  suggestedGasLimit:
-    type: number
-    description: "Suggested gas limit for proposed blocks"
-  doppelgangerProtection:
-    type: boolean
-    description: "Enable protection against duplicate validator instances"
-  externalSigner:
-    type: object
-    properties:
-      enabled:
-        type: boolean
-        description: "Enable external signer"
-      url:
-        type: string
-        description: "URL for external signer service"
-      keystore:
-        type: string
-        description: "Path to external signer keystore"
-      keystorePasswordFile:
-        type: string
-        description: "Path to file containing external signer keystore password"
-      publicKeys:
-        type: array
-        items:
+if:
+  properties:
+    enabled:
+      const: true
+  required: [enabled]
+then:
+  required: [enabled, client, suggestFeeRecipientAddress, beaconNodes]
+  properties:
+    enabled:
+      type: boolean
+      description: "Enable validator functionality"
+    isExternal:
+      type: boolean
+      description: "Is the validator external to the node, in different process"
+    client:
+      type: object
+      required: [name]
+      properties:
+        name:
           type: string
-        description: "List of public keys for external signer"
-  proposerConfig:
-    type: object
-    properties:
-      enabled:
-        type: boolean
-        description: "Enable proposer configuration"
-      file:
+          enum:
+            - lighthouse
+            - lodestar
+            - nimbus-eth2
+            - prysm
+            - teku
+          description: "The validator client implementation to use (required when staking is enabled)"
+          errorMessage:
+            enum: "Validator client must be one of: lighthouse, lodestar, nimbus-eth2, prysm, teku"
+        version:
+          type: string
+          description: "The version of the validator client to use"
+          errorMessage:
+            pattern: "Version must be a valid semver string"
+    dataDir:
+      type: string
+      default: "{common.dataDir}/{validator.client.name}-validator"
+      description: "Base directory for validator data. Interpolated from common.dataDir and validator.client.name."
+    beaconNodes:
+      type: array
+      items:
         type: string
-        description: "Path to proposer configuration file"
-  validatorsDir:
-    type: string
-    description: "Directory containing validator keys"
-  secretsDir:
-    type: string
-    description: "Directory containing validator secrets"
-  distributed:
-    type: boolean
-    description: "Enable distributed validator mode" 
+      description: "Beacon node RPC endpoint(s) (host:port)"
+      errorMessage:
+        pattern: "Beacon RPC provider must be a valid host:port"
+    suggestFeeRecipientAddress:
+      type: string
+      description: "Ethereum address to receive transaction fees"
+      pattern: "^0x[a-fA-F0-9]{40}$"
+      errorMessage:
+        pattern: "Fee recipient address must be a valid Ethereum address"
+    metrics:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: "Enable validator metrics collection"  
+        host:
+          type: string
+          description: "IP address to bind the metrics server to"
+        port:
+          type: number
+          minimum: 1024
+          maximum: 65535
+          errorMessage:
+            minimum: "Metrics port must be >= 1024"
+            maximum: "Metrics port must be <= 65535"
+    graffiti: 
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: "Enable graffiti on proposed blocks"
+        message:
+          type: string
+          description: "Custom graffiti message to include in proposed blocks"
+        file:
+          type: string
+          description: "Path to file containing graffiti messages"
+    suggestedGasLimit:
+      type: number
+      description: "Suggested gas limit for proposed blocks"
+    doppelgangerProtection:
+      type: boolean
+      description: "Enable protection against duplicate validator instances"
+    externalSigner:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: "Enable external signer"
+        url:
+          type: string
+          description: "URL for external signer service"
+        keystore:
+          type: string
+          description: "Path to external signer keystore"
+        keystorePasswordFile:
+          type: string
+          description: "Path to file containing external signer keystore password"
+        publicKeys:
+          type: array
+          items:
+            type: string
+          description: "List of public keys for external signer"
+    proposerConfig:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: "Enable proposer configuration"
+        file:
+          type: string
+          description: "Path to proposer configuration file"
+    validatorsDir:
+      type: string
+      description: "Directory containing validator keys"
+    secretsDir:
+      type: string
+      description: "Directory containing validator secrets"
+    distributed:
+      type: boolean
+      description: "Enable distributed validator mode" 

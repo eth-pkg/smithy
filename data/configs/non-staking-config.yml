@@ -83,7 +83,4 @@ execution:
     saveFile: "txpool.dump"
 
 validator:
-  client:
-    name: lighthouse
-    version: ''
   enabled: false
