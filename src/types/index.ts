@@ -32,7 +32,7 @@ export interface NodeConfig {
 }
 
 // Generation Options
-export interface GenerateOptions {
+export interface ClientChoices {
   preset: string;
   execution: string;
   consensus: string;
