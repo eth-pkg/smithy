@@ -6,7 +6,7 @@ import {
   ValidatorClientName,
 } from "@/types";
 import { testConfig } from "@test/fixtures/configs";
-import SchemaUtils from "@/utils/schema";
+import SchemaUtils from "@/nodeconfig/schema";
 
 describe("Custom Network Mappings Tests", () => {
   let registry: CommandClientRegistry;

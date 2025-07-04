@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { PresetManager } from '@/utils/preset';
+import { PresetManager } from '@/nodeconfig/preset';
 import { NodeConfig, DeepPartial } from '@/types';
 
 export interface NetworkConfig {

@@ -1,10 +1,10 @@
-import { PresetManager } from "@/utils/preset";
+import { ConfigManager } from "@/nodeconfig/config";
 
 /**
  * List available configurations
  * @returns List of configuration names
  */
 export async function listConfigs(): Promise<string[]> {
-  const presetManager = new PresetManager();
-  return await presetManager.listConfigs();
+  const configManager = new ConfigManager();
+  return await configManager.listConfigs();
 }

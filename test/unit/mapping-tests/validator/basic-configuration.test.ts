@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { CommandClientRegistry } from '@/builders/command/command-client-registry';
 import { ValidatorClientName } from '@/types';
 import { testConfig } from '@test/fixtures/configs';
-import SchemaUtils from '@/utils/schema';
+import SchemaUtils from '@/nodeconfig/schema';
 
 describe('Validator Client Basic Configuration Tests', () => {
   let registry: CommandClientRegistry;

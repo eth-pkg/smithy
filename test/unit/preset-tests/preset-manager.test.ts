@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { PresetManager } from '@/utils/preset';
+import { PresetManager } from '@/nodeconfig/preset';
 import { baseConfig, testConfig } from '@test/fixtures/configs';
 import { ExecutionClientName, ConsensusClientName, NodeConfig, ValidatorClientName } from '@/types';
 

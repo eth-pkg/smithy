@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { CommandClientRegistry } from '@/builders/command/command-client-registry';
 import { ConsensusClientName } from '@/types';
-import SchemaUtils from '@/utils/schema';
+import SchemaUtils from '@/nodeconfig/schema';
 import { testConfig } from '@test/fixtures/configs';
 
 

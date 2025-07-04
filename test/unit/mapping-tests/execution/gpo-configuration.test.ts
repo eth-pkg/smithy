@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { CommandClientRegistry } from '@/builders/command/command-client-registry';
 import { ExecutionClientName } from '@/types';
 import { testConfig } from '@test/fixtures/configs';
-import SchemaUtils from '@/utils/schema';
+import SchemaUtils from '@/nodeconfig/schema';
 
 describe('Execution Client Gas Price Oracle Configuration Tests', () => {
   let registry: CommandClientRegistry;

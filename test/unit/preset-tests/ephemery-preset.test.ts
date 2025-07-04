@@ -1,5 +1,5 @@
 import { describe } from 'mocha';
-import { runNetworkPresetTests } from '../../fixtures/network-preset.fixture';
+import { runNetworkPresetTests } from '@test/fixtures/network-preset.fixture';
 
 describe('Ephemery Preset Tests', () => {
   runNetworkPresetTests({

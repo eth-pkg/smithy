@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { describe, it, beforeEach } from 'mocha';
-import { PresetManager } from '@/utils/preset';
+import { PresetManager } from '@/nodeconfig/preset';
 import { NodeConfig } from '@/types';
 import { baseConfig, testConfig } from '@test/fixtures/configs';
 

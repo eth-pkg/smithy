@@ -2,7 +2,8 @@ import { ClientChoices } from "@/types";
 import { PromptManager } from "./prompt-manager";
 import { CommandGenerator } from "./command-generator";
 import { ConfigBuilder } from "./config-builder";
-import { NodeConfigManager } from "@/utils/node-config";
+import { PresetManager } from "@/nodeconfig/preset";
+import ConfigManager from "@/nodeconfig/config";
 
 /**
  * Generate Ethereum client commands
@@ -11,14 +12,15 @@ import { NodeConfigManager } from "@/utils/node-config";
 export async function generate(
   options: Partial<ClientChoices>
 ): Promise<void> {
-  const nodeConfig = new NodeConfigManager();
+  const configManager = new ConfigManager();
+  const presetManager = new PresetManager();
   const promptManager = new PromptManager();
   const commandGenerator = new CommandGenerator();
   const configBuilder = new ConfigBuilder();
 
   try {
     // Load initial configuration
-    const userConfig = await nodeConfig.loadConfigFile(options.configFile || "");
+    const userConfig = await configManager.loadConfigFile(options.configFile || "");
 
     // Determine missing fields and prompt user if needed
     const finalOptions = await promptManager.promptForMissingFields(options, userConfig);
@@ -28,7 +30,10 @@ export async function generate(
 
     // Process configuration with preset
     const preset = options.preset || "default";
-    const config = await nodeConfig.processConfigWithPreset(finalConfig, preset);
+    const config =  await presetManager.validateAndApplyRules(
+      finalConfig,
+      preset
+    );
 
     // Generate client commands
     await commandGenerator.generateClientCommands(config, finalOptions);
