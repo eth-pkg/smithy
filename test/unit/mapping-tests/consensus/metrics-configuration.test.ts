@@ -1,13 +1,12 @@
 import { expect } from 'chai';
 import { CommandClientRegistry } from '@/builders/command/command-client-registry';
 import { ConsensusClientName } from '@/types';
-import SchemaUtils from '@/nodeconfig/schema';
+import { deepMerge } from '@test/fixtures/deepMerge.fixture';
 import { testConfig } from '@test/fixtures/configs';
 
 
 describe('Consensus Client Metrics Configuration Tests', () => {
   let registry: CommandClientRegistry;
-  const schemaUtils = new SchemaUtils('');
   const consensusClients: ConsensusClientName[] = [
     'lighthouse',
     'lodestar',
@@ -23,7 +22,7 @@ describe('Consensus Client Metrics Configuration Tests', () => {
   consensusClients.forEach(client => {
     describe(`${client} metrics configuration`, () => {
       it('should include any metrics flags when metrics is enabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           common: {
             engine: {
               enabled: false
@@ -80,7 +79,7 @@ describe('Consensus Client Metrics Configuration Tests', () => {
       });
 
       it('should not include any metrics flags when metrics is disabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           common: {
             engine: {
               enabled: false

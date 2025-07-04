@@ -2,11 +2,10 @@ import { expect } from 'chai';
 import { CommandClientRegistry } from '@/builders/command/command-client-registry';
 import { ExecutionClientName } from '@/types';
 import { testConfig } from '@test/fixtures/configs';
-import SchemaUtils from '@/nodeconfig/schema';
+import { deepMerge } from '@test/fixtures/deepMerge.fixture';
 
 describe('Execution Client Logging Configuration Tests', () => {
   let registry: CommandClientRegistry;
-  const schemaUtils = new SchemaUtils('');
   const executionClients: ExecutionClientName[] = [
     'besu',
     'erigon',
@@ -21,7 +20,7 @@ describe('Execution Client Logging Configuration Tests', () => {
 
   executionClients.forEach(client => {
     it(`should correctly configure logging for ${client} when enabled`, () => {
-      const config = schemaUtils.deepMerge(testConfig, {
+      const config = deepMerge(testConfig, {
         execution: {
           http: {
             enabled: false,
@@ -100,7 +99,7 @@ describe('Execution Client Logging Configuration Tests', () => {
     });
 
     it(`should not include any logging flags for ${client} when logging is disabled`, () => {
-      const config = schemaUtils.deepMerge(testConfig, {
+      const config = deepMerge(testConfig, {
         execution: {
           http: {
             enabled: false,
@@ -171,7 +170,7 @@ describe('Execution Client Logging Configuration Tests', () => {
     });
 
     it(`should not include stdout logging flags for ${client} when stdout logging is disabled`, () => {
-      const config = schemaUtils.deepMerge(testConfig, {
+      const config = deepMerge(testConfig, {
         execution: {
           http: {
             enabled: false,
@@ -248,7 +247,7 @@ describe('Execution Client Logging Configuration Tests', () => {
     });
 
     it(`should not include file logging flags for ${client} when file logging is disabled`, () => {
-      const config = schemaUtils.deepMerge(testConfig, {
+      const config = deepMerge(testConfig, {
         execution: {
           http: {
             enabled: false,

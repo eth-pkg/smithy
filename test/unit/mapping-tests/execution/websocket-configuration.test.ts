@@ -2,11 +2,10 @@ import { expect } from 'chai';
 import { CommandClientRegistry } from '@/builders/command/command-client-registry';
 import { ExecutionClientName } from '@/types';
 import { testConfig } from '@test/fixtures/configs';
-import SchemaUtils from '@/nodeconfig/schema';
+import { deepMerge } from '@test/fixtures/deepMerge.fixture';
 
 describe('Execution Client WebSocket Configuration Tests', () => {
   let registry: CommandClientRegistry;
-  const schemaUtils = new SchemaUtils('');
   const executionClients: ExecutionClientName[] = [
     'besu',
     'erigon',
@@ -21,7 +20,7 @@ describe('Execution Client WebSocket Configuration Tests', () => {
 
   executionClients.forEach(client => {
     it(`should add WebSocket flags when enabled`, () => {
-      const config = schemaUtils.deepMerge(testConfig, {
+      const config = deepMerge(testConfig, {
         execution: {
           client: {
             name: client,
@@ -57,7 +56,7 @@ describe('Execution Client WebSocket Configuration Tests', () => {
     });
 
     it(`should not add WebSocket flags when disabled`, () => {
-      const config = schemaUtils.deepMerge(testConfig, {
+      const config = deepMerge(testConfig, {
         execution: {
           client: {
             name: client,
@@ -93,7 +92,7 @@ describe('Execution Client WebSocket Configuration Tests', () => {
     });
 
     it(`should not add port flag when WebSocket is disabled even if port is defined`, () => {
-      const config = schemaUtils.deepMerge(testConfig, {
+      const config = deepMerge(testConfig, {
         execution: {
           client: {
             name: client,

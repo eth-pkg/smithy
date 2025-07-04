@@ -2,11 +2,10 @@ import { expect } from 'chai';
 import { CommandClientRegistry } from '@/builders/command/command-client-registry';
 import { ConsensusClientName, DeepPartial, NodeConfig } from '@/types';
 import { testConfig } from '@test/fixtures/configs';
-import SchemaUtils from '@/nodeconfig/schema';
+import { deepMerge } from '@test/fixtures/deepMerge.fixture';
 
 describe('Consensus Client Builder Configuration Tests', () => {
   let registry: CommandClientRegistry;
-  const schemaUtils = new SchemaUtils('');
   const consensusClients: ConsensusClientName[] = [
     'lighthouse',
     "lodestar",
@@ -22,7 +21,7 @@ describe('Consensus Client Builder Configuration Tests', () => {
   consensusClients.forEach(client => {
     describe(`${client} builder configuration`, () => {
       it('should include builder flags when builder is enabled', () => {
-        const config: NodeConfig = schemaUtils.deepMerge(testConfig, {
+        const config: NodeConfig = deepMerge(testConfig, {
           common: {
             engine: {
               enabled: false
@@ -75,7 +74,7 @@ describe('Consensus Client Builder Configuration Tests', () => {
       });
 
       it('should not include any builder flags when builder is disabled', () => {
-        const config: NodeConfig = schemaUtils.deepMerge(testConfig, {
+        const config: NodeConfig = deepMerge(testConfig, {
           common: {
             engine: {
               enabled: false

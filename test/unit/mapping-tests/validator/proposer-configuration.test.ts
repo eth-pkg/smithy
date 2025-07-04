@@ -2,11 +2,10 @@ import { expect } from 'chai';
 import { CommandClientRegistry } from '@/builders/command/command-client-registry';
 import { ValidatorClientName } from '@/types';
 import { testConfig } from '@test/fixtures/configs';
-import SchemaUtils from '@/nodeconfig/schema';
+import { deepMerge } from '@test/fixtures/deepMerge.fixture';
 
 describe('Validator Client Proposer Configuration Tests', () => {
   let registry: CommandClientRegistry;
-  const schemaUtils = new SchemaUtils('');
   const validatorClients: ValidatorClientName[] = [
     'lighthouse',
     'lodestar',
@@ -22,7 +21,7 @@ describe('Validator Client Proposer Configuration Tests', () => {
   validatorClients.forEach(client => {
     describe(`${client} proposer configuration`, () => {
       it('should correctly map proposer configuration when enabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           validator: {
             client: {
               name: client,
@@ -59,7 +58,7 @@ describe('Validator Client Proposer Configuration Tests', () => {
       });
 
       it('should not include proposer config flags when disabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           validator: {
             client: {
               name: client,

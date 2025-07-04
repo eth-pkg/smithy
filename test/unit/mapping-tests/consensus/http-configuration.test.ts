@@ -2,11 +2,10 @@ import { expect } from 'chai';
 import { CommandClientRegistry } from '@/builders/command/command-client-registry';
 import { ConsensusClientName } from '@/types';
 import { testConfig } from '@test/fixtures/configs';
-import SchemaUtils from '@/nodeconfig/schema';
+import { deepMerge } from '@test/fixtures/deepMerge.fixture';
 
 describe('Consensus Client HTTP Configuration Tests', () => {
   let registry: CommandClientRegistry;
-  const schemaUtils = new SchemaUtils('');
   const consensusClients: ConsensusClientName[] = [
     'lighthouse',
     'lodestar',
@@ -22,7 +21,7 @@ describe('Consensus Client HTTP Configuration Tests', () => {
   consensusClients.forEach(client => {
     describe(`${client} http configuration`, () => {
       it('should include http flags when http is enabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           common: {
             engine: {
               enabled: false
@@ -94,7 +93,7 @@ describe('Consensus Client HTTP Configuration Tests', () => {
       });
 
       it('should not include http flags when http is disabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           common: {
             engine: {
               enabled: false

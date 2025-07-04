@@ -2,11 +2,10 @@ import { expect } from 'chai';
 import { CommandClientRegistry } from '@/builders/command/command-client-registry';
 import { ExecutionClientName } from '@/types';
 import { testConfig } from '@test/fixtures/configs';
-import SchemaUtils from '@/nodeconfig/schema';
+import { deepMerge } from '@test/fixtures/deepMerge.fixture';
 
 describe('Execution Client Metrics Configuration Tests', () => {
   let registry: CommandClientRegistry;
-  const schemaUtils = new SchemaUtils('');
   const executionClients: ExecutionClientName[] = [
     'besu',
     'erigon',
@@ -22,7 +21,7 @@ describe('Execution Client Metrics Configuration Tests', () => {
   executionClients.forEach(client => {
     describe(`${client} metrics configuration`, () => {
       it('should not include any metrics flags when metrics is disabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           execution: {
             client: {
               name: client,
@@ -67,7 +66,7 @@ describe('Execution Client Metrics Configuration Tests', () => {
       });
 
       it('should include basic metrics flag when metrics is enabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           execution: {
             client: {
               name: client,
@@ -100,7 +99,7 @@ describe('Execution Client Metrics Configuration Tests', () => {
       });
 
       it('should include port configuration when metrics is enabled with port', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           execution: {
             client: {
               name: client,
@@ -135,7 +134,7 @@ describe('Execution Client Metrics Configuration Tests', () => {
       });
 
       it('should include address configuration when metrics is enabled with address', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           execution: {
             client: {
               name: client,

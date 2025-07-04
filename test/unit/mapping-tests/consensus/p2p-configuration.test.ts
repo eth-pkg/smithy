@@ -2,11 +2,10 @@ import { expect } from 'chai';
 import { CommandClientRegistry } from '@/builders/command/command-client-registry';
 import { ConsensusClientName } from '@/types';
 import { testConfig } from '@test/fixtures/configs';
-import SchemaUtils from '@/nodeconfig/schema';
+import { deepMerge } from '@test/fixtures/deepMerge.fixture';
 
 describe('Consensus Client P2P Configuration Tests', () => {
   let registry: CommandClientRegistry;
-  const schemaUtils = new SchemaUtils('');
   const consensusClients: ConsensusClientName[] = [
     'lighthouse',
     "lodestar",
@@ -23,7 +22,7 @@ describe('Consensus Client P2P Configuration Tests', () => {
     describe(`${client} p2p configuration`, () => {
 
       it('should include listenaddress when p2p is enabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           common: {
             engine: {
               enabled: false
@@ -60,7 +59,7 @@ describe('Consensus Client P2P Configuration Tests', () => {
       });
 
       it('should not include listenaddress when p2p is disabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           common: {
             engine: {
               enabled: false
@@ -96,7 +95,7 @@ describe('Consensus Client P2P Configuration Tests', () => {
         }
       });
       it('should include port when p2p is enabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           common: {
             engine: {
               enabled: false
@@ -157,7 +156,7 @@ describe('Consensus Client P2P Configuration Tests', () => {
       });
 
       it('should not include port when p2p is disabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           common: {
             engine: {
               enabled: false
@@ -214,7 +213,7 @@ describe('Consensus Client P2P Configuration Tests', () => {
       });
 
       it('should include bootnodes when p2p is enabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           common: {
             engine: {
               enabled: false
@@ -250,7 +249,7 @@ describe('Consensus Client P2P Configuration Tests', () => {
       });
 
       it('should include bootnodes when p2p is disabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           common: {
             engine: {
               enabled: false
@@ -286,7 +285,7 @@ describe('Consensus Client P2P Configuration Tests', () => {
       });
 
       it('should include peer settings when p2p is enabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           common: {
             engine: {
               enabled: false
@@ -357,7 +356,7 @@ describe('Consensus Client P2P Configuration Tests', () => {
       });
 
       it('should not include peer settings when p2p is disabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           common: {
             engine: {
               enabled: false
@@ -413,7 +412,7 @@ describe('Consensus Client P2P Configuration Tests', () => {
 
       // TODO: check if this is correct
       it.skip('should handle nodiscover setting when p2p is enabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           common: {
             engine: {
               enabled: false
@@ -455,7 +454,7 @@ describe('Consensus Client P2P Configuration Tests', () => {
       });
 
       it('should handle localPeerDiscovery setting when p2p is enabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           common: {
             engine: {
               enabled: false
@@ -493,7 +492,7 @@ describe('Consensus Client P2P Configuration Tests', () => {
       });
 
       it('should not contain localPeerDiscovery setting when p2p is disabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           common: {
             engine: {
               enabled: false
@@ -531,7 +530,7 @@ describe('Consensus Client P2P Configuration Tests', () => {
       });
 
       it('should handle subscribeAllSubnets setting when p2p is enabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           common: {
             engine: {
               enabled: false
@@ -567,7 +566,7 @@ describe('Consensus Client P2P Configuration Tests', () => {
       });
 
       it('should handle subscribeAllSubnets setting when p2p is disabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           common: {
             engine: {
               enabled: false
@@ -604,7 +603,7 @@ describe('Consensus Client P2P Configuration Tests', () => {
 
 
       it('should handle nat setting when p2p is enabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           common: {
             engine: {
               enabled: false
@@ -641,7 +640,7 @@ describe('Consensus Client P2P Configuration Tests', () => {
 
 
       it('should handle nat setting when p2p is enabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           common: {
             engine: {
               enabled: false
@@ -677,7 +676,7 @@ describe('Consensus Client P2P Configuration Tests', () => {
       });
 
       it('should handle staticId setting when p2p is enabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           common: {
             engine: {
               enabled: false
@@ -720,7 +719,7 @@ describe('Consensus Client P2P Configuration Tests', () => {
       });
 
       it('should not handle staticId setting when p2p is disabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           common: {
             engine: {
               enabled: false

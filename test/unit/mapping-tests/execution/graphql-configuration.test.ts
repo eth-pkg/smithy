@@ -2,11 +2,10 @@ import { expect } from 'chai';
 import { CommandClientRegistry } from '@/builders/command/command-client-registry';
 import { ExecutionClientName } from '@/types';
 import { testConfig } from '@test/fixtures/configs';
-import SchemaUtils from '@/nodeconfig/schema';
+import { deepMerge } from '@test/fixtures/deepMerge.fixture';
 
 describe('Execution Client GraphQL Configuration Tests', () => {
   let registry: CommandClientRegistry;
-  const schemaUtils = new SchemaUtils('');
   const executionClients: ExecutionClientName[] = [
     'besu',
     'erigon',
@@ -22,7 +21,7 @@ describe('Execution Client GraphQL Configuration Tests', () => {
   executionClients.forEach(client => {
     describe(`${client} GraphQL configuration`, () => {
       it('should not add GraphQL flags when disabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           execution: {
             client: {
               name: client,
@@ -68,7 +67,7 @@ describe('Execution Client GraphQL Configuration Tests', () => {
       });
 
       it('should add GraphQL port flag when enabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           execution: {
             client: {
               name: client,
@@ -107,7 +106,7 @@ describe('Execution Client GraphQL Configuration Tests', () => {
       });
 
       it('should add GraphQL address flag when enabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           execution: {
             client: {
               name: client,
@@ -146,7 +145,7 @@ describe('Execution Client GraphQL Configuration Tests', () => {
       });
 
       it('should add GraphQL allowlist flag when enabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           execution: {
             client: {
               name: client,

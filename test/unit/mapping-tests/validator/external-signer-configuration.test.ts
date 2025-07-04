@@ -2,11 +2,10 @@ import { expect } from "chai";
 import { CommandClientRegistry } from "@/builders/command/command-client-registry";
 import { ValidatorClientName } from "@/types";
 import { testConfig } from '@test/fixtures/configs';
-import SchemaUtils from "@/nodeconfig/schema";
+import { deepMerge } from '@test/fixtures/deepMerge.fixture';
 
 describe("Validator Client External Signer Configuration Tests", () => {
   let registry: CommandClientRegistry;
-  const schemaUtils = new SchemaUtils("");
   const validatorClients: ValidatorClientName[] = [
     "lighthouse",
     "lodestar",
@@ -22,7 +21,7 @@ describe("Validator Client External Signer Configuration Tests", () => {
   validatorClients.forEach((client) => {
     describe(`${client} external signer configuration`, () => {
       it("should correctly map external signer configuration when enabled", () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           validator: {
             client: {
               name: client,
@@ -90,7 +89,7 @@ describe("Validator Client External Signer Configuration Tests", () => {
       });
 
       it("should correctly map external signer configuration when validator is disabled", () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           validator: {
             client: {
               name: client,
@@ -158,7 +157,7 @@ describe("Validator Client External Signer Configuration Tests", () => {
       });
 
       it("should correctly map external signer configuration when external signer is disabled", () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           validator: {
             client: {
               name: client,

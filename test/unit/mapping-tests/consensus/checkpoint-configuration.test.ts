@@ -1,12 +1,11 @@
 import { expect } from 'chai';
 import { CommandClientRegistry } from '@/builders/command/command-client-registry';
 import { ConsensusClientName, DeepPartial, NodeConfig } from '@/types';
-import SchemaUtils from '@/nodeconfig/schema';
 import { testConfig } from '@test/fixtures/configs';
+import { deepMerge } from '@test/fixtures/deepMerge.fixture';
 
 describe('Consensus Client Checkpoint Configuration Tests', () => {
   let registry: CommandClientRegistry;
-  const schemaUtils = new SchemaUtils('');
   const consensusClients: ConsensusClientName[] = [
     'lighthouse',
     'lodestar',
@@ -22,7 +21,7 @@ describe('Consensus Client Checkpoint Configuration Tests', () => {
   consensusClients.forEach(client => {
     describe(`${client} checkpoint configuration`, () => {
       it('should include any checkpoint flags when checkpoint is enabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           common: {
             engine: {
               enabled: false
@@ -95,7 +94,7 @@ describe('Consensus Client Checkpoint Configuration Tests', () => {
       });
 
       it('should not include any checkpoint flags when checkpoint is disabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           common: {
             engine: {
               enabled: false

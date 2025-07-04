@@ -2,11 +2,10 @@ import { expect } from "chai";
 import { CommandClientRegistry } from "@/builders/command/command-client-registry";
 import { ValidatorClientName } from "@/types";
 import { testConfig } from '@test/fixtures/configs';
-import SchemaUtils from "@/nodeconfig/schema";
+import { deepMerge } from '@test/fixtures/deepMerge.fixture';
 
 describe("Validator Client Graffiti Configuration Tests", () => {
   let registry: CommandClientRegistry;
-  const schemaUtils = new SchemaUtils("");
   const validatorClients: ValidatorClientName[] = [
     "lighthouse",
     "lodestar",
@@ -22,7 +21,7 @@ describe("Validator Client Graffiti Configuration Tests", () => {
   validatorClients.forEach((client) => {
     describe(`${client} graffiti configuration`, () => {
       it("should correctly map graffiti message when enabled", () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           validator: {
             client: {
               name: client,
@@ -62,7 +61,7 @@ describe("Validator Client Graffiti Configuration Tests", () => {
       });
 
       it("should correctly map graffiti file when enabled", () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           validator: {
             client: {
               name: client,
@@ -101,7 +100,7 @@ describe("Validator Client Graffiti Configuration Tests", () => {
       });
 
       it("should not include graffiti flags when graffiti is disabled", () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           validator: {
             client: {
               name: client,

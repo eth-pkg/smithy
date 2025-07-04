@@ -2,11 +2,10 @@ import { expect } from 'chai';
 import { CommandClientRegistry } from '@/builders/command/command-client-registry';
 import { ConsensusClientName, DeepPartial, NodeConfig } from '@/types';
 import { testConfig } from '@test/fixtures/configs';
-import SchemaUtils from '@/nodeconfig/schema';
+import { deepMerge } from '@test/fixtures/deepMerge.fixture';
 
 describe('Consensus Client Genesis Configuration Tests', () => {
   let registry: CommandClientRegistry;
-  const schemaUtils = new SchemaUtils('');
   const consensusClients: ConsensusClientName[] = [
     'lighthouse',
     'lodestar',
@@ -22,7 +21,7 @@ describe('Consensus Client Genesis Configuration Tests', () => {
   consensusClients.forEach(client => {
     describe(`${client} genesis configuration`, () => {
       it('should include any genesis flags when genesis is enabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           common: {
             engine: {
               enabled: false
@@ -74,7 +73,7 @@ describe('Consensus Client Genesis Configuration Tests', () => {
         }
       });
       it('should not include any genesis flags when genesis is disabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           common: {
             engine: {
               enabled: false

@@ -2,11 +2,10 @@ import { expect } from 'chai';
 import { CommandClientRegistry } from '@/builders/command/command-client-registry';
 import { ExecutionClientName } from '@/types';
 import { testConfig } from '@test/fixtures/configs';
-import SchemaUtils from '@/nodeconfig/schema';
+import { deepMerge } from '@test/fixtures/deepMerge.fixture';
 
 describe('Execution Client P2P Configuration Tests', () => {
   let registry: CommandClientRegistry;
-  const schemaUtils = new SchemaUtils('');
   const executionClients: ExecutionClientName[] = [
     'besu',
     'erigon',
@@ -20,7 +19,7 @@ describe('Execution Client P2P Configuration Tests', () => {
   });
 
   const createTestConfig = (p2pConfig: any) => {
-    return schemaUtils.deepMerge(testConfig, {
+    return deepMerge(testConfig, {
       execution: {
         client: {
           name: '',

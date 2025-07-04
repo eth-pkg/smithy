@@ -2,11 +2,10 @@ import { expect } from 'chai';
 import { CommandClientRegistry } from '@/builders/command/command-client-registry';
 import { ExecutionClientName } from '@/types';
 import { testConfig } from '@test/fixtures/configs';
-import SchemaUtils from '@/nodeconfig/schema';
+import { deepMerge } from '@test/fixtures/deepMerge.fixture';
 
 describe('Execution Client Transaction Pool Configuration Tests', () => {
   let registry: CommandClientRegistry;
-  const schemaUtils = new SchemaUtils('');
   const executionClients: ExecutionClientName[] = [
     'besu',
     'erigon',
@@ -21,7 +20,7 @@ describe('Execution Client Transaction Pool Configuration Tests', () => {
 
   executionClients.forEach(client => {
     it.skip(`should correctly configure transaction pool for ${client}`, () => {
-      const config = schemaUtils.deepMerge(testConfig, {
+      const config = deepMerge(testConfig, {
         execution: {
           client: {
             name: client,

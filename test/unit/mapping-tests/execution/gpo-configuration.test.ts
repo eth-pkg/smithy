@@ -2,11 +2,10 @@ import { expect } from 'chai';
 import { CommandClientRegistry } from '@/builders/command/command-client-registry';
 import { ExecutionClientName } from '@/types';
 import { testConfig } from '@test/fixtures/configs';
-import SchemaUtils from '@/nodeconfig/schema';
+import { deepMerge } from '@test/fixtures/deepMerge.fixture';
 
 describe('Execution Client Gas Price Oracle Configuration Tests', () => {
   let registry: CommandClientRegistry;
-  const schemaUtils = new SchemaUtils('');
   const executionClients: ExecutionClientName[] = [
     'besu',
     'erigon',
@@ -22,7 +21,7 @@ describe('Execution Client Gas Price Oracle Configuration Tests', () => {
   executionClients.forEach(client => {
     describe(`${client} GPO configuration`, () => {
       it('should not add GPO flags when GPO is disabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           execution: {
             client: {
               name: client,
@@ -70,7 +69,7 @@ describe('Execution Client Gas Price Oracle Configuration Tests', () => {
       });
 
       it('should add GPO blocks flag when enabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           execution: {
             client: {
               name: client,
@@ -106,7 +105,7 @@ describe('Execution Client Gas Price Oracle Configuration Tests', () => {
       });
 
       it('should add GPO percentile flag when enabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           execution: {
             client: {
               name: client,
@@ -142,7 +141,7 @@ describe('Execution Client Gas Price Oracle Configuration Tests', () => {
       });
 
       it('should add GPO maxprice flag when enabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           execution: {
             client: {
               name: client,
@@ -178,7 +177,7 @@ describe('Execution Client Gas Price Oracle Configuration Tests', () => {
       });
 
       it('should add GPO ignoreprice flag when enabled', () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           execution: {
             client: {
               name: client,

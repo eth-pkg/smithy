@@ -2,11 +2,10 @@ import { expect } from 'chai';
 import { CommandClientRegistry } from '@/builders/command/command-client-registry';
 import { ExecutionClientName } from '@/types';
 import { testConfig } from '@test/fixtures/configs';
-import SchemaUtils from '@/nodeconfig/schema';
+import { deepMerge } from '@test/fixtures/deepMerge.fixture';
 
 describe('HTTP Configuration Tests', () => {
   let registry: CommandClientRegistry;
-  const schemaUtils = new SchemaUtils('');
   const executionClients: ExecutionClientName[] = [
     'besu',
     'erigon',
@@ -22,7 +21,7 @@ describe('HTTP Configuration Tests', () => {
   describe('HTTP Enabled/Disabled', () => {
     executionClients.forEach(client => {
       it(`should enable HTTP when enabled flag is true for ${client}`, () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           execution: {
             client: {
               name: client,
@@ -57,7 +56,7 @@ describe('HTTP Configuration Tests', () => {
       });
 
       it(`should not add any HTTP flags when disabled for ${client}`, () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           execution: {
             client: {
               name: client,
@@ -130,7 +129,7 @@ describe('HTTP Configuration Tests', () => {
   describe('HTTP Port Configuration', () => {
     executionClients.forEach(client => {
       it(`should correctly configure HTTP port for ${client}`, () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           execution: {
             client: {
               name: client,
@@ -170,7 +169,7 @@ describe('HTTP Configuration Tests', () => {
   describe('HTTP API Modules Configuration', () => {
     executionClients.forEach(client => {
       it(`should correctly configure HTTP API modules for ${client}`, () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           execution: {
             client: {
               name: client,
@@ -211,7 +210,7 @@ describe('HTTP Configuration Tests', () => {
   describe('HTTP Host Configuration', () => {
     executionClients.forEach(client => {
       it(`should correctly configure HTTP host address for ${client}`, () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           execution: {
             client: {
               name: client,
@@ -251,7 +250,7 @@ describe('HTTP Configuration Tests', () => {
   describe('HTTP CORS Configuration', () => {
     executionClients.forEach(client => {
       it(`should correctly configure HTTP CORS for ${client}`, () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           execution: {
             client: {
               name: client,
@@ -294,7 +293,7 @@ describe('HTTP Configuration Tests', () => {
   describe.skip('HTTP TLS Configuration', () => {
     executionClients.forEach(client => {
       it(`should correctly configure HTTP TLS for ${client}`, () => {
-        const config = schemaUtils.deepMerge(testConfig, {
+        const config = deepMerge(testConfig, {
           execution: {
             client: {
               name: client,

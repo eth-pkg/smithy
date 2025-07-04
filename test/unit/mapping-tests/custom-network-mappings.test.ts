@@ -6,11 +6,10 @@ import {
   ValidatorClientName,
 } from "@/types";
 import { testConfig } from "@test/fixtures/configs";
-import SchemaUtils from "@/nodeconfig/schema";
+import { deepMerge } from "@test/fixtures/deepMerge.fixture";
 
 describe("Custom Network Mappings Tests", () => {
   let registry: CommandClientRegistry;
-  const schemaUtils = new SchemaUtils("");
 
   beforeEach(() => {
     registry = new CommandClientRegistry();
@@ -25,7 +24,7 @@ describe("Custom Network Mappings Tests", () => {
   const dataDir = "/path/to/data";
 
   const createBaseConfig = () => {
-    return schemaUtils.deepMerge(testConfig, {
+    return deepMerge(testConfig, {
       common: {
         ...testConfig.common,
         dataDir,
