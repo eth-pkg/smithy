@@ -1,6 +1,6 @@
 import * as fs from "fs-extra";
 import { NodeConfig, ClientChoices, ExecutionClientName, ConsensusClientName, ValidatorClientName } from "@/types";
-import { CommandClientRegistry } from "@/builders/command/command-client-registry";
+import { CommandClientRegistry } from "@/command/command-client-registry";
 
 export class CommandGenerator {
   private registry: CommandClientRegistry;

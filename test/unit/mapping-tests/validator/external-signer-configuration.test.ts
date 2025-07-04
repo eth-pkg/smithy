@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { CommandClientRegistry } from "@/builders/command/command-client-registry";
+import { CommandClientRegistry } from "@/command/command-client-registry";
 import { ValidatorClientName } from "@/types";
 import { testConfig } from '@test/fixtures/configs';
 import { deepMerge } from '@test/fixtures/deepMerge.fixture';

@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { CommandClientRegistry } from "@/builders/command/command-client-registry";
+import { CommandClientRegistry } from "@/command/command-client-registry";
 import {
   ExecutionClientName,
   ConsensusClientName,
