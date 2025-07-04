@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { PresetManager } from '@/utils/preset';
 import { NodeConfig, DeepPartial } from '@/types';
 
-interface NetworkConfig {
+export interface NetworkConfig {
   network: string;
   networkId: number;
   dataDir: string;

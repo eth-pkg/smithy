@@ -1,5 +1,5 @@
 import { describe } from 'mocha';
-import { runNetworkPresetTests } from './network-preset.test-helper';
+import { runNetworkPresetTests } from '../../fixtures/network-preset.fixture';
 
 describe('Mainnet Preset Tests', () => {
   runNetworkPresetTests({
