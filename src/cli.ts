@@ -2,86 +2,67 @@
 import './setup';
 import { Command } from "commander";
 import * as commands from "@/commands/index";
-import { Logger } from "@/utils/logger";
+import { CLI_CONFIG, EXIT_CODES, DEFAULTS } from "@/constants";
 
-// Create CLI instance
 const program = new Command();
-const logger = new Logger();
 
-// Configure the CLI
 program
-  .name("smithy")
-  .description("A CLI tool for generating Ethereum client configurations")
-  .version("0.1.0");
+  .name(CLI_CONFIG.NAME)
+  .description(CLI_CONFIG.DESCRIPTION)
+  .version(CLI_CONFIG.VERSION)
+  .exitOverride();
 
-// Add generate command
 program
   .command("generate")
   .description("Generate configuration files for Ethereum clients")
-  .option("-p, --preset <preset>", "Preset to validate against", "default")
-  .option(
-    "-e, --execution <client>",
-    "Execution client (geth, nethermind, besu)",
-  )
-  .option(
-    "-c, --consensus <client>",
-    "Consensus client (lighthouse, prysm, teku)",
-  )
-  .option(
-    "-v, --validator <client>",
-    "Validator client (lighthouse, prysm, teku)",
-  )
-  .option(
-    "-o, --output <directory>",
-    "Output directory for configuration files",
-  )
-  .option(
-    "-f, --config-file <path>",
-    "Path to a configuration file to use as base",
-  )
-  .option("--verbose", "Enable verbose logging")
-  .action(async (options: any) => {
+  .option("-p, --preset <preset>", "Preset to validate against", DEFAULTS.PRESET)
+  .option("-e, --execution <client>", "Execution client (geth, nethermind, besu)")
+  .option("-c, --consensus <client>", "Consensus client (lighthouse, prysm, teku)")
+  .option("-v, --validator <client>", "Validator client (lighthouse, prysm, teku)")
+  .option("-o, --output <directory>", "Output directory for configuration files")
+  .option("-f, --config-file <path>", "Path to a configuration file to use as base")
+  .action(async (options) => {
     try {
-      if (options.verbose) {
-        logger.setLevel("verbose");
-      }
-
-      logger.info("Generating Ethereum client configurations");
       await commands.generate(options);
-      logger.success("Successfully generated client configurations");
+      console.log("Configuration files generated successfully");
     } catch (error) {
-      logger.error("Failed to generate configurations");
-      if (error instanceof Error) {
-        logger.error(error.message);
-      }
-      process.exit(1);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      console.error(`Error: ${errorMessage}`);
+      process.exit(EXIT_CODES.ERROR);
     }
   });
 
-// Add preset list command
 program
   .command("presets")
   .description("List available configuration presets")
   .action(async () => {
     try {
       const presets = await commands.listPresets();
+      if (presets.length === 0) {
+        console.log("No presets available");
+        return;
+      }
       console.log("Available presets:");
       presets.forEach((preset) => console.log(`- ${preset}`));
     } catch (error) {
-      logger.error("Failed to list presets");
-      if (error instanceof Error) {
-        logger.error(error.message);
-      }
-      process.exit(1);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      console.error(`Error: ${errorMessage}`);
+      process.exit(EXIT_CODES.ERROR);
     }
   });
 
-// Parse command line arguments
-program.parse(process.argv);
-
-// If no arguments provided, show help
-if (process.argv.length === 2) {
-  program.outputHelp();
+async function main() {
+  try {
+    if (process.argv.length === 2) {
+      program.outputHelp();
+      return;
+    }
+    await program.parseAsync(process.argv);
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error(`Fatal error: ${errorMessage}`);
+    process.exit(EXIT_CODES.FATAL);
+  }
 }
 
-export default program;
+main();

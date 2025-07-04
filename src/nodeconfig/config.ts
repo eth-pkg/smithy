@@ -1,101 +1,100 @@
-import * as fs from "fs-extra";
-import * as path from "path";
-import * as yaml from "js-yaml";
-import Ajv from "ajv";
-import ajvErrors from "ajv-errors";
-import { NodeConfig, DeepPartial } from "@/types";
+import fs from "fs-extra";
+import path from "path";
+import yaml from "js-yaml";
+import { NodeConfig } from "@/types";
+import { ConfigError } from "@/errors";
 
+type SupportedExtension = ".yaml" | ".yml" | ".json";
 
-/**
- * Preset utility for loading preset rules and validating configurations
- */
 export class ConfigManager {
+  private static readonly SUPPORTED_EXTENSIONS : SupportedExtension[] = [".yaml", ".yml", ".json"] as const;
+  private static readonly YAML_EXTENSIONS = [".yaml", ".yml"] as const;
 
- 
-  /**
-   * List available configs
-   */
   async listConfigs(): Promise<string[]> {
     const configsDir = this.getConfigsDir();
-
     try {
       const files = await fs.readdir(configsDir);
       return files
-        .filter((file) => file.endsWith(".yaml") || file.endsWith(".yml"))
-        .map((file) => path.basename(file, path.extname(file)));
-    } catch (error) {
+        .filter(file => this.isSupportedConfigFile(file))
+        .map(file => path.basename(file, path.extname(file)));
+    } catch {
       return ["default"];
     }
   }
 
-  /**
-   * Get the path to the configs directory
-   */
-  getConfigsDir(): string {
-    return path.join(__dirname, "..", "..", "configs");
-  }
-
-  /**
-   * Load a default configuration file
-   */
   async loadDefaultConfig(configName: string = "default"): Promise<NodeConfig> {
     const configsDir = this.getConfigsDir();
-    const yamlFile = path.join(configsDir, `${configName}.yaml`);
-    const ymlFile = path.join(configsDir, `${configName}.yml`);
-
-    let configFile = "";
-
-    if (await fs.pathExists(yamlFile)) {
-      configFile = yamlFile;
-    } else if (await fs.pathExists(ymlFile)) {
-      configFile = ymlFile;
-    } else {
-      throw new Error(`Default config not found: ${configName}`);
+    const configFile = await this.findConfigFile(configsDir, configName);
+    
+    if (!configFile) {
+      throw new ConfigError(`Default config not found: ${configName}`);
     }
 
-
-    try {
-      const fileContent = await fs.readFile(configFile, "utf-8");
-      const config = yaml.load(fileContent) as NodeConfig;
-
-      return config;
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(
-          `Failed to load default config ${configName}: ${error.message}`,
-        );
-      }
-      throw new Error(`Failed to load default config ${configName}`);
-    }
+    return this.readConfigFile(configFile, configName);
   }
 
   async loadConfigFile(configPath: string): Promise<Partial<NodeConfig>> {
-
-    try {
-      if (!await fs.pathExists(configPath)) {
-        throw new Error(`Config file not found: ${configPath}`);
-      }
-
-      const fileContent = await fs.readFile(configPath, "utf-8");
-      let config: Partial<NodeConfig> = {};
-
-      if (configPath.endsWith('.json')) {
-        config = JSON.parse(fileContent);
-      } else if (configPath.endsWith('.yml') || configPath.endsWith('.yaml')) {
-        config = yaml.load(fileContent) as Partial<NodeConfig>;
-      } else {
-        throw new Error(`Unsupported config file format: ${path.extname(configPath)}`);
-      }
-
-      return config;
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(`${error.message}`);
-      }
-      throw new Error(`Failed to load config file ${configPath}`);
+    if (!await fs.pathExists(configPath)) {
+      throw new ConfigError(`Config file not found: ${configPath}`);
     }
+
+    const ext = path.extname(configPath).toLowerCase();
+    if (!ConfigManager.SUPPORTED_EXTENSIONS.includes(ext as SupportedExtension)) {
+      throw new ConfigError(
+        `Unsupported format: ${ext}. Supported: ${ConfigManager.SUPPORTED_EXTENSIONS.join(", ")}`
+      );
+    }
+
+    return this.readConfigFile(configPath);
   }
 
+  private getConfigsDir(): string {
+    return path.join(__dirname, "..", "..", "configs");
+  }
+
+  private isSupportedConfigFile(filename: string): boolean {
+    return ConfigManager.SUPPORTED_EXTENSIONS.some(ext => 
+      filename.toLowerCase().endsWith(ext)
+    );
+  }
+
+  private isYamlFile(filepath: string): boolean {
+    return ConfigManager.YAML_EXTENSIONS.some(ext => 
+      filepath.toLowerCase().endsWith(ext)
+    );
+  }
+
+  private async findConfigFile(configsDir: string, configName: string): Promise<string | null> {
+    for (const ext of ConfigManager.YAML_EXTENSIONS) {
+      const filePath = path.join(configsDir, `${configName}${ext}`);
+      if (await fs.pathExists(filePath)) {
+        return filePath;
+      }
+    }
+    return null;
+  }
+
+  private async readConfigFile(filePath: string, configName?: string): Promise<NodeConfig> {
+    try {
+      const content = await fs.readFile(filePath, "utf-8");
+      const config = this.isYamlFile(filePath) 
+        ? yaml.load(content) 
+        : JSON.parse(content);
+
+      if (!config || typeof config !== "object") {
+        throw new ConfigError(`Invalid config format in ${configName || filePath}`);
+      }
+
+      return config as NodeConfig;
+    } catch (error) {
+      const message = configName 
+        ? `Failed to load default config ${configName}`
+        : `Failed to load config file ${filePath}`;
+      throw error instanceof ConfigError 
+        ? error 
+        : new ConfigError(`${message}: ${(error as Error).message}`, filePath, error as Error);
+    }
+  }
 }
 
 export default ConfigManager;

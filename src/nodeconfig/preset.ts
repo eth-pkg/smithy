@@ -3,251 +3,210 @@ import * as path from "path";
 import * as yaml from "js-yaml";
 import Ajv from "ajv";
 import ajvErrors from "ajv-errors";
-import { NodeConfig, DeepPartial } from "@/types";
-import { Logger } from "@/utils/logger";
+import { DeepPartial, NodeConfig } from "@/types";
 
+// Constants
+const SUPPORTED_EXTENSIONS = [".yaml", ".yml"] as const;
+const DEFAULT_PRESET = "default" as const;
+
+// Type definitions
 interface SchemaProperty {
-  type?: string;
-  const?: any;
-  properties?: Record<string, SchemaProperty>;
+  readonly type?: string;
+  readonly const?: unknown;
+  readonly properties?: Record<string, SchemaProperty>;
 }
 
-/**
- * Preset utility for loading preset rules and validating configurations
- */
+interface PresetData {
+  readonly schema?: SchemaProperty;
+  readonly [key: string]: unknown;
+}
+
+interface ValidationError {
+  readonly keyword: string;
+  readonly instancePath: string;
+  readonly message: string;
+  readonly params?: Record<string, unknown>;
+}
+
+interface GroupedErrors {
+  [field: string]: string[];
+}
+
 export class PresetManager {
-  private logger: Logger;
-  private ajv: Ajv;
-  private schema: any;
+  // Instance variables (private first)
+  private readonly ajv: Ajv;
+  private readonly schemaCache: Map<string, PresetData> = new Map();
 
   constructor(verbose = false) {
-    this.logger = new Logger(verbose ? "verbose" : "info");
     this.ajv = new Ajv({
       allErrors: true,
       useDefaults: true,
       coerceTypes: true,
       loadSchema: this.loadSchema.bind(this),
-      strict: true
+      strict: true,
     });
     ajvErrors(this.ajv);
   }
 
-  /**
-   * Get the path to the presets directory
-   */
-  getPresetsDir(): string {
-    return path.join(__dirname, "..", "..", "data", "presets");
-  }
-
-  /**
-   * List available presets
-   */
-  async listPresets(): Promise<string[]> {
+  // Public instance methods
+  async listPresets(): Promise<readonly string[]> {
     const presetsDir = this.getPresetsDir();
-    this.logger.debug(`Looking for presets in: ${presetsDir}`);
-
     try {
       const files = await fs.readdir(presetsDir);
       return files
-        .filter((file) => (file.endsWith(".yaml") || file.endsWith(".yml")))
+        .filter((file) => SUPPORTED_EXTENSIONS.some(ext => file.endsWith(ext)))
         .map((file) => path.basename(file, path.extname(file)));
     } catch (error) {
-      this.logger.error(`Failed to read presets directory: ${presetsDir}`);
-      if (error instanceof Error) {
-        this.logger.error(error.message);
-      }
-      return ["default"];
+      return [DEFAULT_PRESET];
     }
   }
 
-  /**
-   * Load a preset from the presets directory
-   * Presets contain both validation rules and default values
-   */
-  async loadPreset(presetName: string): Promise<any> {
-    if (this.schema) {
-      return this.schema;
+  async loadPreset(presetName: string): Promise<PresetData> {
+    const cachedPreset = this.schemaCache.get(presetName);
+    if (cachedPreset) {
+      return cachedPreset;
     }
 
-    const presetsDir = this.getPresetsDir();
-    const presetPath = path.join(presetsDir, `${presetName}.yml`);
-
+    const presetPath = path.join(this.getPresetsDir(), `${presetName}.yml`);
     try {
-      if (!await fs.pathExists(presetPath)) {
+      if (!(await fs.pathExists(presetPath))) {
         throw new Error(`Preset not found: ${presetName}.yml`);
       }
+      const fileContent = await fs.readFile(presetPath, "utf-8");
+      const presetData = yaml.load(fileContent) as PresetData;
+      
+      if (!presetData || typeof presetData !== "object") {
+        throw new Error(`Invalid preset format: ${presetName}`);
+      }
 
-      const fileContent = await fs.readFile(presetPath, 'utf-8');
-      this.schema = yaml.load(fileContent);
-      this.logger.debug(`Loaded preset: ${presetName} from ${presetPath}`);
-      return this.schema;
+      this.schemaCache.set(presetName, presetData);
+      return presetData;
     } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(`Failed to load preset: ${error.message}`);
-      }
-      throw new Error(`Failed to load preset for ${presetName}`);
+      const errorMessage = error instanceof Error ? error.message : "Unknown error";
+      throw new Error(`Failed to load preset ${presetName}: ${errorMessage}`);
     }
   }
 
-
-  /**
-   * Check if the config is trying to override any constant values from the preset
-   */
-  private checkConstantOverrides(config: any, schema: SchemaProperty, path: string[] = []): string[] {
-    const overrides: string[] = [];
-
-    if (schema.type === 'object' && schema.properties) {
-      for (const [key, value] of Object.entries(schema.properties)) {
-        const currentPath = [...path, key];
-        const fullPath = currentPath.join('.');
-
-        if (value && typeof value === 'object') {
-          if (value.const !== undefined) {
-            let current = config;
-            for (const p of currentPath) {
-              if (current && typeof current === 'object') {
-                current = current[p];
-              } else {
-                current = undefined;
-                break;
-              }
-            }
-            if (current !== undefined && current !== value.const) {
-              overrides.push(fullPath);
-            }
-          }
-
-          if (config && typeof config === 'object' && config[key]) {
-            overrides.push(...this.checkConstantOverrides(config[key], value, currentPath));
-          }
-        }
-      }
-    }
-
-    return overrides;
-  }
-
-  /**
-   * Validate and apply preset rules to a configuration
-   */
-  public async validateAndApplyRules(config: DeepPartial<NodeConfig>, presetName: string = "default"): Promise<NodeConfig> {
+  async validateAndApplyRules(config: DeepPartial<NodeConfig>, presetName: string = DEFAULT_PRESET): Promise<NodeConfig> {
     try {
       const preset = await this.loadPreset(presetName);
       const validationSchema = preset.schema || preset;
 
-      const constantOverrides = this.checkConstantOverrides(config, validationSchema);
-      if (constantOverrides.length > 0) {
-        throw new Error(`Cannot override constant values in preset: ${constantOverrides.join(', ')}`);
+      const overrides = this.checkConstantOverrides(config, validationSchema as SchemaProperty);
+      if (overrides.length > 0) {
+        throw new Error(`Cannot override constants: ${overrides.join(", ")}`);
       }
 
-      const ajv = new Ajv({
-        allErrors: true,
-        coerceTypes: true,
-        loadSchema: this.loadSchema.bind(this),
-        strict: true
-      });
-      ajvErrors(ajv);
-
-      const validate = await ajv.compileAsync(validationSchema);
-
-
-      // Validate the final config
-      const valid = validate(config);
-
-      if (!valid) {
-        const formattedErrors = this.formatValidationErrors(validate.errors || []);
-        throw new Error(formattedErrors);
+      const validate = await this.ajv.compileAsync(validationSchema);
+      if (!validate(config)) {
+        const errors = validate.errors || [];
+        const validationErrors: ValidationError[] = errors.map(error => ({
+          keyword: error.keyword,
+          instancePath: error.instancePath,
+          message: error.message || "Unknown error",
+          params: error.params
+        }));
+        throw new Error(this.formatValidationErrors(validationErrors));
       }
 
       return config as NodeConfig;
     } catch (error) {
-      throw error;
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      throw new Error(`Validation failed: ${errorMessage}`);
     }
   }
 
-  /**
-   * Deep merge utility for configurations
-   */
-  private deepMerge(target: any, source: any): any {
-    if (!source) return target;
+  // Private instance methods
+  private getPresetsDir(): string {
+    return path.join(__dirname, "..", "..", "data", "presets");
+  }
 
-    Object.keys(source).forEach(key => {
-      if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
-        if (!target[key] || typeof target[key] !== 'object') {
-          target[key] = {};
+  private async loadSchema(uri: string): Promise<SchemaProperty> {
+    const schemaPath = path.join(this.getPresetsDir(), uri);
+    try {
+      if (!(await fs.pathExists(schemaPath))) {
+        throw new Error(`Schema not found: ${uri}`);
+      }
+      const fileContent = await fs.readFile(schemaPath, "utf-8");
+      const schema = yaml.load(fileContent) as SchemaProperty;
+      
+      if (!schema || typeof schema !== "object") {
+        throw new Error(`Invalid schema format: ${uri}`);
+      }
+
+      return schema;
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "Unknown error";
+      throw new Error(`Failed to load schema ${uri}: ${errorMessage}`);
+    }
+  }
+
+  private checkConstantOverrides(config: unknown, schema: SchemaProperty, path: readonly string[] = []): readonly string[] {
+    const overrides: string[] = [];
+
+    if (schema.type === "object" && schema.properties) {
+      for (const [key, value] of Object.entries(schema.properties)) {
+        const currentPath = [...path, key];
+        const fullPath = currentPath.join(".");
+
+        if (value.const !== undefined) {
+          let current = config;
+          for (const p of currentPath) {
+            if (current && typeof current === "object" && p in current) {
+              current = (current as Record<string, unknown>)[p];
+            } else {
+              current = undefined;
+              break;
+            }
+          }
+          if (current !== undefined && current !== value.const) {
+            overrides.push(fullPath);
+          }
         }
-        this.deepMerge(target[key], source[key]);
-      } else if (source[key] !== undefined) {
-        target[key] = source[key];
-      }
-    });
 
-    return target;
+        if (config && typeof config === "object" && key in config) {
+          overrides.push(...this.checkConstantOverrides((config as Record<string, unknown>)[key], value, currentPath));
+        }
+      }
+    }
+    return overrides;
   }
 
-  /**
-   * Format validation errors into a user-friendly message
-   */
-  private formatValidationErrors(errors: any[]): string {
-    if (!errors || errors.length === 0) {
-      return "Unknown validation error";
-    }
+  private formatValidationErrors(errors: readonly ValidationError[]): string {
+    if (!errors.length) return "Unknown validation error";
 
-    const groupedErrors: { [key: string]: string[] } = {};
+    const groupedErrors: GroupedErrors = {};
+    errors.forEach((error) => {
+      const fieldPath = error.instancePath.split("/").filter(Boolean);
+      const fieldName = fieldPath[fieldPath.length - 1] || "root";
+      const topLevelField = fieldPath[0] || "root";
 
-    errors.forEach(error => {
-      const fieldPath = error.instancePath.split('/').filter(Boolean);
-      const fieldName = fieldPath[fieldPath.length - 1] || 'root';
-
-      let message = '';
-      if (error.keyword === 'required') {
-        message = `Missing required field: ${error.params.missingProperty}`;
-      } else if (error.keyword === 'enum') {
-        const allowedValues = error.params.allowedValues.join(', ');
-        message = `Invalid value for ${fieldName}. Must be one of: ${allowedValues}`;
-      } else if (error.keyword === 'errorMessage') {
-        message = error.message;
-      } else {
-        message = `${fieldName}: ${error.message}`;
+      let message: string;
+      switch (error.keyword) {
+        case "required":
+          message = `Missing required field: ${error.params?.missingProperty as string}`;
+          break;
+        case "enum":
+          message = `Invalid value for ${fieldName}. Must be one of: ${(error.params?.allowedValues as unknown[])?.join(", ")}`;
+          break;
+        case "errorMessage":
+          message = error.message;
+          break;
+        default:
+          message = `${fieldName}: ${error.message}`;
       }
 
-      const topLevelField = fieldPath[0] || 'root';
       if (!groupedErrors[topLevelField]) {
         groupedErrors[topLevelField] = [];
       }
       groupedErrors[topLevelField].push(message);
     });
 
-    const formattedMessage = Object.entries(groupedErrors)
+    return Object.entries(groupedErrors)
       .map(([field, messages]) => {
-        const fieldHeader = field === 'root' ? 'Configuration' : `Field: ${field}`;
-        return `${fieldHeader}:\n${messages.map(msg => `  - ${msg}`).join('\n')}`;
+        const header = field === "root" ? "Configuration" : `Field: ${field}`;
+        return `${header}:\n${messages.map((msg) => `  - ${msg}`).join("\n")}`;
       })
-      .join('\n\n');
-
-    return formattedMessage;
-  }
-
-  /**
-   * Load a schema from a file
-   */
-  private async loadSchema(uri: string): Promise<any> {
-    const presetsDir = this.getPresetsDir();
-    const schemaPath = path.join(presetsDir, uri);
-    try {
-      if (!await fs.pathExists(schemaPath)) {
-        throw new Error(`Schema not found: ${uri}`);
-      }
-
-      const fileContent = await fs.readFile(schemaPath, 'utf-8');
-      return yaml.load(fileContent);
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(`Failed to load schema ${uri}: ${error.message}`);
-      }
-      throw new Error(`Failed to load schema ${uri}`);
-    }
+      .join("\n\n");
   }
 }
-
-export default PresetManager;
